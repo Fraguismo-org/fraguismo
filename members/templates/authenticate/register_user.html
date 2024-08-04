@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="shadow p-4 mb-5 bg-body rounded">
+<form action="{% url 'register' %}" method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Registrar" class="btn btn-warning" style="border-radius: 20px;">
+</form>
+</div>
+
+{% endblock %}

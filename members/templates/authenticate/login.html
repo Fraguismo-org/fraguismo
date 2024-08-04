@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+
+<form method="post" action="{% url 'login' %}">
+{% csrf_token %}
+    <div class="mb-3">
+      <label for="username" class="form-label">Nome de usuário</label>
+      <input type="text" class="form-control" name="username">      
+    </div>
+    <div class="mb-3">
+      <label for="password" class="form-label">Senha</label>
+      <input type="password" class="form-control" name="password">
+    </div>
+    <button type="submit" class="btn btn-warning" style="border-radius: 20px;">Login</button>
+    </form>
+
+    <p>Se torne um <a href="{% url 'register' %}">fraguista</a>!</p>  
+{% endblock %}

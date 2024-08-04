@@ -1,0 +1,55 @@
+html, body { 
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    height: 100%;
+}
+
+body {
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.footer-top-area {
+    background-color: #1a1a1a;
+}
+
+.footer-top-area .widget > h3 {
+    color: #ffffff;
+}
+
+.footer-top-area .widget {
+    color: #a5a5a5;
+}
+
+.footer-top-area a:link, .footer-top-area a:visited {
+    color: #a5a5a5;
+}
+
+.footer-top-area .widget a:hover, .footer-top-area .widget a:active {
+    color: #ffbc00;
+}
+
+.footer-bottom-area {
+    background-color: #111212;
+    color: #ababab;
+}
+
+.footer-style-2 .footer-top-area .widget .menu li a:hover {
+    color: #ffbc00;
+}
+
+.footer-style-2 .footer-top-area .widget .menu li a:hover:after {
+    background-color: #ffbc00;
+}
+
+.footer-text {
+    text-decoration: none;
+}
+
+footer {
+    margin-top: auto;
+}
