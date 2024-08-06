@@ -9,8 +9,9 @@
 **Linux**
 `$source .venv/bin/activate`
 4. Instale as dependencias
-`pip install -r requirements.txt`
-5. Rode o projeto
+`pip install -r requirements/requirements.txt`
+5. Fazer o migration    `python manage.py migrate`
+6. Rode o projeto
 `python manage.py runserver`
 
 ### O padrão da url é http://localhost:8000
