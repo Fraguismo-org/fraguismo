@@ -11,7 +11,10 @@ class RegisterUserForm(UserCreationForm):
     fone = forms.CharField(max_length=30, widget=forms.TextInput(attrs={'class':'form-control'}), label='Telefone')
     instagram = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'class':'form-control'}))
     birth = forms.DateField(widget=forms.DateInput(attrs={'class':'form-control', 'type': 'date'}), label='Data de nascimento')
-    job_title = forms.CharField(max_length=50, widget=forms.TextInput(attrs={'class':'form-control'}), label='Profissão')
+    # Extender para aceitar separacao por virgula
+    job_title = forms.CharField(max_length=255, widget=forms.TextInput(attrs={'class':'form-control'}), label='Profissão', help_text='Ex.: Programador Backend Java.')
+    lightining_wallet = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'class': 'form-control'}), label='Carteira Lightining')
+    bsc_wallet = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'class': 'form-control'}), label='Carteira BSC')
 
     class Meta:
         model = User
