@@ -3,9 +3,14 @@
 {% load static %}
 
 {% block content %}
+<style>
+.bg-btc {
+    background-image: url("{% static 'images/bg-btc.webp' %}");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size:cover;
+}
+</style>
 
-<main>
-
-</main>
-
+<body class="bg-btc"></body>
 {% endblock %}
