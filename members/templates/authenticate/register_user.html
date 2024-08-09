@@ -9,4 +9,27 @@
 </form>
 </div>
 
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const comoConheceuField = document.getElementById('id_como_conheceu');
+    const quemIndicouField = document.getElementById('id_quem_indicou');
+    const aondeField = document.getElementById('id_aonde');
+
+    function toggleFields() {
+        if (comoConheceuField.value === 'indicacao') {
+            quemIndicouField.style.display = 'block';
+            aondeField.style.display = 'none';
+        } else if (comoConheceuField.value === 'outros') {
+            aondeField.style.display = 'block';
+            quemIndicouField.style.display = 'none';
+        } else {
+            quemIndicouField.style.display = 'none';
+            aondeField.style.display = 'none';
+        }
+    }
+
+    comoConheceuField.addEventListener('change', toggleFields);
+    toggleFields();  // Ensure fields are shown/hidden correctly on page load
+});
+</script>
 {% endblock %}
