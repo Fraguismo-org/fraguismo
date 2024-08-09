@@ -53,3 +53,8 @@ body {
 footer {
     margin-top: auto;
 }
+
+form label.required:after {
+    content: " *";
+    color: red;
+}
