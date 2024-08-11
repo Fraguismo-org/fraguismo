@@ -4,13 +4,71 @@
 
 {% block content %}
 <style>
+/* Reset de margens e padding */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Configuração do body e html para ocupar 100% da largura */
+body, html {
+    width: 100%;
+    height: 100%;
+}
+
+/* Estilização do container de background para cobrir 100% da largura */
 .bg-btc {
     background-image: url("{% static 'images/bg-btc.webp' %}");
     background-repeat: no-repeat;
     background-position: center;
-    background-size:cover;
+    background-size: cover;
+    height: 78vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    margin-left: calc(50% - 50vw); /* Alinhar o fundo ao centro */
 }
+
+/* Estilização do texto sobre o background */
+.overlay-text {
+    color: white;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 20px;
+    border-radius: 20px;
+    width: 80%;
+    max-width: 1200px;
+    z-index: 2;
+}
+
+/* Estilo adicional para efeito de digitação */
+.typing-effect {
+    border-right: 2px solid white; /* Simula o cursor piscante */
+    white-space: nowrap;
+    overflow: hidden;
+    width: 100%; /* Define a largura completa após a animação */
+    animation: typing 4s steps(40, end), remove-caret 1ms forwards;
+}
+
+@keyframes typing {
+    from { width: 0; }
+    to { width: 100%; }
+}
+
+@keyframes remove-caret {
+    to { border-right: none; }
+}
+
 </style>
 
-<body class="bg-btc"></body>
+
+<div class="bg-btc">
+    <div class="overlay-text">
+        <h1 id="typedText" class="typing-effect">Encontre empresas e serviços negociando em Bitcoin</h1>
+        <p>Anuncie seus produtos ou serviços conectando-se com uma comunidade que valoriza a liberdade</p>
+    </div>
+</div>
+
 {% endblock %}
