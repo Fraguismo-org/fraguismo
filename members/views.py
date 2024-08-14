@@ -4,6 +4,7 @@ from django.contrib import messages
 from django.contrib.auth.forms import UserCreationForm
 
 from members.forms import RegisterUserForm
+from members.models import Profile, User
 
 
 def login_user(request):
@@ -13,7 +14,7 @@ def login_user(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            return redirect('index')
+            return redirect('user')
         else:
             messages.success(request, ("E-mail ou senha não encontrado!"))
             return redirect('login')
@@ -43,3 +44,7 @@ def register_user(request):
     return render(request, 'authenticate/register_user.html', {
         'form': form,
     })
+
+def user_page(request):
+    profile = Profile.objects.get(user = request.user)
+    return render(request, 'authenticate/user_page.html', {'profile': profile})
