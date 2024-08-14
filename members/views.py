@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.forms import UserCreationForm
+from django.core.exceptions import ObjectDoesNotExist
 
 from members.forms import RegisterUserForm
 from members.models import Profile, User
@@ -30,10 +31,6 @@ def register_user(request):
         form = RegisterUserForm(request.POST)
         if form.is_valid():
             form.save()
-            username = form.cleaned_data['username']
-            password = form.cleaned_data['password1']
-            user = authenticate(username=username, password=password)
-            login(request, user)
             messages.success(request, "Conta criada com sucesso!")
             return redirect('index')
         else:
@@ -46,5 +43,11 @@ def register_user(request):
     })
 
 def user_page(request):
-    profile = Profile.objects.get(user = request.user)
-    return render(request, 'authenticate/user_page.html', {'profile': profile})
+    try:
+        profile = Profile.objects.get(user = request.user)
+        return render(request, 'authenticate/user_page.html', {'profile': profile})
+    except ObjectDoesNotExist:
+        profile = Profile.objects.create(user=request.user)
+        return render(request, 'authenticate/user_page.html', {'profile': profile})
+
+    
