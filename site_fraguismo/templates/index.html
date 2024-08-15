@@ -71,4 +71,132 @@ body, html {
     </div>
 </div>
 
+<div id="categorias-populares" style="margin-top: 3rem; margin-bottom: 2rem;">
+    <div class="row text-center" style="margin-bottom: 2rem;">
+        <h2 class="h2">Categorias Populares</h2>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">
+            <div class="card text-center" style="width: 16rem; height: 10rem;">
+                <div class="card-body">
+                    <i class="bi bi-tree-fill" style="font-size: 2.5rem; color: darkgoldenrod;"></i>
+                    <h5 class="card-title">
+                        Agro e indústria
+                    </h5>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="card text-center" style="width: 16rem; height: 10rem;">
+                <div class="card-body">
+                    <i class="bi bi-car-front-fill" style="font-size: 2.5rem; color: darkgoldenrod;"></i>
+                    <h5 class="card-title">
+                        Autos e peças
+                    </h5>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="card text-center" style="width: 16rem; height: 10rem;">
+                <div class="card-body">
+                    <i class="bi bi-phone-fill" style="font-size: 2.5rem; color: darkgoldenrod;"></i>
+                    <h5 class="card-title">
+                        Eletrônicos e celulares
+                    </h5>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="card text-center" style="width: 16rem; height: 10rem;">
+                <div class="card-body">
+                    <i class="bi bi-dribbble" style="font-size: 2.5rem; color: darkgoldenrod;"></i>
+                    <h5 class="card-title">
+                        Esportes e lazer
+                    </h5>
+                </div>
+            </div>
+        </div>    
+    </div>
+    <div class="row" style="margin-top: 1rem;">
+        <div class="col-sm-3">
+            <div class="card text-center" style="width: 16rem; height: 10rem;">
+                <div class="card-body">
+                    <i class="bi bi-handbag-fill" style="font-size: 2.5rem; color: darkgoldenrod;"></i>
+                    <h5 class="card-title">
+                        Moda e beleza
+                    </h5>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="card text-center" style="width: 16rem; height: 10rem;">
+                <div class="card-body">
+                    <i class="bi bi-music-note" style="font-size: 2.5rem; color: darkgoldenrod;"></i>
+                    <h5 class="card-title">
+                        Música e hobbies
+                    </h5>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="card text-center" style="width: 16rem; height: 10rem;">
+                <div class="card-body">
+                    <i class="bi bi-house-add-fill" style="font-size: 2.5rem; color: darkgoldenrod;"></i>
+                    <h5 class="card-title">
+                        Para sua casa
+                    </h5>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="card text-center" style="width: 16rem; height: 10rem;">
+                <div class="card-body">
+                    <i class="bi bi-tools" style="font-size: 2.5rem; color: darkgoldenrod;"></i>
+                    <h5 class="card-title">
+                        Prestação de serviços
+                    </h5>
+                </div>
+            </div>
+        </div>    
+    </div>
+</div>
+
+<div id="anuncios-destaque" style="margin-top: 3rem;">
+    <div class="row text-center">
+        <h2 class="h2">Anúncios em destaque</h2>
+    </div>
+    {% with '1 2' as list %}
+    {% for num in list.split %}    
+    <div class="row" style="margin-top: 2rem;">
+        {% with '1 2 3 4' as cardlist %}
+        {% for cards in cardlist.split %}
+        <div class="col-sm-3">
+            <div class="card" style="width: 16rem;">
+                <img src="https://cdn.outsideonline.com/wp-content/uploads/2023/03/Funny_Dog_H.jpg?crop=16:9&width=960&enable=upscale&quality=100" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <a>Título do serviço/produto </a>
+                    </h5>
+                    <div class="tempo-ativo">
+                        <small><i class="bi bi-clock"></i> 2 semanas</small>
+                    </div>
+                    <div class="usuario">
+                        <small><i class="bi bi-person"></i> {{ request.user }}</small>
+                    </div>
+                    <div class="preco">
+                        <h5 class="h5" style="color: darkgoldenrod;">
+                            R$ 1.500,00
+                        </h5>
+                    </div>    
+                </div>                
+            </div>
+        </div>
+        {% endfor %}
+        {% endwith %}
+    </div>
+    {% endfor %}
+    {% endwith %}
+    
+</div>
+
 {% endblock %}

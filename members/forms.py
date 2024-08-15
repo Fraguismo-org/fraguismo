@@ -23,8 +23,7 @@ class RegisterUserForm(UserCreationForm):
     birth = forms.DateField(widget=forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}), label='Data de nascimento *')
     job_title = forms.CharField(max_length=255, widget=forms.TextInput(attrs={'class': 'form-control'}), label='Profissão *', help_text='Ex.: Programador Backend Java.')
     lightining_wallet = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'class': 'form-control'}), label='Carteira Lightining', required=False)
-    bsc_wallet = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'class': 'form-control'}), label='Carteira BSC', required=False)
-    
+    bsc_wallet = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'class': 'form-control'}), label='Carteira BSC', required=False)    
     como_conheceu = forms.ChoiceField(choices=COMO_CONHECEU_CHOICES, widget=forms.Select(attrs={'class': 'form-control'}), label='Como conheceu o Fraguismo? *')
     quem_indicou = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'class': 'form-control', 'style': 'display:none;'}), required=False, label='Quem indicou?')
     aonde = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'class': 'form-control', 'style': 'display:none;'}), required=False, label='Outros? Aonde?')
