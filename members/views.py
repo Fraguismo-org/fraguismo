@@ -2,12 +2,12 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.forms import UserCreationForm
-from django.core.exceptions import ObjectDoesNotExist
-
+from django.contrib.auth.views import PasswordResetView, PasswordResetDoneView, PasswordResetConfirmView, PasswordResetCompleteView
+from django.urls import reverse_lazy
 from members.forms import RegisterUserForm
 from members.models import Profile, User
 
-
+# View para login do usuário
 def login_user(request):
     if request.method == "POST":
         username = request.POST.get('username', None)
@@ -21,20 +21,26 @@ def login_user(request):
             return redirect('login')
     return render(request, 'authenticate/login.html', {})
 
+# View para logout do usuário
 def logout_user(request):
     logout(request)
-    messages.success(request, "Deslogado com sucesso. Volte sempre!")
+    messages.success(request, ("Deslogado com sucesso. Volte sempre!"))
     return redirect('index')
 
+# View para registro de usuário
 def register_user(request):
-    if request.method == 'POST':
+    if request.method == "POST":
         form = RegisterUserForm(request.POST)
         if form.is_valid():
             form.save()
-            messages.success(request, "Conta criada com sucesso!")
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password1']
+            user = authenticate(username=username, password=password)
+            login(request, user)
+            messages.success(request, ("Conta criada com sucesso!"))
             return redirect('index')
         else:
-            messages.success(request, "Erro ao cadastrar usuario!")
+            messages.success(request, ("Erro ao cadastrar usuário!"))
     else:
         form = RegisterUserForm()
 
@@ -42,12 +48,27 @@ def register_user(request):
         'form': form,
     })
 
+# View para exibir página de perfil do usuário
 def user_page(request):
     try:
-        profile = Profile.objects.get(user = request.user)
+        profile = Profile.objects.get(user=request.user)
         return render(request, 'authenticate/user_page.html', {'profile': profile})
-    except ObjectDoesNotExist:
+    except Profile.DoesNotExist:
         profile = Profile.objects.create(user=request.user)
         return render(request, 'authenticate/user_page.html', {'profile': profile})
 
-    
+# Views para redefinição de senha
+class CustomPasswordResetView(PasswordResetView):
+    template_name = 'authenticate/password_reset.html'
+    email_template_name = 'authenticate/password_reset_email.html'
+    success_url = reverse_lazy('password_reset_done')
+
+class CustomPasswordResetDoneView(PasswordResetDoneView):
+    template_name = 'authenticate/password_reset_done.html'
+
+class CustomPasswordResetConfirmView(PasswordResetConfirmView):
+    template_name = 'authenticate/password_reset_confirm.html'
+    success_url = reverse_lazy('password_reset_complete')
+
+class CustomPasswordResetCompleteView(PasswordResetCompleteView):
+    template_name = 'authenticate/password_reset_complete.html'
