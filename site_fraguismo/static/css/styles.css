@@ -58,3 +58,7 @@ form label.required:after {
     content: " *";
     color: red;
 }
+
+a, u {
+    text-decoration: none;
+}
