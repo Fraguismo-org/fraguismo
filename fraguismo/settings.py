@@ -11,7 +11,10 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-dpe5czessmk6&$
 
 DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
 
-ALLOWED_HOSTS = [os.environ.get('ALLOWED_HOSTS')]
+if os.environ.get('ENV') == 'prod':
+    ALLOWED_HOSTS = [os.environ.get('ALLOWED_HOSTS')]
+else:
+    ALLOWED_HOSTS = ['*']
 
 
 INSTALLED_APPS = [
