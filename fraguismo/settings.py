@@ -68,7 +68,7 @@ if os.environ.get('ENV') == 'prod':
             'HOST': os.environ.get('DB_HOST'),
             'PORT': os.environ.get('DB_PORT'),
             'OPTIONS': {
-                "init_command": "SET default_storage_engine=INNODB",
+                "init_command": "SET default_storage_engine=INNODB, sql_mode='STRICT_TRANS_TABLES'",
             }
         }
     }
