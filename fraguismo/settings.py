@@ -104,6 +104,9 @@ USE_TZ = True
 
 
 STATIC_URL = 'static/'
+STATIC_ROOT = "/var/www/miniblog/static/"
+MEDIA_URL = '/media/'
+MEDIA_ROOT = "/var/www/miniblog/media/"
 
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
