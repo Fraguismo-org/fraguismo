@@ -104,9 +104,9 @@ USE_TZ = True
 
 
 STATIC_URL = 'static/'
-STATIC_ROOT = "/var/www/miniblog/static/"
+STATIC_ROOT = "/var/www/fraguismo/static/"
 MEDIA_URL = '/media/'
-MEDIA_ROOT = "/var/www/miniblog/media/"
+MEDIA_ROOT = "/var/www/fraguismo/media/"
 
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
