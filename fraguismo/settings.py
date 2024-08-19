@@ -67,6 +67,9 @@ if os.environ.get('ENV') == 'prod':
             'PASSWORD': os.environ.get('DB_PASSWORD'),
             'HOST': os.environ.get('DB_HOST'),
             'PORT': os.environ.get('DB_PORT'),
+            'OPTIONS': {
+                "init_command": "SET default_storage_engine=INNODB",
+            }
         }
     }
 else:
