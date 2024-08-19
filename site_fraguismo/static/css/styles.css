@@ -62,3 +62,15 @@ form label.required:after {
 a, u {
     text-decoration: none;
 }
+
+
+.password-instructions {list-style-type: none; 
+    padding: 0;     
+    margin-top: 5px;
+} 
+
+.password-instructions li {color: red; font-size: 14px; list-style: disc; margin-left: 18px; } 
+
+.password-strength {font-weight: bold; } 
+
+.password-requirements {font-style: italic; }
