@@ -30,7 +30,7 @@ def login_user(request):
 def logout_user(request):
     logout(request)
     messages.success(request, ("Deslogado com sucesso. Volte sempre!"))
-    return redirect('index')
+    return redirect("index")
 
 # View para registro de usuário
 def register_user(request):
