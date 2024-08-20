@@ -30,7 +30,7 @@ def login_user(request):
 def logout_user(request):
     logout(request)
     messages.success(request, ("Deslogado com sucesso. Volte sempre!"))
-    return redirect('index')
+    return redirect('https://fraguismo.org')
 
 # View para registro de usuário
 def register_user(request):
@@ -43,7 +43,7 @@ def register_user(request):
             user = authenticate(username=username, password=password)
             login(request, user)
             messages.success(request, ("Conta criada com sucesso!"))
-            return redirect('index')
+            return redirect('https://fraguismo.org')
         else:
             messages.success(request, ("Erro ao cadastrar usuário!"))
     else:

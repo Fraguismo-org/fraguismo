@@ -9,13 +9,10 @@ env_path = load_dotenv(os.path.join(BASE_DIR, '.env'))
 
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-dpe5czessmk6&$zn!iy0fg-2o&+cwzwmq(e@w9s#vtf^=br1(!')
 
-DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
+DEBUG = os.environ.get('DJANGO_DEBUG')
 
-if os.environ.get('ENV') == 'prod':
-    ALLOWED_HOSTS = [os.environ.get('ALLOWED_HOSTS')]
-else:
-    ALLOWED_HOSTS = ['*']
 
+ALLOWED_HOSTS =[ os.environ.get('ALLOWED_HOSTS')]
 
 INSTALLED_APPS = [
     'django.contrib.admin',
