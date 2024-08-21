@@ -11,7 +11,7 @@ DEBUG = config('DJANGO_DEBUG', default=True, cast=bool)
 
 ALLOWED_HOSTS = [config('ALLOWED_HOSTS', cast=Csv())]
 
-
+ 
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -60,12 +60,12 @@ WSGI_APPLICATION = 'fraguismo.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': os.environ.get('DB_ENGINE'),
-        'NAME': os.environ.get('DB_NAME'),
-        'USER': os.environ.get('DB_USER'),
-        'PASSWORD': os.environ.get('DB_PASSWORD'),
-        'HOST': os.environ.get('DB_HOST'),
-        'PORT': os.environ.get('DB_PORT'),
+        'ENGINE': config('DB_ENGINE'),
+        'NAME': config('DB_NAME'),
+        'USER': config('DB_USER'),
+        'PASSWORD': config('DB_PASSWORD'),
+        'HOST': config('DB_HOST'),
+        'PORT': config('DB_PORT', int),
         'OPTIONS': {
             "init_command": "SET default_storage_engine=INNODB, sql_mode='STRICT_TRANS_TABLES'",
         }
