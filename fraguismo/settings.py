@@ -1,20 +1,16 @@
 import os
 from pathlib import Path
-from dotenv import load_dotenv
+from decouple import config, Csv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-env_path = load_dotenv(os.path.join(BASE_DIR, '.env'))
 
+SECRET_KEY = config('DJANGO_SECRET_KEY')
 
-SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-dpe5czessmk6&$zn!iy0fg-2o&+cwzwmq(e@w9s#vtf^=br1(!')
+DEBUG = config('DJANGO_DEBUG', default=True, cast=bool)
 
-DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
+ALLOWED_HOSTS = [config('ALLOWED_HOSTS', cast=Csv())]
 
-if os.environ.get('ENV') == 'prod':
-    ALLOWED_HOSTS = [os.environ.get('ALLOWED_HOSTS')]
-else:
-    ALLOWED_HOSTS = ['*']
 
 
 INSTALLED_APPS = [
@@ -61,27 +57,21 @@ TEMPLATES = [
 WSGI_APPLICATION = 'fraguismo.wsgi.application'
 
 
-if os.environ.get('ENV') == 'prod':
-    DATABASES = {
-        'default': {
-            'ENGINE': os.environ.get('DB_ENGINE'),
-            'NAME': os.environ.get('DB_NAME'),
-            'USER': os.environ.get('DB_USER'),
-            'PASSWORD': os.environ.get('DB_PASSWORD'),
-            'HOST': os.environ.get('DB_HOST'),
-            'PORT': os.environ.get('DB_PORT'),
-            'OPTIONS': {
-                "init_command": "SET default_storage_engine=INNODB, sql_mode='STRICT_TRANS_TABLES'",
-            }
+
+DATABASES = {
+    'default': {
+        'ENGINE': os.environ.get('DB_ENGINE'),
+        'NAME': os.environ.get('DB_NAME'),
+        'USER': os.environ.get('DB_USER'),
+        'PASSWORD': os.environ.get('DB_PASSWORD'),
+        'HOST': os.environ.get('DB_HOST'),
+        'PORT': os.environ.get('DB_PORT'),
+        'OPTIONS': {
+            "init_command": "SET default_storage_engine=INNODB, sql_mode='STRICT_TRANS_TABLES'",
         }
     }
-else:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3',
-        }
-    }
+}
+
 
 
 AUTH_PASSWORD_VALIDATORS = [
@@ -117,10 +107,10 @@ MEDIA_ROOT = "/var/www/fraguismo/media/"
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.office365.com'
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'no-reply-fraguismo@outlook.com'  # Substitua pelo seu e-mail
-EMAIL_HOST_PASSWORD = '3Y+2*K_pG_Vzaa8'  # Substitua pela senha do seu e-mail
-DEFAULT_FROM_EMAIL = 'no-reply-fraguismo@outlook.com'
+EMAIL_BACKEND = config('EMAIL_BACKEND')
+EMAIL_HOST = config('EMAIL_HOST')
+EMAIL_PORT = config('EMAIL_PORT', cast=int)
+EMAIL_USE_TLS = config('EMAIL_USE_TLS', cast=bool)
+EMAIL_HOST_USER = config('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
+DEFAULT_FROM_EMAIL = config('EMAIL_HOST_USER')
