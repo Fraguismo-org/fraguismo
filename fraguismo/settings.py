@@ -9,7 +9,7 @@ SECRET_KEY = config('DJANGO_SECRET_KEY')
 
 DEBUG = config('DJANGO_DEBUG', default=True, cast=bool)
 
-ALLOWED_HOSTS = [config('ALLOWED_HOSTS', cast=Csv())]
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())
 
  
 
