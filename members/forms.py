@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.models import User
+from .models import User
 
 class RegisterUserForm(UserCreationForm):
     COMO_CONHECEU_CHOICES = [
@@ -51,6 +51,3 @@ class RegisterUserForm(UserCreationForm):
         for field_name, field in self.fields.items():
             field.widget.attrs['class'] = 'form-control'
             field.label_suffix = ''
-
-  
- 

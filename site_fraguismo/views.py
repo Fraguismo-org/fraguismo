@@ -4,5 +4,4 @@ from django.template import loader
 
 
 def index(request):    
-    return redirect("https://fraguismo.org")
-
+    return redirect('https://fraguismo.org')
