@@ -5,7 +5,7 @@ class Profile(models.Model):
     NIVEL_CHOICES = [
         ('membro', 'Membro'),
         ('assessor', 'Assessor'),
-        ('execultivo', 'Executivo'),
+        ('executivo', 'Executivo'),
         ('lider', 'Líder'),
         ('diretor', 'Diretor'),
     ]
