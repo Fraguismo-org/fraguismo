@@ -1,18 +1,10 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
-from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.views import (
-    PasswordResetView, 
-    PasswordResetDoneView, 
-    PasswordResetConfirmView, 
-    PasswordResetCompleteView
-)
-from django.urls import reverse_lazy
 from members.forms import RegisterUserForm
-from members.models import Profile, User
+from members.models import Profile, Users
 
-# View para login do usuário
+
 def login_user(request):
     if request.method == "POST":
         username = request.POST.get('username', None)
@@ -26,13 +18,11 @@ def login_user(request):
             return redirect('login')
     return render(request, 'authenticate/login.html', {})
 
-# View para logout do usuário
 def logout_user(request):
     logout(request)
     messages.success(request, ("Deslogado com sucesso. Volte sempre!"))
-    return redirect('https://fraguismo.org')
+    return redirect('login')
 
-# View para registro de usuário
 def register_user(request):
     if request.method == "POST":
         form = RegisterUserForm(request.POST)
@@ -53,11 +43,32 @@ def register_user(request):
         'form': form,
     })
 
-# View para exibir página de perfil do usuário
+
 def user_page(request):
     try:
+
         profile = Profile.objects.get(user=request.user)
-        return render(request, 'authenticate/user_page.html', {'profile': profile})
+        member = Users.objects.get(user_ptr_id=request.user)
+        if request.method == 'POST':
+            member.first_name = request.POST.get('first_name', None)
+            member.last_name = request.POST.get('last_name', None)
+            member.city = request.POST.get('city', None)
+            member.fone = request.POST.get('fone', None)
+            member.instagram = request.POST.get('instagram', None)
+            member.job_title = request.POST.get('job_title', None)
+            member.bsc_wallet = request.POST.get('bsc_wallet', None)
+            member.lightning_wallet = request.POST.get('lightning_wallet', None)
+            member.save()
+        return render(
+            request, 
+            'members/user_page.html', 
+            {
+                'profile': profile, 
+                'member': member
+            }
+        )
     except Profile.DoesNotExist:
         profile = Profile.objects.create(user=request.user)
-        return render(request, 'authenticate/user_page.html', {'profile': profile})
+        return render(request, 'members/user_page.html', {'profile': profile})
+    except TypeError as e:
+        return redirect('login')

@@ -33,22 +33,23 @@ class Profile(models.Model):
     observacao = models.TextField(blank=True)
     pendencias = models.TextField(blank=True)
     squad = models.CharField(max_length=20, choices=SQUAD_CHOICES, default='squad_021')  # Novo campo Squad
+    pic_profile = models.ImageField(default='default.jpg', upload_to='profile_pics')
 
     def __str__(self):
         return self.user.username
 
 
-class User(User):
+class Users(User):
     city = models.CharField(max_length=100)
     fone = models.CharField(max_length=30)
     instagram = models.CharField(max_length=100, blank=True)
     birth = models.DateField()
     job_title = models.CharField(max_length=255)
-    bsc_wallet = models.CharField(max_length=100, blank=True)    
+    bsc_wallet = models.CharField(max_length=100, blank=True)
+    lightning_wallet = models.CharField(max_length=100, blank=True)
     como_conheceu = models.CharField(max_length=20)
     quem_indicou = models.CharField(max_length=100, blank=True)
     aonde = models.CharField(max_length=100)
 
     def __str__(self) -> str:
         return super().__str__()
-

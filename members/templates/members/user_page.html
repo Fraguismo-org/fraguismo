@@ -1,0 +1,125 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% csrf_token %}
+{% load static %}
+{% if user.is_authenticated %}
+<style>
+    .profile-pic {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        background-size: contain;
+        background-repeat: none;
+        background-position: center;
+        background-image: url("{{ profile.pic_profile.url }}")
+    }
+    .frame {
+        width: 100%;        
+    }
+</style>
+    <div class="container-lg text-center">
+        <div class="profile-pic">
+            <img src="{% static 'images/niveis_stickers/{{ profile.nivel }}.png' %}" alt="" class="frame">
+        </div>
+        <h2>Seja bem vindo, {{profile.user}}!</h2>
+        <div class="row">
+            <div class="col">
+                <i class="bi bi-trophy" style="font-size: 24px; padding-left: 10px;"></i>
+                <p>{{ profile.pontuacao }} pts </p>
+            </div>
+            <div class="col">
+                <i class="bi bi-people" style="font-size: 24px; padding-left: 10px"></i>
+                <p>{{ profile.squad.capitalize }}</p>
+            </div>
+            <div class="col">
+                <i class="bi bi-bar-chart" style="font-size: 24px; padding-left: 10px"></i>
+                <p>{{ profile.nivel.capitalize }}</p>
+            </div>
+            <div class="col dropdown align-self-center">
+                <button class="navbar-toggler" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Comunidade
+                </button>
+                <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#">Livros</a></li>
+                <li><a class="dropdown-item" href="#">Dashboard</a></li>
+                <li><a class="dropdown-item" href="#">Cadastrar um usuário</a></li>
+                </ul>
+            </div>
+        </div>        
+    </div>
+    <form method="POST">
+        <div class="row">
+            <div class="col">
+                <label for="username" class="form-label">Username</label>
+                <input type="text" class="form-control" id="username" name="username" value="{{ user.username }}" disabled>
+            </div>                
+        </div>
+        <div class="row">
+            <div class="col">
+                <label for="first_name" class="form-label">Nome</label>
+                <input type="text" class="form-control" id="first_name" name="first_name" value="{{ user.first_name }}">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <label for="last_name" class="form-label">Sobrenome</label>
+                <input type="text" name="last_name" id="last_name" class="form-control" value="{{ user.last_name }}">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <label for="email" class="form-label">E-mail</label>
+                <input type="email" id="email" name="email" class="form-control" value="{{ user.email }}">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <label for="city" class="form-label">Localidade</label>
+                <input type="text" id="city" name="city" class="form-control" value="{{ member.city }}">                
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <label for="phone" class="form-label">Telefone</label>
+                <input type="text" id="phone" name="phone" class="form-control" value="{{ member.fone }}">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <label for="instagram" class="form-label">Instagram</label>
+                <input type="text" id="instagram" name="instagram" class="form-control" value="{{ member.instagram }}">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <label for="birth" class="form-label">Data de Nascimento</label>
+                <input type="text" class="form-control" id="birth" name="birth" value="{{ member.birth }}" disabled>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <label for="job_title" class="form-label">Profissão</label>
+                <input type="text" class="form-control" id="job_title" name="job_title" value="{{ member.job_title }}">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <label for="bsc_wallet" class="form-label">BSC Wallet</label>
+                <input type="text" class="form-control" id="bsc_wallet" name="bsc_wallet" value="{{ member.bsc_wallet }}">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <label for="lightning_wallet" class="form-label">Lightning Wallet</label>
+                <input type="text" class="form-control" name="lightning_wallet" id="lightning_wallet" value="{{ member.lightning_wallet }}">
+            </div>
+        </div>
+    </form>
+{% else %}
+    <h2>
+        Área restrita    
+    </h2>
+    <small class="text-body-secondary"> Efetue o <a href="{% url 'login' %}">login</a> para acessar esta página!</small>
+{% endif %}
+{% endblock content %}
