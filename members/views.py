@@ -3,6 +3,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from members.forms import RegisterUserForm
 from members.models import Profile, Users
+from django.contrib.auth.decorators import login_required
 
 
 def login_user(request):
@@ -43,7 +44,7 @@ def register_user(request):
         'form': form,
     })
 
-
+@login_required
 def user_page(request):
     try:
 
@@ -58,7 +59,11 @@ def user_page(request):
             member.job_title = request.POST.get('job_title', None)
             member.bsc_wallet = request.POST.get('bsc_wallet', None)
             member.lightning_wallet = request.POST.get('lightning_wallet', None)
+            if 'pic_profile' in request.FILES:
+                profile.pic_profile = request.FILES['pic_profile']
             member.save()
+            profile.save()
+            return redirect('user')
         return render(
             request, 
             'members/user_page.html', 
