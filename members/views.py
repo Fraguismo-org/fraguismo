@@ -1,9 +1,12 @@
+import os
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from members.forms import RegisterUserForm
 from members.models import Profile, Users
 from django.contrib.auth.decorators import login_required
+from PIL import Image, ImageOps
+
 
 
 def login_user(request):
@@ -60,9 +63,23 @@ def user_page(request):
             member.bsc_wallet = request.POST.get('bsc_wallet', None)
             member.lightning_wallet = request.POST.get('lightning_wallet', None)
             if 'pic_profile' in request.FILES:
-                profile.pic_profile = request.FILES['pic_profile']
+                old_img = profile.pic_profile.path
+                if os.path.isfile(old_img):
+                    os.remove(old_img)                
+            
+            profile.pic_profile = request.FILES['pic_profile']    
+            
             member.save()
             profile.save()
+
+            
+            img = Image.open(profile.pic_profile.path)
+            img = ImageOps.exif_transpose(img)
+            if img.height > 300 or img.width > 300:
+                output_size = (300, 300)
+                img.thumbnail(output_size)
+                img.save(profile.pic_profile.path)
+        
             return redirect('user')
         return render(
             request, 
@@ -75,5 +92,7 @@ def user_page(request):
     except Profile.DoesNotExist:
         profile = Profile.objects.create(user=request.user)
         return render(request, 'members/user_page.html', {'profile': profile})
-    except TypeError as e:
+    except TypeError:
         return redirect('login')
+    except FileNotFoundError:
+        return redirect('user')
