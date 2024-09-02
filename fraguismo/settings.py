@@ -99,10 +99,13 @@ USE_I18N = True
 USE_TZ = True
 
 
-STATIC_URL = 'static/'
+STATIC_URL = 'site_fraguismo/static/'
 STATIC_ROOT = "/var/www/fraguismo/static/"
-MEDIA_URL = '/media/'
-MEDIA_ROOT = "/var/www/fraguismo/media/"
+MEDIA_URL = 'fraguismo/media/'
+if config('ENV') == 'dev':
+    MEDIA_ROOT = os.path.join(BASE_DIR, 'fraguismo/media/')
+else:
+    MEDIA_ROOT = "/var/www/fraguismo/media/"
 
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
