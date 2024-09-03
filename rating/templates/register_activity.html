@@ -3,6 +3,9 @@
 {% block content %}
 
 <div class="shadow p-4 mb-5 bg-body rounded">
+    <div class="row text-center" style="padding-bottom: 40px;">
+        <h2 class="h2">Registrar Atividade</h2>
+    </div>
     <form class="col-md-8 mx-auto" method="POST">
         {% csrf_token %}
         <div class="row">
@@ -15,7 +18,7 @@
                 <input type="number" class="form-control" id="pontuacao" name="pontuacao">
             </div>
         </div>
-        <div class="row">
+        <div class="row text-end" style="padding-top: 20px;">
             <div class="col">
                 <input type="submit" class="btn btn-warning" style="border-radius: 20px;" value="Registrar">                
             </div>
