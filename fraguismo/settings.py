@@ -23,6 +23,7 @@ INSTALLED_APPS = [
     'django_bootstrap5',
     'site_fraguismo',
     'members',
+    'rating',
 ]
 
 
