@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="shadow p-4 mb-5 bg-body rounded">
+    <form class="col-md-8 mx-auto" method="POST">
+        {% csrf_token %}
+        <div class="row">
+            <div class="col">
+                <label for="atividade" class="form-label">Nome atividade</label>
+                <input type="text" id="atividade" name="atividade" class="form-control">
+            </div>
+            <div class="col">
+                <label class="form-label" for="pontuacao">Pontuação</label>
+                <input type="number" class="form-control" id="pontuacao" name="pontuacao">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <input type="submit" class="btn btn-warning" style="border-radius: 20px;" value="Registrar">                
+            </div>
+        </div>
+    </form>
+</div>
+
+{% endblock content %}

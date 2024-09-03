@@ -8,6 +8,7 @@ urlpatterns = [
     path('', include('site_fraguismo.urls')),
     path('members/', include('django.contrib.auth.urls')),
     path('members/', include('members.urls')),
+    path('rating/', include('rating.urls')),
 ]
 
 if settings.DEBUG:

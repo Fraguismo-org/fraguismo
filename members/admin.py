@@ -1,5 +1,6 @@
 from django.contrib import admin
 from .models import Profile
+from rating.models import LogRating
 
 class ProfileAdmin(admin.ModelAdmin):
     list_display = ('user', 'nivel', 'pontuacao', 'observacao', 'pendencias', 'squad', 'pontuacao_proximo_nivel')  # Adicione 'squad' aqui
@@ -24,6 +25,9 @@ class ProfileAdmin(admin.ModelAdmin):
         
         return max(pontos_proximo_nivel - pontos_atual, 0)
     
-    pontuacao_proximo_nivel.short_description = 'Pontuação para o próximo nível'
+    def save_model(self, request, obj, form, change):
+        super().save_model(request, obj, form, change)
+    
+    pontuacao_proximo_nivel.short_description = 'PRÓXIMO NÍVEL'
 
 admin.site.register(Profile, ProfileAdmin)

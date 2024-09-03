@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="shadow p-4 mb-5 bg-body rounded">
+    <div class="row text-center">
+        <h2 class="h2">Adicionar Pontuação</h2>
+    </div>
+    <form class="col-md-8 mx-auto" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="row">            
+            <div class="col">
+                <label for="select-user" class="form-label">Usuários</label>
+                <select class="form-select" id="select-user" name="select-user" aria-label="Usuários">                    
+                    {% for user in users %}
+                    <option id="username" value="{{ user.id }}">{{ user.username }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col">                
+                <label for="select-atividade" class="form-label">Atividade</label>
+                <select class="form-select" id="select-atividade" name="select-atividade" aria-label="Atividade" onchange="ativarPontuacao(this.value)">                
+                    {% for atividade in atividades %}
+                        <option id="atividade"  value="{{ atividade.id }}">{{ atividade.nome_atividade }}</option>
+                    {% endfor %}
+                </select>                
+            </div>
+            <div class="col">
+                <label for="pontuacao" class="form-label">Pontuação</label>
+                <input type="number" class="form-control" id="pontuacao" name="pontuacao" value="" disabled>                             
+            </div>            
+            <div class="row text-end" style="padding-top: 10px;">
+                <div class="col">
+                    <input type="submit" class="btn btn-warning" style="border-radius: 20px;" value="Salvar">
+                </div>
+            </div>
+        </div>           
+    </form>
+</div>
+    
+<script>
+    function ativarPontuacao(value) {
+        let val = -1;
+        {% for atividade in atividades %}
+            if ({{ atividade.id }} == value){
+                val = {{ atividade.pontuacao }};
+            }
+        {% endfor %}
+        if (val == "0") {
+            pontuacao.value = 0;
+            pontuacao.disabled = false
+        }
+        else {
+            pontuacao.value = val == -1 ? "": val;
+            pontuacao.disabled = true;
+        }
+    }
+
+    window.onload = function () {
+        let id = document.getElementById("select-atividade").value;
+        ativarPontuacao(id);
+    }
+
+    let pontuacao = document.getElementById("pontuacao");
+</script>
+{% endblock content %}
