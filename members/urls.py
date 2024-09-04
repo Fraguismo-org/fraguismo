@@ -12,7 +12,7 @@ urlpatterns = [
     path('login_user/', views.login_user, name='login'),
     path('logout_user/', views.logout_user, name='logout'),
     path('register_user/', views.register_user, name='register'),
-    path('user_page/', views.user_page, name='user'),
+    path('user_page/', views.user_page, name='user_page'),
     
     # URLs para redefinição de senha
     path('password-reset/', PasswordResetView.as_view(template_name='authenticate/password-reset.html'), name='password-reset'),

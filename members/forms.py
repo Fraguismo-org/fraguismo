@@ -46,8 +46,7 @@ class RegisterUserForm(UserCreationForm):
             self.fields['aonde'].label = 'Onde conheceu?'
         else:
             self.fields['aonde'].label = ''
-     
-        
+             
         for field_name, field in self.fields.items():
             field.widget.attrs['class'] = 'form-control'
             field.label_suffix = ''

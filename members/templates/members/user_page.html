@@ -4,25 +4,57 @@
 {% load static %}
 {% if user.is_authenticated %}
 <style>
+    .image-upload>input{
+        display: none;
+    }
+
     .profile-pic {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        background-size: cover;
+        background-repeat: none;
+        background-position: center;
+        background-image: url("{{ profile.pic_profile.url }}");
+        position: relative;
+        z-index: 1;
+    }
+
+    .profile-pic:hover {
+        opacity: 0.4;
+    }
+
+    {% with sticker="images/niveis_stickers/"|add:profile.nivel|add:".png" %}
+    .frame {
         width: 150px;
         height: 150px;
         border-radius: 50%;
         background-size: contain;
         background-repeat: none;
-        background-position: center;
-        background-image: url("{{ profile.pic_profile.url }}")
+        border-color: black;
+        position: relative;
+        background-image: url("{% static sticker %}");
+        top: -15px;
+        left: -15px;
     }
-    .frame {
-        width: 100%;        
-    }
+    {% endwith %}
+    
 </style>
-    {% with sticker="images/niveis_stickers/"|add:profile.nivel|add:".png" %}
+    
     <div class="shadow p-4 mb-5 bg-body rounded">
+        <form method="POST" class="col-md-8 mx-auto" enctype="multipart/form-data">            
         <div class="container-lg text-center">
-            <div class="profile-pic mx-auto">
-                <img src="{% static sticker %}" alt="" class="frame">
+            {% csrf_token %}
+            <div class="image-upload">
+                <label for="pic_profile">
+                    <div class="profile-pic  mx-auto" id="profile-pic">
+                        <div class="frame">
+                        </div>                
+                    </div>
+                </label>
+                <input class="form-control" id="pic_profile" name="pic_profile" type="file" accept=".png, .jpeg, jpg">
             </div>
+            
             <h2>Seja bem vindo, {{profile.user}}!</h2>
             <div class="row">
                 <div class="col">                
@@ -48,9 +80,7 @@
                     </ul>
                 </div>
             </div>        
-        </div>
-        <form method="POST" class="col-md-8 mx-auto" enctype="multipart/form-data">
-            {% csrf_token %}
+        </div>                    
             <div class="row">
                 <div class="col">
                     <label for="username" class="form-label">Username</label>
@@ -96,7 +126,7 @@
             <div class="row">
                 <div class="col">
                     <label for="birth" class="form-label">Data de Nascimento</label>
-                    <input type="text" class="form-control" id="birth" name="birth" value="{{ member.birth }}" disabled>
+                    <input type="date" class="form-control" id="birth" name="birth" value="{{ member.birth|date:'Y-m-d' }}">
                 </div>
             </div>
             <div class="row">
@@ -117,25 +147,30 @@
                     <input type="text" class="form-control" name="lightning_wallet" id="lightning_wallet" value="{{ member.lightning_wallet }}">
                 </div>
             </div>
-            <div class="row" style="padding-top: 20px;">
-                <div class="input-group mb-3">
-                    <label for="pic_profile" class="input-group-text">Foto de usuário</label>
-                    <input type="file" id="pic_profile" name="pic_profile" class="form-control">
-                </div>
-            </div>
             <div class="row text-end" style="padding-top: 20px;">
                 <div class="col">
                     <input type="submit" class="btn btn-warning" style="border-radius: 20px;" value="Salvar">                
                 </div>
             </div>
         </form>
-    </div>
-    {% endwith %}
+    </div>    
 {% else %}
     <h2>
         Área restrita    
     </h2>
     <small class="text-body-secondary"> Efetue o <a href="{% url 'login' %}">login</a> para acessar esta página!</small>
 {% endif %}
+
+<script>
+    document.getElementById('pic_profile').addEventListener('change', function(event) {
+        console.log('teste');
+        var file = event.target.files[0];
+        if(file) {
+            var imageUrl = URL.createObjectURL(file);
+            var div = document.getElementById('profile-pic');
+            div.style.backgroundImage = `url(${imageUrl})`;
+        }
+    });
+</script>
 
 {% endblock content %}
