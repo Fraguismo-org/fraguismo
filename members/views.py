@@ -16,7 +16,7 @@ def login_user(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            return redirect('user')
+            return redirect('user_page')
         else:
             messages.success(request, ("E-mail ou senha não encontrado!"))
             return redirect('login')
@@ -50,7 +50,6 @@ def register_user(request):
 @login_required
 def user_page(request):
     try:
-
         profile = Profile.objects.get(user=request.user)
         member = Users.objects.get(user_ptr_id=request.user)
         if request.method == 'POST':
@@ -71,16 +70,16 @@ def user_page(request):
             
             member.save()
             profile.save()
-
             
             img = Image.open(profile.pic_profile.path)
             img = ImageOps.exif_transpose(img)
+            rate = img.height/300 if img.height > img.width else img.width/300     
             if img.height > 300 or img.width > 300:
-                output_size = (300, 300)
+                output_size = (img.width/rate, img.height/rate)
                 img.thumbnail(output_size)
                 img.save(profile.pic_profile.path)
         
-            return redirect('user')
+            return redirect('user_page')
         return render(
             request, 
             'members/user_page.html', 
@@ -95,4 +94,4 @@ def user_page(request):
     except TypeError:
         return redirect('login')
     except FileNotFoundError:
-        return redirect('user')
+        return redirect('user_page')

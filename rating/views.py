@@ -1,15 +1,27 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import user_passes_test
 from .models import LogRating, Atividade
-from members.models import User, Profile
+from members.models import User, Users, Profile
 
 
 @user_passes_test(lambda u: u.is_superuser)
 def log_rating(request):
     query = request.GET.get("busca")
     if query:
-        users = User.objects.filter(username__istartswith=query).values_list('username', flat=True)
-        logs = LogRating.objects.filter(user_id__username__in=users)
+        opcao = request.GET.get("filter_field")
+        match opcao:
+            case 'first_name':
+                users = User.objects.filter(first_name__istartswith=query).values_list('first_name', flat=True)
+                logs = LogRating.objects.filter(user_id__first_name__in=users)
+            case 'username':
+                users = User.objects.filter(username__istartswith=query).values_list('username', flat=True)
+                logs = LogRating.objects.filter(user_id__username__in=users)
+            case 'email':
+                users = User.objects.filter(email__istartswith=query).values_list('email', flat=True)
+                logs = LogRating.objects.filter(user_id__email__in=users)
+            case 'fone':
+                users = Users.objects.filter(username__istartswith=query).values_list('fone', flat=True)                
+                logs = LogRating.objects.filter(user_id__in=users)    
     else:
         logs = LogRating.objects.all()
     return render(request, 'log_rating.html', {'logs': logs})
@@ -55,6 +67,6 @@ def register_activity(request):
         activity.pontuacao = int(request.POST.get('pontuacao', None))
         activity.updated_by = request.user
         activity.save()
-        redirect('register')
+        redirect('register_activity')
     
     return render(request, 'register_activity.html')
