@@ -48,7 +48,7 @@ def add_rating_point(request):
 
         profile.pontuacao += rating.pontuacao_ganha
         profile.save()        
-
+        
         return redirect('logs')
     users = User.objects.all()
     atividades = Atividade.objects.all()
@@ -70,5 +70,5 @@ def register_activity(request):
         activity.updated_by = request.user
         activity.save()
         redirect('register_activity')
-   
+
     return render(request, 'register_activity.html')

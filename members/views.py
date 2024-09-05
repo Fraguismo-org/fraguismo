@@ -95,4 +95,3 @@ def user_page(request):
                 'member': member
             }
         )
-
