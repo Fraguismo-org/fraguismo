@@ -1,5 +1,8 @@
 from django.db import models
+from rating.models.nivel import Nivel
+from members.models.squad import Squad
 from django.contrib.auth.models import User
+
 
 class Profile(models.Model):
     NIVEL_CHOICES = [
@@ -29,27 +32,15 @@ class Profile(models.Model):
 
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     nivel = models.CharField(max_length=10, choices=NIVEL_CHOICES, default='membro')
+    nivel_id = models.ForeignKey(Nivel, null=True, on_delete=models.DO_NOTHING)
+    squad_id = models.ForeignKey(Squad, null=True, on_delete=models.DO_NOTHING)
     pontuacao = models.IntegerField(default=0)
     observacao = models.TextField(blank=True)
-    pendencias = models.TextField(blank=True)
-    squad = models.CharField(max_length=20, choices=SQUAD_CHOICES, default='squad_021')  # Novo campo Squad
+    squad = models.CharField(max_length=20, choices=SQUAD_CHOICES, default='squad_021')
     pic_profile = models.ImageField(default='default.jpg', upload_to='profile_pics')
+
+    def proximo_nivel(self):
+        pass
 
     def __str__(self):
         return self.user.username
-
-
-class Users(User):
-    city = models.CharField(max_length=100)
-    fone = models.CharField(max_length=30)
-    instagram = models.CharField(max_length=100, blank=True)
-    birth = models.DateField()
-    job_title = models.CharField(max_length=255)
-    bsc_wallet = models.CharField(max_length=100, blank=True)
-    lightning_wallet = models.CharField(max_length=100, blank=True)
-    como_conheceu = models.CharField(max_length=20)
-    quem_indicou = models.CharField(max_length=100, blank=True)
-    aonde = models.CharField(max_length=100)
-
-    def __str__(self) -> str:
-        return super().__str__()

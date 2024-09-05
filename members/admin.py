@@ -1,10 +1,9 @@
 from django.contrib import admin
-from .models import Profile
-from rating.models import LogRating
+from members.models.profile import Profile
 
 class ProfileAdmin(admin.ModelAdmin):
-    list_display = ('user', 'nivel', 'pontuacao', 'observacao', 'pendencias', 'squad', 'pontuacao_proximo_nivel')  # Adicione 'squad' aqui
-    search_fields = ('user__username', 'nivel', 'squad')  # Adicione 'squad' nas opções de pesquisa
+    list_display = ('user', 'nivel', 'pontuacao', 'observacao', 'squad', 'pontuacao_proximo_nivel')
+    search_fields = ('user__username', 'nivel', 'squad')
     
     def pontuacao_proximo_nivel(self, obj):
         profile = Profile.objects.get(user=obj.user_id)

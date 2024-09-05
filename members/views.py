@@ -3,10 +3,10 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from members.forms import RegisterUserForm
-from members.models import Profile, Users
+from members.models.profile import Profile
+from members.models.users import Users
 from django.contrib.auth.decorators import login_required
 from PIL import Image, ImageOps
-
 
 
 def login_user(request):
@@ -49,28 +49,34 @@ def register_user(request):
 
 @login_required
 def user_page(request):
+    profile = Profile.objects.get(user=request.user)
     try:
-        profile = Profile.objects.get(user=request.user)
         member = Users.objects.get(user_ptr_id=request.user)
-        if request.method == 'POST':
-            member.first_name = request.POST.get('first_name', None)
-            member.last_name = request.POST.get('last_name', None)
-            member.city = request.POST.get('city', None)
-            member.fone = request.POST.get('fone', None)
-            member.instagram = request.POST.get('instagram', None)
-            member.job_title = request.POST.get('job_title', None)
-            member.bsc_wallet = request.POST.get('bsc_wallet', None)
-            member.lightning_wallet = request.POST.get('lightning_wallet', None)
-            if 'pic_profile' in request.FILES:
-                old_img = profile.pic_profile.path
-                if os.path.isfile(old_img):
-                    os.remove(old_img)                
-            
+    except:
+        member = Users()
+    if request.method == 'POST':       
+        member.clone(request.user)
+        member.first_name = request.POST.get('first_name', None)
+        member.last_name = request.POST.get('last_name', None)
+        member.email = request.POST.get('email', None)
+        member.birth = request.POST.get('birth', None)
+        member.city = request.POST.get('city', None)
+        member.fone = request.POST.get('fone', None)
+        member.instagram = request.POST.get('instagram', None)
+        member.job_title = request.POST.get('job_title', None)
+        member.bsc_wallet = request.POST.get('bsc_wallet', None)
+        member.lightning_wallet = request.POST.get('lightning_wallet', None)
+        
+        if 'pic_profile' in request.FILES:
+            old_img = profile.pic_profile.path
+            if os.path.isfile(old_img):
+                os.remove(old_img)                
             profile.pic_profile = request.FILES['pic_profile']    
-            
-            member.save()
-            profile.save()
-            
+        
+        member.save()
+        profile.save()
+        
+        if profile.pic_profile.path.find('default.jpg') == -1:
             img = Image.open(profile.pic_profile.path)
             img = ImageOps.exif_transpose(img)
             rate = img.height/300 if img.height > img.width else img.width/300     
@@ -78,8 +84,9 @@ def user_page(request):
                 output_size = (img.width/rate, img.height/rate)
                 img.thumbnail(output_size)
                 img.save(profile.pic_profile.path)
-        
-            return redirect('user_page')
+    
+        return redirect('user_page')
+    else:
         return render(
             request, 
             'members/user_page.html', 
@@ -88,10 +95,4 @@ def user_page(request):
                 'member': member
             }
         )
-    except Profile.DoesNotExist:
-        profile = Profile.objects.create(user=request.user)
-        return render(request, 'members/user_page.html', {'profile': profile})
-    except TypeError:
-        return redirect('login')
-    except FileNotFoundError:
-        return redirect('user_page')
+
