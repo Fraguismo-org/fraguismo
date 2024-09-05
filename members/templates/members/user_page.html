@@ -163,14 +163,15 @@
 
 <script>
     document.getElementById('pic_profile').addEventListener('change', function(event) {
-        console.log('teste');
         var file = event.target.files[0];
         if(file) {
             var imageUrl = URL.createObjectURL(file);
             var div = document.getElementById('profile-pic');
+
             div.style.backgroundImage = `url(${imageUrl})`;
         }
     });
+
 </script>
 
 {% endblock content %}

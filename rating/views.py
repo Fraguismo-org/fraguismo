@@ -1,7 +1,9 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import user_passes_test
-from .models import LogRating, Atividade
-from members.models import User, Users, Profile
+from .models.log_rating import LogRating
+from .models.atividade import Atividade
+from members.models.profile import Profile
+from members.models.users import Users, User
 
 
 @user_passes_test(lambda u: u.is_superuser)
@@ -46,7 +48,7 @@ def add_rating_point(request):
 
         profile.pontuacao += rating.pontuacao_ganha
         profile.save()        
-
+        
         return redirect('logs')
     users = User.objects.all()
     atividades = Atividade.objects.all()
@@ -68,5 +70,5 @@ def register_activity(request):
         activity.updated_by = request.user
         activity.save()
         redirect('register_activity')
-    
+
     return render(request, 'register_activity.html')

@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from .models import User
+from members.models.users import User
 
 class RegisterUserForm(UserCreationForm):
     COMO_CONHECEU_CHOICES = [

@@ -1,0 +1,6 @@
+REPLACE INTO `members_nivel` (`id`, `nivel`, `pontuacao_base`) VALUES
+    (1, 'membro', 0),
+    (2, 'assessor', 5),
+    (3, 'lider', 15),
+    (4, 'executivo', 30),
+    (5, 'diretor', 40);

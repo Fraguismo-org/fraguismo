@@ -11,8 +11,6 @@ DEBUG = config('DJANGO_DEBUG', default=True, cast=bool)
 
 ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())
 
- 
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -25,7 +23,6 @@ INSTALLED_APPS = [
     'members',
     'rating',
 ]
-
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -57,8 +54,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'fraguismo.wsgi.application'
 
-
-
 DATABASES = {
     'default': {
         'ENGINE': config('DB_ENGINE'),
@@ -72,8 +67,6 @@ DATABASES = {
         }
     }
 }
-
-
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -90,7 +83,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 LANGUAGE_CODE = 'pt-br'
 
 TIME_ZONE = 'UTC'
@@ -98,7 +90,6 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
-
 
 STATIC_URL = 'site_fraguismo/static/'
 STATIC_ROOT = "/var/www/fraguismo/static/"
@@ -108,6 +99,7 @@ if config('ENV') == 'dev':
 else:
     MEDIA_ROOT = "/var/www/fraguismo/media/"
 
+LOGIN_REDIRECT_URL ='/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
