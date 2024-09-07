@@ -23,5 +23,14 @@ class Users(User):
         self.is_active = user.is_active
         self.is_staff = user.is_staff
 
+    def get_or_create_member(user_request):
+        try:
+            member = Users.objects.get(user_ptr=user_request)
+            return member
+        except:
+            member = Users(user_ptr=user_request)
+            member.clone(user_request)
+            return member
+
     def __str__(self) -> str:
         return super().__str__()

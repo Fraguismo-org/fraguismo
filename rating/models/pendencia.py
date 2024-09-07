@@ -1,6 +1,5 @@
 from django.db import models
-
-from members.models.nivel import Nivel
+from rating.models.nivel import Nivel
 
 
 class Pendencia(models.Model):
