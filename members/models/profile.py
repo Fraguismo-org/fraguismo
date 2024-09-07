@@ -44,3 +44,11 @@ class Profile(models.Model):
 
     def __str__(self):
         return self.user.username
+    
+    def get_or_create_profile(user_request):
+        try:
+            profile = Profile.objects.get(user=user_request)
+            return profile
+        except:
+            profile = Profile.objects.create(user=user_request)
+            return profile

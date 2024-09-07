@@ -49,13 +49,9 @@ def register_user(request):
 
 @login_required
 def user_page(request):
-    profile = Profile.objects.get(user=request.user)
-    try:
-        member = Users.objects.get(user_ptr_id=request.user)
-    except:
-        member = Users()
-    if request.method == 'POST':       
-        member.clone(request.user)
+    profile = Profile.get_or_create_profile(user_request=request.user)
+    member = Users.get_or_create_member(user_request=request.user)
+    if request.method == 'POST':        
         member.first_name = request.POST.get('first_name', None)
         member.last_name = request.POST.get('last_name', None)
         member.email = request.POST.get('email', None)
@@ -70,8 +66,8 @@ def user_page(request):
         if 'pic_profile' in request.FILES:
             old_img = profile.pic_profile.path
             if os.path.isfile(old_img):
-                os.remove(old_img)                
-            profile.pic_profile = request.FILES['pic_profile']    
+                os.remove(old_img)
+            profile.pic_profile = request.FILES['pic_profile']
         
         member.save()
         profile.save()
@@ -79,7 +75,7 @@ def user_page(request):
         if profile.pic_profile.path.find('default.jpg') == -1:
             img = Image.open(profile.pic_profile.path)
             img = ImageOps.exif_transpose(img)
-            rate = img.height/300 if img.height > img.width else img.width/300     
+            rate = img.height/300 if img.height > img.width else img.width/300
             if img.height > 300 or img.width > 300:
                 output_size = (img.width/rate, img.height/rate)
                 img.thumbnail(output_size)
@@ -88,10 +84,10 @@ def user_page(request):
         return redirect('user_page')
     else:
         return render(
-            request, 
-            'members/user_page.html', 
+            request,
+            'members/user_page.html',
             {
-                'profile': profile, 
+                'profile': profile,
                 'member': member
             }
         )
