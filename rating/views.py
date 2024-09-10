@@ -1,9 +1,10 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth.decorators import user_passes_test
+from django.contrib.auth.decorators import user_passes_test, login_required
 from .models.log_rating import LogRating
 from .models.atividade import Atividade
 from members.models.profile import Profile
 from members.models.users import Users, User
+from rating.models.nivel import Nivel
 
 
 @user_passes_test(lambda u: u.is_superuser)
@@ -14,19 +15,48 @@ def log_rating(request):
         match opcao:
             case 'first_name':
                 users = User.objects.filter(first_name__istartswith=query).values_list('first_name', flat=True)
-                logs = LogRating.objects.filter(user_id__first_name__in=users)
+                logs = LogRating.objects.filter(user_id__first_name__in=users).order_by("-updated_at")
             case 'username':
                 users = User.objects.filter(username__istartswith=query).values_list('username', flat=True)
-                logs = LogRating.objects.filter(user_id__username__in=users)
+                logs = LogRating.objects.filter(user_id__username__in=users).order_by("-updated_at")
             case 'email':
                 users = User.objects.filter(email__istartswith=query).values_list('email', flat=True)
-                logs = LogRating.objects.filter(user_id__email__in=users)
+                logs = LogRating.objects.filter(user_id__email__in=users).order_by("-updated_at")
             case 'fone':
                 users = Users.objects.filter(username__istartswith=query).values_list('fone', flat=True)                
-                logs = LogRating.objects.filter(user_id__in=users)    
+                logs = LogRating.objects.filter(user_id__in=users).order_by("-updated_at")
     else:
-        logs = LogRating.objects.all()
+        logs = LogRating.objects.all().order_by("-updated_at")
     return render(request, 'log_rating.html', {'logs': logs})
+
+@login_required
+def user_log_rating(request):
+    data_inicial = request.GET.get("data_inicial")
+    data_final = request.GET.get("data_final")
+    profile = Profile.get_or_create_profile(request.user)
+    nivel = Nivel.objects.get(nivel=profile.nivel.lower())
+    if profile.nivel.lower() == "diretor":
+        pts_prx_nivel = 0
+    else:
+        pts_prx_nivel = nivel.proximo_nivel().pontuacao_base - profile.pontuacao
+    proximo_nivel = (nivel.proximo_nivel().nivel,  pts_prx_nivel if pts_prx_nivel >= 0 else 0)
+
+    logs = LogRating.objects.filter(user_id=request.user).order_by("-updated_at")
+
+    if data_inicial:
+        logs = logs.filter(updated_at__gte=data_inicial)
+    if data_final:
+        logs = logs.filter(updated_at__lte=data_final)
+
+    return render(
+        request,
+        'user_log_rating.html', 
+        {
+            'logs': logs,
+            'profile': profile,
+            'proximo_nivel': proximo_nivel, 
+        }
+    )
 
 @user_passes_test(lambda u: u.is_superuser)
 def add_rating_point(request):

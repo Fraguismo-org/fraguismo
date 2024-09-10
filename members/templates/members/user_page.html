@@ -57,8 +57,8 @@
             
             <h2>Seja bem vindo, {{profile.user}}!</h2>
             <div class="row">
-                <div class="col">                
-                    <i class="bi bi-trophy" style="font-size: 24px; padding-left: 10px;"></i>
+                <div class="col">
+                    <a href="{% url 'user_log_rating' %}"><i class="bi bi-trophy" style="font-size: 24px; padding-left: 10px;"></i></a>
                     <p>{{ profile.pontuacao }} pts </p>
                 </div>
                 <div class="col">
