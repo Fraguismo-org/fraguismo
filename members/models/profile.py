@@ -39,9 +39,6 @@ class Profile(models.Model):
     squad = models.CharField(max_length=20, choices=SQUAD_CHOICES, default='squad_021')
     pic_profile = models.ImageField(default='default.jpg', upload_to='profile_pics')
 
-    def proximo_nivel(self):
-        pass
-
     def __str__(self):
         return self.user.username
     
@@ -52,3 +49,6 @@ class Profile(models.Model):
         except:
             profile = Profile.objects.create(user=user_request)
             return profile
+        
+    def add_point(self, pontuacao):
+        self.pontuacao += pontuacao
