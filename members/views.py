@@ -8,7 +8,6 @@ from members.models.users import Users
 from django.contrib.auth.decorators import login_required
 from PIL import Image, ImageOps
 
-
 def login_user(request):
     if request.method == "POST":
         username = request.POST.get('username', None)
@@ -28,8 +27,10 @@ def logout_user(request):
     return redirect('login')
 
 def register_user(request):
+    referrer = request.GET.get('ref', None)  # Captura o parâmetro 'ref' da URL
+
     if request.method == "POST":
-        form = RegisterUserForm(request.POST)
+        form = RegisterUserForm(request.POST, referrer=referrer)
         if form.is_valid():
             form.save()
             username = form.cleaned_data['username']
@@ -41,11 +42,13 @@ def register_user(request):
         else:
             messages.success(request, ("Erro ao cadastrar usuário!"))
     else:
-        form = RegisterUserForm()
+        form = RegisterUserForm(referrer=referrer)  # Passa o referrer para o formulário
 
     return render(request, 'authenticate/register_user.html', {
         'form': form,
     })
+
+
 
 @login_required
 def user_page(request):
