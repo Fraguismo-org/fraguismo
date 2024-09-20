@@ -32,12 +32,29 @@ def register_user(request):
     if request.method == "POST":
         form = RegisterUserForm(request.POST, referrer=referrer)
         if form.is_valid():
-            form.save()
+            user = form.save()  # Salva o novo usuário
+
+            # Captura username e senha para login automático
             username = form.cleaned_data['username']
             password = form.cleaned_data['password1']
             user = authenticate(username=username, password=password)
+            
+            # Login automático após o registro
             login(request, user)
             messages.success(request, ("Conta criada com sucesso!"))
+
+            # Adicionar 2 pontos ao usuário que gerou o link
+            if referrer:
+                try:
+                    # Procura o perfil do usuário que gerou o link
+                    referrer_profile = Profile.objects.get(user__username=referrer)
+                    # Incrementa a pontuação em 2 pontos
+                    referrer_profile.pontuacao += 2
+                    referrer_profile.save()
+                    messages.success(request, f"{referrer} ganhou 2 pontos por te indicar!")
+                except Profile.DoesNotExist:
+                    messages.warning(request, f"Usuário que gerou o link ({referrer}) não encontrado.")
+            
             return redirect('https://fraguismo.org')
         else:
             messages.success(request, ("Erro ao cadastrar usuário!"))
@@ -47,6 +64,7 @@ def register_user(request):
     return render(request, 'authenticate/register_user.html', {
         'form': form,
     })
+
 
 
 
