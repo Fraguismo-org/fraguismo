@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from members.models.users import User
+from members.models.users import Users
 
 class RegisterUserForm(UserCreationForm):
     COMO_CONHECEU_CHOICES = [
@@ -28,7 +28,7 @@ class RegisterUserForm(UserCreationForm):
     aonde = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'class': 'form-control', 'style': 'display:none;'}), required=False, label='Outros?')
 
     class Meta:
-        model = User
+        model = Users
         fields = ('username', 'first_name', 'last_name', 'email', 'password1', 'password2', 'city', 'fone', 'instagram', 'birth', 'job_title', 'lightining_wallet', 'bsc_wallet', 'como_conheceu', 'quem_indicou', 'aonde')
 
     def __init__(self, *args, **kwargs):

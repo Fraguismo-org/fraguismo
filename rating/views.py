@@ -5,6 +5,7 @@ from .models.atividade import Atividade
 from members.models.profile import Profile
 from members.models.users import Users, User
 from rating.models.nivel import Nivel
+from rating.models.pendencia import Pendencia
 
 
 @user_passes_test(lambda u: u.is_superuser)
@@ -57,6 +58,27 @@ def user_log_rating(request):
             'proximo_nivel': proximo_nivel, 
         }
     )
+
+@login_required
+def user_pending(request):
+    profile = Profile.objects.get(user=request.user)
+    nivel = Nivel.objects.get(nivel=profile.nivel.lower())
+    nivel = nivel.proximo_nivel()
+    pendencias = Pendencia.objects.get(nivel=nivel)
+    return render(request, 'user_pending.html', {'pendencias': pendencias})
+
+
+@user_passes_test(lambda u: u.is_superuser)
+def add_pending(request):
+    if request.method == "POST":
+        nivel = Nivel.objects.get(nivel=request.POST.get('select-nivel', None))
+        pendencia = Pendencia()
+        pendencia.nivel = nivel
+        pendencia.pendencia = request.POST.get('pendencia', None)
+        pendencia.save()
+    pendencias = Pendencia.objects.all()
+    niveis = Nivel.objects.all()
+    return render(request, 'add_pending.html', {'niveis': niveis, 'pendencias': pendencias})
 
 @user_passes_test(lambda u: u.is_superuser)
 def add_rating_point(request):
