@@ -88,19 +88,11 @@ def add_rating_point(request):
         id = request.POST.get('select-user')
         atividade_id = request.POST.get('select-atividade')
         pontuacao = request.POST.get('pontuacao')
-        
-        rating = LogRating()        
+                
         profile = Profile.objects.get(user_id=id)
-        atividade = Atividade.objects.get(id=atividade_id)
-        
-        rating.user_id = profile.user
-        rating.pontuacao_ganha = int(pontuacao) if pontuacao is not None else atividade.pontuacao
-        rating.pontuacao = profile.pontuacao
-        rating.atividade = atividade
-        rating.updated_by = request.user.id
-        rating.save()
+        atividade = Atividade.objects.get(id=atividade_id)        
 
-        profile.pontuacao += rating.pontuacao_ganha
+        profile.pontuacao += pontuacao
         
         if len(ProfilePendencia.get_pendencias(profile)) == 0 and profile.is_next_level():
             profile.change_level()

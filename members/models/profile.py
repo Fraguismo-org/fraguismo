@@ -59,3 +59,4 @@ class Profile(models.Model):
     def change_level(self):
         self.pontuacao -= self.nivel_id.proximo_nivel().pontuacao_base
         self.nivel_id = self.nivel_id.proximo_nivel()
+        self.nivel = self.nivel_id.nivel
