@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block content %}
+{% load static %}
+<link rel="stylesheet" href="{% static '/css/styles.css' %}">
+<div class="shadow p-4 mb-5 bg-body rounded">
+    <div class="row text-center">
+        <h2 class="h2">Pendências</h2>
+    </div>
+    <div class="table-responsive" style="padding-top: 20px;">
+        <table class="table text-center">
+            <thead>
+                <tr>
+                    <th scope="col">Nível</th>
+                    <th scope="col">Pendência</th> 
+                    <th scope="col">Ação</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for pendencia in pendencias %}
+                <tr>
+                    <td>{{ pendencia.nivel.nivel.capitalize }}</td>
+                    <td>{{ pendencia.pendencia }}</td>
+                    <td> 
+                        <button class="btn btn-primary btn-sm">Iniciar</button>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>    
+</div>
+{% endblock content %}

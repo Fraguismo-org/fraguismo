@@ -5,6 +5,7 @@ from django.contrib import messages
 from members.forms import RegisterUserForm
 from members.models.profile import Profile
 from members.models.users import Users
+from members.models.profile_pendencia import ProfilePendencia
 from django.contrib.auth.decorators import login_required
 from PIL import Image, ImageOps
 

@@ -14,5 +14,4 @@ class LogRating(models.Model):
     updated_by = models.IntegerField(default=0)
     
     def __str__(self) -> str:
-        local_time = timezone.localtime(self.updated_at)
-        return f'{self.user_id} | pontuacao total: {self.pontuacao + self.pontuacao_ganha} | {self.atividade.nome_atividade} | {local_time}'
+        return self.user_id
