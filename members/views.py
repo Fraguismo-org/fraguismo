@@ -6,9 +6,9 @@ from members.forms import RegisterUserForm
 from members.models.profile import Profile
 from members.models.users import Users
 from members.models.profile_pendencia import ProfilePendencia
+from rating.models.log_rating import LogRating
 from django.contrib.auth.decorators import login_required
 from PIL import Image, ImageOps
-
 
 def login_user(request):
     if request.method == "POST":
@@ -29,24 +29,39 @@ def logout_user(request):
     return redirect('login')
 
 def register_user(request):
+    referrer = request.GET.get('ref', None)
     if request.method == "POST":
-        form = RegisterUserForm(request.POST)
+        referrer = request.POST.get('quem_indicou', None)
+        form = RegisterUserForm(request.POST, referrer=referrer)
         if form.is_valid():
-            form.save()
+            user = form.save()
             username = form.cleaned_data['username']
             password = form.cleaned_data['password1']
             user = authenticate(username=username, password=password)
             login(request, user)
             messages.success(request, ("Conta criada com sucesso!"))
+            if referrer:
+                try:                    
+                    referrer_profile = Profile.objects.get(user__username=referrer)                
+                    LogRating.add_log_rating(referrer_profile, 2, user.id)
+                    referrer_profile.pontuacao += 2
+                    if len(ProfilePendencia.get_pendencias(referrer_profile)) == 0 and referrer_profile.is_next_level():
+                        referrer_profile.change_level()
+                    referrer_profile.save()
+                    messages.success(request, f"{referrer} ganhou 2 pontos por te indicar!")
+                except Profile.DoesNotExist:
+                    messages.warning(request, f"Usuário que gerou o link ({referrer}) não encontrado.")
+            
             return redirect('https://fraguismo.org')
         else:
             messages.success(request, ("Erro ao cadastrar usuário!"))
     else:
-        form = RegisterUserForm()
+        form = RegisterUserForm(referrer=referrer)
 
     return render(request, 'authenticate/register_user.html', {
         'form': form,
     })
+
 
 @login_required
 def user_page(request):

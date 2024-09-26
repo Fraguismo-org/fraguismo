@@ -13,6 +13,7 @@ class RegisterUserForm(UserCreationForm):
         ('indicacao', 'Indicação'),
         ('outros', 'Outros')
     ]
+    
     email = forms.EmailField(widget=forms.EmailInput(attrs={'class': 'form-control'}), label='E-mail *')
     first_name = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'class': 'form-control'}), label='Nome *')
     last_name = forms.CharField(max_length=50, widget=forms.TextInput(attrs={'class': 'form-control'}), label='Sobrenome *')
@@ -24,7 +25,7 @@ class RegisterUserForm(UserCreationForm):
     lightining_wallet = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'class': 'form-control'}), label='Carteira Lightining', required=False)
     bsc_wallet = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'class': 'form-control'}), label='Carteira BSC', required=False)    
     como_conheceu = forms.ChoiceField(choices=COMO_CONHECEU_CHOICES, widget=forms.Select(attrs={'class': 'form-control'}), label='Como conheceu o Fraguismo? *')
-    quem_indicou = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'class': 'form-control', 'style': 'display:none;'}), required=False, label='Quem indicou?')
+    quem_indicou = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'class': 'form-control', 'style': 'display:block;'}), required=False, label='Quem indicou?')
     aonde = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'class': 'form-control', 'style': 'display:none;'}), required=False, label='Outros?')
 
     class Meta:
@@ -32,9 +33,13 @@ class RegisterUserForm(UserCreationForm):
         fields = ('username', 'first_name', 'last_name', 'email', 'password1', 'password2', 'city', 'fone', 'instagram', 'birth', 'job_title', 'lightining_wallet', 'bsc_wallet', 'como_conheceu', 'quem_indicou', 'aonde')
 
     def __init__(self, *args, **kwargs):
-        super(RegisterUserForm, self).__init__(*args, **kwargs)              
-        self.fields['password1'].help_text = ('<ul class="password-instructions">''<li class="password-requirement">Sua senha não pode ser muito parecida com o resto das suas informações pessoais.</li><li class="password-requirement">Sua senha precisa conter pelo menos 8 caracteres.</li><li class="password-requirement">Sua senha não pode ser uma senha comumente utilizada.</li><li class="password-requirement">Sua senha não pode ser inteiramente numérica.</li>''</ul>') 
-        self.fields['password1'].widget.attrs.update({'class': 'password-field'})
+        referrer = kwargs.pop('referrer', None)  # Pega o parâmetro 'ref'
+        super(RegisterUserForm, self).__init__(*args, **kwargs)
+
+        # Se houver um parâmetro 'ref', define o valor padrão de 'como_conheceu' como 'Indicação' e 'quem_indicou' com o valor de ref
+        if referrer:
+            self.fields['como_conheceu'].initial = 'indicacao'
+            self.fields['quem_indicou'].initial = referrer  # Preenche o campo 'quem_indicou' automaticamente
 
         como_conheceu = self.data.get('como_conheceu')
         if como_conheceu == 'indicacao':
