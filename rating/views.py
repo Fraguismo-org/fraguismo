@@ -6,6 +6,7 @@ from members.models.profile import Profile
 from members.models.users import Users, User
 from rating.models.nivel import Nivel
 from rating.models.pendencia import Pendencia
+from members.models.profile_pendencia import ProfilePendencia
 
 
 @user_passes_test(lambda u: u.is_superuser)
@@ -64,8 +65,9 @@ def user_pending(request):
     profile = Profile.objects.get(user=request.user)
     nivel = Nivel.objects.get(nivel=profile.nivel.lower())
     nivel = nivel.proximo_nivel()
-    pendencias = Pendencia.objects.get(nivel=nivel)
-    return render(request, 'user_pending.html', {'pendencias': pendencias})
+    pendencias = Pendencia.objects.filter(nivel=nivel)
+    profile_pendencias = ProfilePendencia.objects.filter(profile=profile)
+    return render(request, 'user_pending.html', {'pendencias': pendencias, 'profile_pendencias': profile_pendencias})
 
 
 @user_passes_test(lambda u: u.is_superuser)
@@ -99,6 +101,10 @@ def add_rating_point(request):
         rating.save()
 
         profile.pontuacao += rating.pontuacao_ganha
+        
+        if len(ProfilePendencia.get_pendencias(profile)) == 0 and profile.is_next_level():
+            profile.change_level()
+
         profile.save()        
         
         return redirect('logs')
