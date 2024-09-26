@@ -3,7 +3,7 @@ from rating.models.nivel import Nivel
 
 
 class Pendencia(models.Model):
-    id = models.IntegerField(primary_key=True)
+    id = models.AutoField(primary_key=True)
     nivel = models.ForeignKey(Nivel, on_delete=models.CASCADE)
-    pedencia = models.CharField(max_length=50)
+    pendencia = models.CharField(max_length=50)
     

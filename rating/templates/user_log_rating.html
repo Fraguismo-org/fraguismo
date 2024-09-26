@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% load static %}
+<link rel="stylesheet" href="{% static '/css/styles.css' %}">
+<div class="shadow p-4 mb-5 bg-body rounded">
+    <div class="row text-center" style="padding-bottom: 30px;">
+        <h2 class="h2">Log de pontuação</h2>
+    </div>
+    <div class="row text-end">
+        <h6>Pontuação para <strong>{{ proximo_nivel.0.capitalize }}</strong>: {{ proximo_nivel.1 }}</h6>
+    </div>
+    <form method="GET">
+        <div class="row text-end">
+            <div class="col">
+                <input type="date" class="form-control" name="data_inicial" id="data_inicial" >
+            </div>
+            <div class="col">
+                <input type="date" class="form-control" name="data_final" id="data_final" >
+            </div>
+            <div class="col">
+                <input type="submit" class="btn btn-primary" id="filtro" value="Filtrar">
+            </div>
+        </div>
+        
+        <table class="table">
+            <thead>
+                <th>Usuário</th>
+                <th>Pontuação Anterior</th>
+                <th>Pontuação Ganha</th>
+                <th>Atividade</th>
+                <th>Data</th>
+            </thead>
+            <tbody>
+                {% for log in logs %}
+                <tr>
+                    <td>{{ log.user_id }}</td>
+                    <td>{{ log.pontuacao }}</td>
+                    <td>{{ log.pontuacao_ganha}}
+                    <td>{{ log.atividade.nome_atividade }}</td>
+                    <td>{{ log.updated_at }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </form>
+</div>
+
+<script>
+    function validaData() {
+        
+        if(dataInicial.value > dataFinal.value){
+            dataInicial.value = dataFinal.value;
+        }
+    };
+
+    let dataInicial = document.getElementById('data_inicial');
+    let dataFinal = document.getElementById('data_final');
+</script>
+
+{% endblock content %}

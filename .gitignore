@@ -4,4 +4,6 @@
 **/.venv
 **/.env
 **/venv
+**/.vscode
+**/.vscode/*
 fraguismo/media/*

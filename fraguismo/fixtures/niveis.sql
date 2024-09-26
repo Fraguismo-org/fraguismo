@@ -1,4 +1,4 @@
-REPLACE INTO `members_nivel` (`id`, `nivel`, `pontuacao_base`) VALUES
+REPLACE INTO `rating_nivel` (`id`, `nivel`, `pontuacao_base`) VALUES
     (1, 'membro', 0),
     (2, 'assessor', 5),
     (3, 'lider', 15),
