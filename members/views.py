@@ -65,7 +65,8 @@ def register_user(request):
         'form': form,
     })
 
-
+def comunidade(request):
+    return render(request, 'members/comunidade.html')
 
 
 @login_required
