@@ -62,7 +62,7 @@ def user_log_rating(request):
 
 @login_required
 def user_pending(request):
-    profile = Profile.objects.get(user=request.user)
+    profile = Profile.get_or_create_profile(request.user)
     nivel = Nivel.objects.get(nivel=profile.nivel.lower())
     nivel = nivel.proximo_nivel()
     pendencias = Pendencia.objects.filter(nivel=nivel)
