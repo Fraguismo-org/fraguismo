@@ -49,7 +49,8 @@ class Profile(models.Model):
                 profile.nivel_id = Nivel.objects.get(nivel=profile.nivel)
             return profile
         except:
-            profile = Profile.objects.create(user=user_request)
+            profile = Profile()
+            profile.user = user_request
             profile.nivel_id = Nivel.objects.get(id=1)
             return profile
 
