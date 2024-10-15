@@ -88,7 +88,7 @@ document.addEventListener('DOMContentLoaded', function () {
     function getQueryParam(param) {
         const urlParams = new URLSearchParams(window.location.search);
         indicacao = urlParams.get(param);
-        if (indicacao === '') {
+        if (indicacao === '' || indicacao === null) {
             return '';
         }
         comoConheceu.value = 'indicacao';
