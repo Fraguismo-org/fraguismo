@@ -22,7 +22,6 @@ INSTALLED_APPS = [
     'site_fraguismo',
     'members',
     'rating',
-    'administrador',
 ]
 
 MIDDLEWARE = [
