@@ -63,38 +63,24 @@ def register_user(request):
             user.quem_indicou = request.POST.get('quem_indicou', None)
             user.aonde = request.POST.get('aonde', None)
             user.save()
+            profile = Profile.get_or_create_profile(user_request=request.user)
+            profile.save()
+            if user.quem_indicou:
+                try:                    
+                    referrer_profile = Profile.objects.get(user__username=user.quem_indicou)                
+                    LogRating.add_log_rating(referrer_profile, 2, user.id)
+                    referrer_profile.pontuacao += 2
+                    if len(ProfilePendencia.get_pendencias(referrer_profile)) == 0 and referrer_profile.is_next_level():
+                        referrer_profile.change_level()
+                    referrer_profile.save()
+                    messages.success(request, f"{user.quem_indicou} ganhou 2 pontos por te indicar!")
+                except Profile.DoesNotExist:
+                    messages.warning(request, f"Usuário que gerou o link ({user.quem_indicou}) não encontrado.")
             auth_user = authenticate(request, username=user.username, password=password)
             login(request, auth_user)
             messages.success(request, ("Conta criada com sucesso!"))
             return redirect('https://fraguismo.org')
-
-
-
-        # referrer = request.POST.get('quem_indicou', None)
-        # form = RegisterUserForm(request.POST, referrer=referrer)
-        # if form.is_valid():
-        #     user = form.save()
-        #     username = form.cleaned_data['username']
-        #     password = form.cleaned_data['password1']
-        #     user = authenticate(username=username, password=password)
-        #     login(request, user)
-        #     messages.success(request, ("Conta criada com sucesso!"))
-        #     if referrer:
-        #         try:                    
-        #             referrer_profile = Profile.objects.get(user__username=referrer)                
-        #             LogRating.add_log_rating(referrer_profile, 2, user.id)
-        #             referrer_profile.pontuacao += 2
-        #             if len(ProfilePendencia.get_pendencias(referrer_profile)) == 0 and referrer_profile.is_next_level():
-        #                 referrer_profile.change_level()
-        #             referrer_profile.save()
-        #             messages.success(request, f"{referrer} ganhou 2 pontos por te indicar!")
-        #         except Profile.DoesNotExist:
-        #             messages.warning(request, f"Usuário que gerou o link ({referrer}) não encontrado.")
-            
-        #     return redirect('https://fraguismo.org')
-        # else:
-        #     messages.success(request, ("Erro ao cadastrar usuário!"))
-
+        
     return render(request, 'authenticate/register_user.html')
 
 
