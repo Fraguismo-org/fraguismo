@@ -29,7 +29,6 @@ def logout_user(request):
     return redirect('login')
 
 def register_user(request):
-    referrer = request.GET.get('ref', None)
     if request.method == "POST":
         user  = Users()
         user.is_fraguista = request.POST.get('fraguista', None) == 'on'
@@ -88,17 +87,19 @@ def register_user(request):
 def user_page(request):
     profile = Profile.get_or_create_profile(user_request=request.user)
     member = Users.get_or_create_member(user_request=request.user)
-    if request.method == 'POST':        
-        member.first_name = request.POST.get('first_name', None)
-        member.last_name = request.POST.get('last_name', None)
+    if request.method == 'POST':
         member.email = request.POST.get('email', None)
-        member.birth = request.POST.get('birth', None)
-        member.city = request.POST.get('city', None)
-        member.fone = request.POST.get('fone', None)
-        member.instagram = request.POST.get('instagram', None)
-        member.job_title = request.POST.get('job_title', None)
-        member.bsc_wallet = request.POST.get('bsc_wallet', None)
-        member.lightning_wallet = request.POST.get('lightning_wallet', None)
+        member.is_fraguista = request.POST.get('fraguista', None) == 'on'
+        if (member.is_fraguista):
+            member.first_name = request.POST.get('first_name', None)
+            member.last_name = request.POST.get('last_name', None)        
+            member.birth = request.POST.get('birth', None)
+            member.city = request.POST.get('city', None)
+            member.fone = request.POST.get('fone', None)
+            member.instagram = request.POST.get('instagram', None)
+            member.job_title = request.POST.get('job_title', None)
+            member.bsc_wallet = request.POST.get('bsc_wallet', None)
+            member.lightning_wallet = request.POST.get('lightning_wallet', None)
         
         if 'pic_profile' in request.FILES:
             old_img = profile.pic_profile.path

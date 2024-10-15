@@ -38,11 +38,16 @@
         left: -15px;
     }
     {% endwith %}
-    
+
+    .text-error {
+        color: red;
+        display: none;
+    }
+
 </style>
     
     <div class="shadow p-4 mb-5 bg-body rounded">
-        <form method="POST" class="col-md-8 mx-auto" enctype="multipart/form-data">            
+        <form id="formRegistro" method="POST" class="col-md-8 mx-auto" enctype="multipart/form-data">            
         <div class="container-lg text-center">
             {% csrf_token %}
             <div class="image-upload">
@@ -85,76 +90,89 @@
                 </div>                
             </div>
             <div class="row">
-                <div class="col">                
-                    <p><input class="form-check-input" type="checkbox" id="fraguista" name="fraguista">
-                    Tornar fraguista!</p>
+                <div class="col">
+                    <label for="email" class="form-label">E-mail</label>
+                    <input type="email" id="email" name="email" class="form-control" value="{{ user.email }}">
                 </div>
             </div>
-            <div id="div_profile">
+            <span id="validation-email" class="text-error">Endereço inválido.</span>
+            <div class="row">
+                <div class="col">                
+                    <p><input class="form-check-input" type="checkbox" id="fraguista" name="fraguista" 
+                        {% if member.is_fraguista %}
+                         checked
+                        {% endif %}>
+                    Tornar fraguista! <a href="#">Código de conduta</a> do Fraguismo!</p>
+                </div>
+            </div>
+            <div id="div_profile" style="display: none;">
                 <div class="row">
                     <div class="col">
                         <label for="first_name" class="form-label">Nome</label>
                         <input type="text" class="form-control" id="first_name" name="first_name" value="{{ user.first_name }}">
                     </div>
                 </div>
+                <span id="validation-nome" class="text-error">Campo Nome deve ser preenchido.</span>
                 <div class="row">
                     <div class="col">
                         <label for="last_name" class="form-label">Sobrenome</label>
                         <input type="text" name="last_name" id="last_name" class="form-control" value="{{ user.last_name }}">
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col">
-                        <label for="email" class="form-label">E-mail</label>
-                        <input type="email" id="email" name="email" class="form-control" value="{{ user.email }}">
-                    </div>
-                </div>
+                <span id="validation-sobrenome" class="text-error">Campo Sobrenome deve ser preenchido.</span>
                 <div class="row">
                     <div class="col">
                         <label for="city" class="form-label">Localidade</label>
                         <input type="text" id="city" name="city" class="form-control" value="{{ member.city }}">                
                     </div>
                 </div>
+                <span id="validation-city" class="text-error">Localidade inválida.</span>
                 <div class="row">
                     <div class="col">
                         <label for="fone" class="form-label">Telefone</label>
                         <input type="text" id="fone" name="fone" class="form-control" value="{{ member.fone }}">
                     </div>
                 </div>
+                <span id="validation-phone" class="text-error">Telefone inválido.</span>
                 <div class="row">
                     <div class="col">
                         <label for="instagram" class="form-label">Instagram</label>
                         <input type="text" id="instagram" name="instagram" class="form-control" value="{{ member.instagram }}">
                     </div>
                 </div>
+                <span id="validation-instagram" class="text-error">Instagram inválido.</span>
                 <div class="row">
                     <div class="col">
                         <label for="birth" class="form-label">Data de Nascimento</label>
                         <input type="date" class="form-control" id="birth" name="birth" value="{{ member.birth|date:'Y-m-d' }}">
                     </div>
                 </div>
+                <span id="validation-birth" class="text-error">Data de nascimento inválida.</span>
                 <div class="row">
                     <div class="col">
                         <label for="job_title" class="form-label">Profissão</label>
                         <input type="text" class="form-control" id="job_title" name="job_title" value="{{ member.job_title }}">
                     </div>
                 </div>
+                <span id="validation-jobtitle" class="text-error">Campo Profissão deve ser preenchido.</span>
                 <div class="row">
                     <div class="col">
                         <label for="bsc_wallet" class="form-label">BSC Wallet</label>
                         <input type="text" class="form-control" id="bsc_wallet" name="bsc_wallet" value="{{ member.bsc_wallet }}">
                     </div>
                 </div>
+                <span id="validation-bscwallet" class="text-error">Endereço carteira BSC inválido.</span>
                 <div class="row">
                     <div class="col">
                         <label for="lightning_wallet" class="form-label">Bitcoin Lightning Wallet</label>
                         <input type="text" class="form-control" name="lightning_wallet" id="lightning_wallet" value="{{ member.lightning_wallet }}">
                     </div>
                 </div>
+                <span id="validation-btcwallet" class="text-error">Endereço carteira BTC inválido.</span>
             </div>
             <div class="row text-end" style="padding-top: 20px;">
                 <div class="col">
-                    <input type="submit" class="btn btn-warning" style="border-radius: 20px;" value="Salvar">                
+                    <input type="submit" id="btn-salvar" class="btn btn-warning" style="border-radius: 20px;" value="Salvar">                
                 </div>
             </div>
         </form>
@@ -166,49 +184,22 @@
     <small class="text-body-secondary"> Efetue o <a href="{% url 'login' %}">login</a> para acessar esta página!</small>
 {% endif %}
 
+<script src="{% static 'js/userpage.js' %}"></script>
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const picProfile = document.getElementById('pic_profile');
-        const isFraguista = document.getElementById('fraguista');
-        const divProfile = inicializaDivProfile();
-        
-        inicializaDivProfile(){
-            const divProf = document.getElementById('div_profile');
-            if (isFraguista) {
-                divProf.style.display = 'inline';
-            } else {
-                divProf.style.display = 'none';
-            }
+    function generateCustomLink() {
+        var copyText = document.getElementById("affiliateLink");
 
-            return divProf;
-        }
-        
-        
-        picProfile.addEventListener('change', function(event) {
-            var file = event.target.files[0];
-            if(file) {
-                var imageUrl = URL.createObjectURL(file);
-                var div = document.getElementById('profile-pic');
+        copyText.select();
+        copyText.setSelectionRange(0, 99999);
+        document.execCommand("copy");
 
-                div.style.backgroundImage = `url(${imageUrl})`;
-            }
-        });
+        var message = document.getElementById("copyMessage");
+        message.style.display = "block";
 
-        function generateCustomLink() {
-            var copyText = document.getElementById("affiliateLink");
-
-            copyText.select();
-            copyText.setSelectionRange(0, 99999);
-            document.execCommand("copy");
-
-            var message = document.getElementById("copyMessage");
-            message.style.display = "block";
-
-            setTimeout(function() {
-                message.style.display = "none";
-            }, 3000);
-        }
-    });
+        setTimeout(function() {
+            message.style.display = "none";
+        }, 3000);
+    }
 </script>
 
 {% endblock content %}
