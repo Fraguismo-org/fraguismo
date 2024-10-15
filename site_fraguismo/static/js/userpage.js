@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const picProfile = document.getElementById('pic_profile');
     const isFraguista = document.getElementById('fraguista');
     const divProfile = document.getElementById('div_profile');
+    const divUtils = document.getElementById('div_utils');
 
     const nome = document.getElementById('first_name');
     const sobreNome = document.getElementById('last_name');
@@ -23,8 +24,10 @@ document.addEventListener('DOMContentLoaded', function () {
     isFraguista.addEventListener('change', () => {
         if (isFraguista.checked) {
             divProfile.style.display = 'inline';
+            divUtils.style.display ='inline';
         } else {
             divProfile.style.display = 'none';
+            divUtils.style.display = 'none';
         }
     });    
     
