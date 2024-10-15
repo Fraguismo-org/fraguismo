@@ -31,36 +31,71 @@ def logout_user(request):
 def register_user(request):
     referrer = request.GET.get('ref', None)
     if request.method == "POST":
-        referrer = request.POST.get('quem_indicou', None)
-        form = RegisterUserForm(request.POST, referrer=referrer)
-        if form.is_valid():
-            user = form.save()
-            username = form.cleaned_data['username']
-            password = form.cleaned_data['password1']
-            user = authenticate(username=username, password=password)
-            login(request, user)
-            messages.success(request, ("Conta criada com sucesso!"))
-            if referrer:
-                try:                    
-                    referrer_profile = Profile.objects.get(user__username=referrer)                
-                    LogRating.add_log_rating(referrer_profile, 2, user.id)
-                    referrer_profile.pontuacao += 2
-                    if len(ProfilePendencia.get_pendencias(referrer_profile)) == 0 and referrer_profile.is_next_level():
-                        referrer_profile.change_level()
-                    referrer_profile.save()
-                    messages.success(request, f"{referrer} ganhou 2 pontos por te indicar!")
-                except Profile.DoesNotExist:
-                    messages.warning(request, f"Usuário que gerou o link ({referrer}) não encontrado.")
-            
-            return redirect('https://fraguismo.org')
+        user  = Users()
+        user.is_fraguista = request.POST.get('fraguista', None) == 'on'
+        user.username = request.POST.get('username', None)
+        user.email = request.POST.get('email', None)
+        password = request.POST.get('password', None)
+        password2 = request.POST.get('password2', None)
+        if password == password2:
+            user.set_password(password)
         else:
-            messages.success(request, ("Erro ao cadastrar usuário!"))
-    else:
-        form = RegisterUserForm(referrer=referrer)
+            messages.error('Os campos de senha devem coincidir.')
+            return render(request, 'authenticate/register_user.html')
+        if not user.is_fraguista:
+            user.save()
+            auth_user = authenticate(request, username=user.username, password=password)
+            login(request, auth_user)
+            messages.success(request, ("Conta criada com sucesso!"))
+            return redirect('https://fraguismo.org')
+        
+        else:
+            user.first_name = request.POST.get('first_name', None)
+            user.last_name = request.POST.get('last_name', None)
+            user.city = request.POST.get('city', None)
+            user.fone = request.POST.get('fone', None)
+            user.instagram = request.POST.get('instagram', None)
+            user.birth = request.POST.get('birth', None)
+            user.job_title = request.POST.get('job_title', None)
+            user.lightning_wallet = request.POST.get('lightning_wallet', None)
+            user.bsc_wallet = request.POST.get('bsc_wallet', None)
+            user.como_conheceu = request.POST.get('como_conheceu', None)
+            user.quem_indicou = request.POST.get('quem_indicou', None)
+            user.aonde = request.POST.get('aonde', None)
+            user.save()
+            auth_user = authenticate(request, username=user.username, password=password)
+            login(request, auth_user)
+            messages.success(request, ("Conta criada com sucesso!"))
+            return redirect('https://fraguismo.org')
 
-    return render(request, 'authenticate/register_user.html', {
-        'form': form,
-    })
+
+
+        # referrer = request.POST.get('quem_indicou', None)
+        # form = RegisterUserForm(request.POST, referrer=referrer)
+        # if form.is_valid():
+        #     user = form.save()
+        #     username = form.cleaned_data['username']
+        #     password = form.cleaned_data['password1']
+        #     user = authenticate(username=username, password=password)
+        #     login(request, user)
+        #     messages.success(request, ("Conta criada com sucesso!"))
+        #     if referrer:
+        #         try:                    
+        #             referrer_profile = Profile.objects.get(user__username=referrer)                
+        #             LogRating.add_log_rating(referrer_profile, 2, user.id)
+        #             referrer_profile.pontuacao += 2
+        #             if len(ProfilePendencia.get_pendencias(referrer_profile)) == 0 and referrer_profile.is_next_level():
+        #                 referrer_profile.change_level()
+        #             referrer_profile.save()
+        #             messages.success(request, f"{referrer} ganhou 2 pontos por te indicar!")
+        #         except Profile.DoesNotExist:
+        #             messages.warning(request, f"Usuário que gerou o link ({referrer}) não encontrado.")
+            
+        #     return redirect('https://fraguismo.org')
+        # else:
+        #     messages.success(request, ("Erro ao cadastrar usuário!"))
+
+    return render(request, 'authenticate/register_user.html')
 
 
 @login_required

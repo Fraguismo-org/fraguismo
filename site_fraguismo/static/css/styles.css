@@ -74,3 +74,8 @@ a, u {
 .password-strength {font-weight: bold; } 
 
 .password-requirements {font-style: italic; }
+
+.text-error {
+    color: red;
+    display: none;
+}
