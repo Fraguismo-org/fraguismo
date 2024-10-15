@@ -5,6 +5,8 @@ from decouple import config, Csv
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+ENV = config('ENV')
+
 SECRET_KEY = config('DJANGO_SECRET_KEY')
 
 DEBUG = config('DJANGO_DEBUG', default=True, cast=bool)
@@ -91,7 +93,10 @@ USE_I18N = True
 
 USE_TZ = True
 
-STATIC_URL = 'site_fraguismo/static/'
+if ENV == 'dev':
+    STATIC_URL = 'site_fraguismo/static/'
+else:
+    STATIC_URL = 'static/'
 STATIC_ROOT = "/var/www/fraguismo/static/"
 MEDIA_URL = 'fraguismo/media/'
 if config('ENV') == 'dev':
