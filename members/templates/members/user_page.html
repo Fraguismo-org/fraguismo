@@ -24,7 +24,7 @@
         opacity: 0.4;
     }
 
-    {% with sticker="images/niveis_stickers/"|add:profile.nivel|add:".png" %}
+    {% with sticker="images/niveis_stickers/"|add:profile.nivel_id.nivel|add:".png" %}
     .frame {
         width: 150px;
         height: 150px;
@@ -57,8 +57,8 @@
             
             <h2>Seja bem vindo, {{profile.user}}!</h2>
             <div class="row">
-                <div class="col">                
-                    <i class="bi bi-trophy" style="font-size: 24px; padding-left: 10px;"></i>
+                <div class="col">
+                    <a href="{% url 'user_log_rating' %}"><i class="bi bi-trophy" style="font-size: 24px; padding-left: 10px;"></i></a>
                     <p>{{ profile.pontuacao }} pts </p>
                 </div>
                 <div class="col">
@@ -66,19 +66,14 @@
                     <p>{{ profile.squad.capitalize }}</p>
                 </div>
                 <div class="col">
-                    <i class="bi bi-bar-chart" style="font-size: 24px; padding-left: 10px"></i>
+                    <a href="{% url 'user_pending' %}"><i class="bi bi-bar-chart" style="font-size: 24px; padding-left: 10px"></i></a>
                     <p>{{ profile.nivel.capitalize }}</p>
                 </div>
-                <div class="col align-self-center">
-                    <!-- Botão que gera o link -->
+                <div class="col align-self-center">                    
                     <button class="btn btn-primary" role="button" style="border-radius: 20px;" onclick="generateCustomLink()">
                         Link Afiliado
-                    </button>
-
-                    <!-- Campo de texto invisível que irá conter o link gerado -->
-                    <input type="text" id="affiliateLink" value="{{ request.scheme }}://{{ request.get_host }}{% url 'register' %}?ref={{ user.username }}" style="position: absolute; left: -9999px;">
-
-                    <!-- Mensagem de sucesso de cópia -->
+                    </button>                    
+                    <input type="text" id="affiliateLink" value="{{ request.scheme }}://{{ request.get_host }}{% url 'register' %}?ref={{ user.username }}" style="position: absolute; left: -9999px;">                    
                     <p id="copyMessage" style="display: none; color: green;">Link copiado!</p>
                 </div>
                 <div class="col align-self-center">
@@ -152,7 +147,7 @@
             </div>
             <div class="row">
                 <div class="col">
-                    <label for="lightning_wallet" class="form-label">Lightning Wallet</label>
+                    <label for="lightning_wallet" class="form-label">Bitcoin Lightning Wallet</label>
                     <input type="text" class="form-control" name="lightning_wallet" id="lightning_wallet" value="{{ member.lightning_wallet }}">
                 </div>
             </div>
@@ -182,21 +177,15 @@
     });
 
     function generateCustomLink() {
-        // Pega o campo de texto
         var copyText = document.getElementById("affiliateLink");
 
-        // Seleciona o texto do link
         copyText.select();
-        copyText.setSelectionRange(0, 99999); // Para dispositivos móveis
-
-        // Copia o texto para a área de transferência
+        copyText.setSelectionRange(0, 99999);
         document.execCommand("copy");
 
-        // Exibe uma mensagem de sucesso
         var message = document.getElementById("copyMessage");
         message.style.display = "block";
 
-        // Esconde a mensagem após 3 segundos
         setTimeout(function() {
             message.style.display = "none";
         }, 3000);

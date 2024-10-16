@@ -39,16 +39,24 @@ class Profile(models.Model):
     squad = models.CharField(max_length=20, choices=SQUAD_CHOICES, default='squad_021')
     pic_profile = models.ImageField(default='default.jpg', upload_to='profile_pics')
 
-    def proximo_nivel(self):
-        pass
-
     def __str__(self):
         return self.user.username
     
     def get_or_create_profile(user_request):
         try:
             profile = Profile.objects.get(user=user_request)
+            if profile.nivel_id is None:
+                profile.nivel_id = Nivel.objects.get(nivel=profile.nivel)
             return profile
         except:
             profile = Profile.objects.create(user=user_request)
+            profile.nivel_id = Nivel.objects.get(id=1)
             return profile
+
+    def is_next_level(self):
+        return (self.nivel_id.proximo_nivel().pontuacao_base - self.pontuacao) <= 0
+    
+    def change_level(self):
+        self.pontuacao -= self.nivel_id.proximo_nivel().pontuacao_base
+        self.nivel_id = self.nivel_id.proximo_nivel()
+        self.nivel = self.nivel_id.nivel
