@@ -1,0 +1,28 @@
+{%extends 'base.html' %}
+
+{% block content %}
+{% load static %}
+<div class="shadow p-4 mb-5 bg-body rounded">
+    <div class="row">
+        <h1 class="text-center">Certificados</h1>
+    </div>
+    <form method="GET" class="col-md-8 mx-auto" enctype="multipart/form-data">
+        <table class="table">
+            <tbody class="body">
+                <td>{{ certificado.certificado_nome }}</td>
+                <td>{% if certificado.certificado_status == 1 %}
+                    <i class="bi bi-patch-check-fill" style="color: green;">Completado</i>
+                    {% elif certificado.certificado_status == 2 %}
+                    <i class="bi bi-patch-check-fill" style="color: orange;">Em Andamento</i>
+                    {% elif certificado.certificado_status == 3 %}
+                    <i class="bi bi-patch-check-fill" style="color: red;">Falhou</i>
+                    {% endif %}
+                </td>
+            </tbody>            
+        </table>
+        <p><i class="bi bi-patch-check-fill" style="color: green;">Completado</i>
+        <i class="bi bi-patch-check-fill" style="color: orange;">Em Andamento</i>
+        <i class="bi bi-patch-check-fill" style="color: red;">Falhou</i></p>
+    </form>
+</div>
+{% endblock %}

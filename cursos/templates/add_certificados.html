@@ -1,0 +1,40 @@
+{%extends 'base.html' %}
+
+{% block content %}
+{% load static %}
+<div class="shadow p-4 mb-5 bg-body rounded">
+    <div class="row">
+        <h1 class="text-center">Adicionar Certificados</h1>
+    </div>
+    <form method="POST" class="col-md-8 mx-auto" enctype="multipart/form-data" style="padding-top: 20px;">
+        {% csrf_token %}
+        <div class="row">
+            <div class="col">
+                <label for="select-user" class="form-label">Usuários</label>
+                <select class="form-select" id="select-user" name="select-user" aria-label="Usuários">                    
+                    {% for user in users %}
+                    <option id="username" value="{{ user.id }}">{{ user.username }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col">
+                <label for="certificado" class="form-label">Certificado</label>
+                <input type="text" class="form-control" id="certificado" name="certificado">
+            </div> 
+            <div class="col">
+                <label for="select-status" class="form-label">Status</label>
+                <select class="form-select" id="select-status" name="select-status" aria-label="Status">
+                    <option id="status" value="1">Completo</option>
+                    <option id="status" value="2">Em Andamento</option>
+                    <option id="status" value="3">Completo</option>
+                </select>
+            </div>
+        </div>
+        <div class="row text-end" style="padding-top: 20px;">
+            <div class="col">
+                <button type="submit" class="btn btn-primary">Salvar</button>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %}

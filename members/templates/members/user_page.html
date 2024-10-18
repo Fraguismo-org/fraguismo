@@ -68,8 +68,8 @@
                         <p>{{ profile.pontuacao }} pts </p>
                     </div>
                     <div class="col">
-                        <i class="bi bi-people" style="font-size: 24px; padding-left: 10px"></i>
-                        <p>{{ profile.squad.capitalize }}</p>
+                        <a href="{% url 'meus_cursos'%}"><i class="bi bi-book" style="font-size: 24px; padding-left: 10px"></i></a>
+                        <p>Cursos</p>
                     </div>
                     <div class="col">
                         <a href="{% url 'user_pending' %}"><i class="bi bi-bar-chart" style="font-size: 24px; padding-left: 10px"></i></a>
@@ -109,7 +109,7 @@
                         {% if member.is_fraguista %}
                          checked
                         {% endif %}>
-                    Tornar fraguista! <a href="#">Código de conduta</a> do Fraguismo!</p>
+                    Tornar fraguista! <a href="{% url 'codigo_conduta' %}">Código de conduta</a> do Fraguismo!</p>
                 </div>
             </div>
             <div id="div_profile" style="display: none;">

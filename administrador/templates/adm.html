@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% load static %}
+<div class="shadow p-4 mb-5 bg-body rounded">
+    <div class="row">
+        <h1 class="text-center">Acessos</h1>
+    </div>
+    <form method="GET" class="col-md-8 mx-auto" enctype="multipart/form-data" style="padding-top: 20px;">
+        <table class="table">
+            <tbody>
+                {% for link in links %}
+                <tr>
+                    <td>
+                        <a href="{% url link.link %}">{{link.nome}}</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </form>
+</div>
+{% endblock content %}
