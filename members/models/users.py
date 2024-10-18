@@ -3,14 +3,16 @@ from django.db import models
 
 
 class Users(User):
-    city = models.CharField(max_length=100)
-    fone = models.CharField(max_length=30)
+    User._meta.get_field('email')._unique = True
+    is_fraguista = models.BooleanField(default=False)
+    city = models.CharField(max_length=100, blank=True)
+    fone = models.CharField(max_length=30, blank=True)
     instagram = models.CharField(max_length=100, blank=True)
-    birth = models.DateField()
-    job_title = models.CharField(max_length=255)
+    birth = models.DateField(null=True)
+    job_title = models.CharField(max_length=255, blank=True)
     bsc_wallet = models.CharField(max_length=100, blank=True)
     lightning_wallet = models.CharField(max_length=100, blank=True)
-    como_conheceu = models.CharField(max_length=20)
+    como_conheceu = models.CharField(max_length=20, blank=True)
     quem_indicou = models.CharField(max_length=100, blank=True)
     aonde = models.CharField(max_length=100)
 

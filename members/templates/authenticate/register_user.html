@@ -1,37 +1,172 @@
 {% extends 'base.html' %}
 
 {% block content %}
+{% load static %}
+<script src="{% static 'js/registeruser.js' %}"></script>
+<style>
+    .text-error {
+        color: red;
+        display: none;
+    }
+</style>
 <div class="shadow p-4 mb-5 bg-body rounded">
-<form action="{% url 'register' %}" method="POST">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Registrar" class="btn btn-warning" style="border-radius: 20px;">
-    
-</form>
+    <form action="{% url 'register' %}" method="POST" id="form-registro">
+        {% csrf_token %}
+        <div class="row">
+            <div class="col">
+                <label class="lable-control" for="username">Username *</label>
+                <input type="text" class="form-control" id="username" name="username">
+            </div>
+        </div>
+        <span id="validation-username" class="text-error"> Username inválido.</span>
+        <div class="row">
+            <div class="col">
+                <label class="lable-control" for="email">E-mail *</label>
+                <input type="text" class="form-control" id="email" name="email">
+            </div>
+        </div>
+        <span id="validation-email" class="text-error">Endereço inválido.</span>
+        <div class="row">
+            <div class="col">
+                <label class="lable-control" for="password">Senha *</label>
+                <input type="password" class="form-control" id="password" name="password">
+            </div>
+        </div>
+        <div class="div-class-rules">
+            <p>
+                <li id="pass-length">A senha deve ter pelo menos 8 caracteres.</li>
+            </p>
+            <p>
+                <li id="pass-numeric">A senha não pode ser inteiramente numérica.</li>
+            </p>
+            <p>
+                <li id="pass-alphnumeric">A senha deve conter letras e números.</li>
+            </p>
+            <p>
+                <li id="pass-equal">As senhas não correspondem.</li>
+            </p>
+        </div>
+        <div class="row">
+            <div class="col">
+                <label class="lable-control" for="password2">Repita a senha *</label>
+                <input type="password" class="form-control" id="password2" name="password2">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">                
+                <p><input class="form-check-input" type="checkbox" id="fraguista" name="fraguista">
+                Tornar fraguista!</p>
+            </div>
+        </div>
+        <div id="bloco-fraguista" style="display: none;">
+
+            <div class="row">
+                <div class="col">
+                    <label class="lable-control" for="first_name">Nome *</label>
+                    <input type="text" class="form-control" id="first_name" name="first_name">
+                </div>
+            </div>
+            <span id="validation-nome" class="text-error">Campo nome não pode ficar vazio.</span>
+            <div class="row">
+                <div class="col">
+                    <label class="lable-control" for="last_name">Sobrenome *</label>
+                    <input type="text" class="form-control" id="last_name" name="last_name">
+                </div>
+            </div>
+            <span id="validation-sobrenome" class="text-error">Campo Sobrenome não pode ficar vazio.</span>
+            <div class="row">
+                <div class="col">
+                    <label class="lable-control" for="city">Cidade/Estado *</label>
+                    <input type="text" class="form-control" id="city" name="city">
+                </div>
+            </div>
+            <span id="validation-city" class="text-error">Localidade inválido.</span>
+            <div class="row">
+                <div class="col">
+                    <label class="lable-control" for="fone">Telefone *</label>
+                    <input type="text" class="form-control" id="fone" name="fone">
+                </div>
+            </div>
+            <span id="validation-phone" class="text-error">Telefone inválido.</span>
+            <div class="row">
+                <div class="col">
+                    <label class="lable-control" for="instagram">Instagram</label>
+                    <input type="text" class="form-control" id="instagram" name="instagram">
+                </div>
+            </div>
+            <span id="validation-instagram" class="text-error">Instagram inválido.</span>
+            <div class="row">
+                <div class="col">
+                    <label class="lable-control" for="birth">Data de Nascimento *</label>
+                    <input type="date" class="form-control" id="birth" name="birth">
+                </div>
+            </div>
+            <span id="validation-birth" class="text-error">Data de nascimento inválido.</span>
+            <div class="row">
+                <div class="col">
+                    <label class="lable-control" for="job_title">Profissão *</label>
+                    <input type="text" class="form-control" id="job_title" name="job_title">
+                </div>
+            </div>
+            <p>Especifique seu trabalho para que possamos recomendar para outros Fraguistas. Quanto mais detalhado, melhor!</p>
+            <span id="validation-jobtitle" class="text-error">Campo profissão não pode ficar vazio.</span>
+            <div class="row">
+                <div class="col">
+                    <label class="lable-control" for="lightning_wallet">Carteira Bitcoin Lightning</label>
+                    <input type="text" class="form-control" id="lightning_wallet" name="lightning_wallet">
+                </div>
+            </div>
+            <span id="validation-btcwallet" class="text-error">Formato carteira Lightning inválido.</span>
+            <div class="row">
+                <div class="col">
+                    <label class="lable-control" for="bsc_wallet">Carteira BSC</label>
+                    <input type="text" class="form-control" id="bsc_wallet" name="bsc_wallet">
+                </div>
+            </div>
+            <span id="validation-bscwallet" class="text-error">Formato carteira BSC inválido.</span>
+            <div class="row">
+                <div class="col">
+                    <label class="lable-control" for="como_conheceu">Como conheceu o Fraguismo?</label>
+                    <select class="form-select" name="como_conheceu" id="como_conheceu" aria-label="como_conheceu">
+                        <option id="como_conheceu" value='instagram'>Instagram</option>
+                        <option id="como_conheceu" value='facebook'>Facebook</option>
+                        <option id="como_conheceu" value='twitter'>X (Twitter)</option>
+                        <option id="como_conheceu" value='telegram'>Telegram</option>
+                        <option id="como_conheceu" value='amigos'>Amigos</option>
+                        <option id="como_conheceu" value='youtube'>YouTube</option>
+                        <option id="como_conheceu" value='indicacao'>Indicação</option>
+                        <option id="como_conheceu" value='outros'>Outros</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row" id="div_indicou" style="display: none;">            
+                <label class="label-control" for="quem_indicou">Quem indicou? *</label>
+                <input class="form-control" id="quem_indicou" name="quem_indicou">            
+            </div>
+            <span id="validation-indicacao" class="text-error">Informe quem te indicou o Fraguismo.</span>
+            <div class="row" id="div_aonde" style="display: none;">            
+                <label class="label-control" for="aonde">Outros? *</label>
+                <input class="form-control" id="aonde" name="aonde">            
+            </div>
+            <span id="validation-outros" class="text-error">Campo 'Outros?' deve ser preenchido. </span>
+            <div class="row">
+                <p><input type="checkbox" class="form-check-input" id="codigo_conduta"> Li e concordo com o <a href="#">Código de conduta</a> do Fraguismo!</p>
+            </div>
+            <div class="row">
+                <p id="codigoCondutaError" class="text-error">Você deve aceitar o Código de Conduta!</p>
+            </div>
+        </div>
+        <div class="row" style="padding-top: 20px;">
+            <div class="col">
+                <p><input class="form-check-input" type="checkbox" id="termos_adesao"> Li e concordo os <a href="#"> Termos</a> do site Fraguismo!</p>
+            </div>
+            <div class="col text-end">
+                <input type="submit" value="Registrar" class="btn btn-warning  text-end" style="border-radius: 20px;" id="btn-registrar" disabled>
+            </div>
+        </div>
+    </form>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-    const comoConheceuField = document.getElementById('id_como_conheceu');
-    const quemIndicouField = document.getElementById('id_quem_indicou');
-    const aondeField = document.getElementById('id_aonde');
-
-    function toggleFields() {
-        if (comoConheceuField.value === 'indicacao') {
-            quemIndicouField.style.display = 'block';
-            aondeField.style.display = 'none';
-        } else if (comoConheceuField.value === 'outros') {
-            aondeField.style.display = 'block';
-            quemIndicouField.style.display = 'none';
-        } else {
-            quemIndicouField.style.display = 'none';
-            aondeField.style.display = 'none';
-        }
-    }
-
-    comoConheceuField.addEventListener('change', toggleFields);
-    toggleFields();  // Ensure fields are shown/hidden correctly on page load
-});
-</script>
 {% endblock %}

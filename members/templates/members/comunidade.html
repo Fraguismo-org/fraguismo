@@ -1,22 +1,23 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="container">
-    <h1>Bem-vindo à Comunidade</h1>
-    <p>Participe dos grupos Fraguistas do WhatsApp e Telegram.</p>
+<div class="container shadow p-4 mb-5 bg-body rounded">
+    <div class="row text-center" style="padding-bottom: 20px;">
+        <h1>Bem-vindo à Comunidade</h1>
+        <p>Participe dos grupos Fraguistas do WhatsApp e Telegram.</p>
+    </div>
 
     <div class="row">
-        <!-- Coluna 1: Grupos Fraguistas da sua região -->
         <div class="col-md-6">
-            <h3>Encontre Fraguistas da sua região:</h3>
-            <ul style="list-style-type: none;">
-                <!-- Grupo WhatsApp -->
+            <div class="row text-start">
+                <h4>Encontre Fraguistas da sua região:</h4>
+            </div>
+            <ul style="list-style-type: none;">                
                 <li>
                     <i class="bi bi-whatsapp" style="color: #25D366; font-size: 1.5em;"></i>
                     <a href="https://chat.whatsapp.com/CRmI7PCabFMERP3zwpE3Kr" target="_blank">Squads Fraguistas - Grupos WhatsApp</a>
                 </li>
-
-                <!-- Grupo Telegram -->
+                
                 <li>
                     <i class="bi bi-telegram" style="color: #0088cc; font-size: 1.5em;"></i>
                     <a href="https://t.me/fraguismo/11292" target="_blank">Libertários São Paulo</a>
@@ -88,9 +89,10 @@
             </ul>
         </div>
 
-        <!-- Coluna 2: Grupos Diversos -->
         <div class="col-md-6">
-            <h3>Grupos Diversos:</h3>
+            <div class="row text-start">
+                <h4>Grupos Diversos:</h4>
+            </div>
             <ul style="list-style-type: none;">
                 <li>
                     <i class="bi bi-whatsapp" style="color: #25D366; font-size: 1.5em;"></i>
@@ -108,7 +110,6 @@
                     <i class="bi bi-telegram" style="color: #0088cc; font-size: 1.5em;"></i>
                     <a href="https://t.me/fraguismo/10756" target="_blank">Privacidade, Segurança de dados E Programação</a>
                 </li>
-                <!-- Adicione outros grupos diversos aqui -->
             </ul>
         </div>
     </div>
