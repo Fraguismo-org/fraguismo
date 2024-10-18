@@ -1,0 +1,29 @@
+{%extends 'base.html' %}
+
+{% block content %}
+{% load static %}
+<div class="shadow p-4 mb-5 bg-body rounded">
+    <div class="row">
+        <h1 class="text-center">Certificados</h1>
+    </div>
+    <form method="GET" class="col-md-8 mx-auto" enctype="multipart/form-data">
+        <table class="table">
+            <tbody class="body">
+                <td>Arquiteto de Software</td>
+                <td><i class="bi bi-patch-check-fill" style="color: orange;"></i></td>
+            </tbody>
+            <tbody class="body">
+                <td>Engenheiro de Software</td>
+                <td><i class="bi bi-patch-check-fill" style="color: green;"></i></td>
+            </tbody>
+            <tbody class="body">
+                <td>Redes</td>
+                <td><i class="bi bi-patch-check-fill" style="color: red;"></i></td>
+            </tbody>
+        </table>
+        <p><i class="bi bi-patch-check-fill" style="color: green;">Completado</i>
+        <i class="bi bi-patch-check-fill" style="color: orange;">Em Andamento</i>
+        <i class="bi bi-patch-check-fill" style="color: red;">Falhou</i></p>
+    </form>
+</div>
+{% endblock %}
