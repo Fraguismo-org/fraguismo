@@ -61,26 +61,33 @@
             </div>
             
             <h2>Seja bem vindo, {{profile.user}}!</h2>
-            <div class="row" id="div_utils">
-                <div class="col">
-                    <a href="{% url 'user_log_rating' %}"><i class="bi bi-trophy" style="font-size: 24px; padding-left: 10px;"></i></a>
-                    <p>{{ profile.pontuacao }} pts </p>
-                </div>
-                <div class="col">
-                    <i class="bi bi-people" style="font-size: 24px; padding-left: 10px"></i>
-                    <p>{{ profile.squad.capitalize }}</p>
-                </div>
-                <div class="col">
-                    <a href="{% url 'user_pending' %}"><i class="bi bi-bar-chart" style="font-size: 24px; padding-left: 10px"></i></a>
-                    <p>{{ profile.nivel.capitalize }}</p>
-                </div>
-                <div class="col align-self-center">                    
-                    <button class="btn btn-primary" type="button" style="border-radius: 20px;" onclick="generateCustomLink()">
-                        Link Afiliado
-                    </button>                    
-                    <input type="text" id="affiliateLink" value="{{ request.scheme }}://{{ request.get_host }}{% url 'register' %}?ref={{ user.username }}" style="position: absolute; left: -9999px;">                    
-                    <p id="copyMessage" style="display: none; color: green;">Link copiado!</p>
-                </div>   
+            <div id="div_utils">
+                <div class="row">
+                    <div class="col">
+                        <a href="{% url 'user_log_rating' %}"><i class="bi bi-trophy" style="font-size: 24px; padding-left: 10px;"></i></a>
+                        <p>{{ profile.pontuacao }} pts </p>
+                    </div>
+                    <div class="col">
+                        <i class="bi bi-people" style="font-size: 24px; padding-left: 10px"></i>
+                        <p>{{ profile.squad.capitalize }}</p>
+                    </div>
+                    <div class="col">
+                        <a href="{% url 'user_pending' %}"><i class="bi bi-bar-chart" style="font-size: 24px; padding-left: 10px"></i></a>
+                        <p>{{ profile.nivel.capitalize }}</p>
+                    </div>
+                    <div class="col align-self-center">                    
+                        <button class="btn btn-primary text-wrap" role="button" onclick="generateCustomLink()">
+                            Afiliado
+                        </button>                    
+                        <input type="text" id="affiliateLink" value="{{ request.scheme }}://{{ request.get_host }}{% url 'register' %}?ref={{ user.username }}" style="position: absolute; left: -9999px;">                    
+                        <p id="copyMessage" style="display: none; color: green;">Link copiado!</p>
+                    </div>
+                    <div class="col align-self-center">                        
+                        <a href="{% url 'comunidade' %}" class="btn btn-secondary" role="button" style="border-radius: 20px;">
+                            Comunidade
+                        </a>
+                    </div>
+                </div>                
             </div>        
         </div>                    
             <div class="row">
@@ -186,20 +193,16 @@
 
 <script src="{% static 'js/userpage.js' %}"></script>
 <script>
-    function generateCustomLink() {
-        var copyText = document.getElementById("affiliateLink");
+    document.getElementById('pic_profile').addEventListener('change', function(event) {
+        var file = event.target.files[0];
+        if(file) {
+            var imageUrl = URL.createObjectURL(file);
+            var div = document.getElementById('profile-pic');
 
-        copyText.select();
-        copyText.setSelectionRange(0, 99999);
-        document.execCommand("copy");
+            div.style.backgroundImage = `url(${imageUrl})`;
+        }
+    });
 
-        var message = document.getElementById("copyMessage");
-        message.style.display = "block";
-
-        setTimeout(function() {
-            message.style.display = "none";
-        }, 3000);
-    }
 </script>
 
 {% endblock content %}

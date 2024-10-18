@@ -29,6 +29,7 @@ def logout_user(request):
     return redirect('login')
 
 def register_user(request):
+    referrer = request.GET.get('ref', None)
     if request.method == "POST":
         user  = Users()
         user.is_fraguista = request.POST.get('fraguista', None) == 'on'
@@ -46,6 +47,18 @@ def register_user(request):
             auth_user = authenticate(request, username=user.username, password=password)
             login(request, auth_user)
             messages.success(request, ("Conta criada com sucesso!"))
+            if referrer:
+                try:                    
+                    referrer_profile = Profile.objects.get(user__username=referrer)                
+                    LogRating.add_log_rating(referrer_profile, 2, user.id)
+                    referrer_profile.pontuacao += 2
+                    if len(ProfilePendencia.get_pendencias(referrer_profile)) == 0 and referrer_profile.is_next_level():
+                        referrer_profile.change_level()
+                    referrer_profile.save()
+                    messages.success(request, f"{referrer} ganhou 2 pontos por te indicar!")
+                except Profile.DoesNotExist:
+                    messages.warning(request, f"Usuário que gerou o link ({referrer}) não encontrado.")
+            
             return redirect('https://fraguismo.org')
         
         else:
@@ -81,6 +94,10 @@ def register_user(request):
             return redirect('https://fraguismo.org')
         
     return render(request, 'authenticate/register_user.html')
+
+
+def comunidade(request):
+    return render(request, 'members/comunidade.html')
 
 
 @login_required
