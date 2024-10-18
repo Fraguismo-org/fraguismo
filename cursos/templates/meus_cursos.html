@@ -9,17 +9,16 @@
     <form method="GET" class="col-md-8 mx-auto" enctype="multipart/form-data">
         <table class="table">
             <tbody class="body">
-                <td>Arquiteto de Software</td>
-                <td><i class="bi bi-patch-check-fill" style="color: orange;"></i></td>
-            </tbody>
-            <tbody class="body">
-                <td>Engenheiro de Software</td>
-                <td><i class="bi bi-patch-check-fill" style="color: green;"></i></td>
-            </tbody>
-            <tbody class="body">
-                <td>Redes</td>
-                <td><i class="bi bi-patch-check-fill" style="color: red;"></i></td>
-            </tbody>
+                <td>{{ certificado.certificado_nome }}</td>
+                <td>{% if certificado.certificado_status == 1 %}
+                    <i class="bi bi-patch-check-fill" style="color: green;">Completado</i>
+                    {% elif certificado.certificado_status == 2 %}
+                    <i class="bi bi-patch-check-fill" style="color: orange;">Em Andamento</i>
+                    {% elif certificado.certificado_status == 3 %}
+                    <i class="bi bi-patch-check-fill" style="color: red;">Falhou</i>
+                    {% endif %}
+                </td>
+            </tbody>            
         </table>
         <p><i class="bi bi-patch-check-fill" style="color: green;">Completado</i>
         <i class="bi bi-patch-check-fill" style="color: orange;">Em Andamento</i>
