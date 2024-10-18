@@ -193,15 +193,20 @@
 
 <script src="{% static 'js/userpage.js' %}"></script>
 <script>
-    document.getElementById('pic_profile').addEventListener('change', function(event) {
-        var file = event.target.files[0];
-        if(file) {
-            var imageUrl = URL.createObjectURL(file);
-            var div = document.getElementById('profile-pic');
+  function generateCustomLink() {
+        var copyText = document.getElementById("affiliateLink");
 
-            div.style.backgroundImage = `url(${imageUrl})`;
-        }
-    });
+        copyText.select();
+        copyText.setSelectionRange(0, 99999);
+        document.execCommand("copy");
+
+        var message = document.getElementById("copyMessage");
+        message.style.display = "block";
+
+        setTimeout(function() {
+            message.style.display = "none";
+        }, 3000);
+    }
 
 </script>
 
