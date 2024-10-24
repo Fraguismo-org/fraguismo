@@ -9,6 +9,7 @@ from members.models.profile_pendencia import ProfilePendencia
 from rating.models.log_rating import LogRating
 from django.contrib.auth.decorators import login_required
 from PIL import Image, ImageOps
+from fraguismo.settings import LOGIN_URL
 
 def login_user(request):
     if request.method == "POST":
@@ -95,12 +96,12 @@ def register_user(request):
         
     return render(request, 'authenticate/register_user.html')
 
-
+@login_required(login_url='login')
 def comunidade(request):
     return render(request, 'members/comunidade.html')
 
 
-@login_required
+@login_required(login_url='login')
 def user_page(request):
     profile = Profile.get_or_create_profile(user_request=request.user)
     member = Users.get_or_create_member(user_request=request.user)

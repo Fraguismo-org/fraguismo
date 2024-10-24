@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import user_passes_test, login_required
+from django.contrib import messages
 from .models.log_rating import LogRating
 from .models.atividade import Atividade
 from members.models.profile import Profile
@@ -31,7 +32,7 @@ def log_rating(request):
         logs = LogRating.objects.all().order_by("-updated_at")
     return render(request, 'log_rating.html', {'logs': logs})
 
-@login_required
+@login_required(login_url='login')
 def user_log_rating(request):
     data_inicial = request.GET.get("data_inicial")
     data_final = request.GET.get("data_final")
@@ -60,7 +61,7 @@ def user_log_rating(request):
         }
     )
 
-@login_required
+@login_required(login_url='login')
 def user_pending(request):
     profile = Profile.get_or_create_profile(request.user)
     nivel = Nivel.objects.get(nivel=profile.nivel.lower())
@@ -92,13 +93,14 @@ def add_rating_point(request):
         profile = Profile.objects.get(user_id=id)
         atividade = Atividade.objects.get(id=atividade_id)        
 
-        profile.pontuacao += pontuacao
-        
-        if len(ProfilePendencia.get_pendencias(profile)) == 0 and profile.is_next_level():
-            profile.change_level()
-
-        profile.save()        
-        
+        if pontuacao.isdigit() and pontuacao != '0':
+            profile.pontuacao += int(pontuacao)
+            LogRating.add_log_rating(profile, int(pontuacao), request.user.id, atividade)
+            if len(ProfilePendencia.get_pendencias(profile)) == 0 and profile.is_next_level():
+                profile.change_level()
+            profile.save() 
+        else:
+            messages.warning(request, 'Adicione uma pontuação válida!')
         return redirect('logs')
     users = User.objects.all()
     atividades = Atividade.objects.all()

@@ -4,7 +4,7 @@ from members.models.users import User
 from cursos.models.certificado import Certificado
 
 # Create your views here.
-@login_required
+@login_required(login_url='login')
 def meus_cursos(request):
     certificados = Certificado.objects.filter(user=request.user)
     return render(request, 'meus_cursos.html', {'certificados': certificados})

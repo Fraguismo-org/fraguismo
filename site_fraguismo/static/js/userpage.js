@@ -48,6 +48,10 @@ document.addEventListener('DOMContentLoaded', function () {
             if (validaCampos()) {
                 formRegistro.submit();
             }
+        } else {
+            if (validaEmail()) {
+                formRegistro.submit();
+            }            
         }
     });
 
