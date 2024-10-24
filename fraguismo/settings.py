@@ -107,6 +107,7 @@ else:
     MEDIA_ROOT = "/var/www/fraguismo/media/"
 
 LOGIN_REDIRECT_URL ='/'
+LOGIN_URL='members/autheticate/login.html'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
