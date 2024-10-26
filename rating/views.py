@@ -91,9 +91,12 @@ def add_rating_point(request):
         pontuacao = request.POST.get('pontuacao')
                 
         profile = Profile.objects.get(user_id=id)
-        atividade = Atividade.objects.get(id=atividade_id)        
+        atividade = Atividade.objects.get(id=atividade_id)  
+        
+        if pontuacao == None:
+            pontuacao = str(atividade.pontuacao)
 
-        if pontuacao.isdigit() and pontuacao != '0':
+        if str.isdigit(pontuacao) and pontuacao != '0':
             profile.pontuacao += int(pontuacao)
             LogRating.add_log_rating(profile, int(pontuacao), request.user.id, atividade)
             if len(ProfilePendencia.get_pendencias(profile)) == 0 and profile.is_next_level():
