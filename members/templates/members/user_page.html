@@ -77,7 +77,7 @@
                     </div>
                     <div class="col align-self-center">                    
                         <button class="btn btn-primary text-wrap" role="button" type="button" onclick="generateCustomLink()">
-                            Afiliado
+                            Indicação
                         </button>                    
                         <input type="text" id="affiliateLink" value="{{ request.scheme }}://{{ request.get_host }}{% url 'register' %}?ref={{ user.username }}" style="position: absolute; left: -9999px;">                    
                         <p id="copyMessage" style="display: none; color: green;">Link copiado!</p>
