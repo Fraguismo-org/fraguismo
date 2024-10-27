@@ -15,6 +15,7 @@ class Users(User):
     como_conheceu = models.CharField(max_length=20, blank=True)
     quem_indicou = models.CharField(max_length=100, blank=True)
     aonde = models.CharField(max_length=100)
+    codigo_conduta = models.BooleanField(null=True)
 
     def clone(self, user: User):
         self.user_ptr = user

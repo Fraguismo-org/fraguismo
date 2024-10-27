@@ -177,7 +177,10 @@
                 </div>
                 <span id="validation-btcwallet" class="text-error">Endereço carteira BTC inválido.</span>
                 <div class="col">
-                    <p><input class="form-check-input" type="checkbox" id="codigo_conduta" name="codigo_conduta">
+                    <p><input class="form-check-input" type="checkbox" id="codigo_conduta" name="codigo_conduta"
+                        {% if member.codigo_conduta %}
+                            checked
+                        {% endif %}>
                     Li e concordo com o <a href="{% url 'codigo_conduta' %}">Código de conduta</a> do Fraguismo!</p>                    
                 </div>
                 <span id="validation-codigo_conduta" class="text-error">Você deve aceitar o Código de Conduta!</span>

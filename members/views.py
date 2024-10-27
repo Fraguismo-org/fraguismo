@@ -34,6 +34,7 @@ def register_user(request):
     if request.method == "POST":
         user  = Users()
         user.is_fraguista = request.POST.get('fraguista', None) == 'on'
+        user.codigo_conduta = request.POST.get('codigo_conduta', None) == 'on'
         user.username = request.POST.get('username', None)
         user.email = request.POST.get('email', None)
         password = request.POST.get('password', None)
@@ -118,6 +119,7 @@ def user_page(request):
             member.job_title = request.POST.get('job_title', None)
             member.bsc_wallet = request.POST.get('bsc_wallet', None)
             member.lightning_wallet = request.POST.get('lightning_wallet', None)
+            member.codigo_conduta = request.POST.get('codigo_conduta', None) == 'on'
         
         if 'pic_profile' in request.FILES:
             old_img = profile.pic_profile.path
