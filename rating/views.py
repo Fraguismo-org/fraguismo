@@ -72,7 +72,7 @@ def user_pending(request):
 
 
 @user_passes_test(lambda u: u.is_superuser)
-def add_pending(request):
+def add_pendencia(request):
     if request.method == "POST":
         nivel = Nivel.objects.get(nivel=request.POST.get('select-nivel', None))
         pendencia = Pendencia()
@@ -81,7 +81,7 @@ def add_pending(request):
         pendencia.save()
     pendencias = Pendencia.objects.all()
     niveis = Nivel.objects.all()
-    return render(request, 'add_pending.html', {'niveis': niveis, 'pendencias': pendencias})
+    return render(request, 'pendencias/add_pendencia.html', {'niveis': niveis, 'pendencias': pendencias})
 
 @user_passes_test(lambda u: u.is_superuser)
 def add_rating_point(request):
@@ -127,3 +127,32 @@ def register_activity(request):
         redirect('register_activity')
 
     return render(request, 'register_activity.html')
+
+@user_passes_test(lambda u: u.is_superuser)
+def remove_pendencia(request, id: int):
+    if request.method == 'GET':
+        pendencia = Pendencia.objects.get(id=id)
+        return render(request, 'pendencias/remove_pendencia.html', {'pendencia': pendencia})
+    if request.method == 'POST':
+        pendencia = Pendencia.objects.get(id=id)
+        pendencia.delete()
+        return redirect('add_pendencia')
+    
+@user_passes_test(lambda u: u.is_superuser)
+def edita_pendencia(request, id: int):
+    if request.method == 'GET':
+        niveis = Nivel.objects.all()
+        pendencia = Pendencia.objects.get(id=id)
+        return render(request, 'pendencias/edita_pendencia.html', {
+            'niveis': niveis,
+            'pendencia': pendencia,
+        })
+    if request.method == 'POST':
+        nivel_id = request.POST.get('select_nivel', 1)
+        pendencia_nome = request.POST.get('pendencia', '')
+        pendencia = Pendencia.objects.get(id=id)
+        nivel = Nivel.objects.get(id=nivel_id)
+        pendencia.pendencia = pendencia_nome
+        pendencia.nivel = nivel
+        pendencia.save()
+        return redirect('add_pendencia')

@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% load static %}
+<link rel="stylesheet" href="{% static '/css/styles.css' %}">
+<div class="shadow p-4 mb-5 bg-body rounded">
+    <div class="row text-center">
+        <h2 class="h2">Editar Pendência</h2>
+    </div>
+    <br>    
+    <form method="POST">
+        {% csrf_token %}
+        <div class="row">
+            <div class="col">
+                <label for="select-nivel" class="form-label">Nível</label>
+                <select name="select-nivel" id="select-nivel" class="form-select" aria-label="Níveis">                    
+                    {% for nivel in niveis %}
+                        {% if nivel.id == pendencia.nivel.id %}
+                            <option selected id="nivel" value="{{ nivel.id }}">{{nivel.nivel}}</option>
+                        {% else %}
+                            <option id="nivel" value="{{ nivel.id }}">{{ nivel.nivel }}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col">
+                <label for="pendencia" class="form-label">Pendência</label>
+                <input name="pendencia" id="pendencia" class="form-control" value="{{ pendencia.pendencia }}">
+            </div>
+        </div>
+        <br>
+        <div class="row text-end">
+            <div class="col">
+                <button type="submit" class="btn btn-primary">
+                    Salvar
+                </button>
+                <a type="button" class="btn btn-secondary" href="{% url  'add_pendencia' %}">
+                    Voltar
+                </a>
+            </div>
+        </div>        
+    </form>
+</div>
+
+{% endblock content %}
