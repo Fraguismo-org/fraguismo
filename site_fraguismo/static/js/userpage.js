@@ -13,6 +13,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const jobTitle = document.getElementById('job_title');
     const bscWallet = document.getElementById('bsc_wallet');
     const btcWallet = document.getElementById('lightning_wallet');
+    const chkCodigoConduta = document.getElementById('codigo_conduta');
 
     const btnSalvar = document.getElementById('btn-salvar');
     const formRegistro = document.getElementById('formRegistro');
@@ -106,7 +107,8 @@ document.addEventListener('DOMContentLoaded', function () {
             validaBirth()&&
             validaJobTitle() &&
             validaBSCWallet() &&
-            validaBTCWallet()
+            validaBTCWallet() &&
+            validaCodigoConduta()
         );
     }
 
@@ -257,5 +259,13 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById("validation-btcwallet").style.display = 'inline';
         return false;
 
+    }
+
+    function validaCodigoConduta() {
+        document.getElementById("validation-codigo_conduta").style.display = 'none';
+        if (! chkCodigoConduta.checked) {
+            document.getElementById("validation-codigo_conduta").style.display = 'inline';
+        }
+        return chkCodigoConduta.checked
     }
 });

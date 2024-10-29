@@ -32,6 +32,7 @@ def log_rating(request):
         logs = LogRating.objects.all().order_by("-updated_at")
     return render(request, 'log_rating.html', {'logs': logs})
 
+
 @login_required(login_url='login')
 def user_log_rating(request):
     data_inicial = request.GET.get("data_inicial")
@@ -61,6 +62,7 @@ def user_log_rating(request):
         }
     )
 
+
 @login_required(login_url='login')
 def user_pending(request):
     profile = Profile.get_or_create_profile(request.user)
@@ -68,11 +70,18 @@ def user_pending(request):
     nivel = nivel.proximo_nivel()
     pendencias = Pendencia.objects.filter(nivel=nivel)
     profile_pendencias = ProfilePendencia.objects.filter(profile=profile)
-    return render(request, 'user_pending.html', {'pendencias': pendencias, 'profile_pendencias': profile_pendencias})
+    return render(
+        request, 
+        'pendencias/user_pending.html', 
+        {
+            'pendencias': pendencias, 
+            'profile_pendencias': profile_pendencias
+        }
+    )
 
 
 @user_passes_test(lambda u: u.is_superuser)
-def add_pending(request):
+def add_pendencia(request):
     if request.method == "POST":
         nivel = Nivel.objects.get(nivel=request.POST.get('select-nivel', None))
         pendencia = Pendencia()
@@ -81,7 +90,15 @@ def add_pending(request):
         pendencia.save()
     pendencias = Pendencia.objects.all()
     niveis = Nivel.objects.all()
-    return render(request, 'add_pending.html', {'niveis': niveis, 'pendencias': pendencias})
+    return render(
+        request, 
+        'pendencias/add_pendencia.html', 
+        {
+            'niveis': niveis, 
+            'pendencias': pendencias
+        }
+    )
+
 
 @user_passes_test(lambda u: u.is_superuser)
 def add_rating_point(request):
@@ -96,11 +113,11 @@ def add_rating_point(request):
         if pontuacao == None:
             pontuacao = str(atividade.pontuacao)
 
-        if str.isdigit(pontuacao) and pontuacao != '0':
-            profile.pontuacao += int(pontuacao)
+        if str.isdigit(pontuacao) and pontuacao != '0':            
             LogRating.add_log_rating(profile, int(pontuacao), request.user.id, atividade)
             if len(ProfilePendencia.get_pendencias(profile)) == 0 and profile.is_next_level():
                 profile.change_level()
+            profile.pontuacao += int(pontuacao)
             profile.save() 
         else:
             messages.warning(request, 'Adicione uma pontuação válida!')
@@ -116,6 +133,7 @@ def add_rating_point(request):
         }
     )
 
+
 @user_passes_test(lambda u: u.is_superuser)
 def register_activity(request):
     if request.method == 'POST':
@@ -127,3 +145,34 @@ def register_activity(request):
         redirect('register_activity')
 
     return render(request, 'register_activity.html')
+
+
+@user_passes_test(lambda u: u.is_superuser)
+def remove_pendencia(request, id: int):
+    if request.method == 'GET':
+        pendencia = Pendencia.objects.get(id=id)
+        return render(request, 'pendencias/remove_pendencia.html', {'pendencia': pendencia})
+    if request.method == 'POST':
+        pendencia = Pendencia.objects.get(id=id)
+        pendencia.delete()
+        return redirect('add_pendencia')
+
+
+@user_passes_test(lambda u: u.is_superuser)
+def edita_pendencia(request, id: int):
+    if request.method == 'GET':
+        niveis = Nivel.objects.all()
+        pendencia = Pendencia.objects.get(id=id)
+        return render(request, 'pendencias/edita_pendencia.html', {
+            'niveis': niveis,
+            'pendencia': pendencia,
+        })
+    if request.method == 'POST':
+        nivel_id = request.POST.get('select_nivel', 1)
+        pendencia_nome = request.POST.get('pendencia', '')
+        pendencia = Pendencia.objects.get(id=id)
+        nivel = Nivel.objects.get(id=nivel_id)
+        pendencia.pendencia = pendencia_nome
+        pendencia.nivel = nivel
+        pendencia.save()
+        return redirect('add_pendencia')

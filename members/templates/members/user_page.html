@@ -68,7 +68,7 @@
                         <p>{{ profile.pontuacao }} pts </p>
                     </div>
                     <div class="col">
-                        <a href="{% url 'meus_cursos'%}"><i class="bi bi-book" style="font-size: 24px; padding-left: 10px"></i></a>
+                        <a href="{% url 'lista_cursos' username=user.username %}"><i class="bi bi-book" style="font-size: 24px; padding-left: 10px"></i></a>
                         <p>Cursos</p>
                     </div>
                     <div class="col">
@@ -109,7 +109,7 @@
                         {% if member.is_fraguista %}
                          checked
                         {% endif %}>
-                    Tornar fraguista! <a href="{% url 'codigo_conduta' %}">Código de conduta</a> do Fraguismo!</p>
+                    Tornar fraguista!</p>
                 </div>
             </div>
             <div id="div_profile" style="display: none;">
@@ -176,8 +176,16 @@
                     </div>
                 </div>
                 <span id="validation-btcwallet" class="text-error">Endereço carteira BTC inválido.</span>
+                <div class="col">
+                    <p><input class="form-check-input" type="checkbox" id="codigo_conduta" name="codigo_conduta"
+                        {% if member.codigo_conduta %}
+                            checked
+                        {% endif %}>
+                    Li e concordo com o <a href="{% url 'codigo_conduta' %}">Código de conduta</a> do Fraguismo!</p>                    
+                </div>
+                <span id="validation-codigo_conduta" class="text-error">Você deve aceitar o Código de Conduta!</span>
             </div>
-            <div class="row text-end" style="padding-top: 20px;">
+            <div class="row text-end" style="padding-top: 20px;">                
                 <div class="col">
                     <input type="submit" id="btn-salvar" class="btn btn-warning" style="border-radius: 20px;" value="Salvar">                
                 </div>

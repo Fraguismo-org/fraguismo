@@ -2,14 +2,14 @@ import os
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
-from members.forms import RegisterUserForm
 from members.models.profile import Profile
 from members.models.users import Users
 from members.models.profile_pendencia import ProfilePendencia
 from rating.models.log_rating import LogRating
 from django.contrib.auth.decorators import login_required
 from PIL import Image, ImageOps
-from fraguismo.settings import LOGIN_URL
+from datetime import date
+
 
 def login_user(request):
     if request.method == "POST":
@@ -30,12 +30,15 @@ def logout_user(request):
     return redirect('login')
 
 def register_user(request):
-    referrer = request.GET.get('ref', None)
     if request.method == "POST":
         user  = Users()
         user.is_fraguista = request.POST.get('fraguista', None) == 'on'
+        user.codigo_conduta = request.POST.get('codigo_conduta', None) == 'on'
         user.username = request.POST.get('username', None)
         user.email = request.POST.get('email', None)
+        if Users.objects.get(email=user.email) != None:
+            messages.error(f'E-mail {user.email} já está em uso!')
+            return render(request, 'authenticate/register_user.html')
         password = request.POST.get('password', None)
         password2 = request.POST.get('password2', None)
         if password == password2:
@@ -43,26 +46,7 @@ def register_user(request):
         else:
             messages.error('Os campos de senha devem coincidir.')
             return render(request, 'authenticate/register_user.html')
-        if not user.is_fraguista:
-            user.save()
-            auth_user = authenticate(request, username=user.username, password=password)
-            login(request, auth_user)
-            messages.success(request, ("Conta criada com sucesso!"))
-            if referrer:
-                try:                    
-                    referrer_profile = Profile.objects.get(user__username=referrer)                
-                    LogRating.add_log_rating(referrer_profile, 2, user.id)
-                    referrer_profile.pontuacao += 2
-                    if len(ProfilePendencia.get_pendencias(referrer_profile)) == 0 and referrer_profile.is_next_level():
-                        referrer_profile.change_level()
-                    referrer_profile.save()
-                    messages.success(request, f"{referrer} ganhou 2 pontos por te indicar!")
-                except Profile.DoesNotExist:
-                    messages.warning(request, f"Usuário que gerou o link ({referrer}) não encontrado.")
-            
-            return redirect('https://fraguismo.org')
-        
-        else:
+        if user.is_fraguista:
             user.first_name = request.POST.get('first_name', None)
             user.last_name = request.POST.get('last_name', None)
             user.city = request.POST.get('city', None)
@@ -76,25 +60,27 @@ def register_user(request):
             user.quem_indicou = request.POST.get('quem_indicou', None)
             user.aonde = request.POST.get('aonde', None)
             user.save()
-            profile = Profile.get_or_create_profile(user_request=request.user)
-            profile.save()
-            if user.quem_indicou:
-                try:                    
-                    referrer_profile = Profile.objects.get(user__username=user.quem_indicou)                
-                    LogRating.add_log_rating(referrer_profile, 2, user.id)
-                    referrer_profile.pontuacao += 2
-                    if len(ProfilePendencia.get_pendencias(referrer_profile)) == 0 and referrer_profile.is_next_level():
-                        referrer_profile.change_level()
-                    referrer_profile.save()
-                    messages.success(request, f"{user.quem_indicou} ganhou 2 pontos por te indicar!")
-                except Profile.DoesNotExist:
-                    messages.warning(request, f"Usuário que gerou o link ({user.quem_indicou}) não encontrado.")
-            auth_user = authenticate(request, username=user.username, password=password)
-            login(request, auth_user)
-            messages.success(request, ("Conta criada com sucesso!"))
-            return redirect('https://fraguismo.org')
-        
+        profile = Profile.get_or_create_profile(user_request=user)
+        profile.save()
+        if user.quem_indicou:
+            indicacao(request, user)
+        auth_user = authenticate(request, username=user.username, password=password)
+        login(request, auth_user)
+        messages.success(request, ("Conta criada com sucesso!"))       
+        return redirect('https://fraguismo.org')        
     return render(request, 'authenticate/register_user.html')
+
+def indicacao(request, user):
+    try:
+        referrer_profile = Profile.objects.get(user__username=user.quem_indicou)
+        LogRating.add_log_rating(referrer_profile, 2, user.id)        
+        if len(ProfilePendencia.get_pendencias(referrer_profile)) == 0 and referrer_profile.is_next_level():
+            referrer_profile.change_level()
+        referrer_profile.pontuacao += 2
+        referrer_profile.save()
+        messages.success(request, f"{user.quem_indicou} ganhou 2 pontos por te indicar!")
+    except Profile.DoesNotExist:
+        messages.warning(request, f"Usuário que gerou o link ({user.quem_indicou}) não encontrado.")
 
 @login_required(login_url='login')
 def comunidade(request):
@@ -102,7 +88,7 @@ def comunidade(request):
 
 
 @login_required(login_url='login')
-def user_page(request):
+def user_page(request): 
     profile = Profile.get_or_create_profile(user_request=request.user)
     member = Users.get_or_create_member(user_request=request.user)
     if request.method == 'POST':
@@ -118,6 +104,7 @@ def user_page(request):
             member.job_title = request.POST.get('job_title', None)
             member.bsc_wallet = request.POST.get('bsc_wallet', None)
             member.lightning_wallet = request.POST.get('lightning_wallet', None)
+            member.codigo_conduta = request.POST.get('codigo_conduta', None) == 'on'
         
         if 'pic_profile' in request.FILES:
             old_img = profile.pic_profile.path
@@ -147,3 +134,16 @@ def user_page(request):
                 'member': member
             }
         )
+
+
+def profile(request, username: str):
+    member = Users.objects.get(user_ptr_id__username=username)
+    profile = Profile.objects.get(user_id__username=username)
+    if request.method == 'GET':
+        if member.birth is None:
+            idade = 'Não informado'
+        else:
+            idade  = date.today().year - member.birth.year
+        return render(request, 'members/profile.html', {'member': member, 'profile': profile, 'idade': idade})
+    else:
+        return redirect('user_page')

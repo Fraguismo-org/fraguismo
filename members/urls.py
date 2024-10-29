@@ -13,6 +13,7 @@ urlpatterns = [
     path('logout_user/', views.logout_user, name='logout'),
     path('register_user/', views.register_user, name='register'),
     path('user_page/', views.user_page, name='user_page'),
+    path('profile/<str:username>', views.profile, name='profile'),
     path('comunidade/', views.comunidade, name='comunidade'),
     
     # URLs para redefinição de senha

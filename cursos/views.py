@@ -5,8 +5,8 @@ from cursos.models.certificado import Certificado
 
 # Create your views here.
 @login_required(login_url='login')
-def meus_cursos(request):
-    certificados = Certificado.objects.filter(user=request.user)
+def lista_cursos(request, username):
+    certificados = Certificado.objects.filter(user__username=username)
     return render(request, 'meus_cursos.html', {'certificados': certificados})
 
 @user_passes_test(lambda u: u.is_superuser)
