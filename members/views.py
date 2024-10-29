@@ -30,7 +30,6 @@ def logout_user(request):
     return redirect('login')
 
 def register_user(request):
-    referrer = request.GET.get('ref', None)
     if request.method == "POST":
         user  = Users()
         user.is_fraguista = request.POST.get('fraguista', None) == 'on'
@@ -44,26 +43,7 @@ def register_user(request):
         else:
             messages.error('Os campos de senha devem coincidir.')
             return render(request, 'authenticate/register_user.html')
-        if not user.is_fraguista:
-            user.save()
-            auth_user = authenticate(request, username=user.username, password=password)
-            login(request, auth_user)
-            messages.success(request, ("Conta criada com sucesso!"))
-            if referrer:
-                try:                    
-                    referrer_profile = Profile.objects.get(user__username=referrer)                
-                    LogRating.add_log_rating(referrer_profile, 2, user.id)
-                    referrer_profile.pontuacao += 2
-                    if len(ProfilePendencia.get_pendencias(referrer_profile)) == 0 and referrer_profile.is_next_level():
-                        referrer_profile.change_level()
-                    referrer_profile.save()
-                    messages.success(request, f"{referrer} ganhou 2 pontos por te indicar!")
-                except Profile.DoesNotExist:
-                    messages.warning(request, f"Usuário que gerou o link ({referrer}) não encontrado.")
-            
-            return redirect('https://fraguismo.org')
-        
-        else:
+        if user.is_fraguista:
             user.first_name = request.POST.get('first_name', None)
             user.last_name = request.POST.get('last_name', None)
             user.city = request.POST.get('city', None)
@@ -76,26 +56,28 @@ def register_user(request):
             user.como_conheceu = request.POST.get('como_conheceu', None)
             user.quem_indicou = request.POST.get('quem_indicou', None)
             user.aonde = request.POST.get('aonde', None)
-            user.save()
-            profile = Profile.get_or_create_profile(user_request=user)
-            profile.save()
-            if user.quem_indicou:
-                try:                    
-                    referrer_profile = Profile.objects.get(user__username=user.quem_indicou)                
-                    LogRating.add_log_rating(referrer_profile, 2, user.id)
-                    referrer_profile.pontuacao += 2
-                    if len(ProfilePendencia.get_pendencias(referrer_profile)) == 0 and referrer_profile.is_next_level():
-                        referrer_profile.change_level()
-                    referrer_profile.save()
-                    messages.success(request, f"{user.quem_indicou} ganhou 2 pontos por te indicar!")
-                except Profile.DoesNotExist:
-                    messages.warning(request, f"Usuário que gerou o link ({user.quem_indicou}) não encontrado.")
-            auth_user = authenticate(request, username=user.username, password=password)
-            login(request, auth_user)
-            messages.success(request, ("Conta criada com sucesso!"))
-            return redirect('https://fraguismo.org')
-        
+        user.save()
+        profile = Profile.get_or_create_profile(user_request=user)
+        profile.save()
+        if user.quem_indicou:
+            indicacao(request, user)
+        auth_user = authenticate(request, username=user.username, password=password)
+        login(request, auth_user)
+        messages.success(request, ("Conta criada com sucesso!"))       
+        return redirect('https://fraguismo.org')        
     return render(request, 'authenticate/register_user.html')
+
+def indicacao(request, user):
+    try:
+        referrer_profile = Profile.objects.get(user__username=user.quem_indicou)
+        LogRating.add_log_rating(referrer_profile, 2, user.id)        
+        if len(ProfilePendencia.get_pendencias(referrer_profile)) == 0 and referrer_profile.is_next_level():
+            referrer_profile.change_level()
+        referrer_profile.pontuacao += 2
+        referrer_profile.save()
+        messages.success(request, f"{user.quem_indicou} ganhou 2 pontos por te indicar!")
+    except Profile.DoesNotExist:
+        messages.warning(request, f"Usuário que gerou o link ({user.quem_indicou}) não encontrado.")
 
 @login_required(login_url='login')
 def comunidade(request):
@@ -155,7 +137,10 @@ def profile(request, username: str):
     member = Users.objects.get(user_ptr_id__username=username)
     profile = Profile.objects.get(user_id__username=username)
     if request.method == 'GET':
-        idade  = date.today().year - member.birth.year
+        if member.birth is None:
+            idade = 'Não informado'
+        else:
+            idade  = date.today().year - member.birth.year
         return render(request, 'members/profile.html', {'member': member, 'profile': profile, 'idade': idade})
     else:
         return redirect('user_page')

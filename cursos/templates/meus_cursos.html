@@ -9,15 +9,19 @@
     <form method="GET" class="col-md-8 mx-auto" enctype="multipart/form-data">
         <table class="table">
             <tbody class="body">
-                <td>{{ certificado.certificado_nome }}</td>
-                <td>{% if certificado.certificado_status == 1 %}
+                {% for certificado in certificados %}
+                <tr>
+                    <td>{{ certificado.certificado_nome }}</td>
+                    <td>{% if certificado.certificado_status == 1 %}
                     <i class="bi bi-patch-check-fill" style="color: green;">Completado</i>
                     {% elif certificado.certificado_status == 2 %}
                     <i class="bi bi-patch-check-fill" style="color: orange;">Em Andamento</i>
                     {% elif certificado.certificado_status == 3 %}
                     <i class="bi bi-patch-check-fill" style="color: red;">Falhou</i>
                     {% endif %}
-                </td>
+                    </td>
+                </tr>
+                {% endfor %}            
             </tbody>            
         </table>
         <p><i class="bi bi-patch-check-fill" style="color: green;">Completado</i>

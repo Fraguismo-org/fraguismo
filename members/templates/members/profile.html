@@ -20,10 +20,6 @@
         z-index: 1;
     }
 
-    .profile-pic:hover {
-        opacity: 0.4;
-    }
-
     {% with sticker="images/niveis_stickers/"|add:profile.nivel_id.nivel|add:".png" %}
     .frame {
         width: 150px;
@@ -56,7 +52,7 @@
                         </div>                
                     </div>
                 </label>
-                <input class="form-control" id="pic_profile" name="pic_profile" type="file" accept=".png, .jpeg, jpg">
+                <!--<input class="form-control" id="pic_profile" name="pic_profile" type="file" accept=".png, .jpeg, jpg">!-->
             </div>
             
             <h2>Seja bem vindo, {{profile.user}}!</h2>
@@ -67,7 +63,7 @@
                         <p>{{ profile.pontuacao }} pts </p>
                     </div>
                     <div class="col">
-                        <a href="{% url 'meus_cursos'%}"><i class="bi bi-book" style="font-size: 24px; padding-left: 10px"></i></a>
+                        <a href="{% url 'lista_cursos' username=member.username %}"><i class="bi bi-book" style="font-size: 24px; padding-left: 10px"></i></a>
                         <p>Cursos</p>
                     </div>
                     <div class="col">
@@ -107,7 +103,10 @@
                 <div class="row">
                     <div class="col">
                         <label for="birth" class="form-label">Idade</label>
-                        <input type="text" class="form-control" id="birth" name="birth" value="{{ idade }} anos" disabled>
+                        <input type="text" class="form-control" id="birth" name="birth" value=" {{ idade }}
+                                                                                                {% if idade != 'Não informado' %}
+                                                                                                    anos
+                                                                                                {% endif %}" disabled>
                     </div>
                 </div>
                 

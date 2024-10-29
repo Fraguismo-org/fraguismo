@@ -68,7 +68,7 @@
                         <p>{{ profile.pontuacao }} pts </p>
                     </div>
                     <div class="col">
-                        <a href="{% url 'meus_cursos'%}"><i class="bi bi-book" style="font-size: 24px; padding-left: 10px"></i></a>
+                        <a href="{% url 'lista_cursos' username=user.username %}"><i class="bi bi-book" style="font-size: 24px; padding-left: 10px"></i></a>
                         <p>Cursos</p>
                     </div>
                     <div class="col">

@@ -96,11 +96,11 @@ def add_rating_point(request):
         if pontuacao == None:
             pontuacao = str(atividade.pontuacao)
 
-        if str.isdigit(pontuacao) and pontuacao != '0':
-            profile.pontuacao += int(pontuacao)
+        if str.isdigit(pontuacao) and pontuacao != '0':            
             LogRating.add_log_rating(profile, int(pontuacao), request.user.id, atividade)
             if len(ProfilePendencia.get_pendencias(profile)) == 0 and profile.is_next_level():
                 profile.change_level()
+            profile.pontuacao += int(pontuacao)
             profile.save() 
         else:
             messages.warning(request, 'Adicione uma pontuação válida!')
