@@ -32,6 +32,7 @@ def log_rating(request):
         logs = LogRating.objects.all().order_by("-updated_at")
     return render(request, 'log_rating.html', {'logs': logs})
 
+
 @login_required(login_url='login')
 def user_log_rating(request):
     data_inicial = request.GET.get("data_inicial")
@@ -61,6 +62,7 @@ def user_log_rating(request):
         }
     )
 
+
 @login_required(login_url='login')
 def user_pending(request):
     profile = Profile.get_or_create_profile(request.user)
@@ -68,7 +70,14 @@ def user_pending(request):
     nivel = nivel.proximo_nivel()
     pendencias = Pendencia.objects.filter(nivel=nivel)
     profile_pendencias = ProfilePendencia.objects.filter(profile=profile)
-    return render(request, 'pendencias/user_pending.html', {'pendencias': pendencias, 'profile_pendencias': profile_pendencias})
+    return render(
+        request, 
+        'pendencias/user_pending.html', 
+        {
+            'pendencias': pendencias, 
+            'profile_pendencias': profile_pendencias
+        }
+    )
 
 
 @user_passes_test(lambda u: u.is_superuser)
@@ -81,7 +90,15 @@ def add_pendencia(request):
         pendencia.save()
     pendencias = Pendencia.objects.all()
     niveis = Nivel.objects.all()
-    return render(request, 'pendencias/add_pendencia.html', {'niveis': niveis, 'pendencias': pendencias})
+    return render(
+        request, 
+        'pendencias/add_pendencia.html', 
+        {
+            'niveis': niveis, 
+            'pendencias': pendencias
+        }
+    )
+
 
 @user_passes_test(lambda u: u.is_superuser)
 def add_rating_point(request):
@@ -116,6 +133,7 @@ def add_rating_point(request):
         }
     )
 
+
 @user_passes_test(lambda u: u.is_superuser)
 def register_activity(request):
     if request.method == 'POST':
@@ -128,6 +146,7 @@ def register_activity(request):
 
     return render(request, 'register_activity.html')
 
+
 @user_passes_test(lambda u: u.is_superuser)
 def remove_pendencia(request, id: int):
     if request.method == 'GET':
@@ -137,7 +156,8 @@ def remove_pendencia(request, id: int):
         pendencia = Pendencia.objects.get(id=id)
         pendencia.delete()
         return redirect('add_pendencia')
-    
+
+
 @user_passes_test(lambda u: u.is_superuser)
 def edita_pendencia(request, id: int):
     if request.method == 'GET':

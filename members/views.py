@@ -36,6 +36,9 @@ def register_user(request):
         user.codigo_conduta = request.POST.get('codigo_conduta', None) == 'on'
         user.username = request.POST.get('username', None)
         user.email = request.POST.get('email', None)
+        if Users.objects.get(email=user.email) != None:
+            messages.error(f'E-mail {user.email} já está em uso!')
+            return render(request, 'authenticate/register_user.html')
         password = request.POST.get('password', None)
         password2 = request.POST.get('password2', None)
         if password == password2:
@@ -56,7 +59,7 @@ def register_user(request):
             user.como_conheceu = request.POST.get('como_conheceu', None)
             user.quem_indicou = request.POST.get('quem_indicou', None)
             user.aonde = request.POST.get('aonde', None)
-        user.save()
+            user.save()
         profile = Profile.get_or_create_profile(user_request=user)
         profile.save()
         if user.quem_indicou:

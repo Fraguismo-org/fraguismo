@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% load static %}
+<div class="shadow p-4 mb-5 bg-body rounded">
+    <div class="text-center">
+        <h1>Lista de usuários</h1>
+    </div>
+    <table class="table">
+        <thead>
+            <th>Username</th>
+            <th>Email</th>
+            <th>É Fraguista</th>
+        </thead>
+        <tbody>
+            {% for usuario in usuarios %}
+            <tr>
+                <td>
+                    <a href="{% url 'pendencia_usuarios' username=usuario.username %}">{{ usuario.username }}
+                </td>
+                <td>
+                    {{ usuario.email }}
+                </td>
+                <td>
+                    {% if usuario.is_fraguista %}
+                        Sim
+                    {% else %}
+                        Não
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
