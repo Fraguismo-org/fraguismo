@@ -2,14 +2,14 @@ import os
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
-from members.forms import RegisterUserForm
 from members.models.profile import Profile
 from members.models.users import Users
 from members.models.profile_pendencia import ProfilePendencia
 from rating.models.log_rating import LogRating
 from django.contrib.auth.decorators import login_required
 from PIL import Image, ImageOps
-from fraguismo.settings import LOGIN_URL
+from datetime import date
+
 
 def login_user(request):
     if request.method == "POST":
@@ -77,7 +77,7 @@ def register_user(request):
             user.quem_indicou = request.POST.get('quem_indicou', None)
             user.aonde = request.POST.get('aonde', None)
             user.save()
-            profile = Profile.get_or_create_profile(user_request=request.user)
+            profile = Profile.get_or_create_profile(user_request=user)
             profile.save()
             if user.quem_indicou:
                 try:                    
@@ -103,7 +103,7 @@ def comunidade(request):
 
 
 @login_required(login_url='login')
-def user_page(request):
+def user_page(request): 
     profile = Profile.get_or_create_profile(user_request=request.user)
     member = Users.get_or_create_member(user_request=request.user)
     if request.method == 'POST':
@@ -149,3 +149,13 @@ def user_page(request):
                 'member': member
             }
         )
+
+
+def profile(request, username: str):
+    member = Users.objects.get(user_ptr_id__username=username)
+    profile = Profile.objects.get(user_id__username=username)
+    if request.method == 'GET':
+        idade  = date.today().year - member.birth.year
+        return render(request, 'members/profile.html', {'member': member, 'profile': profile, 'idade': idade})
+    else:
+        return redirect('user_page')

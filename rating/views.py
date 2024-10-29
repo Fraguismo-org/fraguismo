@@ -68,7 +68,7 @@ def user_pending(request):
     nivel = nivel.proximo_nivel()
     pendencias = Pendencia.objects.filter(nivel=nivel)
     profile_pendencias = ProfilePendencia.objects.filter(profile=profile)
-    return render(request, 'user_pending.html', {'pendencias': pendencias, 'profile_pendencias': profile_pendencias})
+    return render(request, 'pendencias/user_pending.html', {'pendencias': pendencias, 'profile_pendencias': profile_pendencias})
 
 
 @user_passes_test(lambda u: u.is_superuser)
