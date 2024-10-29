@@ -105,6 +105,7 @@ if config('ENV') == 'dev':
     MEDIA_ROOT = os.path.join(BASE_DIR, 'fraguismo/media/')
 else:
     MEDIA_ROOT = "/var/www/fraguismo/media/"
+    MEDIA_URL = 'media/'
 
 LOGIN_REDIRECT_URL ='/'
 LOGIN_URL='members/autheticate/login.html'
