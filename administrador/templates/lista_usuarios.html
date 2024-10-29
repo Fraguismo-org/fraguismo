@@ -10,16 +10,20 @@
         <thead>
             <th>Username</th>
             <th>Email</th>
+            <th>Pendências</th>
             <th>É Fraguista</th>
         </thead>
         <tbody>
             {% for usuario in usuarios %}
             <tr>
                 <td>
-                    <a href="{% url 'pendencia_usuarios' username=usuario.username %}">{{ usuario.username }}
+                    <a href="{% url 'profile' username=usuario.username %}">{{ usuario.username }}
                 </td>
                 <td>
                     {{ usuario.email }}
+                </td>
+                <td>
+                    <a href="{% url 'pendencia_usuarios' username=usuario.username %}"><i class="bi bi-card-checklist" style="font-size: large;"></i></a>
                 </td>
                 <td>
                     {% if usuario.is_fraguista %}
@@ -32,5 +36,21 @@
             {% endfor %}
         </tbody>
     </table>
+    <div class="pagination">
+        <span class="step-links">
+            {% if usuarios.has_previous %}
+                <a href="?page=1"><i class="bi bi-caret-left-square-fill"></i></a>
+                <a href="?page={{ usuarios.previous_page_number }}"><i class="bi bi-caret-left-fill"></i></a>
+            {% endif %}
+            <span class="current">
+                Página {{ usuarios.number }} de {{ usuarios.paginator.num_pages }}
+            </span>
+
+            {% if usuarios.has_next %}
+                <a href="?page={{ usuarios.next_page_number }}"><i class="bi bi-caret-right-fill"></i></a>
+                <a href="?page={{ usuarios.paginator.num_pages }}"><i class="bi bi-caret-right-square-fill"></i></a>
+            {% endif %}
+        </span>
+    </div>
 </div>
 {% endblock %}
