@@ -122,7 +122,7 @@ def add_rating_point(request):
         else:
             messages.warning(request, 'Adicione uma pontuação válida!')
         return redirect('logs')
-    users = User.objects.all()
+    users = Users.objects.filter(is_fraguista=True)
     atividades = Atividade.objects.all()
     return render(
         request,
