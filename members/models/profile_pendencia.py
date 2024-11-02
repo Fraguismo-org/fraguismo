@@ -20,7 +20,7 @@ class ProfilePendencia(models.Model):
     updated_at = models.DateTimeField(default=datetime.now)
 
     def add_pendencias(profile, pendencias):
-        user_pendencias = ProfilePendencia.objects.filter(profile=profile).filter(nivel=pendencia.nivel)
+        user_pendencias = ProfilePendencia.objects.filter(profile=profile) #.filter(nivel=pendencia.nivel)
         for pendencia in pendencias:
             if pendencia in user_pendencias:
                 continue
