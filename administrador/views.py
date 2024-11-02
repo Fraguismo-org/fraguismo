@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.core.paginator import Paginator, InvalidPage, EmptyPage
 from .models.acesso import Acesso
 from members.models.users import Users
 from members.models.profile import Profile
@@ -15,7 +16,16 @@ def administrador(request):
 
 @user_passes_test(lambda u: u.is_superuser)
 def lista_usuarios(request):
-    usuarios = Users.objects.all()
+    usuarios_list = Users.objects.all()
+    paginas = Paginator(usuarios_list, 25)
+    try:
+        page = int(request.GET.get('page', '1'))
+    except ValueError:
+        page = 1
+    try:
+        usuarios = paginas.page(page)
+    except (EmptyPage, InvalidPage):
+        usuarios = paginas.page(paginas.num_pages)
     return render(request, 'lista_usuarios.html', {'usuarios': usuarios,})
 
 @user_passes_test(lambda u: u.is_superuser)
