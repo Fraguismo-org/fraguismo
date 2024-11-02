@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import user_passes_test, login_required
+from django.views.decorators.csrf import csrf_exempt
 from django.contrib import messages
 from .models.log_rating import LogRating
 from .models.atividade import Atividade
@@ -62,14 +63,22 @@ def user_log_rating(request):
         }
     )
 
-
+@csrf_exempt
 @login_required(login_url='login')
 def user_pending(request):
+    if request.method == 'POST':
+        p_pendencia_id = request.POST.get('profile_pendencia_id')
+        p_pendencia = ProfilePendencia.objects.get(id=p_pendencia_id)
+        p_pendencia.pendencia_status = 1
+        p_pendencia.save()
     profile = Profile.get_or_create_profile(request.user)
     nivel = Nivel.objects.get(nivel=profile.nivel.lower())
     nivel = nivel.proximo_nivel()
     pendencias = Pendencia.objects.filter(nivel=nivel)
-    profile_pendencias = ProfilePendencia.objects.filter(profile=profile)
+    profile_pendencias = ProfilePendencia.objects.filter(profile=profile).filter(nivel=nivel)
+    if len(profile_pendencias) < len(pendencias):
+        ProfilePendencia.add_pendencias(profile, pendencias)
+        profile_pendencias = ProfilePendencia.objects.filter(profile=profile).filter(nivel=nivel)    
     return render(
         request, 
         'pendencias/user_pending.html', 
@@ -115,7 +124,7 @@ def add_rating_point(request):
 
         if str.isdigit(pontuacao) and pontuacao != '0':            
             LogRating.add_log_rating(profile, int(pontuacao), request.user.id, atividade)
-            if len(ProfilePendencia.get_pendencias(profile)) == 0 and profile.is_next_level():
+            if profile.nivel.lower() != 'diretor' and len(ProfilePendencia.get_pendencias(profile)) == 0 and profile.is_next_level():                
                 profile.change_level()
             profile.pontuacao += int(pontuacao)
             profile.save() 
