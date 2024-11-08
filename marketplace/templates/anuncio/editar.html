@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block content %}
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <h4>Fotos Anúncio</h4>
+    <div class="existing-images">
+        {% for image in images %}
+            <div class="image-item">
+                <img src="{{ image.image.url }}" alt="Imagem do anúncio" width="150">
+                <label>
+                    <input type="checkbox" name="delete_image_{{ image.id }}"> Excluir
+                </label>
+            </div>
+        {% endfor %}
+    </div>
+    {{ form.as_p }}
+    
+    <button type="submit" class="btn btn-primary">Salvar Alterações</button>
+</form>
+{% endblock content %}

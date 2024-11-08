@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from marketplace.models.anuncio import Anuncio
 from marketplace.forms.anuncio_form import AnuncioForm
+from marketplace.models.image import Images
 
 
 @login_required
@@ -15,11 +16,14 @@ def cadastrar_anuncio(request):
     if request.method == 'POST':
         form = AnuncioForm(request.POST)
         if form.is_valid():
+            anuncio = form.save(commit=False)
+            anuncio.user = request.user
+            anuncio.save()
             messages.success(request, "Anúncio cadastrado com sucesso!")
-            return redirect('anuncio/listar.html')
+            return redirect('listar_anuncios')
     else:
         form = AnuncioForm()
-        return render(request, "anuncio/cadastrar.html", {'form': form})
+    return render(request, "anuncio/cadastrar.html", {'form': form})
 
 
 @login_required
@@ -37,7 +41,17 @@ def editar_anuncio(request, id: int):
     if request.method == 'GET':        
         if id:
             anuncio = Anuncio.objects.get(id=id)
-            return render(request, "anuncio/editar.html", anuncio)
+            form = AnuncioForm(instance=anuncio)
+            images = Images.objects.filter(anuncio=anuncio)
+            return render(
+                request, 
+                "anuncio/editar.html",
+                {
+                    'form': form,
+                    'anuncio': anuncio,
+                    'images': images,
+                }
+            )
         else:
             messages.error(request, "Anúncio não encontrado.")
             return redirect('anuncio/listar.html')

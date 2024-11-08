@@ -3,7 +3,11 @@
 <h1>Cadastro de Anúncio</h1>
 <form method="POST">
     {% csrf_token %}
-    {{ form }}
-    <input type="submit" value="Criar">
+    {{ form.as_p }}
+    <div class="row text-end">
+        <div class="col">
+            <input type="submit" class="btn btn-primary" value="Criar">
+        </div>
+    </div>
 </form>
 {% endblock content %}
