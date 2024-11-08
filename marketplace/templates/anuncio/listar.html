@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Anúncios {{ user.username }}</h1>
+<table class="table">
+    <tbody>
+    {% for anuncio in anuncios %}
+    <tr>
+        <tb>{{ anuncio.codigo_anuncio }}</tb>
+        <tb>{{ anuncio.images.first }}</tb>
+        <tb>{{ anuncio.titulo }}</tb>
+        <tb>{{ anuncio.status }}</tb>
+        <tb>{{ anuncio.preco }}</tb>
+        <tb><a href="{% url 'editar_anuncio' id=anuncio.id %}"><i class="bi bi-pencil-fill"></i></a></tb>
+        <tb><a href="{% url 'deletar_anuncio' id=anuncio.id %}"><i class="bi bi-trash-fill"></i></a></tb>
+    </tr>
+    {% endfor %}
+    <tbody>    
+</table>
+{% endblock %}

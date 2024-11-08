@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div id=content class="container">
+    <div class="row">
+        <div class="col-6 col-sm-3" id="logo"></div>
+        <div class="col-6 col-md-9" id="search-area"></div>
+    </div>
+    <div class="col col-sm-4" id="filtro"></div>
+    <div class="col-6 col-sm-8" id="content">
+        <div class="row text-start">
+            <div class="col">
+                <span>pag 1 de 12</span>
+            <div>
+            <div class="col"></div>
+            <div class="col">
+                <label class="form-label" for="ordernar">Ordernar por: </label>
+                <select id="ordernar" name="ordenar">
+                    <option value="data_asc" selected>Mais novos</option>
+                    <option value="data_desc">Mais antigos</option>                
+                    <option value="preco_asc">Menor preço</option>
+                    <option value="preco_desc">Mario preço</option>
+                </select>
+            </div>
+        </div>
+        <div class="row">
+        </div>
+    </div>
+</div>
+
+{% endblock %}
