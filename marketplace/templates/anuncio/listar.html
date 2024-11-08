@@ -1,20 +1,40 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>Anúncios {{ user.username }}</h1>
-<table class="table">
-    <tbody>
-    {% for anuncio in anuncios %}
-    <tr>
-        <tb>{{ anuncio.codigo_anuncio }}</tb>
-        <tb>{{ anuncio.images.first }}</tb>
-        <tb>{{ anuncio.titulo }}</tb>
-        <tb>{{ anuncio.status }}</tb>
-        <tb>{{ anuncio.preco }}</tb>
-        <tb><a href="{% url 'editar_anuncio' id=anuncio.id %}"><i class="bi bi-pencil-fill"></i></a></tb>
-        <tb><a href="{% url 'deletar_anuncio' id=anuncio.id %}"><i class="bi bi-trash-fill"></i></a></tb>
-    </tr>
-    {% endfor %}
-    <tbody>    
-</table>
+<div class="shadow p-4 mb-5 bg-body rounded">
+<div class="text-center">
+    <h1>Anúncios {{ user }}</h1>
+</div>
+<hr>
+    <div class="responsive-table">
+        {% if anuncio|length == 0 %}
+        <div class="text-center">
+            <h4>Sem anúncios para listar!</h4>
+        </div>
+        {% else %}
+        <table class="table">
+            <tbody>
+                {% for anuncio in anuncios %}
+                <tr>
+                    <td>{{ anuncio.codigo_anuncio }}</td>
+                    <td>{{ anuncio.images.first }}</td>
+                    <td>{{ anuncio.titulo }}</td>
+                    <td>{{ anuncio.status_anuncio }}</td>
+                    <td>{{ anuncio.preco }}</td>
+                    <td><a href="{% url 'editar_anuncio' id=anuncio.id %}"><i class="bi bi-pencil-fill"></i></a></td>
+                    <td><a href="{% url 'deletar_anuncio' id=anuncio.id %}"><i class="bi bi-trash-fill"></i></a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% endif %}
+    </div>
+<hr>
+<div class="row text-end">
+    <div class="col">
+        <a class="btn btn-primary" href="{% url 'cadastrar_anuncio' %}">Criar anúncio</a>
+    </div>
+</div>
+</div>
+
 {% endblock %}

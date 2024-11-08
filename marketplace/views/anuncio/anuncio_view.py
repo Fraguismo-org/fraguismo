@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from marketplace.models.anuncio import Anuncio
+from marketplace.forms.anuncio_form import AnuncioForm
 
 
 @login_required
@@ -12,11 +13,13 @@ def listar_anuncios(request):
 @login_required
 def cadastrar_anuncio(request):
     if request.method == 'POST':
-        Anuncio.cadastrar_novo()
-        messages.success(request, "Anúncio cadastrado com sucesso!")
-        return redirect('anuncio/listar.html')
+        form = AnuncioForm(request.POST)
+        if form.is_valid():
+            messages.success(request, "Anúncio cadastrado com sucesso!")
+            return redirect('anuncio/listar.html')
     else:
-        return render(request, "anuncio/cadastrar.html")
+        form = AnuncioForm()
+        return render(request, "anuncio/cadastrar.html", {'form': form})
 
 
 @login_required

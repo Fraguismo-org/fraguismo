@@ -30,7 +30,8 @@ class RegisterUserForm(UserCreationForm):
 
     class Meta:
         model = Users
-        fields = ('username', 'first_name', 'last_name', 'email', 'password1', 'password2', 'city', 'fone', 'instagram', 'birth', 'job_title', 'lightining_wallet', 'bsc_wallet', 'como_conheceu', 'quem_indicou', 'aonde')
+        fields = ('username', 'first_name', 'last_name', 'email', 'password1', 'password2', 'city', 'fone', 'instagram', 'birth', 
+                  'job_title', 'lightining_wallet', 'bsc_wallet', 'como_conheceu', 'quem_indicou', 'aonde')
 
     def __init__(self, *args, **kwargs):
         referrer = kwargs.pop('referrer', None)  # Pega o parâmetro 'ref'
