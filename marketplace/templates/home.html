@@ -1,31 +1,52 @@
 {% extends 'base.html' %}
-
 {% block content %}
-<div id=content class="container">
-    <div class="row">
-        <div class="col-6 col-sm-3" id="logo"></div>
-        <div class="col-6 col-md-9" id="search-area"></div>
-    </div>
-    <div class="col col-sm-4" id="filtro"></div>
-    <div class="col-6 col-sm-8" id="content">
-        <div class="row text-start">
-            <div class="col">
-                <span>pag 1 de 12</span>
-            <div>
-            <div class="col"></div>
-            <div class="col">
-                <label class="form-label" for="ordernar">Ordernar por: </label>
-                <select id="ordernar" name="ordenar">
-                    <option value="data_asc" selected>Mais novos</option>
-                    <option value="data_desc">Mais antigos</option>                
-                    <option value="preco_asc">Menor preço</option>
-                    <option value="preco_desc">Mario preço</option>
-                </select>
-            </div>
+{% load static %}
+<link rel="stylesheet" href="{% static '/css/styles.css' %}">
+<div class="row text-center">
+    <h1>Marketplace Fraguismo</h1>
+</div>
+<div class="shadow p-4 mb-5 bg-body rounded">
+    <div class="container">
+        <div class="row text-center">
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon1"><i class="bi bi-search"></i></span>
+                <input type="text" class="form-control" placeholder="Produto ou serviço" aria-label="produto-servico" aria-describedby="basic-addon1">
+            </div>            
         </div>
-        <div class="row">
+        <div class="row" id="filtro">
+            <div class="" id="content">
+                <div class="row text-start">
+                    <div class="col">
+                        <span>pag 1 de 12</span>
+                    </div>                    
+                    <div class="col-9 col-sm-3 text-end">
+                        <label class="form-label" for="ordernar">Ordernar por: </label>
+                        <select id="ordernar" name="ordenar">
+                            <option value="data_asc" selected>Mais novos</option>
+                            <option value="data_desc">Mais antigos</option>                
+                            <option value="preco_asc">Menor preço</option>
+                            <option value="preco_desc">Mario preço</option>
+                        </select>
+                    </div>
+                </div>                
+                {% for linha in linhas %}                
+                <div class="row" >
+                    {% for coluna in colunas %}
+                    <div class="col">
+                        {% with pos="{% widthratio linha 1 coluna %}" %}
+                        <div class="card" style="width: 18rem;">
+                            <img src="" class="card-img-top" alt="">
+                            <div class="card-body">
+                              <h5 class="card-title">{{ anuncios.{% widthratio linha 1 coluna %} }}</h5>
+                            </div>
+                          </div>
+                    </di>
+                    {% endfor %}                    
+                </div>
+                {% endfor %}                
+            </div>
         </div>
     </div>
 </div>
 
-{% endblock %}
+{% endblock content %}

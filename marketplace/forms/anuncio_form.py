@@ -10,7 +10,7 @@ class MultipleFileField(forms.FileField):
         kwargs.setdefault('widget', MultipleFileInput())
         super().__init__(*args, **kwargs)
 
-    def clea(self, data, initial=None):
+    def clean(self, data, initial=None):
         single_file_clean = super().clean
         if isinstance(data, (list, tuple)):
             result = [single_file_clean(d, initial) for d in data]
