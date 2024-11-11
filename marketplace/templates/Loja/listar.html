@@ -3,7 +3,7 @@
 {% block content %}
 <div class="shadow p-4 mb-5 bg-body rounded">
     <div class="text-center">
-        <h1>Lojas {{ user }}</h1>
+        <h1>Lojas de {{ user }}</h1>
     </div>
     <hr>
     <div class="responsive-table">
@@ -20,22 +20,20 @@
                     <th>Localidade</th>
                     <th>Email</th>
                     <th>Telefone</th>
-                    <th>Instagram</th>
                     <th>Ações</th>
                 </tr>
             </thead>
             <tbody>
                 {% for loja in lojas %}
                 <tr>
-                    <td>{{ loja.id }}</td>
+                    <td><a href="{% url 'page_loja' cod_loja=loja.cod_loja %}">{{ loja.cod_loja }}</a></td>
                     <td>{{ loja.nome }}</td>
                     <td>{{ loja.localidade }}</td>
                     <td>{{ loja.email }}</td>
                     <td>{{ loja.telefone }}</td>
-                    <td>{{ loja.instagram }}</td>
                     <td>
-                        <a href="{% url 'editar_loja' id=loja.id %}"><i class="bi bi-pencil-fill"></i></a>
-                        <a href="{% url 'deletar_loja' id=loja.id %}"><i class="bi bi-trash-fill"></i></a>
+                        <a href="{% url 'editar_loja' loja_id=loja.id %}"><i class="bi bi-pencil-fill"></i></a>
+                        <a href="{% url 'deletar_loja' loja_id=loja.id %}"><i class="bi bi-trash-fill"></i></a>
                     </td>
                 </tr>
                 {% endfor %}

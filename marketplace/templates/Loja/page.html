@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/styles.css' %}">
+
+<div class="shadow p-4 mb-5 bg-body rounded">
+    <div class="container">
+        <div class="row">
+            <div class="row">
+                <h2>{{ loja.nome }}</h2>
+            </div>
+            <div class="row">
+                <p class="small">{{ loja.cod_loja }}</p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-8">
+                <h4>Descrição</h4>
+                <hr>
+                <p>{{ loja.descricao }}</p>
+
+                <br>
+                <h4>Localidade</h4>
+                <hr>
+                <p><i class="bi bi-geo-alt-fill"></i> {{ loja.localidade }}</p>
+
+                <br>
+                <h4>Contato</h4>
+                <hr>
+                <p><i class="bi bi-envelope-at-fill"></i> {{ loja.email }}</p>
+                <p><i class="bi bi-telephone-fill"></i> {{ loja.telefone }}</p>
+                <p><i class="bi bi-whatsapp"></i> {{ loja.whatsapp }}</p>
+                <p><i class="bi bi-telegram"></i> {{ loja.telegram }}</p>
+
+                <br>
+                <h4>Redes Sociais</h4>
+                <hr>
+                {% if loja.instagram %}
+                    <p><i class="bi bi-instagram"></i> <a href="https://instagram.com/{{ loja.instagram }}" target="_blank">{{ loja.instagram }}</a></p>
+                {% endif %}
+                {% if loja.facebook %}
+                    <p><i class="bi bi-facebook"></i> <a href="https://facebook.com/{{ loja.facebook }}" target="_blank">{{ loja.facebook }}</a></p>
+                {% endif %}
+                {% if loja.twitter %}
+                    <p><i class="bi bi-twitter"></i> <a href="https://twitter.com/{{ loja.twitter }}" target="_blank">{{ loja.twitter }}</a></p>
+                {% endif %}
+                {% if loja.web_site %}
+                    <p><i class="bi bi-globe"></i> <a href="{{ loja.web_site }}" target="_blank">Website</a></p>
+                {% endif %}
+            </div>
+
+            <div class="col col-sm-4">
+                <div class="card" style="width: 22rem;">
+                    {% if loja.user.profile.pic_profile %}
+                        <img src="{{ loja.user.profile.pic_profile.url }}" class="card-img-top" alt="Imagem do proprietário">
+                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title">{{ loja.user.username }}</h5>
+                        {% if user.is_authenticated %}
+                            <p><i class="bi bi-telephone-fill"></i> {{ loja.user.profile.fone }}</p>
+                            <p><i class="bi bi-envelope-at-fill"></i> {{ loja.user.email }}</p>
+                            <p><i class="bi bi-geo-alt-fill"></i> Localidade: {{ loja.user.profile.city }}</p>
+                        {% else %}
+                            <p>Faça login para ver as informações de contato!</p>
+                            <a class="btn btn-primary" href="{% url 'login' %}">Login</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

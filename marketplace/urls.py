@@ -16,4 +16,5 @@ urlpatterns = [
     path('loja/cadastrar/', view=cadastrar_loja, name='cadastrar_loja'),
     path('loja/editar/<int:loja_id>/', editar_loja, name='editar_loja'),
     path('loja/deletar/<int:loja_id>/', deletar_loja, name='deletar_loja'),
+    path('loja/page/<uuid:cod_loja>/', page_loja, name='page_loja'),
 ]
