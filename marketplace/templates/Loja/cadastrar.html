@@ -1,7 +1,10 @@
 {% extends "base.html" %}
 {% block content %}
-<h1>Cadastrar Loja</h1>
-<form method="post">
+<div class="shadow p-4 mb-5 bg-body rounded">
+    <div class="text-center">
+        <h1>Cadastro de Loja</h1>
+    </div>
+<form method="post" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form.as_p }}
     <div class="row text-end">
@@ -10,4 +13,5 @@
         </div>
     </div>
 </form>
+</div>
 {% endblock %}

@@ -12,7 +12,7 @@ urlpatterns = [
     path('anuncio/deletar/<int:id>', view=deletar_anuncio, name='deletar_anuncio'),
     path('anuncio/page/<str:cod_anuncio>', view=page_anuncio, name='page_anuncio'),
 
-    path('loja/listar/', view=listar_loja, name='listar_loja'),
+    path('loja/listar/', view=listar_lojas, name='listar_lojas'),
     path('loja/cadastrar/', view=cadastrar_loja, name='cadastrar_loja'),
     path('loja/editar/<int:loja_id>/', editar_loja, name='editar_loja'),
     path('loja/deletar/<int:loja_id>/', deletar_loja, name='deletar_loja'),

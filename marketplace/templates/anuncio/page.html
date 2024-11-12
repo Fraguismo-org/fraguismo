@@ -18,12 +18,12 @@
                     <div class="carousel-inner">
                         {% if imagens|length == 0 or imagens is None %}
                             <div class="carousel-item active">
-                                <img src="{% static 'images/default-fraguinha.png' %}" class="d-block w-100" alt="...">
+                                <img src="{% static 'images/default-fraguinha.png' %}" class="d-block w-100" alt="..." width="300">
                             </div>
                         {% else %}
                         {% for imagem in imagens %}
                             <div class="carousel-item active">
-                                <img src="{{ imagem.image }}" class="d-block w-100">
+                                <img src="{{ imagem.image.url }}" class="d-block w-100" width="300">
                             </div>
                         {% endfor %}
                         {% endif %}
@@ -67,6 +67,28 @@
             </div>
         </div>    
     </div>
+</div>
+
+<div class="shadow p-4 mb-5 bg-body rounded">
+    <div class="row">
+        <h3>Deixe um comentário</h3>
+    </div>
+    <br>
+    <form action="post" id="form_comentario">
+        <div class="row">
+            <input type="text" class="form-control" id="titulo" name="titulo" placeholder="Título">
+        </div>
+        <br>
+        <div class="row">
+            <textarea name="comentario" id="comentario" class="form-control" placeholder="Comentário..." ></textarea>
+        </div>
+        <br>
+        <div class="row text-end">
+            <div class="col">
+                <a href="#" class="btn btn-primary">Enviar</a>
+            </div>
+        </div>
+    </form>
 </div>
 
 {% endblock content %}

@@ -5,9 +5,20 @@ class LojaForm(forms.ModelForm):
     class Meta:
         model = Loja
         fields = [
-            'nome', 'descricao', 'localidade', 'email', 'telefone',
-            'instagram', 'facebook', 'twitter', 'web_site', 'whatsapp', 'telegram'
+            'logo',
+            'nome',
+            'descricao', 
+            'localidade', 
+            'email', 
+            'telefone',
+            'instagram',
+            'facebook',
+            'twitter',
+            'web_site',
+            'whatsapp',
+            'telegram',
         ]
+
         widgets = {
             'nome': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Nome da Loja'}),
             'descricao': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Descrição'}),
@@ -16,7 +27,7 @@ class LojaForm(forms.ModelForm):
             'telefone': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Telefone'}),
             'instagram': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Instagram'}),
             'facebook': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Facebook'}),
-            'twitter': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Twitter'}),
+            'twitter': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'X'}),
             'web_site': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Website'}),
             'whatsapp': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'WhatsApp'}),
             'telegram': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Telegram'}),

@@ -4,6 +4,7 @@ from django.contrib import messages
 from marketplace.models.anuncio import Anuncio
 from marketplace.forms.anuncio_form import AnuncioForm
 from marketplace.models.image import Images
+from marketplace.forms.image_form import ImagesForm
 from members.models.profile import Profile
 from members.models.users import Users
 from datetime import datetime
@@ -17,16 +18,25 @@ def listar_anuncios(request):
 @login_required
 def cadastrar_anuncio(request):
     if request.method == 'POST':
-        form = AnuncioForm(request.POST)
-        if form.is_valid():
-            anuncio = form.save(commit=False)
+        anuncio_form = AnuncioForm(request.POST)
+        imagem_form = ImagesForm(request.POST)
+        if anuncio_form.is_valid():
+            anuncio = anuncio_form.save(commit=False)
             anuncio.user = request.user
             anuncio.save()
+            if request.FILES:
+                for image in request.FILES.getlist('images'):
+                    img = Images(image=image, anuncio=anuncio)
+                    img.save()
             messages.success(request, "Anúncio cadastrado com sucesso!")
             return redirect('listar_anuncios')
     else:
-        form = AnuncioForm()
-    return render(request, "anuncio/cadastrar.html", {'form': form})
+        anuncio_form = AnuncioForm()
+        images_form = ImagesForm()
+    return render(request, "anuncio/cadastrar.html", {
+        'anuncio_form': anuncio_form, 
+        'images_form': images_form
+    })
 
 
 @login_required
