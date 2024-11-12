@@ -13,7 +13,7 @@ class Anuncio(models.Model):
     id = models.AutoField(primary_key=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     cod_anuncio = models.UUIDField(unique=True, null=False, default=uuid4, editable=False)
-    titulo = models.CharField(max_length=255, null=False)
+    titulo = models.CharField(max_length=50, null=False)
     descricao = models.TextField(max_length=4096, null=False)    
     status_anuncio = models.IntegerField(choices=STATUS_ANUNCIO, default=1)
     preco = models.DecimalField(decimal_places=2, null=False, default=0.00, max_digits=15)

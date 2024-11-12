@@ -1,9 +1,10 @@
 {% extends 'base.html' %}
 {% block content %}
 <h1>Cadastro de Anúncio</h1>
-<form method="POST">
+<form method="POST" enctype="multipart/form-data">
     {% csrf_token %}
-    {{ form.as_p }}
+    <input class="form-control" id="images" name="images" type="file" accept=".png, .jpeg, .jpg" multiple>
+    {{ anuncio_form.as_p }}
     <div class="row text-end">
         <div class="col">
             <input type="submit" class="btn btn-primary" value="Criar">

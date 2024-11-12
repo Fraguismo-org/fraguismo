@@ -1,31 +1,81 @@
 {% extends 'base.html' %}
-
 {% block content %}
-<div id=content class="container">
-    <div class="row">
-        <div class="col-6 col-sm-3" id="logo"></div>
-        <div class="col-6 col-md-9" id="search-area"></div>
+{% load static %}
+{% load humanize %}
+<link rel="stylesheet" href="{% static '/css/styles.css' %}">
+<div class="shadow p-4 mb-5 bg-body rounded">
+    {% if user.is_authenticated %}
+        {% if member.is_fraguista %}        
+            <nav class="navbar navbar-expand-lg bg-body-tertiary">
+                <div class="container-fluid">
+                    <div class="collapse navbar-collapse" id="navbarNav">
+                        <ul class="navbar-nav">
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="{% url 'listar_anuncios' %}">Meus Anúncios</a>
+                            </li>
+                            <li class="nav-item active">
+                                <a href="{% url 'listar_lojas'%}" class="nav-link">Minhas lojas</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        {% endif %}
+    {% endif %}
+    <div class="row text-center">
+        <h1>Marketplace Fraguismo</h1>
     </div>
-    <div class="col col-sm-4" id="filtro"></div>
-    <div class="col-6 col-sm-8" id="content">
-        <div class="row text-start">
-            <div class="col">
-                <span>pag 1 de 12</span>
-            <div>
-            <div class="col"></div>
-            <div class="col">
-                <label class="form-label" for="ordernar">Ordernar por: </label>
-                <select id="ordernar" name="ordenar">
-                    <option value="data_asc" selected>Mais novos</option>
-                    <option value="data_desc">Mais antigos</option>                
-                    <option value="preco_asc">Menor preço</option>
-                    <option value="preco_desc">Mario preço</option>
-                </select>
+    <br>
+    <div class="container">
+        <div class="row text-center">
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon1"><i class="bi bi-search"></i></span>
+                <input type="text" class="form-control" placeholder="Produto ou serviço" aria-label="produto-servico" aria-describedby="basic-addon1">
             </div>
         </div>
-        <div class="row">
+        <div class="row" id="content">            
+            <div class="row text-start" style="padding-bottom: 20px;">
+                <div class="col">
+                    <span>pag 1 de 12</span>
+                </div>
+                <div class="col-8 col-sm-4 text-end">
+                    <label class="form-label" for="ordernar">Ordernar por: </label>
+                    <select id="ordernar" name="ordenar">
+                        <option value="data_asc" selected>Mais novos</option>
+                        <option value="data_desc">Mais antigos</option>
+                        <option value="preco_asc">Menor preço</option>
+                        <option value="preco_desc">Mario preço</option>
+                    </select>
+                </div>
+            </div>
+            <br>
+            <div class="row" >
+                {% for anuncio in anuncios %}
+                <div class="col">
+                    <div class="card" style="width: 18rem; margin-bottom: 20px;">
+                        <img
+                            {% if anuncio.imagens.first is not None %}
+                                src="{{ anuncio.imagens.first.image.url }}"
+                            {% else %}
+                                src="{% static 'images/default-fraguinha.png'%}"
+                            {% endif %}
+                                    class="card-img-top" alt="">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ anuncio.titulo }}</h5>
+                            <p>R${{ anuncio.preco|intcomma}}</p>
+                            <p>{{ anuncio.descricao|slice:"0:20"}}...</p>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="row text-end">
+                <div class="col">
+                    <span>pag 1 de 12</span>
+                </div>
+            </div>
         </div>
     </div>
 </div>
 
-{% endblock %}
+{% endblock content %}
