@@ -26,3 +26,9 @@ def contato(request):
         mensagem.save()
         return redirect('index')
     return render(request, 'contato.html')
+
+def administrativo(request):
+    return redirect('index')
+
+def agenda(request):
+    return redirect('index')
