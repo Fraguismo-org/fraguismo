@@ -95,12 +95,12 @@
                                 </li>                                
                             </ul>
                         </li>
-                        <li class="nav-item">
+                        {% comment %} <li class="nav-item">
                             <a class="nav-link" href="https://fraguismo.org/stores/">Lojas</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="https://fraguismo.org/todos-os-anuncios/">Negocie em Bitcoin</a>
-                        </li>
+                            <a class="nav-link" href="#">Negocie em Bitcoin</a>
+                        </li> {% endcomment %}
                     {% if user.is_authenticated %}
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'user_page' %}">Minha Área</a>
@@ -129,7 +129,7 @@
                                 </a>                    
                         {% endif %}
                         <li class="nav-item">
-                            <a class="btn btn-warning align-self-center" style="border-radius: 20px;" aria-current="page" href="https://fraguismo.org/postar-anuncio">
+                            <a class="btn btn-warning align-self-center" style="border-radius: 20px;" aria-current="page" href="#">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                 Publique aqui
                             </a>
