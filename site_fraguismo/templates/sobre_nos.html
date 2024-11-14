@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% load static %}
+<div class="content">
+    <div class="row">
+        <div class="col-sm-6">
+    
+            <h3>Sobre a nossa instituição</h3>
+            <br>
+            <p>O Fraguismo é uma instituição formada por um grupo de homens e mulheres que se uniram, de forma voluntária e pacífica, em uma comunidade que compartilha fé e senso moral. Como crença comum, acreditamos que o Criador dotou todos os homens e todas as mulheres de certos direitos inalienáveis, os quais são a Vida, a Liberdade e a Propriedade. Desses direitos deriva o Princípio de Não-Agressão: entendemos que todo indivíduo tem o dever ético de abstenção quanto a iniciar agressão, ameaçar factualmente de agressão ou cometer fraude contra qualquer outra pessoa.</p>
+            <br>
+            <h3>O que nós fazemos</h3>
+            <br>
+            <p>Nossa instituição tem como objetivo divulgar as ideias libertárias e anarco-capitalistas, porém, não somente de forma teórica, mas, principalmente, de forma prática para utilização no cotidiano.</p>
+            
+            <p>Uma das nossas principais ferramentas é o Bitcoin. Uma moeda não-política, com oferta limitada e custo de emissão atrelado ao custo de energia. O Bitcoin é muito mais confiável que qualquer moeda fiduciária estatal, que pode ser emitida de forma excessiva por governos populistas.</p>
+            
+            <p>Com o objetivo de ampliar o uso dessa nova moeda na sociedade, criamos este site que divulga lojas, produtos e serviços que aceitam pagamentos em Bitcoin.</p>
+        </div>
+        <div class="col-sm-6">
+            <img src="{% static 'images/sobre_nos/Comunidade-Libertaria.jpeg' %}" width="500">
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

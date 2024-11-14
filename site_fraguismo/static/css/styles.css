@@ -79,3 +79,8 @@ a, u {
     color: red;
     display: none;
 }
+
+.content {
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
