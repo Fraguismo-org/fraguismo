@@ -79,3 +79,33 @@ a, u {
     color: red;
     display: none;
 }
+
+.image-container {
+    width: 18rem;
+    overflow: hidden;
+}
+
+.preco-card {
+    color: gold;
+    font-weight: bolder;
+    font-size: x-large;
+}
+
+.departamento-display {
+    color: lightgray;
+    font-size: small;
+}
+
+.zoom-image {
+    width: 100%;
+    transition: transform 0.3s ease;
+}
+
+.card:hover .zoom-image {
+    transform: scale(1.2);
+}
+
+#star:hover {
+    color: gold;
+    font-size: large;
+}

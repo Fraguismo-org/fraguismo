@@ -39,7 +39,7 @@
                 </div>
                 <br>
                 <div class="row text-end">
-                    <h5 class="self">R$ {{ anuncio.preco }}</h5>
+                    <h5 class="preco-card">R$ {{ anuncio.preco }}</h5>
                 </div>                
                 <br>
                 <h4>Descrição</h4>
@@ -75,6 +75,26 @@
     </div>
     <br>
     <form action="post" id="form_comentario">
+        <div class="row">
+            <p>
+                Preço:  
+                <i class="bi bi-star-fill" id="star"></i>
+                <i class="bi bi-star-fill" id="star"></i>
+                <i class="bi bi-star-fill" id="star"></i>
+                <i class="bi bi-star-fill" id="star"></i>
+                <i class="bi bi-star-fill" id="star"></i>
+            </p>
+        </div>
+        <div class="row">
+            <p>
+                Qualidade: 
+                <i class="bi bi-star-fill" id="star"></i>
+                <i class="bi bi-star-fill" id="star"></i>
+                <i class="bi bi-star-fill" id="star"></i>
+                <i class="bi bi-star-fill" id="star"></i>
+                <i class="bi bi-star-fill" id="star"></i>
+            </p>
+        </div>        
         <div class="row">
             <input type="text" class="form-control" id="titulo" name="titulo" placeholder="Título">
         </div>

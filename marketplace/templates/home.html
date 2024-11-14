@@ -52,20 +52,25 @@
             <div class="row" >
                 {% for anuncio in anuncios %}
                 <div class="col">
-                    <div class="card" style="width: 18rem; margin-bottom: 20px;">
-                        <img
+                    <a href="{% url 'page_anuncio' cod_anuncio=anuncio.cod_anuncio %}">
+                    <div class="card" style="width: 18rem; margin-bottom: 20px;" onclick=redirect({{ anuncio.cod_anuncio }})>
+                        <div class="image-container">
+                            <img
                             {% if anuncio.imagens.first is not None %}
                                 src="{{ anuncio.imagens.first.image.url }}"
                             {% else %}
                                 src="{% static 'images/default-fraguinha.png'%}"
                             {% endif %}
-                                    class="card-img-top" alt="">
+                                    class="zoom-image" alt="">
+                        </div>                        
                         <div class="card-body">
                             <h5 class="card-title">{{ anuncio.titulo }}</h5>
-                            <p>R${{ anuncio.preco|intcomma}}</p>
+                            <p class="departamento-display">{{ anuncio.get_departamento_display }}</p>
+                            <p class="preco-card">R${{ anuncio.preco|intcomma}}</p>
                             <p>{{ anuncio.descricao|slice:"0:20"}}...</p>
                         </div>
                     </div>
+                    </a>
                 </div>
                 {% endfor %}
             </div>
@@ -77,5 +82,4 @@
         </div>
     </div>
 </div>
-
 {% endblock content %}
