@@ -97,12 +97,12 @@
                         </li>
                         {% comment %} <li class="nav-item">
                             <a class="nav-link" href="https://fraguismo.org/stores/">Lojas</a>
-                        </li>
+                        </li> {% endcomment %}
                         <li class="nav-item">
 
                             <a class="nav-link" href="{% url 'home' %}">Marketplace</a>
                         </li>                    
-
+                        {% comment %}
                             <a class="nav-link" href="#">Negocie em Bitcoin</a>
                         </li> {% endcomment %}
                     {% if user.is_authenticated %}
@@ -181,7 +181,7 @@
                                     </a>
                                 </li>
                                 <li class="list-group">
-                                    <a href="https://www.youtube.com/@fraguismo7066" target="_blank" style="padding: 10px;">
+                                    <a href="https://www.youtube.com/@fraguismo" target="_blank" style="padding: 10px;">
                                         <i class="bi bi-youtube" style="font-size: 24px;"></i>
                                     </a>
                                 </li>
