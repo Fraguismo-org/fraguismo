@@ -27,56 +27,77 @@
     </div>
     <br>
     <div class="container">
-        <div class="row text-center">
-            <div class="input-group mb-3">
-                <span class="input-group-text" id="basic-addon1"><i class="bi bi-search"></i></span>
-                <input type="text" class="form-control" placeholder="Produto ou serviço" aria-label="produto-servico" aria-describedby="basic-addon1">
-            </div>
-        </div>
-        <div class="row" id="content">            
-            <div class="row text-start" style="padding-bottom: 20px;">
-                <div class="col">
-                    <span>pag 1 de 12</span>
-                </div>
-                <div class="col-8 col-sm-4 text-end">
-                    <label class="form-label" for="ordernar">Ordernar por: </label>
-                    <select id="ordernar" name="ordenar">
-                        <option value="data_asc" selected>Mais novos</option>
-                        <option value="data_desc">Mais antigos</option>
-                        <option value="preco_asc">Menor preço</option>
-                        <option value="preco_desc">Mario preço</option>
-                    </select>
+        <div class="row">
+            <!-- Sidebar com filtro de departamentos -->
+            <div class="col-md-3">
+                <div class="list-group">
+                    <h5>Departamentos</h5>
+                    <a href="{% url 'home' %}" class="list-group-item {% if not selected_department %}active{% endif %}">
+                        Todos os departamentos
+                    </a>
+                    {% for id, name in DEPARTAMENTOS %}
+                    <a href="?departamento={{ id }}" class="list-group-item {% if selected_department == id|stringformat:'d' %}active{% endif %}">
+                        {{ name }}
+                    </a>
+                    {% endfor %}
                 </div>
             </div>
-            <br>
-            <div class="row" >
-                {% for anuncio in anuncios %}
-                <div class="col">
-                    <a href="{% url 'page_anuncio' cod_anuncio=anuncio.cod_anuncio %}">
-                    <div class="card" style="width: 18rem; margin-bottom: 20px;" onclick=redirect({{ anuncio.cod_anuncio }})>
-                        <div class="image-container">
-                            <img
-                            {% if anuncio.imagens.first is not None %}
-                                src="{{ anuncio.imagens.first.image.url }}"
-                            {% else %}
-                                src="{% static 'images/default-fraguinha.png'%}"
-                            {% endif %}
-                                    class="zoom-image" alt="" width="300" height="125">
-                        </div>                        
-                        <div class="card-body">
-                            <h5 class="card-title">{{ anuncio.titulo }}</h5>
-                            <p class="departamento-display">{{ anuncio.get_departamento_display }}</p>
-                            <p class="preco-card">R${{ anuncio.preco|intcomma}}</p>
-                            <p>{{ anuncio.descricao|slice:"0:20"}}...</p>
+            <!-- Conteúdo principal -->
+            <div class="col-md-9">
+                <div class="row text-center">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="basic-addon1"><i class="bi bi-search"></i></span>
+                        <input type="text" class="form-control" placeholder="Produto ou serviço" aria-label="produto-servico" aria-describedby="basic-addon1">
+                    </div>
+                </div>
+                <div class="row" id="content">            
+                    <div class="row text-start" style="padding-bottom: 20px;">
+                        <div class="col">
+                            <span>pag 1 de 12</span>
+                        </div>
+                        <div class="col-8 col-sm-4 text-end">
+                            <label class="form-label" for="ordernar">Ordernar por: </label>
+                            <select id="ordernar" name="ordenar">
+                                <option value="data_asc" selected>Mais novos</option>
+                                <option value="data_desc">Mais antigos</option>
+                                <option value="preco_asc">Menor preço</option>
+                                <option value="preco_desc">Maior preço</option>
+                            </select>
                         </div>
                     </div>
-                    </a>
-                </div>
-                {% endfor %}
-            </div>
-            <div class="row text-end">
-                <div class="col">
-                    <span>pag 1 de 12</span>
+                    <br>
+                    <div class="row">
+                        {% for anuncio in anuncios %}
+                        <div class="col-md-4">
+                            <a href="{% url 'page_anuncio' cod_anuncio=anuncio.cod_anuncio %}">
+                            <div class="card" style="width: 18rem; margin-bottom: 20px;">
+                                <div class="image-container">
+                                    <img
+                                    {% if anuncio.imagens.first is not None %}
+                                        src="{{ anuncio.imagens.first.image.url }}"
+                                    {% else %}
+                                        src="{% static 'images/default-fraguinha.png'%}"
+                                    {% endif %}
+                                            class="zoom-image" alt="" width="300" height="125">
+                                </div>                        
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ anuncio.titulo }}</h5>
+                                    <p class="departamento-display">{{ anuncio.get_departamento_display }}</p>
+                                    <p class="preco-card">R${{ anuncio.preco|intcomma }}</p>
+                                    <p>{{ anuncio.descricao|slice:"0:20" }}...</p>
+                                </div>
+                            </div>
+                            </a>
+                        </div>
+                        {% empty %}
+                        <p>Nenhum anúncio encontrado neste departamento.</p>
+                        {% endfor %}
+                    </div>
+                    <div class="row text-end">
+                        <div class="col">
+                            <span>pag 1 de 12</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

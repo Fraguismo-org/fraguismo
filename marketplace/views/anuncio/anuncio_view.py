@@ -9,6 +9,33 @@ from members.models.profile import Profile
 from members.models.users import Users
 from datetime import datetime
 
+DEPARTAMENTOS = [
+    (0, "Outros"),
+    (1, "Agro e indústria"),
+    (2, "Alimentação"),
+    (3, "Autos e peças"),
+    (4, "Eletrônicos e celulares"),
+    (5, "Esportes e lazer"),
+    (6, "Imóveis"),
+    (7, "Moda e beleza"),
+    (8, "Músicas e hobbies"),
+    (9, "Para a sua casa"),
+    (10, "Prestação de Serviços"),
+    (11, "Vagas de emprego"),
+]
+
+def home(request):
+    departamento = request.GET.get('departamento')  # Obtém o departamento selecionado da URL
+    if departamento:
+        anuncios = Anuncio.objects.filter(departamento=departamento)  # Filtra por departamento
+    else:
+        anuncios = Anuncio.objects.all()  # Exibe todos os anúncios se nenhum departamento for selecionado
+    return render(request, 'home.html', {
+        'anuncios': anuncios,
+        'DEPARTAMENTOS': DEPARTAMENTOS,
+        'selected_department': departamento,  # Passa o departamento selecionado para destacar no template
+    })
+
 
 @login_required
 def listar_anuncios(request):
