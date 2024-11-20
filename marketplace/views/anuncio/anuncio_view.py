@@ -25,15 +25,25 @@ DEPARTAMENTOS = [
 ]
 
 def home(request):
-    departamento = request.GET.get('departamento')  # Obtém o departamento selecionado da URL
+    departamento = request.GET.get('departamento')  # Obtém o departamento selecionado
+    localidade = request.GET.get('localidade')  # Obtém a localidade selecionada
+
+    # Filtrar anúncios com base no departamento e localidade
+    anuncios = Anuncio.objects.all()
     if departamento:
-        anuncios = Anuncio.objects.filter(departamento=departamento)  # Filtra por departamento
-    else:
-        anuncios = Anuncio.objects.all()  # Exibe todos os anúncios se nenhum departamento for selecionado
+        anuncios = anuncios.filter(departamento=departamento)
+    if localidade:
+        anuncios = anuncios.filter(localidade=localidade)
+
+    # Obter localidades únicas para o filtro
+    localidades = Anuncio.objects.values_list('localidade', flat=True).distinct()
+
     return render(request, 'home.html', {
         'anuncios': anuncios,
         'DEPARTAMENTOS': DEPARTAMENTOS,
-        'selected_department': departamento,  # Passa o departamento selecionado para destacar no template
+        'localidades': localidades,  # Passar as localidades para o template
+        'selected_department': departamento,  # Passar o departamento selecionado
+        'selected_localidade': localidade,  # Passar a localidade selecionada
     })
 
 

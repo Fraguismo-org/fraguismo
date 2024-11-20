@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="{% static '/css/styles.css' %}">
 <div class="shadow p-4 mb-5 bg-body rounded">
     {% if user.is_authenticated %}
-        {% if member.is_fraguista %}        
+        {% if member.is_fraguista %}
             <nav class="navbar navbar-expand-lg bg-body-tertiary">
                 <div class="container-fluid">
                     <div class="collapse navbar-collapse" id="navbarNav">
@@ -28,7 +28,7 @@
     <br>
     <div class="container">
         <div class="row">
-            <!-- Sidebar com filtro de departamentos -->
+            <!-- Sidebar com filtro de departamentos e localidades -->
             <div class="col-md-3">
                 <div class="list-group">
                     <h5>Departamentos</h5>
@@ -41,6 +41,18 @@
                     </a>
                     {% endfor %}
                 </div>
+                <br>
+                <div class="list-group">
+                    <h5>Localidades</h5>
+                    <a href="{% url 'home' %}" class="list-group-item {% if not selected_localidade %}active{% endif %}">
+                        Todas as localidades
+                    </a>
+                    {% for local in localidades %}
+                    <a href="?localidade={{ local }}" class="list-group-item {% if selected_localidade == local %}active{% endif %}">
+                        {{ local }}
+                    </a>
+                    {% endfor %}
+                </div>
             </div>
             <!-- Conteúdo principal -->
             <div class="col-md-9">
@@ -50,7 +62,7 @@
                         <input type="text" class="form-control" placeholder="Produto ou serviço" aria-label="produto-servico" aria-describedby="basic-addon1">
                     </div>
                 </div>
-                <div class="row" id="content">            
+                <div class="row" id="content">
                     <div class="row text-start" style="padding-bottom: 20px;">
                         <div class="col">
                             <span>pag 1 de 12</span>
@@ -83,6 +95,9 @@
                                 <div class="card-body">
                                     <h5 class="card-title">{{ anuncio.titulo }}</h5>
                                     <p class="departamento-display">{{ anuncio.get_departamento_display }}</p>
+                                    <p class="localidade-display">
+                                        <i class="bi bi-geo-alt-fill"></i> {{ anuncio.localidade }}
+                                    </p>
                                     <p class="preco-card">R${{ anuncio.preco|intcomma }}</p>
                                     <p>{{ anuncio.descricao|slice:"0:20" }}...</p>
                                 </div>
@@ -90,7 +105,7 @@
                             </a>
                         </div>
                         {% empty %}
-                        <p>Nenhum anúncio encontrado neste departamento.</p>
+                        <p>Nenhum anúncio encontrado nesta categoria/localidade.</p>
                         {% endfor %}
                     </div>
                     <div class="row text-end">

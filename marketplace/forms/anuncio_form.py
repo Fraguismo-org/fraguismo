@@ -9,13 +9,15 @@ class AnuncioForm(forms.ModelForm):
             'titulo', 
             'descricao', 
             'status_anuncio', 
-            'preco',
-            'departamento',  # Adicionando o campo departamento
+            'preco', 
+            'departamento', 
+            'localidade',  # Adicionado o campo localidade
         ]
         widgets = {
             'titulo': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Título do Anúncio'}),
             'descricao': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Descrição'}),
             'status_anuncio': forms.Select(attrs={'class': 'form-select'}),
             'preco': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Preço'}),
-            'departamento': forms.Select(attrs={'class': 'form-select'}),  # Configurando o widget
+            'departamento': forms.Select(attrs={'class': 'form-select'}),
+            'localidade': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Localidade'}),
         }
