@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.core.paginator import Paginator
 from marketplace.models.anuncio import Anuncio
 from marketplace.forms.anuncio_form import AnuncioForm
 from marketplace.models.image import Images
@@ -27,30 +28,53 @@ DEPARTAMENTOS = [
 def home(request):
     departamento = request.GET.get('departamento')  # Obtém o departamento selecionado
     localidade = request.GET.get('localidade')  # Obtém a localidade selecionada
+    ordernar = request.GET.get('ordernar')  # Obtém o critério de ordenação
+    page = request.GET.get('page', 1)  # Obtém o número da página atual
 
-    # Filtrar anúncios com base no departamento e localidade
+    # Base queryset
     anuncios = Anuncio.objects.all()
-    if departamento:
-        anuncios = anuncios.filter(departamento=departamento)
-    if localidade:
+
+    # Filtrar por departamento se válido
+    if departamento and departamento.isdigit():
+        anuncios = anuncios.filter(departamento=int(departamento))
+
+    # Filtrar por localidade se válido
+    if localidade and localidade != 'None':
         anuncios = anuncios.filter(localidade=localidade)
+
+    # Ordenação
+    if ordernar == 'data_asc':
+        anuncios = anuncios.order_by('-created_at')
+    elif ordernar == 'data_desc':
+        anuncios = anuncios.order_by('created_at')
+    elif ordernar == 'preco_asc':
+        anuncios = anuncios.order_by('preco')
+    elif ordernar == 'preco_desc':
+        anuncios = anuncios.order_by('-preco')
+
+    # Paginação
+    paginator = Paginator(anuncios, 6)  # Mostra 6 anúncios por página
+    anuncios_paginados = paginator.get_page(page)
 
     # Obter localidades únicas para o filtro
     localidades = Anuncio.objects.values_list('localidade', flat=True).distinct()
 
     return render(request, 'home.html', {
-        'anuncios': anuncios,
+        'anuncios': anuncios_paginados,  # Use os anúncios paginados
         'DEPARTAMENTOS': DEPARTAMENTOS,
         'localidades': localidades,  # Passar as localidades para o template
         'selected_department': departamento,  # Passar o departamento selecionado
         'selected_localidade': localidade,  # Passar a localidade selecionada
+        'selected_order': ordernar,  # Passar a ordenação selecionada
     })
+
 
 
 @login_required
 def listar_anuncios(request):
     anuncios = Anuncio.objects.filter(user=request.user)
     return render(request, "anuncio/listar.html", {'anuncios': anuncios})
+
 
 @login_required
 def cadastrar_anuncio(request):
@@ -136,6 +160,7 @@ def deletar_anuncio(request, id: int):
             messages.error(request, "Anúncio não encontrado.")
             return redirect('listar_anuncios')
     return redirect('listar_anuncios')
+
 
 def page_anuncio(request, cod_anuncio):
     anuncio = Anuncio.objects.get(cod_anuncio=cod_anuncio)
