@@ -56,11 +56,13 @@
             </div>
             <!-- Conteúdo principal -->
             <div class="col-md-9">
+                <!-- Campo de busca -->
                 <div class="row text-center">
-                    <div class="input-group mb-3">
+                    <form method="get" action="{% url 'home' %}" class="input-group mb-3">
                         <span class="input-group-text" id="basic-addon1"><i class="bi bi-search"></i></span>
-                        <input type="text" class="form-control" placeholder="Produto ou serviço" aria-label="produto-servico" aria-describedby="basic-addon1">
-                    </div>
+                        <input type="text" name="q" class="form-control" placeholder="Produto ou serviço" aria-label="produto-servico" aria-describedby="basic-addon1" value="{{ search_query|default:'' }}">
+                        <button type="submit" class="btn btn-primary">Buscar</button>
+                    </form>
                 </div>
                 <div class="row" id="content">
                     <div class="row text-start" style="padding-bottom: 20px;">
@@ -68,12 +70,12 @@
                             <span>pag {{ anuncios.number }} de {{ anuncios.paginator.num_pages }}</span>
                         </div>
                         <div class="col-8 col-sm-4 text-end">
-                            <label class="form-label" for="ordernar">Ordernar por: </label>
-                            <select id="ordernar" name="ordernar" onchange="applyOrder()">
-                                <option value="data_asc" {% if selected_order == 'data_asc' %}selected{% endif %}>Mais novos</option>
-                                <option value="data_desc" {% if selected_order == 'data_desc' %}selected{% endif %}>Mais antigos</option>
-                                <option value="preco_asc" {% if selected_order == 'preco_asc' %}selected{% endif %}>Menor preço</option>
-                                <option value="preco_desc" {% if selected_order == 'preco_desc' %}selected{% endif %}>Maior preço</option>
+                            <label class="form-label" for="ordernar">Ordenar por: </label>
+                            <select id="ordernar" name="ordernar" class="form-select" onchange="location = this.value;">
+                                <option value="?ordernar=data_asc" {% if selected_order == 'data_asc' %}selected{% endif %}>Mais novos</option>
+                                <option value="?ordernar=data_desc" {% if selected_order == 'data_desc' %}selected{% endif %}>Mais antigos</option>
+                                <option value="?ordernar=preco_asc" {% if selected_order == 'preco_asc' %}selected{% endif %}>Menor preço</option>
+                                <option value="?ordernar=preco_desc" {% if selected_order == 'preco_desc' %}selected{% endif %}>Maior preço</option>
                             </select>
                         </div>
                     </div>
@@ -91,7 +93,7 @@
                                         src="{% static 'images/default-fraguinha.png'%}"
                                     {% endif %}
                                             class="zoom-image" alt="" width="300" height="125">
-                                </div>
+                                </div>                        
                                 <div class="card-body">
                                     <h5 class="card-title">{{ anuncio.titulo }}</h5>
                                     <p class="departamento-display">{{ anuncio.get_departamento_display }}</p>
@@ -110,26 +112,34 @@
                     </div>
                     <!-- Paginação -->
                     <div class="row text-center">
-                        <nav aria-label="Page navigation example">
+                        <nav aria-label="Page navigation">
                             <ul class="pagination justify-content-center">
                                 {% if anuncios.has_previous %}
-                                <li class="page-item">
-                                    <a class="page-link" href="?page={{ anuncios.previous_page_number }}&ordernar={{ selected_order }}&departamento={{ selected_department }}&localidade={{ selected_localidade }}" aria-label="Previous">
-                                        <span aria-hidden="true">&laquo;</span>
-                                    </a>
-                                </li>
+                                    <li class="page-item">
+                                        <a class="page-link" href="?page={{ anuncios.previous_page_number }}" aria-label="Previous">
+                                            <span aria-hidden="true">&laquo;</span>
+                                        </a>
+                                    </li>
+                                {% else %}
+                                    <li class="page-item disabled">
+                                        <span class="page-link">&laquo;</span>
+                                    </li>
                                 {% endif %}
                                 {% for num in anuncios.paginator.page_range %}
-                                <li class="page-item {% if anuncios.number == num %}active{% endif %}">
-                                    <a class="page-link" href="?page={{ num }}&ordernar={{ selected_order }}&departamento={{ selected_department }}&localidade={{ selected_localidade }}">{{ num }}</a>
-                                </li>
+                                    <li class="page-item {% if anuncios.number == num %}active{% endif %}">
+                                        <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                                    </li>
                                 {% endfor %}
                                 {% if anuncios.has_next %}
-                                <li class="page-item">
-                                    <a class="page-link" href="?page={{ anuncios.next_page_number }}&ordernar={{ selected_order }}&departamento={{ selected_department }}&localidade={{ selected_localidade }}" aria-label="Next">
-                                        <span aria-hidden="true">&raquo;</span>
-                                    </a>
-                                </li>
+                                    <li class="page-item">
+                                        <a class="page-link" href="?page={{ anuncios.next_page_number }}" aria-label="Next">
+                                            <span aria-hidden="true">&raquo;</span>
+                                        </a>
+                                    </li>
+                                {% else %}
+                                    <li class="page-item disabled">
+                                        <span class="page-link">&raquo;</span>
+                                    </li>
                                 {% endif %}
                             </ul>
                         </nav>
@@ -139,13 +149,5 @@
         </div>
     </div>
 </div>
-
-<script>
-    function applyOrder() {
-        const ordenar = document.getElementById('ordernar').value;
-        const params = new URLSearchParams(window.location.search);
-        params.set('ordernar', ordenar);  // Define o novo critério de ordenação
-        window.location.search = params.toString();  // Atualiza a URL
-    }
-</script>
 {% endblock content %}
+

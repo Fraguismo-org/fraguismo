@@ -29,6 +29,7 @@ def home(request):
     departamento = request.GET.get('departamento')  # Obtém o departamento selecionado
     localidade = request.GET.get('localidade')  # Obtém a localidade selecionada
     ordernar = request.GET.get('ordernar')  # Obtém o critério de ordenação
+    busca = request.GET.get('q')  # Obtém o texto do campo de busca
     page = request.GET.get('page', 1)  # Obtém o número da página atual
 
     # Base queryset
@@ -41,6 +42,10 @@ def home(request):
     # Filtrar por localidade se válido
     if localidade and localidade != 'None':
         anuncios = anuncios.filter(localidade=localidade)
+
+    # Filtrar por texto de busca
+    if busca:
+        anuncios = anuncios.filter(titulo__icontains=busca)
 
     # Ordenação
     if ordernar == 'data_asc':
@@ -66,6 +71,7 @@ def home(request):
         'selected_department': departamento,  # Passar o departamento selecionado
         'selected_localidade': localidade,  # Passar a localidade selecionada
         'selected_order': ordernar,  # Passar a ordenação selecionada
+        'search_query': busca,  # Passar o texto de busca para o template
     })
 
 
