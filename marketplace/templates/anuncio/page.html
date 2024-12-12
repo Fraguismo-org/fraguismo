@@ -1,6 +1,34 @@
 {% extends 'base.html' %}
 {% block content %}
 {% load static %}
+<style>
+    .profile-pic {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        background-size: cover;
+        background-repeat: none;
+        background-position: center;
+        background-image: url("{{ profile.pic_profile.url }}");
+        position: relative;
+        z-index: 1;
+    }
+
+    {% with sticker="images/niveis_stickers/"|add:profile.nivel_id.nivel|add:".png" %}
+    .frame {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        background-size: contain;
+        background-repeat: none;
+        border-color: black;
+        position: relative;
+        background-image: url("{% static sticker %}");
+        top: -15px;
+        left: -15px;
+    }
+    {% endwith %}
+</style>
 <link rel="stylesheet" href="{% static '/css/styles.css' %}">
 <div class="shadow p-4 mb-5 bg-body rounded">
     <div class="container">
@@ -59,8 +87,12 @@
                 <p style="font-size: small; font-style: italic;">Atualizado: {{ anuncio.updated_at }} <i class="bi bi-clock"></i></p>
             </div>
             <div class="col col-sm-4">
-                <div class="card" style="width: 22rem;">
-                    <img src="{{ profile.pic_profile.url }}" class="card-img-top" alt="...">
+                <div class="profile-pic mx-auto" id="profile-pic">
+                    <div class="frame"></div>
+                </div>
+                <br>
+                <div class="card" style="width: 22rem;">                    
+                    {% comment %} <img src="{{ profile.pic_profile.url }}" class="card-img-top" alt="..."> {% endcomment %}
                     <div class="card-body">
                     <h5 class="card-title"><a href="{% url 'profile' username=member.username %}">{{ member.username }}</a></h5>
                     {% if user.is_authenticated %}
