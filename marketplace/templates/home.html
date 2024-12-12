@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="{% static '/css/styles.css' %}">
 <div class="shadow p-4 mb-5 bg-body rounded">
     {% if user.is_authenticated %}
-        {% if member.is_fraguista %}        
+        {% if member.is_fraguista %}
             <nav class="navbar navbar-expand-lg bg-body-tertiary">
                 <div class="container-fluid">
                     <div class="collapse navbar-collapse" id="navbarNav">
@@ -27,59 +27,127 @@
     </div>
     <br>
     <div class="container">
-        <div class="row text-center">
-            <div class="input-group mb-3">
-                <span class="input-group-text" id="basic-addon1"><i class="bi bi-search"></i></span>
-                <input type="text" class="form-control" placeholder="Produto ou serviço" aria-label="produto-servico" aria-describedby="basic-addon1">
-            </div>
-        </div>
-        <div class="row" id="content">            
-            <div class="row text-start" style="padding-bottom: 20px;">
-                <div class="col">
-                    <span>pag 1 de 12</span>
+        <div class="row">
+            <!-- Sidebar com filtro de departamentos e localidades -->
+            <div class="col-md-3">
+                <div class="list-group">
+                    <h5>Departamentos</h5>
+                    <a href="{% url 'home' %}" class="list-group-item {% if not selected_department %}active{% endif %}">
+                        Todos os departamentos
+                    </a>
+                    {% for id, name in DEPARTAMENTOS %}
+                    <a href="?departamento={{ id }}" class="list-group-item {% if selected_department == id|stringformat:'d' %}active{% endif %}">
+                        {{ name }}
+                    </a>
+                    {% endfor %}
                 </div>
-                <div class="col-8 col-sm-4 text-end">
-                    <label class="form-label" for="ordernar">Ordernar por: </label>
-                    <select id="ordernar" name="ordenar">
-                        <option value="data_asc" selected>Mais novos</option>
-                        <option value="data_desc">Mais antigos</option>
-                        <option value="preco_asc">Menor preço</option>
-                        <option value="preco_desc">Mario preço</option>
-                    </select>
+                <br>
+                <div class="list-group">
+                    <h5>Localidades</h5>
+                    <a href="{% url 'home' %}" class="list-group-item {% if not selected_localidade %}active{% endif %}">
+                        Todas as localidades
+                    </a>
+                    {% for local in localidades %}
+                    <a href="?localidade={{ local }}" class="list-group-item {% if selected_localidade == local %}active{% endif %}">
+                        {{ local }}
+                    </a>
+                    {% endfor %}
                 </div>
             </div>
-            <br>
-            
-                {% for anuncio in anuncios %}
-                <div class="col">
-                    <a href="{% url 'page_anuncio' cod_anuncio=anuncio.cod_anuncio %}">
-                    <div class="card" style="width: 18rem; margin-bottom: 20px;" onclick=redirect({{ anuncio.cod_anuncio }})>
-                        <div class="image-container">
-                            <img
-                            {% if anuncio.imagens.first is not None %}
-                                src="{{ anuncio.imagens.first.image.url }}"
-                            {% else %}
-                                src="{% static 'images/default-fraguinha.png'%}"
-                            {% endif %}
-                                    class="zoom-image resized-image" alt="{{ anuncio.titulo }}" height="130">
-                        </div>                        
-                        <div class="card-body">
-                            <h5 class="card-title">{{ anuncio.titulo }}</h5>
-                            <p class="departamento-display">{{ anuncio.get_departamento_display }}</p>
-                            <p class="preco-card">R${{ anuncio.preco|intcomma }}</p>
-                            <p>{{ anuncio.descricao|slice:"0:20"}}...</p>
+            <!-- Conteúdo principal -->
+            <div class="col-md-9">
+                <!-- Campo de busca -->
+                <div class="row text-center">
+                    <form method="get" action="{% url 'home' %}" class="input-group mb-3">
+                        <span class="input-group-text" id="basic-addon1"><i class="bi bi-search"></i></span>
+                        <input type="text" name="q" class="form-control" placeholder="Produto ou serviço" aria-label="produto-servico" aria-describedby="basic-addon1" value="{{ search_query|default:'' }}">
+                        <button type="submit" class="btn btn-primary">Buscar</button>
+                    </form>
+                </div>
+                <div class="row" id="content">
+                    <div class="row text-start" style="padding-bottom: 20px;">
+                        <div class="col">
+                            <span>pag {{ anuncios.number }} de {{ anuncios.paginator.num_pages }}</span>
+                        </div>
+                        <div class="col-8 col-sm-4 text-end">
+                            <label class="form-label" for="ordernar">Ordenar por: </label>
+                            <select id="ordernar" name="ordernar" class="form-select" onchange="location = this.value;">
+                                <option value="?ordernar=data_asc" {% if selected_order == 'data_asc' %}selected{% endif %}>Mais novos</option>
+                                <option value="?ordernar=data_desc" {% if selected_order == 'data_desc' %}selected{% endif %}>Mais antigos</option>
+                                <option value="?ordernar=preco_asc" {% if selected_order == 'preco_asc' %}selected{% endif %}>Menor preço</option>
+                                <option value="?ordernar=preco_desc" {% if selected_order == 'preco_desc' %}selected{% endif %}>Maior preço</option>
+                            </select>
                         </div>
                     </div>
-                    </a>
-                </div>
-                {% endfor %}
-            
-            <div class="row text-end">
-                <div class="col">
-                    <span>pag 1 de 12</span>
+                    <br>
+                    <div class="row">
+                        {% for anuncio in anuncios %}
+                        <div class="col-md-4">
+                            <a href="{% url 'page_anuncio' cod_anuncio=anuncio.cod_anuncio %}">
+                            <div class="card" style="width: 18rem; margin-bottom: 20px;">
+                                <div class="image-container">
+                                    <img
+                                    {% if anuncio.imagens.first is not None %}
+                                        src="{{ anuncio.imagens.first.image.url }}"
+                                    {% else %}
+                                        src="{% static 'images/default-fraguinha.png'%}"
+                                    {% endif %}
+                                            class="zoom-image" alt="" width="300" height="125">
+                                </div>                        
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ anuncio.titulo }}</h5>
+                                    <p class="departamento-display">{{ anuncio.get_departamento_display }}</p>
+                                    <p class="localidade-display">
+                                        <i class="bi bi-geo-alt-fill"></i> {{ anuncio.localidade }}
+                                    </p>
+                                    <p class="preco-card">R${{ anuncio.preco|intcomma }}</p>
+                                    <p>{{ anuncio.descricao|slice:"0:20" }}...</p>
+                                </div>
+                            </div>
+                            </a>
+                        </div>
+                        {% empty %}
+                        <p>Nenhum anúncio encontrado nesta categoria/localidade.</p>
+                        {% endfor %}
+                    </div>
+                    <!-- Paginação -->
+                    <div class="row text-center">
+                        <nav aria-label="Page navigation">
+                            <ul class="pagination justify-content-center">
+                                {% if anuncios.has_previous %}
+                                    <li class="page-item">
+                                        <a class="page-link" href="?page={{ anuncios.previous_page_number }}" aria-label="Previous">
+                                            <span aria-hidden="true">&laquo;</span>
+                                        </a>
+                                    </li>
+                                {% else %}
+                                    <li class="page-item disabled">
+                                        <span class="page-link">&laquo;</span>
+                                    </li>
+                                {% endif %}
+                                {% for num in anuncios.paginator.page_range %}
+                                    <li class="page-item {% if anuncios.number == num %}active{% endif %}">
+                                        <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                                    </li>
+                                {% endfor %}
+                                {% if anuncios.has_next %}
+                                    <li class="page-item">
+                                        <a class="page-link" href="?page={{ anuncios.next_page_number }}" aria-label="Next">
+                                            <span aria-hidden="true">&raquo;</span>
+                                        </a>
+                                    </li>
+                                {% else %}
+                                    <li class="page-item disabled">
+                                        <span class="page-link">&raquo;</span>
+                                    </li>
+                                {% endif %}
+                            </ul>
+                        </nav>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
 {% endblock content %}
+

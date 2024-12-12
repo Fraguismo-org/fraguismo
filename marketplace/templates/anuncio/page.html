@@ -40,7 +40,17 @@
                 <br>
                 <div class="row text-end">
                     <h5 class="preco-card">R$ {{ anuncio.preco }}</h5>
-                </div>                
+                </div>  
+                <div class="row">
+                    <p style="font-size: 1.2rem;"> 
+                        <strong>Categoria:</strong> {{ anuncio.get_departamento_display }}
+                    </p>
+                </div>
+                <div class="row">
+                    <p style="font-size: 1.2rem;">
+                        <i class="bi bi-geo-alt-fill"></i> <strong>Localidade:</strong> {{ anuncio.localidade }}
+                    </p>
+                </div>
                 <br>
                 <h4>Descrição</h4>
                 <hr>
@@ -57,7 +67,12 @@
                     <p><i class="bi bi-whatsapp"></i> {{ member.fone }}</p>
                     <p><i class="bi bi-envelope-at-fill"></i> {{ member.email }}</p>
                     <p><i class="bi bi-instagram"></i> {{ member.instagram }}</p>
-                    <p class="small">localidade: <i class="bi bi-geo-alt-fill"></i> {{ member.city}}</p>
+                    <p class="small">
+                        <i class="bi bi-geo-alt-fill"></i> Localidade: {{ member.city }}
+                    </p>
+                    <p class="small">
+                        <i class="bi bi-trophy"></i> Nível: {{ profile.nivel.capitalize }}
+                    </p>
                     {% else %}
                     <p>Faça o login para entrar em contato!</p>
                     <a class="btn btn-primary" href="{% url 'login' %}">Login</a>

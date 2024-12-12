@@ -12,7 +12,7 @@ STATUS_ANUNCIO = (
 DEPARTAMENTO = (
     (0, 'Outros'),
     (1, 'Agro e indústria'),
-    (2, 'Alimetação'),
+    (2, 'Alimentação'),
     (3, 'Autos e peças'),
     (4, 'Eletrônicos e celulares'),
     (5, 'Esportes e lazer'),
@@ -33,5 +33,6 @@ class Anuncio(models.Model):
     status_anuncio = models.IntegerField(choices=STATUS_ANUNCIO, default=1)
     departamento = models.IntegerField(choices=DEPARTAMENTO, default=0)
     preco = models.DecimalField(decimal_places=2, null=False, default=0.00, max_digits=15)
+    localidade = models.CharField(max_length=255, null=True, blank=True)
     created_at = models.DateTimeField(default=datetime.now, null=False)
     updated_at = models.DateTimeField(default=datetime.now, null=True)
