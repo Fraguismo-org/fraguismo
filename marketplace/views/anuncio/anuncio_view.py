@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.core.paginator import Paginator
+from django.db.models import Q  # Import necessário para busca avançada
 from marketplace.models.anuncio import Anuncio
 from marketplace.forms.anuncio_form import AnuncioForm
 from marketplace.models.image import Images
@@ -43,9 +44,13 @@ def home(request):
     if localidade and localidade != 'None':
         anuncios = anuncios.filter(localidade=localidade)
 
-    # Filtrar por texto de busca
+    # Filtrar por texto de busca no título, descrição ou localidade
     if busca:
-        anuncios = anuncios.filter(titulo__icontains=busca)
+        anuncios = anuncios.filter(
+            Q(titulo__icontains=busca) |
+            Q(descricao__icontains=busca) |
+            Q(localidade__icontains=busca)
+        )
 
     # Ordenação
     if ordernar == 'data_asc':
@@ -74,13 +79,10 @@ def home(request):
         'search_query': busca,  # Passar o texto de busca para o template
     })
 
-
-
 @login_required
 def listar_anuncios(request):
     anuncios = Anuncio.objects.filter(user=request.user)
     return render(request, "anuncio/listar.html", {'anuncios': anuncios})
-
 
 @login_required
 def cadastrar_anuncio(request):
@@ -104,7 +106,6 @@ def cadastrar_anuncio(request):
         'anuncio_form': anuncio_form, 
         'images_form': images_form
     })
-
 
 @login_required
 def editar_anuncio(request, id: int):
@@ -146,7 +147,6 @@ def editar_anuncio(request, id: int):
             return redirect('listar_anuncios')
     return redirect('listar_anuncios')
 
-
 @login_required
 def deletar_anuncio(request, id: int):
     if request.method == 'POST':
@@ -166,7 +166,6 @@ def deletar_anuncio(request, id: int):
             messages.error(request, "Anúncio não encontrado.")
             return redirect('listar_anuncios')
     return redirect('listar_anuncios')
-
 
 def page_anuncio(request, cod_anuncio):
     anuncio = Anuncio.objects.get(cod_anuncio=cod_anuncio)
