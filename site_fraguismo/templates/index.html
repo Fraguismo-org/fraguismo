@@ -31,6 +31,7 @@ body, html {
     margin-left: calc(50% - 50vw); /* Alinhar o fundo ao centro */
 }
 
+
 /* Estilização do texto sobre o background */
 .overlay-text {
     color: white;
@@ -38,11 +39,15 @@ body, html {
     background-color: rgba(0, 0, 0, 0.5);
     padding: 20px;
     border-radius: 20px;
-    width: 80%;
+    width: 100%;
     max-width: 1200px;
     z-index: 2;
 }
 
+.overlay-text:hover {
+    transform: scale(1.1);
+    background-color: rgba(0, 0, 0, 0.8);
+}
 /* Estilo adicional para efeito de digitação */
 .typing-effect {
     border-right: 2px solid white; /* Simula o cursor piscante */
@@ -67,14 +72,20 @@ body, html {
     
 }
 
+.overlay-text-anchor {
+    text-decoration: none;
+}
+
 </style>
 
 
 <div class="bg-btc">
+    <a class="overlay-text-anchor" href="{% url 'home' %}">
     <div class="overlay-text">
         <h1 id="typedText" class="typing-effect">Encontre empresas e serviços negociando em Bitcoin</h1>
         <p>Anuncie seus produtos ou serviços conectando-se com uma comunidade que valoriza a liberdade</p>
     </div>
+    <a/>
 </div>
 
 {% comment %} <div id="categorias-populares" style="margin-top: 3rem; margin-bottom: 2rem;">

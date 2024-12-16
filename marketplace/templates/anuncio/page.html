@@ -1,10 +1,10 @@
 {% extends 'base.html' %}
 {% block content %}
-{% load static %}
+  {% load static %}
 <style>
     .profile-pic {
-        width: 120px;
-        height: 120px;
+        width: 180px;
+        height: 180px;
         border-radius: 50%;
         background-size: cover;
         background-repeat: none;
@@ -16,146 +16,152 @@
 
     {% with sticker="images/niveis_stickers/"|add:profile.nivel_id.nivel|add:".png" %}
     .frame {
-        width: 150px;
-        height: 150px;
+        width: 200px;
+        height: 200px;
         border-radius: 50%;
         background-size: contain;
         background-repeat: none;
         border-color: black;
         position: relative;
         background-image: url("{% static sticker %}");
-        top: -15px;
-        left: -15px;
+        top: -10px;
+        left: -10px;
     }
     {% endwith %}
 </style>
-<link rel="stylesheet" href="{% static '/css/styles.css' %}">
-<div class="shadow p-4 mb-5 bg-body rounded">
+  <link rel="stylesheet" href="{% static '/css/styles.css' %}" />
+  <div class="shadow p-4 mb-5 bg-body rounded">
     <div class="container">
+      <div class="row">
         <div class="row">
-            <div class="row">
-                <h2>{{ anuncio.titulo }}</h2>
-            </div>
-            <div class="row">
-                <p class="small">{{ anuncio.cod_anuncio }}</p>
-            </div>
+          <h2>{{ anuncio.titulo }}</h2>
         </div>
         <div class="row">
-            <div class="col-sm-8">            
-                <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel" style="font-size: large;">
-                    <div class="carousel-inner">
-                        {% if imagens|length == 0 or imagens is None %}
-                            <div class="carousel-item active">
-                                <img src="{% static 'images/default-fraguinha.png' %}" class="d-block w-100" alt="..." width="300">
-                            </div>
-                        {% else %}
-                        {% for imagem in imagens %}
-                            <div class="carousel-item active">
-                                <img src="{{ imagem.image.url }}" class="d-block w-100" width="300">
-                            </div>
-                        {% endfor %}
-                        {% endif %}
-                    </div>
-                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Previous</span>
-                    </button>
-                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Next</span>
-                    </button>
+          <p class="small">{{ anuncio.cod_anuncio }}</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-8">
+          <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel" style="font-size: large;">
+            <div class="carousel-inner">
+              {% if imagens|length == 0 or imagens is None %}
+                <div class="carousel-item active">
+                  <img src="{% static 'images/default-fraguinha.png' %}" class="d-block w-100" alt="..." width="300" />
                 </div>
-                <br>
-                <div class="row text-end">
-                    <h5 class="preco-card">R$ {{ anuncio.preco }}</h5>
-                </div>  
-                <div class="row">
-                    <p style="font-size: 1.2rem;"> 
-                        <strong>Categoria:</strong> {{ anuncio.get_departamento_display }}
-                    </p>
-                </div>
-                <div class="row">
-                    <p style="font-size: 1.2rem;">
-                        <i class="bi bi-geo-alt-fill"></i> <strong>Localidade:</strong> {{ anuncio.localidade }}
-                    </p>
-                </div>
-                <br>
-                <h4>Descrição</h4>
-                <hr>
-                <p>{{ anuncio.descricao }}</p>
-                <hr>
-                <p style="font-size: small; font-style: italic;">Atualizado: {{ anuncio.updated_at }} <i class="bi bi-clock"></i></p>
+              {% else %}
+                {% for imagem in imagens %}
+                  <div class="carousel-item active">
+                    <img src="{{ imagem.image.url }}" class="d-block w-100" width="300" />
+                  </div>
+                {% endfor %}
+              {% endif %}
             </div>
-            <div class="col col-sm-4">
-                <div class="profile-pic mx-auto" id="profile-pic">
-                    <div class="frame"></div>
-                </div>
-                <br>
-                <div class="card" style="width: 22rem;">                    
-                    {% comment %} <img src="{{ profile.pic_profile.url }}" class="card-img-top" alt="..."> {% endcomment %}
-                    <div class="card-body">
-                    <h5 class="card-title"><a href="{% url 'profile' username=member.username %}">{{ member.username }}</a></h5>
-                    {% if user.is_authenticated %}
-                    <p><i class="bi bi-whatsapp"></i> {{ member.fone }}</p>
-                    <p><i class="bi bi-envelope-at-fill"></i> {{ member.email }}</p>
-                    <p><i class="bi bi-instagram"></i> {{ member.instagram }}</p>
-                    <p class="small">
-                        <i class="bi bi-geo-alt-fill"></i> Localidade: {{ member.city }}
-                    </p>
-                    <p class="small">
-                        <i class="bi bi-trophy"></i> Nível: {{ profile.nivel.capitalize }}
-                    </p>
-                    {% else %}
-                    <p>Faça o login para entrar em contato!</p>
-                    <a class="btn btn-primary" href="{% url 'login' %}">Login</a>
-                    {% endif %}
-                    </div>
-                </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Next</span>
+            </button>
+          </div>
+          <br />
+          <div class="row text-end">
+            <h5 class="preco-card">R$ {{ anuncio.preco }}</h5>
+          </div>
+          <div class="row">
+            <p style="font-size: 1.2rem;">
+              <strong>Categoria:</strong> {{ anuncio.get_departamento_display }}
+            </p>
+          </div>
+          <div class="row">
+            <p style="font-size: 1.2rem;">
+              <i class="bi bi-geo-alt-fill"></i> <strong>Localidade:</strong> {{ anuncio.localidade }}
+            </p>
+          </div>
+          <br />
+          <h4>Descrição</h4>
+          <hr />
+          <p>{{ anuncio.descricao }}</p>
+          <hr />
+          <p style="font-size: small; font-style: italic;">
+            Atualizado: {{ anuncio.updated_at }} <i class="bi bi-clock"></i>
+          </p>
+        </div>
+        <div class="col col-sm-4">
+          <div class="profile-pic mx-auto" id="profile-pic">
+            <div class="frame"></div>
+          </div>
+          <br />
+          <div class="card" style="width: 22rem;">
+            <div class="card-body">
+              <h5 class="card-title"><a href="{% url 'profile' username=member.username %}">{{ member.username }}</a></h5>
+              {% if user.is_authenticated %}
+                <p>
+                  <i class="bi bi-whatsapp"></i> {{ member.fone }}
+                </p>
+                <p>
+                  <i class="bi bi-envelope-at-fill"></i> {{ member.email }}
+                </p>
+                <p>
+                  <i class="bi bi-instagram"></i> {{ member.instagram }}
+                </p>
+                <p class="small">
+                  <i class="bi bi-geo-alt-fill"></i> Localidade: {{ member.city }}
+                </p>
+                <p class="small">
+                  <i class="bi bi-trophy"></i> Nível: {{ profile.nivel.capitalize }}
+                </p>
+              {% else %}
+                <p>Faça o login para entrar em contato!</p>
+                <a class="btn btn-primary" href="{% url 'login' %}">Login</a>
+              {% endif %}
             </div>
-        </div>    
+          </div>
+        </div>
+      </div>
     </div>
-</div>
+  </div>
 
-<div class="shadow p-4 mb-5 bg-body rounded">
+  <div class="shadow p-4 mb-5 bg-body rounded">
     <div class="row">
-        <h3>Deixe um comentário</h3>
+      <h3>Deixe um comentário</h3>
     </div>
-    <br>
+    <br />
     <form action="post" id="form_comentario">
-        <div class="row">
-            <p>
-                Preço:  
-                <i class="bi bi-star-fill" id="star"></i>
-                <i class="bi bi-star-fill" id="star"></i>
-                <i class="bi bi-star-fill" id="star"></i>
-                <i class="bi bi-star-fill" id="star"></i>
-                <i class="bi bi-star-fill" id="star"></i>
-            </p>
+      <div class="row">
+        <p>
+          Preço:
+          <i class="bi bi-star-fill" id="star"></i>
+          <i class="bi bi-star-fill" id="star"></i>
+          <i class="bi bi-star-fill" id="star"></i>
+          <i class="bi bi-star-fill" id="star"></i>
+          <i class="bi bi-star-fill" id="star"></i>
+        </p>
+      </div>
+      <div class="row">
+        <p>
+          Qualidade:
+          <i class="bi bi-star-fill" id="star"></i>
+          <i class="bi bi-star-fill" id="star"></i>
+          <i class="bi bi-star-fill" id="star"></i>
+          <i class="bi bi-star-fill" id="star"></i>
+          <i class="bi bi-star-fill" id="star"></i>
+        </p>
+      </div>
+      <div class="row">
+        <input type="text" class="form-control" id="titulo" name="titulo" placeholder="Título" />
+      </div>
+      <br />
+      <div class="row">
+        <textarea name="comentario" id="comentario" class="form-control" placeholder="Comentário..."></textarea>
+      </div>
+      <br />
+      <div class="row text-end">
+        <div class="col">
+          <a href="#" class="btn btn-primary">Enviar</a>
         </div>
-        <div class="row">
-            <p>
-                Qualidade: 
-                <i class="bi bi-star-fill" id="star"></i>
-                <i class="bi bi-star-fill" id="star"></i>
-                <i class="bi bi-star-fill" id="star"></i>
-                <i class="bi bi-star-fill" id="star"></i>
-                <i class="bi bi-star-fill" id="star"></i>
-            </p>
-        </div>        
-        <div class="row">
-            <input type="text" class="form-control" id="titulo" name="titulo" placeholder="Título">
-        </div>
-        <br>
-        <div class="row">
-            <textarea name="comentario" id="comentario" class="form-control" placeholder="Comentário..." ></textarea>
-        </div>
-        <br>
-        <div class="row text-end">
-            <div class="col">
-                <a href="#" class="btn btn-primary">Enviar</a>
-            </div>
-        </div>
+      </div>
     </form>
-</div>
-
-{% endblock content %}
+  </div>
+{% endblock %}
