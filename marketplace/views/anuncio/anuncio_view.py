@@ -84,7 +84,7 @@ def listar_anuncios(request):
     anuncios = Anuncio.objects.filter(user=request.user)
     return render(request, "anuncio/listar.html", {'anuncios': anuncios})
 
-@login_required
+@login_required(login_url='login')
 def cadastrar_anuncio(request):
     if request.method == 'POST':
         anuncio_form = AnuncioForm(request.POST)
