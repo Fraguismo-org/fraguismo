@@ -12,6 +12,7 @@ urlpatterns = [
     path('rating/', include('rating.urls')),
     path('administrador/', include('administrador.urls')),
     path('cursos/', include('cursos.urls')),
+    path('marketplace/', include('marketplace.urls')),
 ]
 
 if settings.DEBUG:

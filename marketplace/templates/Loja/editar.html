@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="shadow p-4 mb-5 bg-body rounded">
+    <div class="text-center">
+        <h1>Editar Loja - {{ loja.nome }}</h1>
+    </div>
+    <hr>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Salvar alterações</button>
+        <a href="{% url 'listar_lojas' %}" class="btn btn-secondary">Cancelar</a>
+    </form>
+</div>
+{% endblock %}

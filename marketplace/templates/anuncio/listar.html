@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% load humanize %}
+<div class="shadow p-4 mb-5 bg-body rounded">
+<div class="text-center">
+    <h1>Anúncios {{ user }}</h1>
+</div>
+<hr>
+    <div class="responsive-table">
+        {% if anuncios|length == 0 %}
+        <div class="text-center">
+            <h4>Sem anúncios para listar!</h4>
+        </div>
+        {% else %}
+        <table class="table">
+            <tbody>
+                {% for anuncio in anuncios %}
+                <tr>
+                    <td><a href="{% url 'page_anuncio' cod_anuncio=anuncio.cod_anuncio %}">{{ anuncio.cod_anuncio }}</a></td>
+                    <td><img src="{{ anuncio.images.first.url }}" width="50"></td>
+                    <td>{{ anuncio.titulo }}</td>
+                    <td>
+                        {% if anuncio.status_anuncio == 1 %}
+                            Ativo
+                        {% elif anuncio.status_anuncio == 2 %}
+                            Encerrado
+                        {% else %}
+                            Pausado
+                        {% endif %}
+                    </td>
+                    <td>R${{ anuncio.preco|intcomma }}</td>
+                    <td><a href="{% url 'editar_anuncio' id=anuncio.id %}"><i class="bi bi-pencil-fill"></i></a></td>
+                    <td><a href="{% url 'deletar_anuncio' id=anuncio.id %}"><i class="bi bi-trash-fill"></i></a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% endif %}
+    </div>
+<hr>
+<div class="row text-end">
+    <div class="col">
+        <a class="btn btn-primary" href="{% url 'cadastrar_anuncio' %}">Criar anúncio</a>
+    </div>
+</div>
+</div>
+
+{% endblock %}

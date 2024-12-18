@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="shadow p-4 mb-5 bg-body rounded">
+    <div class="text-center">
+        <h1>Lojas de {{ user }}</h1>
+    </div>
+    <hr>
+    <div class="responsive-table">
+        {% if lojas|length == 0 %}
+        <div class="text-center">
+            <h4>Sem lojas para listar!</h4>
+        </div>
+        {% else %}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>Localidade</th>
+                    <th>Email</th>
+                    <th>Telefone</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for loja in lojas %}
+                <tr>
+                    <td><a href="{% url 'page_loja' cod_loja=loja.cod_loja %}">{{ loja.cod_loja }}</a></td>
+                    <td>{{ loja.nome }}</td>
+                    <td>{{ loja.localidade }}</td>
+                    <td>{{ loja.email }}</td>
+                    <td>{{ loja.telefone }}</td>
+                    <td>
+                        <a href="{% url 'editar_loja' loja_id=loja.id %}"><i class="bi bi-pencil-fill"></i></a>
+                        <a href="{% url 'deletar_loja' loja_id=loja.id %}"><i class="bi bi-trash-fill"></i></a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% endif %}
+    </div>
+    <hr>
+    <div class="row text-end">
+        <div class="col">
+            <a class="btn btn-primary" href="{% url 'cadastrar_loja' %}">Criar loja</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

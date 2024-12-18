@@ -63,7 +63,6 @@ a, u {
     text-decoration: none;
 }
 
-
 .password-instructions {list-style-type: none; 
     padding: 0;     
     margin-top: 5px;
@@ -80,7 +79,75 @@ a, u {
     display: none;
 }
 
+.image-container {
+    width: 18rem;
+    overflow: hidden;
+}
+
+.resized-image {
+    max-width: 100%;
+    max-height: 100%;
+    display: block;
+    margin: auto;
+}
+
+.preco-card {
+    color: gold;
+    font-weight: bolder;
+    font-size: x-large;
+}
+
+.departamento-display {
+    color: lightgray;
+    font-size: small;
+}
+
+.zoom-image {
+    width: 100%;
+    transition: transform 0.3s ease;
+}
+
+.card:hover .zoom-image {
+    transform: scale(1.2);
+}
+
+#star:hover {
+    color: gold;
+    font-size: large;
+}
+
 .content {
     padding-top: 50px;
     padding-bottom: 50px;
+}
+
+/* Barra de navegação */
+.navbar-nav .nav-link {
+    color: #333333; /* Cor uniforme para todos os links */
+    font-weight: normal; /* Remove o negrito */
+    font-size: 1rem; /* Tamanho da fonte consistente */
+    text-transform: none; /* Remove transformações */
+}
+
+.navbar-nav .nav-link:hover {
+    color: #007bff; /* Cor ao passar o mouse (opcional) */
+}
+
+.navbar-brand {
+    color: #333333; /* Cor do link principal */
+    font-weight: normal;
+    font-size: 1.2rem; /* Ajuste do tamanho da fonte */
+    text-transform: none;
+}
+
+.navbar-toggler {
+    border: none; /* Remove borda do botão no mobile */
+}
+
+.navbar-toggler-icon {
+    background-color: #333333; /* Cor do ícone do mobile */
+}
+
+.navbar-nav {
+    font-size: 1rem; /* Ajusta o tamanho dos itens da barra */
 }

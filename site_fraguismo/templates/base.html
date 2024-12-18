@@ -65,42 +65,12 @@
                         <li class="nav-item">
                             <a class="nav-link active" href="https://fraguismo.org/blog/">Artigos</a>
                         </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false" href="https://fraguismo.org/ensino/">Ensino</a>
-                            <ul class="dropdown-menu">
-                                <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false" href="https://fraguismo.org/fragaflix/">Fragaflix</a>
-                                    <ul class="dropdown-menu">
-                                        <li>
-                                            <a class="nav-link" href="https://fraguismo.org/videos/">Vídeos</a>
-                                        </li>
-                                        <li>
-                                            <a class="nav-link" href="https://fraguismo.org/filmes/">Filmes</a>
-                                        </li>
-                                        <li>
-                                            <a class="nav-link" href="https://fraguismo.org/podcasts/">Podcasts</a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li class="nav-item dropdown">
-                                    <a class="nav-link" href="https://fraguismo.org/fraga-academy/">Fraga Academy &raquo;</a>
-                                    <ul class="dropdown-menu dropdown-submenu">
-                                        <li>
-                                            <a class="dropdown-item"  href="https://fraguismo.org/cursos/">Cursos</a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item"  href="https://fraguismo.org/livros-free/">Livros Membro</a>
-                                        </li>
-                                    </ul>
-                                </li>                                
-                            </ul>
-                        </li>
                         {% comment %} <li class="nav-item">
                             <a class="nav-link" href="https://fraguismo.org/stores/">Lojas</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Negocie em Bitcoin</a>
                         </li> {% endcomment %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'home' %}">Negocie em Bitcoin</a>
+                        </li>
                     {% if user.is_authenticated %}
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'user_page' %}">Minha Área</a>
@@ -121,15 +91,16 @@
                             <li class="nav-item" style="font-size: 18px;">
                             {% if user.is_authenticated %}
                                 <a class="nav-link active" data-toggle="tooltip" title="Logout" href="{% url 'logout' %}">
-                                    <i class="bi bi-box-arrow-right" ></i>
+                                    <i class="bi bi-box-arrow-right" style="font-size: xx-large;"></i>
                                 </a>
                             {% else %}
                                 <a class="nav-link active" data-toggle="tooltip" title="Login/Registrar" href="{% url 'login' %}">
-                                    <i class="bi bi-person"  aria-hidden="true"></i>
+                                    <i class="bi bi-person" style="font-size: xx-large;"  aria-hidden="true"></i>
                                 </a>                    
                         {% endif %}
-                        <li class="nav-item">
-                            <a class="btn btn-warning align-self-center" style="border-radius: 20px;" aria-current="page" href="#">
+                            </li>
+                        <li>
+                            <a class="btn btn-warning align-self-center" style="border-radius: 20px; margin-top: 15px;" aria-current="page" href="{% url 'cadastrar_anuncio' %}">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                 Publique aqui
                             </a>
@@ -177,7 +148,7 @@
                                     </a>
                                 </li>
                                 <li class="list-group">
-                                    <a href="https://www.youtube.com/@fraguismo7066" target="_blank" style="padding: 10px;">
+                                    <a href="https://www.youtube.com/@fraguismo" target="_blank" style="padding: 10px;">
                                         <i class="bi bi-youtube" style="font-size: 24px;"></i>
                                     </a>
                                 </li>

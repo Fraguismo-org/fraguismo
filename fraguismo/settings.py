@@ -20,12 +20,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.humanize',
     'django_bootstrap5',
     'site_fraguismo',
     'members',
     'rating',
     'administrador',
     'cursos',
+    'marketplace',
 ]
 
 MIDDLEWARE = [

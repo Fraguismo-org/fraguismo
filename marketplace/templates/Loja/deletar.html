@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="shadow p-4 mb-5 bg-body rounded">
+    <div class="text-center">
+        <h1>Deletar Loja</h1>
+        <p>Tem certeza de que deseja deletar a loja <strong>{{ loja.nome }}</strong>?</p>
+    </div>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Deletar</button>
+        <a href="{% url 'listar_lojas' %}" class="btn btn-secondary">Cancelar</a>
+    </form>
+</div>
+{% endblock %}
