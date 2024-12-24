@@ -11,7 +11,7 @@ class Users(User):
     birth = models.DateField(null=True)
     job_title = models.CharField(max_length=255, blank=True)
     bsc_wallet = models.CharField(max_length=100, blank=True)
-    lightning_wallet = models.CharField(max_length=100, blank=True)
+    lightning_wallet = models.CharField(max_length=400, blank=True)
     como_conheceu = models.CharField(max_length=20, blank=True)
     quem_indicou = models.CharField(max_length=100, blank=True)
     aonde = models.CharField(max_length=100)
