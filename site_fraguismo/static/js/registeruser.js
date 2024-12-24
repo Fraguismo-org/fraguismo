@@ -24,8 +24,6 @@ document.addEventListener('DOMContentLoaded', function () {
     const instagram = document.getElementById('instagram');
     const birth = document.getElementById('birth');
     const jobTitle = document.getElementById('job_title');
-    const lightningWallet = document.getElementById('lightning_wallet');
-    const bscWallet = document.getElementById('bsc_wallet');
     const comoConheceu = document.getElementById('como_conheceu');
     const quemIndicou = document.getElementById('quem_indicou');
     const aonde = document.getElementById('aonde');
@@ -75,14 +73,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     jobTitle.addEventListener('change', () => {
         validaJobTitle();
-    });
-
-    lightningWallet.addEventListener('change', () => {
-        validaBTCWallet();
-    });
-
-    bscWallet.addEventListener('change', () => {
-        validaBSCWallet();
     });
 
     function getQueryParam(param) {
@@ -169,8 +159,7 @@ document.addEventListener('DOMContentLoaded', function () {
             validaInstagram() &&
             validaBirth() &&
             validaJobTitle() &&
-            validaBSCWallet() &&
-            validaBTCWallet() &&
+            alidaBTCWallet() &&
             validaComoConheceu()
         );
     }
@@ -309,29 +298,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         document.getElementById("validation-jobtitle").style.display = 'inline';
-        return false;
-    }
-
-    function validaBTCWallet(){
-        document.getElementById("validation-btcwallet").style.display = 'none';
-        const regex = /^[a-zA-Z0-9]{190,400}$/;
-        if (regex.test(lightningWallet.value) || lightningWallet.value === ''){
-            return true;
-        }
-
-        document.getElementById("validation-btcwallet").style.display = 'inline';
-        return false;
-
-    }
-
-    function validaBSCWallet(){
-        document.getElementById("validation-bscwallet").style.display = 'none';
-        const regex = /^0x[a-fA-F0-9]{40}$/;
-        if (regex.test(bscWallet.value) || bscWallet.value === '') {
-            return true;
-        }
-
-        document.getElementById("validation-bscwallet").style.display = 'inline';
         return false;
     }
 

@@ -11,8 +11,6 @@ document.addEventListener('DOMContentLoaded', function () {
     const instagram = document.getElementById('instagram');
     const birth = document.getElementById('birth');
     const jobTitle = document.getElementById('job_title');
-    const bscWallet = document.getElementById('bsc_wallet');
-    const btcWallet = document.getElementById('lightning_wallet');
     const chkCodigoConduta = document.getElementById('codigo_conduta');
 
     const btnSalvar = document.getElementById('btn-salvar');
@@ -88,14 +86,6 @@ document.addEventListener('DOMContentLoaded', function () {
         validaJobTitle();
     });
 
-    btcWallet.addEventListener('change', () => {
-        validaBTCWallet();
-    });
-
-    bscWallet.addEventListener('change', () => {
-        validaBSCWallet();
-    });
-
     function validaCampos() {
         return (
             validaEmail() &&
@@ -106,8 +96,7 @@ document.addEventListener('DOMContentLoaded', function () {
             validaInstagram() &&
             validaBirth()&&
             validaJobTitle() &&
-            validaBSCWallet() &&
-            validaBTCWallet() &&
+            alidaBTCWallet() &&
             validaCodigoConduta()
         );
     }
@@ -236,29 +225,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
         document.getElementById("validation-jobtitle").style.display = 'inline';
         return false;
-    }
-
-    function validaBSCWallet(){
-        document.getElementById("validation-bscwallet").style.display = 'none';
-        const regex = /^0x[a-fA-F0-9]{40}$/;
-        if (regex.test(bscWallet.value) || bscWallet.value === '') {
-            return true;
-        }
-
-        document.getElementById("validation-bscwallet").style.display = 'inline';
-        return false;
-    }
-
-    function validaBTCWallet(){
-        document.getElementById("validation-btcwallet").style.display = 'none';
-        const regex = /^[a-zA-Z0-9]{190,400}$/;
-        if (regex.test(btcWallet.value) || btcWallet.value === ''){
-            return true;
-        }
-
-        document.getElementById("validation-btcwallet").style.display = 'inline';
-        return false;
-
     }
 
     function validaCodigoConduta() {
