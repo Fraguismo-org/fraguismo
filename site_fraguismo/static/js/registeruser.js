@@ -327,7 +327,7 @@ document.addEventListener('DOMContentLoaded', function () {
     function validaBSCWallet(){
         document.getElementById("validation-bscwallet").style.display = 'none';
         const regex = /^0x[a-fA-F0-9]{40}$/;
-        if (regex.test(bscWallet) || bscWallet.value === '') {
+        if (regex.test(bscWallet.value) || bscWallet.value === '') {
             return true;
         }
 

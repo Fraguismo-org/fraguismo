@@ -107,7 +107,7 @@
                 <div class="col">                
                     <p><input class="form-check-input" type="checkbox" id="fraguista" name="fraguista" 
                         {% if member.is_fraguista %}
-                         checked
+                         checked="checked"
                         {% endif %}>
                     Tornar fraguista!</p>
                 </div>
@@ -179,7 +179,7 @@
                 <div class="col">
                     <p><input class="form-check-input" type="checkbox" id="codigo_conduta" name="codigo_conduta"
                         {% if member.codigo_conduta %}
-                            checked
+                            checked="checked"
                         {% endif %}>
                     Li e concordo com o <a href="{% url 'codigo_conduta' %}">Código de conduta</a> do Fraguismo!</p>                    
                 </div>
