@@ -314,7 +314,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function validaBTCWallet(){
         document.getElementById("validation-btcwallet").style.display = 'none';
-        const regex = /^[a-zA-Z0-9._]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        const regex = /^[a-zA-Z0-9]{190,400}$/;
         if (regex.test(lightningWallet.value) || lightningWallet.value === ''){
             return true;
         }
