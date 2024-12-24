@@ -241,7 +241,7 @@ document.addEventListener('DOMContentLoaded', function () {
     function validaBSCWallet(){
         document.getElementById("validation-bscwallet").style.display = 'none';
         const regex = /^0x[a-fA-F0-9]{40}$/;
-        if (regex.test(bscWallet) || bscWallet.value === '') {
+        if (regex.test(bscWallet.value) || bscWallet.value === '') {
             return true;
         }
 
@@ -251,7 +251,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function validaBTCWallet(){
         document.getElementById("validation-btcwallet").style.display = 'none';
-        const regex = /^[a-zA-Z0-9._]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        const regex = /^[a-zA-Z0-9]{190,350}$/;
         if (regex.test(btcWallet.value) || btcWallet.value === ''){
             return true;
         }

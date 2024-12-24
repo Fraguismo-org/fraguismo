@@ -60,6 +60,7 @@ def register_user(request):
             user.como_conheceu = request.POST.get('como_conheceu', None)
             user.quem_indicou = request.POST.get('quem_indicou', None)
             user.aonde = request.POST.get('aonde', None)
+            user.codigo_conduta = request.POST.get('termos_adesao', True)
 
         user.save()
         profile = Profile.get_or_create_profile(user_request=user)
