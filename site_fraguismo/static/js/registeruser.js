@@ -159,7 +159,6 @@ document.addEventListener('DOMContentLoaded', function () {
             validaInstagram() &&
             validaBirth() &&
             validaJobTitle() &&
-            alidaBTCWallet() &&
             validaComoConheceu()
         );
     }
