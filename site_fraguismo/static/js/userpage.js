@@ -95,8 +95,7 @@ document.addEventListener('DOMContentLoaded', function () {
             validaPhone() &&
             validaInstagram() &&
             validaBirth()&&
-            validaJobTitle() &&
-            alidaBTCWallet() &&
+            validaJobTitle() &&            
             validaCodigoConduta()
         );
     }
