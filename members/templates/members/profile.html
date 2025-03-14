@@ -75,34 +75,30 @@
             <div class="row">
                 <div class="col">
                     <label for="username" class="form-label">Username</label>
-                    <input type="text" class="form-control" id="username" name="username" value="{{ profile.user.username }}" 
-                    {% if not user.is_superuser %}
-                    disabled
-                    {% endif %}
-                    >
+                    <input type="text" class="form-control" id="username" name="username" value="{{ profile.user.username }}" disabled>
                 </div>                
             </div>
             {% if user.is_superuser %}
             <div class="row">
                 <div class="col">
                     <label for="email" class="form-label">E-mail</label>
-                    <input type="email" id="email" name="email" class="form-control" value="{{ profile.user.email }}">
+                    <input type="email" id="email" name="email" class="form-control" value="{{ profile.user.email }}" disabled>
                 </div>
             </div>
             <div class="row">
                 <div class="col">
                     <label for="first_name" class="form-label">Nome</label>
-                    <input type="text" class="form-control" id="first_name" name="first_name" value="{{ profile.user.first_name }}">
+                    <input type="text" class="form-control" id="first_name" name="first_name" value="{{ profile.user.first_name }}" disabled>
                 </div>
             </div>
             <div class="col">
                 <label for="last_name" class="form-label">Sobrenome</label>
-                <input type="text" name="last_name" id="last_name" class="form-control" value="{{ user.last_name }}">
+                <input type="text" name="last_name" id="last_name" class="form-control" value="{{ user.last_name }}" disabled>
             </div>
             <div class="row">
                 <div class="col">
                     <label for="fone" class="form-label">Telefone</label>
-                    <input type="text" id="fone" name="fone" class="form-control" value="{{ member.fone }}">
+                    <input type="text" id="fone" name="fone" class="form-control" value="{{ member.fone }}" disabled>
                 </div>
             </div>
             <div class="row">
