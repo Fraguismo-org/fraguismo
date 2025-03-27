@@ -4,7 +4,7 @@
     {% load static %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static '/css/styles.css' %}">
+    <link rel="stylesheet" href="{% static '/css/components.css' %}">
     <link rel="shortcut icon" type="image/png" href="{% static '/images/favicon.ico' %}"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
@@ -111,20 +111,20 @@
             </div>
         </nav>
     </header>
-
-    <div class="container" >
-        {% if messages %}
-            {% for message in messages %}                
-                <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                    {{ message }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                  </div>
-            {% endfor %}
-        {% endif %}
+    
+        <div class="{% if request.resolver_match.url_name == 'index' %}container-fluid container-geral{% else %}container{% endif %}">
+            {% if messages %}
+                {% for message in messages %}                
+                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endfor %}
+            {% endif %}
 
         {% block content %} 
         {% endblock content %}
-    </div>
+        </div>
 
     <footer >
         <div class="footer-top-area" style="padding-top: 80px; padding-bottom: 80px;">
@@ -252,7 +252,6 @@
     {% block javascript %}
 
     <script src="https://kit.fontawesome.com/32cd59ffee.js" crossorigin="anonymous"></script>
-
     {% endblock javascript %}
 </body>
 </html>

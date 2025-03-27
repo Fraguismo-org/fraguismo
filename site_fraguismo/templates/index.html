@@ -1,237 +1,201 @@
 {% extends "base.html" %}
-
 {% load static %}
+
 {% block content %}
-<link rel="stylesheet" href="{% static '/css/styles.css' %}">
-<style>
-/* Reset de margens e padding */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+<link rel="stylesheet" href="{% static '/css/index.css' %}">
+<link rel="stylesheet" href="{% static '/css/components.css' %}">
 
-/* Configuração do body e html para ocupar 100% da largura */
-body, html {
-    width: 100%;
-    height: 100%;
-}
-
-/* Estilização do container de background para cobrir 100% da largura */
-.bg-btc {
-    background-image: url("{% static 'images/bg-btc.webp' %}");
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-    height: 78vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100vw;
-    margin-left: calc(50% - 50vw); /* Alinhar o fundo ao centro */
-}
-
-
-/* Estilização do texto sobre o background */
-.overlay-text {
-    color: white;
-    text-align: center;
-    background-color: rgba(0, 0, 0, 0.5);
-    padding: 20px;
-    border-radius: 20px;
-    width: 100%;
-    max-width: 1200px;
-    z-index: 2;
-}
-
-.overlay-text:hover {
-    transform: scale(1.1);
-    background-color: rgba(0, 0, 0, 0.8);
-}
-/* Estilo adicional para efeito de digitação */
-.typing-effect {
-    border-right: 2px solid white; /* Simula o cursor piscante */
-    white-space: nowrap;
-    overflow: hidden;
-    width: 100%; /* Define a largura completa após a animação */
-    animation: typing 4s steps(40, end), remove-caret 1ms forwards;
-}
-
-@keyframes typing {
-    from { width: 0; }
-    to { width: 100%; }
-}
-
-@keyframes remove-caret {
-    to { border-right: none; }
-}
-
-.card:hover{
-    background-color: darkkhaki;
-    color: aliceblue;
-    
-}
-
-.overlay-text-anchor {
-    text-decoration: none;
-}
-
-</style>
-
-
-<div class="bg-btc">
-    <a class="overlay-text-anchor" href="{% url 'home' %}">
-    <div class="overlay-text">
-        <h1 id="typedText" class="typing-effect">Encontre empresas e serviços negociando em Bitcoin</h1>
-        <p>Anuncie seus produtos ou serviços conectando-se com uma comunidade que valoriza a liberdade</p>
+<section class="hero-section">
+    <div class="wrapper-carousel">
+        <img src="{% static '/images/ancapicon.webp' %}" class="d-block w-100" alt="bg-img" loading="lazy">
     </div>
-    <a/>
+    <div class="container d-flex hero-content">
+        <div class="row wrapper-hero-content">
+            <div class="col hero-text" id="hero-text">
+                <h1>O QUE É O FRAGUISMO?</h1>
+                <p>O Fraguismo é a primeira Religião Libertária do Brasil, que é baseada na “Lei Natural” de
+                    respeito absoluto à “Vida, Propriedade e Liberdade”. Acreditamos que todas as interações na
+                    sociedade devam ser voluntárias e que toda coerção, ameaça ou agressão contra pessoas pacíficas
+                    seja uma violação da propriedade, e portanto, fere os princípios da nossa fé.</p>
+                <p>Não temos dogmas morais, apenas exigimos que nossos seguidores respeitem a propriedade do
+                    próximo. Nossa religião é ecumênica, ou seja nossos seguidores podem ter outras crenças
+                    espirituais e seguir outras doutrinas, desde que, respeitem a lei natural.</p>
+            </div>
+            <div class="col d-flex video-fraga">
+                <iframe src="https://www.youtube.com/embed/jHKABs6rMpM" frameborder="0"></iframe>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="custom-shape-divider-top-1741034210">
+    <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+        <path d="M1200,0H0V120H281.94C572.9,116.24,602.45,3.86,602.45,3.86h0S632,116.24,923,120h277Z" class="shape-fill"></path>
+    </svg>
 </div>
 
-{% comment %} <div id="categorias-populares" style="margin-top: 3rem; margin-bottom: 2rem;">
-    <div class="row text-center" style="margin-bottom: 2rem;">
-        <h2 class="h2">Categorias Populares</h2>
-    </div>
-    <div class="row">
-        <div class="col-sm-3">
-            <a class="" href="https://fraguismo.org/listing-category/agro-e-industria/">
-                <div class="card text-center" style="width: 16rem; height: 10rem;">
-                    <div class="card-body">
-                        <i class="bi bi-tree-fill" style="font-size: 2.5rem; color: darkgoldenrod;"></i>
-                        <h5 class="card-title">
-                            Agro e indústria
-                        </h5>
-                    </div>
-                </div>
-            </a>
-        </div>
-        <div class="col-sm-3">
-            <a href="https://fraguismo.org/listing-category/autos-e-pecas/">
-                <div class="card text-center" style="width: 16rem; height: 10rem;">
-                    <div class="card-body">
-                        <i class="bi bi-car-front-fill" style="font-size: 2.5rem; color: darkgoldenrod;"></i>
-                        <h5 class="card-title">
-                            Autos e peças
-                        </h5>
-                    </div>
-                </div>
-            </a>
-        </div>
-        <div class="col-sm-3">
-            <a href="https://fraguismo.org/listing-category/eletronicos-e-celulares/">
-                <div class="card text-center" style="width: 16rem; height: 10rem;">
-                    <div class="card-body">
-                        <i class="bi bi-phone-fill" style="font-size: 2.5rem; color: darkgoldenrod;"></i>
-                        <h5 class="card-title">
-                            Eletrônicos e celulares
-                        </h5>
-                    </div>
-                </div>
-            </a>
-        </div>
-        <div class="col-sm-3">
-            <a href="https://fraguismo.org/listing-category/esportes-e-lazer/">
-                <div class="card text-center" style="width: 16rem; height: 10rem;">
-                    <div class="card-body">
-                        <i class="bi bi-dribbble" style="font-size: 2.5rem; color: darkgoldenrod;"></i>
-                        <h5 class="card-title">
-                            Esportes e lazer
-                        </h5>
-                    </div>
-                </div>
-            </a>
-        </div>    
-    </div>
-    <div class="row" style="margin-top: 1rem;">
-        <div class="col-sm-3">
-            <a href="https://fraguismo.org/listing-category/moda-e-beleza/">
-                <div class="card text-center" style="width: 16rem; height: 10rem;">
-                    <div class="card-body">
-                        <i class="bi bi-handbag-fill" style="font-size: 2.5rem; color: darkgoldenrod;"></i>
-                        <h5 class="card-title">
-                            Moda e beleza
-                        </h5>
-                    </div>
-                </div>
-            </a>
-        </div>
-        <div class="col-sm-3">
-            <a href="https://fraguismo.org/listing-category/musicas-e-hobbies/">
-                <div class="card text-center" style="width: 16rem; height: 10rem;">
-                    <div class="card-body">
-                        <i class="bi bi-music-note" style="font-size: 2.5rem; color: darkgoldenrod;"></i>
-                        <h5 class="card-title">
-                            Música e hobbies
-                        </h5>
-                    </div>
-                </div>
-            </a>
-        </div>
-        <div class="col-sm-3">
-            <a href="https://fraguismo.org/listing-category/para-a-sua-casa/">
-                <div class="card text-center" style="width: 16rem; height: 10rem;">
-                    <div class="card-body">
-                        <i class="bi bi-house-add-fill" style="font-size: 2.5rem; color: darkgoldenrod;"></i>
-                        <h5 class="card-title">
-                            Para sua casa
-                        </h5>
-                    </div>
-                </div>
-            </a>
-        </div>
-        <div class="col-sm-3">
-            <a href="https://fraguismo.org/listing-category/servicos/">
-                <div class="card text-center" style="width: 16rem; height: 10rem;">
-                    <div class="card-body">
-                        <i class="bi bi-tools" style="font-size: 2.5rem; color: darkgoldenrod;"></i>
-                        <h5 class="card-title">
-                            Prestação de serviços
-                        </h5>
-                    </div>
-                </div>
-            </a>
-        </div>    
-    </div>
-</div> {% endcomment %}
-
-{% comment %} <div id="anuncios-destaque" style="margin-top: 3rem;">
-    <div class="row text-center">
-        <h2 class="h2">Anúncios em destaque</h2>
-    </div>
-    {% with '1 2' as list %}
-    {% for num in list.split %}    
-    <div class="row" style="margin-top: 2rem;">
-        {% with '1 2 3 4' as cardlist %}
-        {% for cards in cardlist.split %}
-        <div class="col-sm-3">
-            <a href="">
-                <div class="card" style="width: 16rem;">
-                    <img src="https://fraguismo.org/wp-content/uploads/classified-listing/2024/06/ben-white-gEKMstKfZ6w-unsplash-scaled.jpg" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">
-                            <a>Título do serviço/produto </a>
-                        </h5>
-                        <div class="tempo-ativo">
-                            <small><i class="bi bi-clock"></i> 2 semanas</small>
+<section class="lei-natural d-flex w-100 justify-content-center align-items-center">
+    <div class="container text-center">
+        <div class="row w-100 justify-content-center d-flex flex-wrap">
+            <div class="col-md-4 d-flex flex-column" id="container-cards">
+                <div class="wrapper-container d-flex flex-column h-100">
+                    <div class="wrapper-bio-alt flex-grow-1 d-flex flex-column">
+                        <h2 class="font-weight-bold display-4 pb-12">Lei Natural</h2>
+                        <p class="flex-grow-1">
+                            A vida, a propriedade e a liberdade são direitos naturais humanos e não é legítimo uma
+                            pessoa, grupo de pessoas
+                            e/ou entidade violar esses direitos, pois eles são naturais da condição humana,
+                            portanto, inalienáveis.<br /><br />
+                            Seguimos o princípio da Lei Áurea: "Não faça aos outros o que não gostaria que fizessem
+                            contigo."<br />
+                            Saiba mais sobre Lei Natural e os princípios do Fraguismo.
+                        </p>
+                        <div class="mt-5">
+                            <button class="btn btn-dark btn-lg text-uppercase">Saiba mais!</button>
                         </div>
-                        <div class="usuario">
-                            <small><i class="bi bi-person"></i> {{ request.user }}</small>
-                        </div>
-                        <div class="preco">
-                            <h5 class="h5" style="color: darkgoldenrod;">
-                                R$ 1.500,00
-                            </h5>
-                        </div>    
-                    </div>                
+                    </div>
                 </div>
-            </a>
+            </div>
+            <div class="col-md-4 d-flex flex-column mr-5 ml-5" id="container-cards">
+                <div class="wrapper-container d-flex flex-column h-100">
+                    <div class="wrapper-bio-alt wrapper-dao flex-grow-1 d-flex flex-column">
+                        <h2 class="font-weight-bold display-4 pb-12">DAO</h2>
+                        <p class="flex-grow-1">
+                            O Fraguismo opera como uma DAO <br />(do inglês: Organização, Autônoma, Descentralizada)<br /><br />
+                            De forma em que a comunidade
+                            faz as escolhas estratégicas da instituição de modo descentralizado para que nunca se
+                            torne um projeto pessoal de poder, ou que possa ser cooptado por agentes destrutivos.
+                        </p>
+                        <div class="mt-5">
+                            <button class="btn btn-dark btn-lg text-uppercase">Saiba mais!</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 d-flex flex-column" id="container-cards">
+                <div class="wrapper-container d-flex flex-column h-100">
+                    <div class="wrapper-bio-alt flex-grow-1 d-flex flex-column">
+                        <h2 class="font-weight-bold display-4 pb-12">Hierarquia</h2>
+                        <p class="flex-grow-1">
+                            O Fraguismo tem uma hierarquia de 6 (seis) níveis, não existe (nem poderá existir)
+                            nenhuma trava política para a
+                            ascensão dentro da instituição, sendo ela feita apenas por conhecimento teórico e
+                            participação dentro da comunidade.<br /><br />
+                            Somente é possível opinar no direcionamento do Fraguismo quem atinge o nível de Guardião
+                            ou de VPL (nível mais alto).
+                        </p>
+                        <div class="mt-5">
+                            <button class="btn btn-dark btn-lg text-uppercase">Saiba mais!</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        {% endfor %}
-        {% endwith %}
     </div>
-    {% endfor %}
-    {% endwith %}
-    
-</div> {% endcomment %}
+</section>
 
-{% endblock %}
+<section class="curso-fraga">
+    <img src="{% static '/images/rothbard.webp' %}" alt="rothbard" loading="lazy"/>
+    <div class="content-curso">
+        <p class="title-curso">CURSO DE FORMAÇÃO FRAGUISTA</p>
+        <p class="subtitle-curso">O Curso é necessário para o participante subir na hierarquia através de leitura de livros e provas.</p>
+        <p class="text-curso">Ele tem como objetivo guiar e acompanhar o novo membro no caminho pelo conhecimento dos princípios éticos que fundamentam a nossa crença.<br /><br />
+        Cada nível da formação tem uma seleção de livros de autores renomados e que já foram aferidos pela comunidade, o aluno será direcionado a um mentor que acompanhará toda a sua jornada e estará disponível para esclarecer dúvidas.<br /><br />
+        O aluno também terá acesso a grupos de estudos e discussões sobre os livros e temas abordados no curso, podendo assim estreitar os laços com colegas Fraguistas.<br/></p>
+        <button href="link-do-formulario.html" class="btn btn-dark btn-lg text-uppercase btn-cta">Clique aqui para o curso de formação!</button>
+    </div>
+</section>
+
+<section class="objetivo-section">
+    <div class="custom-shape-divider-top-1741632460">
+        <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+            <rect x="1200" height="3.6"></rect>
+            <rect height="3.6"></rect>
+            <path d="M0,0V3.6H580.08c11,0,19.92,5.09,19.92,13.2,0-8.14,8.88-13.2,19.92-13.2H1200V0Z" class="shape-fill"></path>
+        </svg>
+    </div>
+    <div class="objetivo-imagem"></div>
+    <div class="objetivo-texto">
+        <h2>Nosso Objetivo</h2>
+        <p>Nosso objetivo como religião é <span class="call-action">proteger os direitos naturais</span> humanos e avançar na direção de uma sociedade livre de coerção, onde todos possam viver e interagir de forma voluntária e pacífica.</p>
+        <p>Pretendemos juntos <span class="call-action">criar soluções e alternativas não violentas</span> para os problemas e desafios da sociedade.</p>
+        <p>Se você também acredita que a iniciação de <strong>violência contra pessoas pacíficas seja errada</strong> e gostaria de criar um novo sistema, <span class="call-action">junte-se a nós e nos ajude</span> a concretizar esse sonho de forma ativa.</p>
+        <p><strong>Mas se você não acredita que isso seja possível ou prefere esperar que alguém faça isso por você. O Fraguismo não é o seu lugar.</strong></p>
+        <p><span class="call-action">Somos uma religião propositiva e não destrutiva. Reclamar é fácil, difícil é criar algo novo. Seja alguém que faz a diferença!</span></p>
+        <p>Dentro do Fraguismo você encontrará aliados para trazer o seu sonho para a realidade.</p>
+        <p class="vpl">VPL!</p>
+        <p><i>Vida Propriedade e Liberdade</i></p>
+        <button class="btn btn-dark btn-lg text-uppercase">Saiba mais!</button>
+    </div>
+    <div class="custom-shape-divider-bottom-1741633164">
+        <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+            <rect x="1200" height="3.6"></rect>
+            <rect height="3.6"></rect>
+            <path d="M0,0V3.6H580.08c11,0,19.92,5.09,19.92,13.2,0-8.14,8.88-13.2,19.92-13.2H1200V0Z" class="shape-fill"></path>
+        </svg>
+    </div>
+</section>
+
+<section class="container-contador-fraga text-center">
+    <div class="container">
+        <p class="fs-1 text-contador">
+            SOMOS MAIS DE<br />
+            <span class="counter-item" data-target="500">0</span><br />
+            FRAGUISTAS ATIVOS!</p>
+    </div>
+</section>
+
+
+<div class="container-CTA">
+    <div class="wrapper-CTA">
+        <h2>Você tem interesse em se juntar a nós?</h2>
+        <p>
+            O objetivo do formulário é conhecer o seu nível de conhecimento sobre os nossos princípios, você não precisa saber de tudo para entrar, 
+            mas com essa informação poderemos recomendar materiais de estudo mais direcionados a você antes mesmo de você entrar para o Fraguismo.
+        </p>
+        <button class="btn btn-light btn-lg">COMPLETE O FORMULÁRIO DE ENTRADA AQUI!</button>
+    </div>
+    <div class="img-CTA">
+        <img src="/site_fraguismo/static/images/fraga.webp" alt="fraguismo" loading="lazy">
+    </div>
+</div>
+
+<!-- JS USADO NO index.html -->
+<script>
+
+    /* Função para o contador começar a subir a partir do momento que o usuário estiver rolado até aonde ele está na tela */
+    function startCounter() {
+            const counter = document.querySelector('.counter-item');
+            counter.innerText = '0';
+            const updateCounter = () => {
+                const target = +counter.getAttribute('data-target');
+                const count = +counter.innerText;
+                const increment = target / 100;
+                if (count < target) {
+                    counter.innerText = `${Math.ceil(count + increment)}`;
+                    setTimeout(updateCounter, 20);
+                } else {
+                    counter.innerText = target;
+                }
+            };
+            updateCounter();
+        }
+
+        let started = false;
+
+        function checkVisibility() {
+            const section = document.querySelector('.container-contador-fraga'); // Classe corrigida
+            const sectionTop = section.getBoundingClientRect().top;
+            const sectionBottom = section.getBoundingClientRect().bottom;
+
+            if (sectionTop < window.innerHeight && sectionBottom > 0 && !started) {
+                startCounter();
+                started = true;
+            }
+        }
+
+        window.addEventListener('load', checkVisibility);
+        window.addEventListener('scroll', checkVisibility);
+</script>
+
+{% endblock content %}
