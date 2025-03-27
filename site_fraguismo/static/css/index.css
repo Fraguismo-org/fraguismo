@@ -6,7 +6,7 @@
 }
 /*       */
 html, body {
-    background: url('/site_fraguismo/static/images/leinatural.webp') no-repeat center !important;
+    background: url('/static/images/leinatural.webp') no-repeat center !important;
     background-attachment: fixed !important;
     background-size: cover !important;
 }
@@ -264,7 +264,7 @@ button:hover {
     left: 0;
     bottom: 0;
     width: 50%;
-    background: url('/site_fraguismo/static/images/ancapflag.webp') no-repeat center;
+    background: url('/static/images/ancapflag.webp') no-repeat center;
     background-size: cover;
     height: 100% !important;
 }
@@ -330,7 +330,7 @@ button:hover {
     justify-content: space-between;
     align-items: center;
     padding: 50px;
-    background: url('/site_fraguismo/static/images/meteor.svg') no-repeat center;
+    background: url('/static/images/meteor.svg') no-repeat center;
     background-size: cover;
 }
 
