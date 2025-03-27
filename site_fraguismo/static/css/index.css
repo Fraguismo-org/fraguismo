@@ -1,0 +1,691 @@
+@import url('https://fonts.googleapis.com/css2?family=Ballet:opsz@16..72&family=Charm:wght@400;700&family=Cookie&display=swap');
+/*       */
+.container-geral {
+    padding: 0 !important;
+    margin: 0 !important;
+}
+/*       */
+html, body {
+    background: url('/site_fraguismo/static/images/leinatural.webp') no-repeat center !important;
+    background-attachment: fixed !important;
+    background-size: cover !important;
+}
+
+button {
+    background-color: #f0b90b !important;
+    color: black !important;
+    transition: 0.3s all ease-in-out !important;
+    border-color: none !important;
+    border: none !important;
+    font-weight: 500;
+    padding: 20px;
+}
+
+section {
+    width: 100% !important;
+}
+
+button:hover {
+    background-color: #d89b08 !important;
+    color: white !important;
+    transition: 0.3s all ease-in-out !important;
+    cursor: pointer !important;
+}
+
+.btn-cta {
+    font-size: 1.2rem;
+}
+
+.cookie-regular {
+    font-family: "Cookie", cursive;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.charm-regular {
+    font-family: "Charm", cursive;
+    font-weight: 400;
+    font-style: normal;
+}
+
+/* SHAPES ------------------------------------------------------------------------------------------------------------------------- */
+.custom-shape-divider-top-1741034210 {
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+    line-height: 0;
+}
+
+.custom-shape-divider-top-1741034210 svg {
+    position: relative;
+    display: block;
+    width: calc(100% + 1.3px);
+    height: 60px;
+}
+
+.custom-shape-divider-top-1741034081 .shape-fill {
+    fill: #000000;
+}
+
+.custom-shape-divider-top-1741632460 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+    line-height: 0;
+}
+
+.custom-shape-divider-top-1741632460 svg {
+    position: relative;
+    display: block;
+    width: calc(100% + 1.3px);
+    height: 330px;
+    z-index: 99999;
+}
+
+.custom-shape-divider-top-1741632460 .shape-fill {
+    fill: #000000;
+}
+
+.custom-shape-divider-bottom-1741633164 {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+    line-height: 0;
+    transform: rotate(180deg);
+}
+
+.custom-shape-divider-bottom-1741633164 svg {
+    position: relative;
+    display: block;
+    width: calc(100% + 1.3px);
+    height: 330px;
+    z-index: 99999;
+}
+
+.custom-shape-divider-bottom-1741633164 .shape-fill {
+    fill: yellow
+}
+
+/* SEÇÃO O QUE É O FRAGUISMO? --------------------------------------------------------------------------------------------------------- */
+.hero-section {
+    min-height: 100dvh;
+    align-items: center;
+    position: relative !important;
+    display: flex !important;
+}
+
+.wrapper-carousel {
+    position: relative;
+    height: 100%;
+    width: 100%;
+}
+
+.wrapper-carousel img {
+    width: 100%;
+    height: 100dvh;
+    position: relative;
+    object-fit: cover !important;
+    filter: brightness(0.3) !important;
+}
+
+.hero-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);   
+}
+
+.hero-text {
+    color: white;
+    align-items: left;
+    width: fit-content;
+    height: fit-content;
+}
+
+.hero-text h1 {
+    font-size: 3.5rem;
+    font-weight: 400;
+}
+
+.hero-text p {
+    font-size: 1.3rem;
+}
+
+.wrapper-hero-content {
+    min-height: 100%;
+    display: flex;
+}
+
+.video-fraga {
+    width: 100%;
+    height: 400px;
+    display: flex;
+    flex-direction: column;
+ } 
+
+.video-fraga iframe {
+    width: 100%;
+    height: 100%;
+}
+
+/* SEÇÃO DOS CARD's (LEI NATURAL, DAO E HIERARQUIA) --------------------------------------------------------------------------------------------------------- */
+.lei-natural {
+    width: 100% !important;
+    height: fit-content !important;
+    margin-top: 5% !important;
+    margin-bottom: 5% !important;
+}
+
+.wrapper-bio-alt {
+    background-color: rgba(66, 66, 66, 0.719);
+    padding: 20px !important;
+    border-radius: 10px;
+    color: white;
+}
+
+.wrapper-bio-alt p {
+    font-size: 1.3rem !important;
+}
+
+/* Curso de formaçao fraguista --------------------------------------------------------------------------------------------------------- */
+.curso-fraga {
+    height: 75dvh;
+    width: 100%;
+    position: relative;
+}
+
+.curso-fraga img {
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
+    filter: brightness(0.8);
+}
+
+.content-curso {
+    position: absolute;
+    top: 50%;
+    left: 70%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 2rem;
+    font-weight: bold;
+    text-align: center;
+    padding: 10px 20px;
+    border-radius: 5px;
+    width: 870px;
+    height: fit-content;
+}
+
+.content-curso p {
+    font-size: 1.4rem;
+    font-weight: 100;
+}
+
+.title-curso {
+    font-size: 2.5rem !important;
+    font-weight: 700 !important;
+}
+
+.subtitle-curso {
+    font-size: 1.8rem !important;
+    font-weight: 500 !important;
+}
+
+.text-curso {
+    margin-bottom: 1rem !important;
+}
+
+/* SEÇÃO DE OBJETIVO --------------------------------------------------------------------------------------------------------- */
+.objetivo-section {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    min-height: 100dvh;
+    background-color: rgb(46, 46, 46);
+    color: white;
+    position: relative;
+    overflow: hidden;
+}
+
+.vpl {
+    font-family: "Charm", cursive;
+    font-size: 3rem !important;
+}
+
+.objetivo-imagem {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 50%;
+    background: url('/site_fraguismo/static/images/ancapflag.webp') no-repeat center;
+    background-size: cover;
+    height: 100% !important;
+}
+
+.objetivo-texto {
+    width: 50%;
+    padding: 80px 60px;
+    z-index: 2;
+}
+
+.objetivo-texto h2 {
+    font-size: 2.8rem;
+    margin-bottom: 20px;
+    color: #f0b90b;
+}
+
+.objetivo-texto p {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    margin-bottom: 20px;
+}
+
+.call-action {
+    font-weight: bold;
+    color: #f0b90b;
+}
+
+/* ÁREA DE CONTADOR DE FRAGUISTAS ----------------------------------------------------------------------------------------------- */
+.container-contador-fraga {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 45dvh;
+    padding: 50px 0;
+    text-align: center;
+    background: fixed;
+    background: url('/site_fraguismo/static/images/abstractpaper.svg') no-repeat center;
+    background-size: cover;
+    color: white;
+    font-weight: 500;
+    text-shadow: #f0b90b;
+}
+
+.counter-item {
+    font-size: 6rem;
+    font-weight: bold;
+    display: inline;
+    padding-left: 10px;
+    padding-right: 10px;
+    color: #000000;
+    border: solid;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+}
+
+/* ÁREA CALL TO ACTION --------------------------------------------------------------------------------------------------------- */
+.container-CTA {
+    width: 100%;
+    height: 65dvh;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 50px;
+    background: url('/site_fraguismo/static/images/meteor.svg') no-repeat center;
+    background-size: cover;
+}
+
+.wrapper-CTA {
+    width: 50%;
+    padding: 20px;
+}
+
+.wrapper-CTA h2 {
+    font-size: 2.5rem;
+    color: white;
+}
+
+.wrapper-CTA p {
+    font-size: 2rem;
+    color: white;
+    margin: 15px 0;
+}
+
+/* Área de imagem */
+.img-CTA {
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.img-CTA img {
+    max-width: 90%;
+    height: auto;
+    border-radius: 8px;
+}
+
+.cards-container {
+    min-width: 100%;
+    min-height: 100vh;
+    background-color: #bdbdbd44;
+    position: relative;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
+
+/* ---------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------
+*/
+.password-instructions {
+    list-style-type: none;
+    padding: 0;
+    margin-top: 5px;
+}
+
+.password-instructions li {
+    color: red;
+    font-size: 14px;
+    list-style: disc;
+    margin-left: 18px;
+}
+
+.password-strength {
+    font-weight: bold;
+}
+
+.password-requirements {
+    font-style: italic;
+}
+
+.text-error {
+    color: red;
+    display: none;
+}
+
+.image-container {
+    width: 18rem;
+    overflow: hidden;
+}
+
+.resized-image {
+    max-width: 100%;
+    max-height: 100%;
+    display: block;
+    margin: auto;
+}
+
+.preco-card {
+    color: gold;
+    font-weight: bolder;
+    font-size: x-large;
+}
+
+.departamento-display {
+    color: lightgray;
+    font-size: small;
+}
+
+.zoom-image {
+    width: 100%;
+    transition: transform 0.3s ease;
+}
+
+.card:hover .zoom-image {
+    transform: scale(1.2);
+}
+
+#star:hover {
+    color: gold;
+    font-size: large;
+}
+
+.content {
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+
+/* Responsividade --------------------------------------------------------------------------------------------------------- */
+@media (max-width: 1447px) {
+    .content-curso {
+        position: absolute;
+        top: 50%;
+        left: 75%;
+        transform: translate(-50%, -50%);
+        color: white;
+        font-weight: bold;
+        text-align: center;
+        padding: 10px 10px 10px 20px;
+        border-radius: 5px;
+        width: 600px;
+        height: fit-content;
+    }
+
+    .content-curso p {
+        font-size: 1.2rem;
+        font-weight: 100;
+    }
+
+    .title-curso {
+        font-size: 2rem !important;
+        font-weight: 700 !important;
+    }
+
+    .subtitle-curso {
+        font-size: 1.5rem !important;
+        font-weight: 500 !important;
+    }
+
+    .curso-fraga img {
+        object-fit: cover;
+        height: 100%;
+        width: 100%;
+        filter: brightness(0.8);
+    }
+}
+
+@media (max-width: 1250px){
+    .wrapper-CTA {
+        width: 400px;
+        height: fit-content;
+    }
+
+    .wrapper-CTA h2 {
+        font-size: 2.3rem;
+        color: white;
+    }
+    
+    .wrapper-CTA p {
+        font-size: 1.3rem;
+        color: white;
+        margin: 15px 0;
+    }
+
+    .img-CTA img {
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 1200px) {
+    #container-cards {
+        flex: 0 0 100%;
+        padding-right: 10px;
+        padding-left: 10px;
+    }
+    
+    .wrapper-dao {
+        margin-top: 25px;
+        margin-bottom: 25px;
+    }
+}
+
+@media (max-width: 1175px) {
+    .content-curso {
+        position: absolute;
+        top: 50%;
+        left: 73%;
+        transform: translate(-50%, -50%);
+        color: white;
+        font-weight: bold;
+        text-align: center;
+        padding: 10px 0px 10px 0px;
+        border-radius: 5px;
+        width: 500px;
+        height: fit-content;
+    }
+
+    .content-curso p {
+        font-size: 1rem;
+        font-weight: 100;
+    }
+
+    .title-curso {
+        font-size: 1.5rem !important;
+        font-weight: 700 !important;
+    }
+
+    .subtitle-curso {
+        font-size: 1.2rem !important;
+        font-weight: 500 !important;
+    }
+
+    .curso-fraga img {
+        object-fit: cover;
+        height: 100%;
+        width: 100%;
+        filter: brightness(0.8);
+    }
+}
+
+@media (max-width: 993px) {
+    .content-curso {
+        width: 430px;
+        left: 69%;
+    }
+
+    .hero-content{
+        height: 75% !important;
+    }
+
+    .col .video-fraga {
+        height: fit-content !important;
+    }
+
+    #hero-text {
+        flex: 0 0 100%;
+    }
+
+    .hero-text h1 {
+        font-size: 2.5rem;
+        font-weight: 400;
+    }
+
+    .hero-text p {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero-text h1 {
+        font-size: 1.5rem;
+        font-weight: 400;
+    }
+
+    .hero-text p {
+        font-size: 0.85rem;
+    }
+
+
+    .objetivo-section {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .objetivo-imagem {
+        position: relative;
+        width: 100%;
+        height: 40vh !important;
+    }
+
+    .objetivo-texto {
+        width: 100%;
+        padding: 50px 20px !important;
+    }
+
+    .container-CTA {
+        flex-direction: column;
+        text-align: center;
+        height: auto;
+        padding: 20px;
+    }
+
+    .wrapper-CTA,
+    .img-CTA {
+        width: 100%;
+    }
+
+    .img-CTA img {
+        max-width: 100%;
+    }
+
+    .wrapper-CTA h2 {
+        font-size: 2rem;
+        color: white;
+    }
+    
+    .wrapper-CTA p {
+        font-size: 1.5rem;
+        color: white;
+        margin: 15px 0;
+    }
+
+    .content-curso {
+        position: absolute;
+        top: 50%;
+        left: 70%;
+        transform: translate(-50%, -50%);
+        color: white;
+        font-weight: bold;
+        text-align: center;
+        padding: 10px 8px 10px 20px;
+        border-radius: 5px;
+        width: 350px;
+        height: fit-content;
+    }
+
+    .btn-cta {
+        font-size: 0.85rem;
+    }
+
+    .content-curso p {
+        font-size: 0.90rem;
+        font-weight: 100;
+    }
+
+    .title-curso {
+        font-size: 1.2rem !important;
+        font-weight: 700 !important;
+    }
+
+    .subtitle-curso {
+        font-size: 0.90rem !important;
+        font-weight: 500 !important;
+    }
+
+    .curso-fraga img {
+        object-fit: cover;
+        height: 100%;
+        width: 100%;
+        filter: brightness(0.8);
+    }
+}
+
+@media (max-width: 587px) {
+    .content-curso {
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+}

@@ -122,6 +122,13 @@ a, u {
 }
 
 /* Barra de navegação */
+header {
+    z-index: 9999 !important;
+    position: relative !important;
+    width: 100%;
+    height: fit-content;
+}
+
 .navbar-nav .nav-link {
     color: #333333; /* Cor uniforme para todos os links */
     font-weight: normal; /* Remove o negrito */
@@ -145,7 +152,7 @@ a, u {
 }
 
 .navbar-toggler-icon {
-    background-color: #333333; /* Cor do ícone do mobile */
+    background-color: #ffffff00; /* Cor do ícone do mobile */
 }
 
 .navbar-nav {
