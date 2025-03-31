@@ -222,11 +222,6 @@ button:hover {
     height: fit-content;
 }
 
-.content-curso p {
-    font-size: 1.4rem;
-    font-weight: 100;
-}
-
 .title-curso {
     font-size: 2.5rem !important;
     font-weight: 700 !important;
@@ -239,6 +234,8 @@ button:hover {
 
 .text-curso {
     margin-bottom: 1rem !important;
+    font-weight: 400 !important;
+    font-size: 1.4rem;
 }
 
 /* SEÇÃO DE OBJETIVO --------------------------------------------------------------------------------------------------------- */
@@ -302,7 +299,7 @@ button:hover {
     padding: 50px 0;
     text-align: center;
     background: fixed;
-    background: url('/site_fraguismo/static/images/abstractpaper.svg') no-repeat center;
+    background: url('/static/images/abstractpaper.svg') no-repeat center;
     background-size: cover;
     color: white;
     font-weight: 500;
