@@ -314,6 +314,10 @@ button:hover {
     padding-right: 10px;
     color: #000000;
     border: solid;
+    text-shadow:   
+    1px 1px 2px #FFFFFF,
+    0 0 1em #FFFFFF,
+    0 0 0.2em #FFFFFF;
     border-top: none;
     border-left: none;
     border-right: none;
@@ -612,7 +616,7 @@ button:hover {
     }
 
     .container-CTA {
-        flex-direction: column;
+        flex-direction: column-reverse !important;
         text-align: center;
         height: auto;
         padding: 20px;
