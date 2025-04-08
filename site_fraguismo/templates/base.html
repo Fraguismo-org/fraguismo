@@ -20,7 +20,7 @@
         <nav class="navbar navbar-expand-lg bg-body-tertiary">
             <div class="container-fluid">
                 <a class="navbar-brand" href="{% url 'index' %}">
-                    <img src="https://fraguismo.org/wp-content/uploads/2023/03/logov9.png" class="container-fluid" alt="Fraguismo">
+                    <img src="{% static '/images/logofraguinha.png' %}" alt="Fraguismo" width="100" height="70" style="margin: 0 20px 0 20px;">
                 </a>  
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggler1" aria-controls="navbarToggler1" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -133,7 +133,7 @@
                     <div class="col-lg-3 col-sm-6 col-12">
                         <div id="classima_about-2" class="widget widget_classima_about">
                             <div class="d-flex align-items-center" style="padding-bottom: 20px;">
-                                <img src="https://fraguismo.org/wp-content/uploads/2023/03/fraguismov78.png" width="150" height="45" alt="https://fraguismo.org/wp-content/uploads/2023/03/fraguismov78.png">
+                                <img src="{% static '/images/logofraguinha.png' %}" width="120" height="80" alt="Fraguismo">
                             </div>
                             <p class="rtin-des">Fraguismo é uma religião pautada nos princípios do jusnaturalismo e do PNA</p>
                             <ul class="list-group list-group-horizontal">
@@ -239,8 +239,8 @@
                     <div class="col-md-4">
                         <ul class="list-group">
                             <li class="list-group">
-                                <a href="https://bitcoin.org/">
-                                    <img width="32" height="32" src="https://fraguismo.org/wp-content/uploads/2023/03/bitcoin-fraga.png" class="attachment-thumbnail size-thumbnail" alt="" decoding="async" title=""/>
+                                <a href="https://bitcoin.org/" class="btc-cta">
+                                    BTC
                                 </a>
                             </li>
                         </ul>
