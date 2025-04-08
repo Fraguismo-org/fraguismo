@@ -121,6 +121,15 @@ a, u {
     padding-bottom: 50px;
 }
 
+.btc-cta {
+    color: white;
+    font-weight: 500;
+}
+
+.btc-cta:hover {
+    color: #ffbc00;
+}
+
 /* Barra de navegação */
 header {
     z-index: 9999 !important;

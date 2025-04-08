@@ -114,8 +114,9 @@ button:hover {
 
 /* SEÇÃO O QUE É O FRAGUISMO? --------------------------------------------------------------------------------------------------------- */
 .hero-section {
-    min-height: 100dvh;
+    min-height: 80dvh;
     align-items: center;
+    justify-content: center;
     position: relative !important;
     display: flex !important;
 }
@@ -136,14 +137,12 @@ button:hover {
 
 .hero-content {
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);   
 }
 
 .hero-text {
     color: white;
     align-items: left;
+    width: 50%;
     width: fit-content;
     height: fit-content;
 }
@@ -166,7 +165,6 @@ button:hover {
     width: 100%;
     height: 400px;
     display: flex;
-    flex-direction: column;
  } 
 
 .video-fraga iframe {
@@ -321,6 +319,10 @@ button:hover {
     border-top: none;
     border-left: none;
     border-right: none;
+}
+
+.text-contador {
+    line-height: 80px;
 }
 
 /* ÁREA CALL TO ACTION --------------------------------------------------------------------------------------------------------- */
@@ -566,6 +568,11 @@ button:hover {
         left: 69%;
     }
 
+    .wrapper-hero-content {
+        flex-direction: column;
+        height: fit-content;
+    }
+
     .hero-content{
         height: 75% !important;
     }
@@ -590,7 +597,7 @@ button:hover {
 
 @media (max-width: 768px) {
     .hero-text h1 {
-        font-size: 1.5rem;
+        font-size: 1.8rem;
         font-weight: 400;
     }
 
