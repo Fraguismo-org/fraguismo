@@ -32,3 +32,18 @@ def administrativo(request):
 
 def agenda(request):
     return redirect('index')
+
+def leinatural(request):
+    return render(request, 'leinatural.html')
+
+def dao(request):
+    return render(request, 'dao.html')
+
+def daoregras(request):
+    return render(request, 'daoregras.html')
+
+def hierarquia(request):
+    return render(request, 'hierarquia.html')
+
+def cursofraguista(request):
+    return render(request, 'cursofraguista.html')
