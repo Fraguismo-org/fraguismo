@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<link rel="stylesheet" href="{% static '/css/triadefraguista.css' %}"/>
+<link rel="stylesheet" href="{% static '/css/components.css' %}"/>
+
+<section class="apresentation apresentation-DAO">
+    <div class="container head-title">
+        <h1>
+            DAO
+        </h1>
+        <h4>
+            Uma DAO (Decentralized Autonomous Organization) em português: Organização Autônoma Descentralizada, 
+            é uma organização governada por regras codificadas em contratos inteligentes (smart contracts) na blockchain, 
+            sem controle centralizado. Seu funcionamento é baseado em descentralização, transparência e tomada de decisão coletiva.
+        </h4>
+    </div>
+    <div class="custom-shape-divider-top-1744652616">
+        <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+            <path d="M1200 120L0 16.48 0 0 1200 0 1200 120z" class="shape-fill"></path>
+        </svg>
+    </div>
+</section>
+
+<section class="body-text mt-5 mb-5">
+    <div class="container-fluid">
+        <div class="row d-flex">
+            <div class="col-12 col-md-6 column-rights">
+                <h4 class="hidden-on-scroll">
+                    Como Funciona a DAO do Fraguismo
+                </h4>
+                <p class="hidden-on-scroll">
+                    1. Smart Contracts: 
+                    As regras da DAO do Fraguismo são programadas em contratos inteligentes na blockchain da Polygon, garantindo execução automática e imutabilidade.
+                </p>
+                <p class="hidden-on-scroll">
+                    2. Tokens de Governança: Os membros da DAO possuem tokens que representam sua cota de participação no projeto, conferindo-lhes 
+                    poder de voto e influência nas decisões da organização, uma vez que alcancem o nível de Guardião ou superior.
+                </p>
+                <p class="hidden-on-scroll">
+                    3. Votação Descentralizada: Propostas, como investimentos, mudanças de regras ou alocação de fundos, são submetidas e 
+                    votadas pelos Guardiões+ do Fraguismo, com votos proporcionais à quantidade de tokens que cada um possui.
+                </p>
+                <p class="hidden-on-scroll">
+                    4. Tesouraria Transparente: A DAO gerencia recursos financeiros através de contratos inteligentes, garantindo segurança e 
+                    transparência na movimentação dos fundos.
+                </p>
+                <p class="hidden-on-scroll">
+                    5. Execução Automatizada: As decisões aprovadas são executadas automaticamente, sem a necessidade de intermediários.
+                </p>
+                <div class="blackline hidden-on-scroll" style="width: 100%; background-color: black; height: 3px; border-radius: 100%;"></div>
+                <p style="margin-top: 10px;" class="hidden-on-scroll">
+                    - As <strong>DAOs</strong> se destacam em relação a outros modelos de governança por sua transparência total, 
+                    já que todas as decisões e transações ficam registradas na blockchain, o que reduz as possibilidades de fraudes e corrupção.
+                </p>
+                <p class="hidden-on-scroll">
+                    - Sua descentralização elimina o controle de uma entidade central, tornando-a mais resistentes à censura e removendo 
+                    incentivos políticos tradicionais, como troca de favores, lobby e a influência de grupos de interesse. 
+                    Isso deixa a governança mais eficiente e meritocrática.
+                </p class="hidden-on-scroll">
+                <p class="hidden-on-scroll">
+                    - Além disso, a automação via contratos inteligentes reduz a burocracia e os custos administrativos. 
+                    As decisões são tomadas com base em votos proporcionais ao número de tokens, criando incentivos econômicos para que os detentores de tokens
+                    ajam de forma prudente, já que o valor da DAO depende da boa gestão dos participantes.
+                </p>
+            </div>
+            <div class="col-12 col-lg-6 hidden-on-scroll column-img column-img-DAO" style="position: relative;">
+                <img src="{% static '/images/btcfreedom.webp' %}" alt="Tres-direitos" class="img-fluid display-img" style="border-radius: 10px; object-fit: cover; position: relative; z-index: 2; min-height: 100%;"/>
+            </div>
+        </row>
+    </div>
+</section>
+
+<div class="container-fluid d-flex align-items-center justify-content-center text-center hidden-on-scroll mt-5 pt-5 mb-5 pb-5">
+    <a href="/daoregras" class="fs-3 dao-button">Conheça as regras da DAO</a>
+</div>
+
+<script>
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+            setTimeout(() => {
+                entry.target.classList.add('visible');
+            }, 1000); 
+            }
+        });
+        });
+    
+    document.querySelectorAll('.hidden-on-scroll').forEach(el => observer.observe(el));
+    
+</script>
+
+{% endblock content %}
