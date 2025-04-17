@@ -1,0 +1,202 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<link rel="stylesheet" href="{% static '/css/triadefraguista.css' %}"/>
+<link rel="stylesheet" href="{% static '/css/components.css' %}"/>
+
+<section class="apresentation apresentation-REGRAS">
+    <div class="container head-title">
+        <h1>
+            Regras da DAO
+        </h1>
+        <h4>
+            Queremos viver de forma ética, respeitando a propriedade do próximo e tendo nossa propriedade respeitada. 
+            Trabalhamos ativamente para possibilitar que mais Fraguistas possam viver de acordo com as Leis Naturais em que 
+            todas as interações sejam voluntárias e que a agressão seja cessada.
+        </h4>
+    </div>
+    <div class="custom-shape-divider-top-1744652616">
+        <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+            <path d="M1200 120L0 16.48 0 0 1200 0 1200 120z" class="shape-fill"></path>
+        </svg>
+    </div>
+</section>
+
+<section class="missões pb-5 mt-5 mb-5 hidden-on-scroll">
+    <div class="container d-flex align-items-center justify-content-center flex-column position-relative">
+        <div class="bg-img">
+            <img src="{% static '/images/bandeiraancap.webp' %}" alt="balança" width="600" height="300" class="img-fluid img-side"/>
+        </div>
+        <div class="bg-img-2">
+            <img src="{% static '/images/btcbg.webp' %}" alt="balança" width="600" height="300" class="img-fluid img-side"/>
+        </div>
+        <h1>Missão e Objetivo:</h1>
+        <div class="blackline" style="width: 70%; background-color: black; height: 3px; border-radius: 100%; margin-top: 2%; margin-bottom: 2%;"></div>
+        <div class="content-law">
+            <p>
+                Por sermos uma religião anarcocapitalista, as trocas voluntárias de livre comércio são algo sagrado e importante para nós. 
+                O nosso objetivo é trazer abundância e prosperidade na vida dos nossos fiéis, permitindo que eles se libertem das amarras que 
+                os prendem no sistema coercitivo e possam migrar para uma vida baseada no respeito à propriedade e nas trocas voluntárias, aumentando sua independência.
+            </p>
+            <p>
+                Todos nossos projetos tem como objetivo chegarmos mais perto de uma vida mais alinhada com nossos valores fundamentais, 
+                podemos agir em diversas áreas, mas todo novo empreendimento tem como objetivo criar sistemas voluntaristas alternativos aos coercitivos, 
+                focando principalmente no suprimento das demandas da nossa comunidade mas não necessariamente de uso exclusivo dela, 
+                porém os Fraguistas sempre terão preferência e benefícios maiores de acordo com sua posição dentro da nossa hierarquia em relação à 
+                pessoas que não seguem a nossa fé.
+            </p>
+        </div>
+    </div>
+</section>
+
+<section class="body-text pt-5 mt-5 mb-5">
+    <div class="container-fluid">
+        <div class="row d-flex">
+            <div class="col-12 col-md-6 column-rights">
+                <h4 class="hidden-on-scroll">
+                   
+                </h4>
+                <p class="hidden-on-scroll">
+                   <strong>HIERARQUIA:</strong>
+                   <br/>- O Fraguismo tem uma escala hierárquica onde o conhecimento e a participação no projeto são os pré-requisitos para ascensão.<br/><br/>
+                    - Nenhum entrave político pode ser usado para impedir alguém de subir na hierarquia.<br/><br/>
+                    <strong>- Para subir de nível, o Fraguista deve:<br/><br/></strong>
+                         - <strong>1.</strong>Completar os módulos referentes ao seu nível do curso de formação Fraguista, lendo os livros e materiais obrigatórios; e sendo aprovado na prova.<br/><br/>
+                         - <strong>2.</strong>Ter o número suficiente de pontos de participação. (verificar, no site, a quantidade de pontuação necessária para cada nível);<br/><br/>
+                         - <strong>3.</strong>Para alcançar o nível de Guardião, além de cumprir os requisitos anteriores, o Fraguista precisará adquirir pelo menos um Token do Fraguismo, que será o peso do seu voto.<br/><br/>
+                    - Apenas a partir do nível Guardião é possível votar nas decisões do Fraguismo. Todo Guardião deve ter pelo menos um Token.<br/><br/>
+                    - Cada nível tem regras e acesso à informações diferentes, quanto mais o Fraguista sobe na hierarquia mais conhecimento sobre o Fraguismo ele tem e mais participação ativa ele poderá ter no projeto.<br/><br/>
+                
+                    - <strong>Conflitos entre Fraguistas</strong>, caso não exista contrato determinando outro foro arbitral, serão arbitrados pela CAL. (Câmara Arbitral Libertária) ou qualquer outro meio de arbitragem com anuência de ambas as partes - <strong>contrato de adesão.<br/><br/></strong>
+                    - Todos os cargos administrativos do Fraguismo (CEO, Financeiro, Marketing, Adm...) podem ser substituídos por outras pessoas, basta alguém se candidatar e ser votado pelos Guardiões.<br/><br/>
+                    - Para a abertura de um novo CNPJ Fraguista é necessário que, pelo menos, o presidente seja um Guardião do Fraguismo.
+                </p>
+            </div>
+            <div class="col-12 col-lg-6 hidden-on-scroll column-img column-img-DAO" style="position: relative;">
+                <img src="{% static '/images/btcfreedom.webp' %}" alt="Tres-direitos" class="img-fluid display-img" style="border-radius: 10px; object-fit: cover; position: relative; z-index: 2; min-height: 100%;"/>
+            </div>
+        </row>
+    </div>
+</section>
+
+<section class="topicos mt-5 hidden-on-scroll">
+    <div class="mt-5">
+        <div class="row mx-0 pt-0 pb-0 content" 
+            style=
+            "flex-direction: column;">
+            <div class="col-sm-6" style="
+            width: 100%;
+            padding: 10px 0;"
+            >
+                <div class="column-topics">
+                    <h3>Votação</h3>
+                    <h6 style="font-size: clamp(0.85rem, 1vw, 1.1rem);">
+                        Os Guardiões+ são os responsáveis pelas tomadas de decisão do Fraguismo, 
+                        o peso do seu voto é proporcional ao número de Tokens de Governança (FRAGs) que ele possui, 
+                        isso mantém os incentivos financeiros corretos, aumentando as chances do Fraguismo ter projetos bem sucedidos e 
+                        refletindo o nível de comprometimento e contribuição do Guardião dentro da instituição.
+                    </h6>
+                    <ul>
+                        <li><strong>QUORUM:</strong> É necessário que estejam presentes 50% + 1 Guardião para uma votação ser válida. 
+                            (Ex: existem quatorze Guardiões no Fraguismo, o mínimo de quórum são oito Guardiões) caso não atinja o quórum, a votação deve ser adiada.
+                        </li>
+                        <li>
+                            Satisfeito o quesito do Quórum mínimo, para aprovar um projeto, 
+                            é necessário que mais de 50% dos Tokens dos Guardiões votantes, tenham sido favoráveis a aprovação. 
+                            (Ex: se somando os Tokens de 8 Guardiões tivermos 1.000 Tokens, seriam necessários, no mínimo, 501 Tokens votando favorável a proposta,
+                             para ela ser considerada aprovada.) *levando em consideração o sistema anti-takeover descrito abaixo.
+                        </li>
+                        <li>
+                            Qualquer escolha de alocação de recursos (que exceda R$ 1.000,00) ou de execução de projetos que usem a imagem da 
+                            instituição, será feita através de votação.
+                        </li>
+                        <li>
+                            O voto é individual, indelegável e intrasferível.
+                        </li>
+                        <li>
+                            Existem 4 opções de voto: APROVADO, NEGADO, INDEFINIDO e ABSTENÇÃO (*). 
+                            Se tivermos um número maior do que 50% dos Guardiões votantes como indefinidos, a votação deve ser adiada por uma semana para que 
+                            eles possam se informar melhor sobre o assunto e definirem seu voto. Se novamente mais de 50% estiverem indefinidos (pela segunda vez) 
+                            o resultado será executado independente disso.<br/><br/>
+                            Indefinido: aquele que reconhece não ter informações para opinar, mas gostaria de opinar, por isso precisa de mais informações e reflexão;<br/><br/>
+                            Abstenção: aquele que, tendo as informações que julgue suficientes, optar por não opinar.<br/><br/>
+                        </li>
+                        <li>
+                            Guardiões que possuam conflitos de interesse, como ganhos financeiros diretos com um projeto específico, 
+                            não poderão votar nessas decisões, garantindo que as votações sejam imparciais e focadas no melhor interesse do Fraguismo.
+                        </li>
+                        <li>
+                            Para mudar as regras da DAO é necessário a aprovação de 75% (dos Tokens) dos Guardiões presentes na reunião. 
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-sm-6" style="
+            width: 100%;
+            padding: 10px 0;"
+            >
+                <div class="column-topics">
+                    <h3>Transparência e Sistema ANTI-TAKEOVER:</h3>
+                    <ul>
+                        <h5>Transparência:</h5>
+                            <li>
+                                Um relatório mensal deverá ser elaborado, contendo as decisões de votação dos Guardiões, incluindo o percentual de aprovação de cada proposta. 
+                                Além disso, o relatório deverá detalhar a alocação de recursos dentro do Fraguismo. 
+                                Esse relatório será divulgado de forma aberta e transparente para a comunidade, garantindo que todos os membros (Escudeiros+) tenham acesso às 
+                                informações sobre as decisões tomadas e a gestão dos recursos.
+                            </li>
+                            <li>
+                                Um relatório mensal de Fluxo de caixa (entradas, distribuições e saídas) deve ser publicado para acesso de Cavaleiros+<br/><br/>
+                            </li>
+                        <h5>Sistema ANTI-TAKEOVER:</h5>
+                            <li>
+                                Para evitar uma tomada hostil, — em que um agente externo mal-intencionado possa adquirir uma quantidade significativa de tokens e tomar controle do projeto —. 
+                                Implementamos um mecanismo de limitação de poder de voto. 
+                                Esse sistema previne que a compra em massa de tokens seja utilizada de forma a prejudicar a integridade da governança do projeto.<br/><br/>
+                            </li>
+                        <h6>
+                            Os percentuais máximos que um guardião tem numa votação diminuem quanto mais Guardiões estiverem votando.
+                        </h6>
+                            <li>
+                                de 05 a 09 Guardiões votantes:<br/>
+                                máximo de poder de voto é 25% por Guardião;<br/>
+                            </li>
+                            <li>
+                                de 10 a 15 Guardiões votantes:<br/>
+                                máximo de poder de voto é 20% por Guardião;<br/>
+                            </li>
+                            <li>
+                                de 16 a 20 Guardiões votantes:<br/>
+                                máximo de poder de voto é 15% por Guardião;<br/>
+                            </li>
+                            <li>
+                                a partir de 21 Guardiões votantes:<br/>
+                                máximo de poder de voto é 10% por Guardião.<br/>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+            setTimeout(() => {
+                entry.target.classList.add('visible');
+            }, 1000); 
+            }
+        });
+        });
+    
+    document.querySelectorAll('.hidden-on-scroll').forEach(el => observer.observe(el));
+    
+</script>
+
+
+{% endblock content %}
