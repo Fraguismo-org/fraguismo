@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<link rel="stylesheet" href="{% static '/css/triadefraguista.css' %}"/>
+<link rel="stylesheet" href="{% static '/css/components.css' %}"/>
+
+<section class="apresentation apresentation-CF">
+    <div class="container head-title">
+        <h1>
+            Curso de formação fraguista
+        </h1>
+        <h4>
+            O Curso de Formação Fraguista é destinado aos membros da nossa comunidade, com o objetivo de garantir que cada fraguista 
+            tenha um conhecimento mínimo sobre Libertarianismo. Por meio da leitura e discussão de obras validadas no meio libertário, 
+            ele oferece uma base sólida para a compreensão dos princípios que norteiam nossa fé.
+        </h4>
+    </div>
+    <div class="custom-shape-divider-top-1744652616">
+        <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+            <path d="M1200 120L0 16.48 0 0 1200 0 1200 120z" class="shape-fill"></path>
+        </svg>
+    </div>
+</section>
+
+<section class="body-text mt-5">
+    <div class="container-fluid">
+        <div class="row d-flex">
+            <div class="col-12 col-md-6 column-rights">
+                <h4 class="hidden-on-scroll">Curso: Funcionamento e Sobre</h4>
+                <p class="hidden-on-scroll">
+                    O curso é dividido em quatro níveis, sendo cada um composto por quatro livros, cuidadosamente selecionados. 
+                    Além das leituras, o aluno terá acesso a audiobooks e vídeos complementares, que ajudarão na assimilação do conteúdo. 
+                    Também oferecemos tutores, um grupo no WhatsApp e duas reuniões online mensais, para garantir apoio contínuo durante o processo de aprendizado.
+                </p>
+                <p class="hidden-on-scroll">
+                    As obras são organizadas de forma didática, com níveis progressivos de dificuldade. 
+                    Ao concluir cada nível, o aluno deve realizar uma prova, composta por duas questões sobre cada livro estudado. 
+                    Com base no desempenho, o aluno será considerado apto a seguir para o próximo nível ou inapto, podendo refazer o curso conforme necessário.
+                </p>
+                <p class="hidden-on-scroll">
+                    As provas não têm o objetivo de testar a memória do aluno em relação a datas, nomes ou passagens. 
+                    O que pretendemos com essas leituras é que o aluno compreenda e internalize os conceitos que fazem parte da nossa crença no jusnaturalismo 
+                    e na economia austríaca. Portanto, fique tranquilo para agendar sua prova e priorize a compreensão dos conceitos ao estudar.
+                </p>
+                <div class="blackline hidden-on-scroll" style="width: 100%; background-color: black; height: 3px; border-radius: 100%; margin: 13px 0;"></div>
+                <h4 class="hidden-on-scroll">Finalidade</h4>
+                <p class="hidden-on-scroll">
+                    Vale ressaltar que o objetivo do curso não é formar libertários, já que acreditamos que qualquer pessoa pode buscar conhecimento por conta própria, 
+                    por meio de livros e outros recursos.<br/><br/>O que buscamos é garantir que os fraguistas tenham familiaridade com as obras fundamentais, pois, 
+                    ao ascenderem a posições de liderança em nossa comunidade, eles terão um papel crucial nas decisões que guiarão o Fraguismo. 
+                    Para isso, um conhecimento básico dessas obras é essencial.
+                </p>
+                <p class="hidden-on-scroll">
+                    Além disso, o curso oferece uma oportunidade de integração com a comunidade, especialmente através do contato direto com o tutor, 
+                    favorecendo o estreitamento dos laços de amizade e confiança entre os membros.<br/><br/>
+                    O curso é hospedado na Plataforma Hotmart e tem um custo de R$10,00. Para se inscrever, basta acessar o link abaixo:
+                </p>
+            </div>
+            <div class="col-12 col-lg-6 hidden-on-scroll column-img column-img-CF" style="position: relative;">
+                <img src="{% static '/images/donttreadonmeLG.webp' %}" alt="Dont Tread On Me" class="img-fluid display-img" style="border-radius: 10px; object-fit: cover; position: relative; z-index: 2; height: 100%;"/>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="container-fluid d-flex align-items-center justify-content-center text-center hidden-on-scroll mt-5 pt-5 mb-5 pb-5">
+    <a href="https://pay.hotmart.com/E87143607R?off=2e84h9lw&bid=1702246507502" class="fs-3 dao-button">Inscreva-se agora!</a>
+</div>
+
+<script>
+
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+        setTimeout(() => {
+            entry.target.classList.add('visible');
+        }, 1000); 
+        }
+    });
+    });
+
+document.querySelectorAll('.hidden-on-scroll').forEach(el => observer.observe(el));
+
+</script>
+
+{% endblock content %}
