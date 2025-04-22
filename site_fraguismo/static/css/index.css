@@ -249,7 +249,7 @@ button:hover {
     left: 0;
     bottom: 0;
     width: 50%;
-    background: url('/site_fraguismo/static/images/ancapflag.webp') no-repeat center;
+    background: url('/static/images/ancapflag.webp') no-repeat center;
     background-size: cover;
     height: 100% !important;
 }
@@ -287,7 +287,7 @@ button:hover {
     padding: 50px 0;
     text-align: center;
     background: fixed;
-    background: url('/site_fraguismo/static/images/abstractpaper.svg') no-repeat center;
+    background: url('/static/images/abstractpaper.svg') no-repeat center;
     background-size: cover;
     color: white;
     font-weight: 500;
@@ -324,7 +324,7 @@ button:hover {
     align-items: center;
     text-align: center;
     padding: 50px;
-    background: url('/site_fraguismo/static/images/meteor.svg') no-repeat center;
+    background: url('/static/images/meteor.svg') no-repeat center;
     background-size: cover;
 }
 
