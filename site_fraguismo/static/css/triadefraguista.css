@@ -14,7 +14,7 @@ li {
 }
 
 h4 {
-    font-size: clamp(1.2rem, 2.5vw, 1.7rem) !important;
+    font-size: clamp(1rem, 2.5vw, 1.7rem) !important;
 }
 
 h5 {
@@ -129,7 +129,6 @@ html, body {
 }
 
 .head-title h4 {
-    font-size: 1.8rem;
     font-weight: 200;
     padding: 10px 15px;
     color:rgb(0, 0, 0);
@@ -237,17 +236,16 @@ html, body {
         padding-top: 0 !important;
         margin-top: 0 !important;
     }
-
-    .body-text {
-        margin-top: 50px !important;
-        padding-top: 50px !important;
-    }
-
   }
+
+@media (max-height: 658px) {
+    .head-title h1 {
+        font-size: 2rem;
+    }
+}
 
 /* notebook */
 @media (max-width: 1024px) {
-
     .column-rights {
         width: 100%;
     }
@@ -266,7 +264,7 @@ html, body {
     }
 
     .column-img-DAO{
-        background: url('/static/images/automatization.webp') no-repeat center/cover;
+        background: url('/static/images/network.webp') no-repeat center/cover;
     }
 
     .column-img-CF {
@@ -285,11 +283,9 @@ html, body {
         width: 100%;
         padding: 10px 0;    
     }
-
 }
 
 @media (min-width: 1024px) {
-
     .column-rights p {
         font-size: clamp(0.90rem, 1.5vw, 3rem);
     }

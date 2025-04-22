@@ -6,7 +6,7 @@
 }
 /*       */
 html, body {
-    background: url('/static/images/leinatural.webp') no-repeat center !important;
+    background: url('/site_fraguismo/static/images/leinatural.webp') no-repeat center !important;
     background-attachment: fixed !important;
     background-size: cover !important;
 }
@@ -33,7 +33,7 @@ button:hover {
 }
 
 .btn-cta {
-    font-size: 1.2rem;
+    font-size: clamp(0.50rem, 1.2dvw, 1.5rem);
 }
 
 .cookie-regular {
@@ -121,13 +121,13 @@ button:hover {
     display: flex !important;
 }
 
-.wrapper-carousel {
+.img-hero-section {
     position: relative;
     height: 100%;
     width: 100%;
 }
 
-.wrapper-carousel img {
+.img-hero-section img {
     width: 100%;
     height: 100dvh;
     position: relative;
@@ -137,6 +137,7 @@ button:hover {
 
 .hero-content {
     position: absolute;
+    padding: 5% 5%;
 }
 
 .hero-text {
@@ -148,22 +149,20 @@ button:hover {
 }
 
 .hero-text h1 {
-    font-size: 3.5rem;
-    font-weight: 400;
+   font-size: clamp(1.60rem, 2.3dvw, 4.2rem);
 }
 
 .hero-text p {
-    font-size: 1.3rem;
+    font-size: clamp(0.80em, 1.4dvw, 2.3rem);
 }
 
 .wrapper-hero-content {
-    min-height: 100%;
+    height: 100%;
     display: flex;
 }
 
 .video-fraga {
     width: 100%;
-    height: 400px;
     display: flex;
  } 
 
@@ -188,13 +187,13 @@ button:hover {
 }
 
 .wrapper-bio-alt p {
-    font-size: 1.3rem !important;
+    font-size: 1.4rem;
 }
 
 /* Curso de formaçao fraguista --------------------------------------------------------------------------------------------------------- */
 .curso-fraga {
     height: 75dvh;
-    width: 100%;
+    min-width: 100%;
     position: relative;
 }
 
@@ -206,34 +205,25 @@ button:hover {
 }
 
 .content-curso {
-    position: absolute;
-    top: 50%;
-    left: 70%;
-    transform: translate(-50%, -50%);
     color: white;
-    font-size: 2rem;
-    font-weight: bold;
     text-align: center;
-    padding: 10px 20px;
-    border-radius: 5px;
-    width: 870px;
-    height: fit-content;
+    position: absolute;
+    width: 50%;
+    top: 50%;
+    left: 72%;
+    transform: translate(-50%, -50%);
 }
 
-.title-curso {
-    font-size: 2.5rem !important;
-    font-weight: 700 !important;
+.content-curso h4{
+    font-size: clamp(0.80rem, 1.8vw, 2.5rem);
 }
 
-.subtitle-curso {
-    font-size: 1.8rem !important;
-    font-weight: 500 !important;
+.content-curso h6 {
+    font-size: clamp(0.75rem, 1.2vw, 2.2rem);
 }
 
-.text-curso {
-    margin-bottom: 1rem !important;
-    font-weight: 400 !important;
-    font-size: 1.4rem;
+.content-curso p {
+    font-size: clamp(0.60rem, 1vw, 1.8rem);
 }
 
 /* SEÇÃO DE OBJETIVO --------------------------------------------------------------------------------------------------------- */
@@ -266,7 +256,7 @@ button:hover {
 
 .objetivo-texto {
     width: 50%;
-    padding: 80px 60px;
+    padding: 5% 2%;
     z-index: 2;
 }
 
@@ -332,6 +322,7 @@ button:hover {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    text-align: center;
     padding: 50px;
     background: url('/static/images/meteor.svg') no-repeat center;
     background-size: cover;
@@ -451,44 +442,6 @@ button:hover {
 }
 
 /* Responsividade --------------------------------------------------------------------------------------------------------- */
-@media (max-width: 1447px) {
-    .content-curso {
-        position: absolute;
-        top: 50%;
-        left: 75%;
-        transform: translate(-50%, -50%);
-        color: white;
-        font-weight: bold;
-        text-align: center;
-        padding: 10px 10px 10px 20px;
-        border-radius: 5px;
-        width: 600px;
-        height: fit-content;
-    }
-
-    .content-curso p {
-        font-size: 1.2rem;
-        font-weight: 100;
-    }
-
-    .title-curso {
-        font-size: 2rem !important;
-        font-weight: 700 !important;
-    }
-
-    .subtitle-curso {
-        font-size: 1.5rem !important;
-        font-weight: 500 !important;
-    }
-
-    .curso-fraga img {
-        object-fit: cover;
-        height: 100%;
-        width: 100%;
-        filter: brightness(0.8);
-    }
-}
-
 @media (max-width: 1250px){
     .wrapper-CTA {
         width: 400px;
@@ -512,100 +465,6 @@ button:hover {
 }
 
 @media (max-width: 1200px) {
-    #container-cards {
-        flex: 0 0 100%;
-        padding-right: 10px;
-        padding-left: 10px;
-    }
-    
-    .wrapper-dao {
-        margin-top: 25px;
-        margin-bottom: 25px;
-    }
-}
-
-@media (max-width: 1175px) {
-    .content-curso {
-        position: absolute;
-        top: 50%;
-        left: 73%;
-        transform: translate(-50%, -50%);
-        color: white;
-        font-weight: bold;
-        text-align: center;
-        padding: 10px 0px 10px 0px;
-        border-radius: 5px;
-        width: 500px;
-        height: fit-content;
-    }
-
-    .content-curso p {
-        font-size: 1rem;
-        font-weight: 100;
-    }
-
-    .title-curso {
-        font-size: 1.5rem !important;
-        font-weight: 700 !important;
-    }
-
-    .subtitle-curso {
-        font-size: 1.2rem !important;
-        font-weight: 500 !important;
-    }
-
-    .curso-fraga img {
-        object-fit: cover;
-        height: 100%;
-        width: 100%;
-        filter: brightness(0.8);
-    }
-}
-
-@media (max-width: 993px) {
-    .content-curso {
-        width: 430px;
-        left: 69%;
-    }
-
-    .wrapper-hero-content {
-        flex-direction: column;
-        height: fit-content;
-    }
-
-    .hero-content{
-        height: 75% !important;
-    }
-
-    .col .video-fraga {
-        height: fit-content !important;
-    }
-
-    #hero-text {
-        flex: 0 0 100%;
-    }
-
-    .hero-text h1 {
-        font-size: 2.5rem;
-        font-weight: 400;
-    }
-
-    .hero-text p {
-        font-size: 1rem;
-    }
-}
-
-@media (max-width: 768px) {
-    .hero-text h1 {
-        font-size: 1.8rem;
-        font-weight: 400;
-    }
-
-    .hero-text p {
-        font-size: 0.85rem;
-    }
-
-
     .objetivo-section {
         flex-direction: column;
         text-align: center;
@@ -619,12 +478,43 @@ button:hover {
 
     .objetivo-texto {
         width: 100%;
-        padding: 50px 20px !important;
+        padding: 8% 6%;
     }
 
+    #container-cards {
+        flex: 0 0 100%;
+        padding-right: 10px;
+        padding-left: 10px;
+    }
+    
+    .wrapper-dao {
+        margin-top: 25px;
+        margin-bottom: 25px;
+    }
+
+    .wrapper-hero-content {
+        flex-direction: column;
+        height: fit-content;
+    }
+}
+
+@media (max-width: 993px) {
+    .hero-content{
+        height: 75% !important;
+    }
+
+    .col .video-fraga {
+        height: fit-content !important;
+    }
+
+    #hero-text {
+        flex: 0 0 100%;
+    }
+}
+
+@media (max-width: 768px) {
     .container-CTA {
         flex-direction: column-reverse !important;
-        text-align: center;
         height: auto;
         padding: 20px;
     }
@@ -647,53 +537,35 @@ button:hover {
         font-size: 1.5rem;
         color: white;
         margin: 15px 0;
-    }
-
-    .content-curso {
-        position: absolute;
-        top: 50%;
-        left: 70%;
-        transform: translate(-50%, -50%);
-        color: white;
-        font-weight: bold;
-        text-align: center;
-        padding: 10px 8px 10px 20px;
-        border-radius: 5px;
-        width: 350px;
-        height: fit-content;
-    }
-
-    .btn-cta {
-        font-size: 0.85rem;
-    }
-
-    .content-curso p {
-        font-size: 0.90rem;
-        font-weight: 100;
-    }
-
-    .title-curso {
-        font-size: 1.2rem !important;
-        font-weight: 700 !important;
-    }
-
-    .subtitle-curso {
-        font-size: 0.90rem !important;
-        font-weight: 500 !important;
-    }
-
-    .curso-fraga img {
-        object-fit: cover;
-        height: 100%;
-        width: 100%;
-        filter: brightness(0.8);
-    }
+    } 
 }
 
 @media (max-width: 587px) {
     .content-curso {
-        top: 50%;
         left: 50%;
-        transform: translate(-50%, -50%);
+    }
+}
+
+@media (min-height: 300px) {
+    .video-fraga {
+        height: 200px;
+    }
+}
+
+@media (min-height: 500px) {
+    .video-fraga {
+        height: 250px;
+    }
+}
+
+@media (min-height: 768px) {
+    .video-fraga {
+        height: 400px;
+    }
+}
+
+@media (min-height: 900px) {
+    .video-fraga {
+        height: 500px;
     }
 }
