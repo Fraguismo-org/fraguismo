@@ -33,7 +33,7 @@ button:hover {
 }
 
 .btn-cta {
-    font-size: clamp(0.80rem, 1.2dvw, 1.5rem);
+    font-size: clamp(0.50rem, 1.2dvw, 1.5rem);
 }
 
 .cookie-regular {
@@ -215,15 +215,15 @@ button:hover {
 }
 
 .content-curso h4{
-    font-size: clamp(0.70rem, 1.8vw, 2.5rem);
+    font-size: clamp(0.80rem, 1.8vw, 2.5rem);
 }
 
 .content-curso h6 {
-    font-size: clamp(0.65rem, 1.2vw, 2.2rem);
+    font-size: clamp(0.75rem, 1.2vw, 2.2rem);
 }
 
 .content-curso p {
-    font-size: clamp(0.50rem, 1vw, 1.8rem);
+    font-size: clamp(0.60rem, 1vw, 1.8rem);
 }
 
 /* SEÇÃO DE OBJETIVO --------------------------------------------------------------------------------------------------------- */
