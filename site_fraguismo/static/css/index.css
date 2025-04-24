@@ -6,7 +6,7 @@
 }
 /*       */
 html, body {
-    background: url('/site_fraguismo/static/images/leinatural.webp') no-repeat center !important;
+    background: url('/static/images/leinatural.webp') no-repeat cover/center !important;
     background-attachment: fixed !important;
     background-size: cover !important;
 }
