@@ -186,8 +186,13 @@ button:hover {
     color: white;
 }
 
+.wrapper-bio-alt h2 {
+    font-size: clamp(2.3rem, 3.3vw, 3.5rem);
+    font-weight: 300 !important;
+}
+
 .wrapper-bio-alt p {
-    font-size: 1.4rem;
+    font-size: clamp(1rem, 1vw, 1.5rem);
 }
 
 /* Curso de formaçao fraguista --------------------------------------------------------------------------------------------------------- */
@@ -334,12 +339,12 @@ button:hover {
 }
 
 .wrapper-CTA h2 {
-    font-size: 2.5rem;
+    font-size: clamp(1.5rem, 1.6vw, 2.5rem);
     color: white;
 }
 
 .wrapper-CTA p {
-    font-size: 2rem;
+    font-size: clamp(1rem, 1.6vw, 2rem);
     color: white;
     margin: 15px 0;
 }
@@ -353,8 +358,8 @@ button:hover {
 }
 
 .img-CTA img {
-    max-width: 90%;
-    height: auto;
+    max-width: 100%;
+    max-height: 100%;
     border-radius: 8px;
 }
 
@@ -447,15 +452,8 @@ button:hover {
         width: 400px;
         height: fit-content;
     }
-
-    .wrapper-CTA h2 {
-        font-size: 2.3rem;
-        color: white;
-    }
     
     .wrapper-CTA p {
-        font-size: 1.3rem;
-        color: white;
         margin: 15px 0;
     }
 
@@ -519,42 +517,47 @@ button:hover {
         padding: 20px;
     }
 
-    .wrapper-CTA,
-    .img-CTA {
+    .wrapper-CTA {
         width: 100%;
-    }
-
-    .img-CTA img {
-        max-width: 100%;
-    }
-
-    .wrapper-CTA h2 {
-        font-size: 2rem;
-        color: white;
     }
     
     .wrapper-CTA p {
-        font-size: 1.5rem;
-        color: white;
         margin: 15px 0;
     } 
 }
-
 @media (max-width: 587px) {
     .content-curso {
         left: 50%;
+        width: 90%;
     }
 }
 
-@media (min-height: 300px) {
+@media (max-width: 479px) {
+    .img-CTA {
+        width: 300px !important;
+        height: 300px !important;
+    }
+}
+
+@media (min-height: 400px) {
     .video-fraga {
         height: 200px;
     }
+
+    .img-CTA {
+        width: 300px;
+        height: 300px;
+    }
 }
 
-@media (min-height: 500px) {
+@media (min-height: 580px) {
     .video-fraga {
         height: 250px;
+    }
+
+    .img-CTA {
+        width: 375px;
+        height: 375px;
     }
 }
 
@@ -562,10 +565,20 @@ button:hover {
     .video-fraga {
         height: 400px;
     }
+
+    .img-CTA {
+        width: 430px;
+        height: 430px;
+    }
 }
 
 @media (min-height: 900px) {
     .video-fraga {
+        height: 500px;
+    }
+
+    .img-CTA {
+        width: 500px;
         height: 500px;
     }
 }

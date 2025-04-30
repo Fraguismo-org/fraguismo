@@ -40,9 +40,9 @@
             <div class="col-md-4 d-flex flex-column" id="container-cards">
                 <div class="wrapper-container d-flex flex-column h-100">
                     <div class="wrapper-bio-alt flex-grow-1 d-flex flex-column">
-                        <h2 class="font-weight-bold display-3 pb-12">Lei Natural</h2>
-                        <p class="flex-grow-1">
-                            A Lei Natural estabelece que a vida, a propriedade e a liberdade são direitos naturais do ser humano, sendo inalienáveis. 
+                        <h2 class="pb-12">Lei Natural</h2>
+                        <p>
+                            A Lei Natural estabelece que a vida, a propriedade e a liberdade são direitos naturais do ser humano, sendo inalienáveis. <br/><br/>
                             Ninguém, seja indivíduo, grupo ou entidade, tem o direito de violar esses direitos, pois eles derivam da própria condição humana.<br/><br/>
                             Seguimos o princípio da Lei Áurea: "Não faça aos outros o que não gostaria que fizessem contigo." 
                             Este é o fundamento central da nossa fé, que orienta todas as nossas ações e crenças.
@@ -56,8 +56,8 @@
             <div class="col-md-4 d-flex flex-column mr-5 ml-5" id="container-cards">
                 <div class="wrapper-container d-flex flex-column h-100">
                     <div class="wrapper-bio-alt wrapper-dao flex-grow-1 d-flex flex-column">
-                        <h2 class="font-weight-bold display-3 pb-12">DAO</h2>
-                        <p class="flex-grow-1">
+                        <h2 class="pb-12">DAO</h2>
+                        <p>
                             O Fraguismo funciona como uma DAO (Organização Autônoma Descentralizada), onde as decisões estratégicas são tomadas de forma descentralizada 
                             pela comunidade.
                             As votações não seguem um modelo democrático, mas são proporcionais à quantidade de tokens de cada membro, e são realizadas 
@@ -73,8 +73,8 @@
             <div class="col-md-4 d-flex flex-column" id="container-cards">
                 <div class="wrapper-container d-flex flex-column h-100">
                     <div class="wrapper-bio-alt flex-grow-1 d-flex flex-column">
-                        <h2 class="font-weight-bold display-3 pb-12">Hierarquia</h2>
-                        <p class="flex-grow-1">
+                        <h2 class="pb-12">Hierarquia</h2>
+                        <p>
                             A hierarquia do Fraguismo possui seis níveis. 
                             A ascensão depende exclusivamente do conhecimento teórico e da participação ativa na comunidade — 
                             sem interferência política ou favorecimentos.<br/><br/>
@@ -153,30 +153,32 @@
         <button class="btn btn-light btn-lg" onclick="window.open('https://docs.google.com/forms/d/e/1FAIpQLSfsyzEI_4QouYa2h1_nuRDLeyUuVdhyAlhj09jJOBH7Q62Y9g/viewform', '_blank')">COMPLETE O FORMULÁRIO DE ENTRADA AQUI!</button>
     </div>
     <div class="img-CTA">
-        <img src="{% static '/images/fraga.webp' %}" alt="fraguismo" loading="lazy">
+        <img src="{% static '/images/fraga.webp' %}" alt="fraguismo" loading="lazy" class="img-fluid">
     </div>
 </div>
 
 <!-- JS USADO NO index.html -->
 <script>
 
-    /* Função para o contador começar a subir a partir do momento que o usuário estiver rolado até aonde ele está na tela */
+ /* Função para o contador começar a subir a partir do momento que o usuário estiver rolado até aonde ele está na tela */ 
     function startCounter() {
-            const counter = document.querySelector('.counter-item');
-            counter.innerText = '0';
-            const updateCounter = () => {
-                const target = +counter.getAttribute('data-target');
-                const count = +counter.innerText;
-                const increment = target / 100;
-                if (count < target) {
-                    counter.innerText = `${Math.ceil(count + increment)}`;
-                    setTimeout(updateCounter, 50);
-                } else {
-                    counter.innerText = target;
-                }
-            };
-            updateCounter();
-        }
+    const counter = document.querySelector('.counter-item');
+    if (!counter) return;
+
+    const target = +counter.dataset.target;
+    let current = 0;
+    const duration = 4000;
+    const startTime = performance.now();
+
+    function animate(time) {
+        const progress = Math.min((time - startTime) / duration, 1);
+        current = Math.floor(progress * target);
+        counter.textContent = current.toLocaleString(); // melhor para grandes números
+        if (progress < 1) requestAnimationFrame(animate);
+    }
+
+    requestAnimationFrame(animate);
+    }
 
         let started = false;
 
