@@ -6,11 +6,11 @@ from django.contrib.auth.models import User
 
 class Profile(models.Model):
     NIVEL_CHOICES = [
-        ('membro', 'Membro'),
-        ('assessor', 'Assessor'),
-        ('executivo', 'Executivo'),
-        ('lider', 'Líder'),
-        ('diretor', 'Diretor'),
+        ('aprendiz', 'Aprendiz'),
+        ('escudeiro', 'Escudeiro'),
+        ('cavaleiro', 'Cavaleiro'),
+        ('conselheiro', 'Conselheiro'),
+        ('guradiao', 'Guardião'),
     ]
 
     SQUAD_CHOICES = [
@@ -31,7 +31,7 @@ class Profile(models.Model):
     ]
 
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    nivel = models.CharField(max_length=10, choices=NIVEL_CHOICES, default='membro')
+    nivel = models.CharField(max_length=20, choices=NIVEL_CHOICES, default='membro')
     nivel_id = models.ForeignKey(Nivel, null=True, on_delete=models.DO_NOTHING)
     squad_id = models.ForeignKey(Squad, null=True, on_delete=models.DO_NOTHING)
     pontuacao = models.IntegerField(default=0)
