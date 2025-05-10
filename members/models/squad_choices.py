@@ -1,0 +1,16 @@
+SQUAD_CHOICES = [
+        ('squad_021', 'Squad 021'),
+        ('area_51', 'Area 51'),
+        ('curitiba', 'Curitiba'),
+        ('serra_gaucha', 'Serra Gaucha'),
+        ('squad_011', 'Squad 011'),
+        ('squad_pampa', 'Squad Pampa'),
+        ('squad_061', 'Squad 061'),
+        ('squad_063', 'Squad 063'),
+        ('squad_064', 'Squad 064'),
+        ('squad_065', 'Squad 065'),
+        ('squad_066', 'Squad 066'),
+        ('squad_067', 'Squad 067'),
+        ('squad_069', 'Squad 069'),
+        ('squad_serra', 'Squad Serra'),
+    ]

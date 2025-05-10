@@ -23,7 +23,7 @@
                     {{ usuario.email }}
                 </td>
                 <td>
-                    <a href="{% url 'pendencia_usuarios' username=usuario.username %}"><i class="bi bi-card-checklist" style="font-size: large;"></i></a>
+                    <a href="{% url 'user_pending' username=usuario.username %}"><i class="bi bi-card-checklist" style="font-size: large;"></i></a>
                 </td>
                 <td>
                     {% if usuario.is_fraguista %}

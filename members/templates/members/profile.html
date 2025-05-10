@@ -66,7 +66,7 @@
                         <p>Cursos</p>
                     </div>
                     <div class="col">
-                        <a href="{% url 'pendencia_usuarios' username=usuario.username %}"><i class="bi bi-bar-chart" style="font-size: 24px; padding-left: 10px"></i></a>
+                        <a href="{% url 'user_pending' username=member.username %}"><i class="bi bi-bar-chart" style="font-size: 24px; padding-left: 10px"></i></a>
                         <p>{{ profile.nivel.capitalize }}</p>
                     </div>                   
                 </div>                

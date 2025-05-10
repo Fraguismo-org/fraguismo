@@ -7,6 +7,7 @@ from .models.atividade import Atividade
 from members.models.profile import Profile
 from members.models.users import Users, User
 from rating.models.nivel import Nivel
+from rating.models.nivel_choices import NivelChoices
 from rating.models.pendencia import Pendencia
 from members.models.profile_pendencia import ProfilePendencia
 
@@ -39,7 +40,10 @@ def user_log_rating(request):
     data_inicial = request.GET.get("data_inicial")
     data_final = request.GET.get("data_final")
     profile = Profile.get_or_create_profile(request.user)
-    nivel = Nivel.objects.get(nivel=profile.nivel.lower())
+    if profile.nivel.lower() == '':
+        nivel = Nivel.objects.get(nivel=NivelChoices.APPRENTICE[0])
+    else:
+        nivel = Nivel.objects.get(nivel=profile.nivel.lower())
     if profile.nivel.lower() == "diretor":
         pts_prx_nivel = 0
     else:
@@ -65,14 +69,17 @@ def user_log_rating(request):
 
 @csrf_exempt
 @login_required(login_url='login')
-def user_pending(request):
+def my_pendings(request):
     if request.method == 'POST':
         p_pendencia_id = request.POST.get('profile_pendencia_id')
         p_pendencia = ProfilePendencia.objects.get(id=p_pendencia_id)
         p_pendencia.pendencia_status = 1
         p_pendencia.save()
     profile = Profile.get_or_create_profile(request.user)
-    nivel = Nivel.objects.get(nivel=profile.nivel.lower())
+    if profile.nivel.lower() == '':
+        nivel = Nivel.objects.get(nivel=NivelChoices.APPRENTICE[0])
+    else:
+        nivel = Nivel.objects.get(nivel=profile.nivel.lower())
     nivel = nivel.proximo_nivel()
     pendencias = Pendencia.objects.filter(nivel=nivel)
     profile_pendencias = ProfilePendencia.objects.filter(profile=profile).filter(nivel=nivel)
@@ -81,10 +88,29 @@ def user_pending(request):
         profile_pendencias = ProfilePendencia.objects.filter(profile=profile).filter(nivel=nivel)    
     return render(
         request, 
-        'pendencias/user_pending.html', 
+        'pendencias/my_pendings.html', 
         {
             'pendencias': pendencias, 
             'profile_pendencias': profile_pendencias
+        }
+    )
+    
+@login_required(login_url='login')
+def user_pending(request, username):
+    user = Users.objects.get(username=username)
+    profile = Profile.get_or_create_profile(user)
+    if profile.nivel.lower() == '':
+        nivel = Nivel.objects.get(nivel=NivelChoices.APPRENTICE[0])
+    else: 
+        nivel = Nivel.objects.get(nivel=profile.nivel.lower())
+    return render(
+        request,
+        'pendencias/user_pending.html', 
+        {
+            'pendencias': Pendencia.objects.filter(nivel=nivel), 
+            'profile_pendencias': ProfilePendencia.objects.filter(profile=profile).filter(nivel=nivel),
+            'usuario': user,
+            'profile': profile,
         }
     )
 
