@@ -86,6 +86,8 @@ def listar_anuncios(request):
 
 @login_required(login_url='login')
 def cadastrar_anuncio(request):
+    anuncio_form = None
+    imagem_form = None
     if request.method == 'POST':
         anuncio_form = AnuncioForm(request.POST)
         imagem_form = ImagesForm(request.POST)
@@ -94,17 +96,24 @@ def cadastrar_anuncio(request):
             anuncio.user = request.user
             anuncio.save()
             if request.FILES:
-                for image in request.FILES.getlist('images'):
-                    img = Images(image=image, anuncio=anuncio)
+                id = 1
+                for imagem in request.FILES.getlist('images'):
+                    imagem.name = str(anuncio.cod_anuncio) + str(id) + ".jpg"
+                    id += 1
+                    img = Images(image=imagem, anuncio=anuncio)
+                    rate = img.height/1000 if img.height > img.width else img.width/1000
+                    if img.height > 1000 or img.width > 1000:
+                        output_size = (img.width/rate, img.height/rate)
+                        img.thumbnail(output_size)
                     img.save()
             messages.success(request, "Anúncio cadastrado com sucesso!")
             return redirect('listar_anuncios')
     else:
         anuncio_form = AnuncioForm()
-        images_form = ImagesForm()
+        imagem_form = ImagesForm()
     return render(request, "anuncio/cadastrar.html", {
         'anuncio_form': anuncio_form, 
-        'images_form': images_form
+        'images_form': imagem_form
     })
 
 @login_required
