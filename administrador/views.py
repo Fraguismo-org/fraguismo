@@ -1,5 +1,7 @@
 from django.shortcuts import render
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
+
+from members.query.users_query import UsersQuery
 from .models.acesso import Acesso
 from members.models.users import Users
 from members.models.profile import Profile
@@ -7,6 +9,8 @@ from members.models.profile_pendencia import ProfilePendencia
 from rating.models.pendencia import Pendencia
 from rating.models.nivel import Nivel
 from django.contrib.auth.decorators import user_passes_test
+from services.query_filter_service import QueryFilterService
+from services.query_type import QueryType
 
 @user_passes_test(lambda u: u.is_superuser)
 def administrador(request):
@@ -16,7 +20,8 @@ def administrador(request):
 
 @user_passes_test(lambda u: u.is_superuser)
 def lista_usuarios(request):
-    usuarios_list = Users.objects.all()
+    query = request.GET.get("busca")
+    usuarios_list = UsersQuery.get_users_by_query(query)
     paginas = Paginator(usuarios_list, 25)
     try:
         page = int(request.GET.get('page', '1'))

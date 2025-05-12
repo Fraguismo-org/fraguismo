@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% load static %}
+<link rel="stylesheet" href="{% static '/css/styles.css' %}">
+<div class="shadow p-4 mb-5 bg-body rounded">
+    <div class="text-center">
+        <h3>Adicionar pendência</h3>
+    </div>
+    <br>
+    <br>
+    <form method="POST" id="form-add">
+        {% csrf_token %}
+        <div class="row text-end">
+            <div class="col">
+                <p hidden="hidden" id="usuario-id">{{ usuario.id }}</p>
+            </div>
+            <div class="col">
+                <input type="text" class="form-control" id="usuario" name="usuario" value="{{ usuario.username }}" readonly>
+            </div>
+            <div class="col">
+                <select class="form-select" name="select-pendencia" id="select-pendencia">
+                    {% for pendencia in pendencias %}
+                    <option id="pendencia" value="{{ pendencia.id }}">{{ pendencia.pendencia }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col">
+                <input type="submit" class="btn btn-primary" id="btn-add" value="Adicionar">
+            </div>
+        </div>
+    </form>
+</div>
+
+{% endblock content %}

@@ -2,17 +2,22 @@
 {% block content %}
 {% load static %}
 <link rel="stylesheet" href="{% static '/css/styles.css' %}">
-<div class="text-center">
-    <h3>Pendências {{usuario.username}}</h3>
-</div>
 <div class="shadow p-4 mb-5 bg-body rounded">
-    <table class="table text-center">        
+    <div class="text-center">
+        <h3>Pendências {{ usuario.username }}</h3>
+    </div>
+    <br>
+    <br>
+    <table class="table text-center table-striped table-hover">
         <thead>
             <tr>
                 <th scope="col" style="display: none;">Id</th>
                 <th scope="col">Nível</th>
-                <th scope="col">Pendência</th> 
-                <th scope="col">Ação</th>
+                <th scope="col">Pendência</th>
+                <th scope="col">Status</th>
+                {% if user.is_superuser %}
+                <th scope="col">Ações</th>
+                {% endif %}
             </tr>
         </thead>
         <tbody>
@@ -23,26 +28,78 @@
                 <td>{{ p_pendencia.pendencia.pendencia }}</td>
                 <td>
                     {% if p_pendencia.pendencia_status == 0 %}
-                        Pendente
+                    Pendente
                     {% elif p_pendencia.pendencia_status == 1 %}
-                    <button class="btn btn-primary btn-sm" type="button" onclick=finalizarPendencia("{{ p_pendencia.id }}")>
-                        Finalizar
-                    </button>
+                    Em Andamento
                     {% elif p_pendencia.pendencia_status == 2 %}
-                        Finalizado
+                    Finalizado
                     {% endif %}
-                    
                 </td>
+                {% if user.is_superuser %}
+                <td>
+                    {% if p_pendencia.pendencia_status != 2 %}
+                    <button class="btn btn-success" onclick="finalizaPendencia({{ p_pendencia.id }})"><i
+                            class="bi bi-floppy2-fill"></i></button>
+                    {% endif %}
+
+                    <button class="btn btn-danger" onclick="removePendencia({{ p_pendencia.id }})"><i
+                            class="bi bi-x-square-fill"></i></button>
+
+                </td>
+                {% endif %}
+
             </tr>
             {% endfor %}
         </tbody>
+        {% if user.is_superuser %}
+        <tfoot>
+            <tr>
+                <td colspan="4">
+                    <a class="btn btn-secondary" href="{% url 'add_pendencia_usuario' id=usuario.id %}">
+                        Adicionar Pendência
+                    </a>
+                </td>
+            </tr>
+        </tfoot>
+        {% endif %}
     </table>
 </div>
 
 <script>
+    {% if user.is_superuser %}
+    function finalizaPendencia(profilePendenciaId) {
+        const confirmation = confirm("Você tem certeza que deseja finalizar pendência?");
+        if (!confirmation) {
+            return;
+        }
 
-    function finalizarPendencia(profilePendenciaId){
-        fetch("{% url 'pendencia_usuarios' username=usuario.username %}", {
+        const url = "{% url 'finaliza_pendencia_usuario' profile_pendencia_id=0 %}".replace('0', profilePendenciaId);
+        console.log(url);
+
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': "{{ csrf_token }}",
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: new URLSearchParams({
+                'usuario_id': "{{ usuario.id }}",
+            })
+        })
+            .then(response => response.text())
+            .then(data => console.log(data))
+            .catch(error => console.error(error));
+        location.reload();
+    }
+
+    function removePendencia(profilePendenciaId) {
+        const confirmation = confirm("Você tem certeza que deseja finalizar pendência?");
+        if (!confirmation) {
+            return;
+        }
+
+        const url = "{% url 'remove_pendencia_usuario' profile_pendencia_id=0 %}".replace('0', profilePendenciaId);
+        fetch(url, {
             method: 'POST',
             headers: {
                 'X-CSRFToken': "{{ csrf_token }}",
@@ -52,11 +109,12 @@
                 'profile_pendencia_id': profilePendenciaId
             })
         })
-        .then(response => response.text())
-        .then(data => console.log(data))
-        .catch(error => console.error(error));
+            .then(response => response.text())
+            .then(data => console.log(data))
+            .catch(error => console.error(error));
         location.reload();
     }
+    {% endif %}
 </script>
 
 {% endblock %}

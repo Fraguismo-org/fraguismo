@@ -3,6 +3,7 @@ from members.models.profile import Profile
 from rating.models.nivel import Nivel
 from django.db import models
 from datetime import datetime
+from rating.models.nivel_choices import NivelChoices
 
 
 STATUS_PENDENCIA = (
@@ -37,7 +38,7 @@ class ProfilePendencia(models.Model):
     def get_pendencias(profile: Profile):
         if profile.nivel_id is None:
             profile.nivel_id = Nivel.objects.get(nivel=profile.nivel)
-        if profile.nivel.lower() == 'diretor':
+        if profile.nivel.lower() == NivelChoices.GUARDIAN:
             return []
         prx_nivel = profile.nivel_id.proximo_nivel()
         pendencias = Pendencia.objects.filter(nivel=prx_nivel)
@@ -50,3 +51,6 @@ class ProfilePendencia(models.Model):
             if not pendencia in pendencias_done:
                 pendencias_faltantes.append(pendencia)
         return pendencias_faltantes
+    
+    def get_all_pendencias(profile: Profile):
+        return ProfilePendencia.objects.filter(profile=profile)

@@ -6,9 +6,25 @@
     <div class="text-center">
         <h1>Lista de usuários</h1>
     </div>
+    <br>
+    <br>
+    <div class="consulta">
+        <form method="GET" action="{% url 'lista_usuarios' %}">
+            <div class="row">
+                <div class="col">
+                    <input class="form-control" type="text" name="busca" placeholder="Pesquisar usuário">
+                </div>
+                <div class="col">
+                    <button class="btn btn-primary" type="submit"><i class="bi bi-search"></i></button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <br>
     <table class="table">
         <thead>
             <th>Username</th>
+            <th>Nome</th>
             <th>Email</th>
             <th>Pendências</th>
             <th>É Fraguista</th>
@@ -20,16 +36,20 @@
                     <a href="{% url 'profile' username=usuario.username %}">{{ usuario.username }}
                 </td>
                 <td>
+                    {{ usuario.first_name|add:' '|add:usuario.last_name  }}
+                </td>
+                <td>
                     {{ usuario.email }}
                 </td>
                 <td>
-                    <a href="{% url 'user_pending' username=usuario.username %}"><i class="bi bi-card-checklist" style="font-size: large;"></i></a>
+                    <a href="{% url 'user_pending' username=usuario.username %}"><i class="bi bi-card-checklist"
+                            style="font-size: large;"></i></a>
                 </td>
                 <td>
                     {% if usuario.is_fraguista %}
-                        Sim
+                    Sim
                     {% else %}
-                        Não
+                    Não
                     {% endif %}
                 </td>
             </tr>
@@ -39,16 +59,16 @@
     <div class="pagination">
         <span class="step-links">
             {% if usuarios.has_previous %}
-                <a href="?page=1"><i class="bi bi-caret-left-square-fill"></i></a>
-                <a href="?page={{ usuarios.previous_page_number }}"><i class="bi bi-caret-left-fill"></i></a>
+            <a href="?page=1"><i class="bi bi-caret-left-square-fill"></i></a>
+            <a href="?page={{ usuarios.previous_page_number }}"><i class="bi bi-caret-left-fill"></i></a>
             {% endif %}
             <span class="current">
                 Página {{ usuarios.number }} de {{ usuarios.paginator.num_pages }}
             </span>
 
             {% if usuarios.has_next %}
-                <a href="?page={{ usuarios.next_page_number }}"><i class="bi bi-caret-right-fill"></i></a>
-                <a href="?page={{ usuarios.paginator.num_pages }}"><i class="bi bi-caret-right-square-fill"></i></a>
+            <a href="?page={{ usuarios.next_page_number }}"><i class="bi bi-caret-right-fill"></i></a>
+            <a href="?page={{ usuarios.paginator.num_pages }}"><i class="bi bi-caret-right-square-fill"></i></a>
             {% endif %}
         </span>
     </div>

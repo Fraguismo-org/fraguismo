@@ -10,9 +10,9 @@ NIVEL_CHOICES = [
     ]
 
 class NivelChoices:
-    APPRENTICE = 'aprendiz', 'Aprendiz'
-    SQUIRE = 'escudeiro', 'Escudeiro'
-    KNIGHT = 'cavaleiro', 'Cavaleiro'
-    COUNSELOR = 'conselheiro', 'Conselheiro'
-    GUARDIAN = 'guardiao', 'Guardião'
+    APPRENTICE = 'aprendiz'
+    SQUIRE = 'escudeiro'
+    KNIGHT = 'cavaleiro'
+    COUNSELOR = 'conselheiro'
+    GUARDIAN = 'guardiao'
     

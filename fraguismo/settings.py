@@ -28,6 +28,7 @@ INSTALLED_APPS = [
     'administrador',
     'cursos',
     'marketplace',
+    'services',
 ]
 
 MIDDLEWARE = [

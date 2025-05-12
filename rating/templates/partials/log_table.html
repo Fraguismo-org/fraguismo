@@ -1,0 +1,22 @@
+<table class="table table-hover table-striped table-responsive">
+    <thead>
+        <th>Usuário</th>
+        <th>Pontução Atual</th>
+        <th>Pontuação Anterior</th>
+        <th>Pontuação Ganha</th>
+        <th>Atividade</th>
+        <th>Data</th>
+    </thead>
+    <tbody>
+        {% for log in logs %}
+        <tr>
+            <td>{{ log.user_id }}</td>
+            <td>{{ log.pontuacao|add:log.pontuacao_ganha }}</td>
+            <td>{{ log.pontuacao }}</td>
+            <td>{{ log.pontuacao_ganha}}
+            <td>{{ log.atividade.nome_atividade }}</td>
+            <td>{{ log.updated_at }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>

@@ -2,6 +2,10 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import user_passes_test, login_required
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib import messages
+from django.core.paginator import Paginator, InvalidPage, EmptyPage
+
+from members.query.users_query import UsersQuery
+from rating.query.log_rating_query import LogRatingQuery
 from .models.log_rating import LogRating
 from .models.atividade import Atividade
 from members.models.profile import Profile
@@ -16,20 +20,8 @@ from members.models.profile_pendencia import ProfilePendencia
 def log_rating(request):
     query = request.GET.get("busca")
     if query:
-        opcao = request.GET.get("filter_field")
-        match opcao:
-            case 'first_name':
-                users = User.objects.filter(first_name__istartswith=query).values_list('first_name', flat=True)
-                logs = LogRating.objects.filter(user_id__first_name__in=users).order_by("-updated_at")
-            case 'username':
-                users = User.objects.filter(username__istartswith=query).values_list('username', flat=True)
-                logs = LogRating.objects.filter(user_id__username__in=users).order_by("-updated_at")
-            case 'email':
-                users = User.objects.filter(email__istartswith=query).values_list('email', flat=True)
-                logs = LogRating.objects.filter(user_id__email__in=users).order_by("-updated_at")
-            case 'fone':
-                users = Users.objects.filter(username__istartswith=query).values_list('fone', flat=True)                
-                logs = LogRating.objects.filter(user_id__in=users).order_by("-updated_at")
+        usuarios_list = UsersQuery.get_users_by_query(query)
+        logs = LogRatingQuery.get_log_rating_by_query(query, usuarios_list)
     else:
         logs = LogRating.objects.all().order_by("-updated_at")
     return render(request, 'log_rating.html', {'logs': logs})
@@ -41,7 +33,7 @@ def user_log_rating(request):
     data_final = request.GET.get("data_final")
     profile = Profile.get_or_create_profile(request.user)
     if profile.nivel.lower() == '':
-        nivel = Nivel.objects.get(nivel=NivelChoices.APPRENTICE[0])
+        nivel = Nivel.objects.get(nivel=NivelChoices.APPRENTICE)
     else:
         nivel = Nivel.objects.get(nivel=profile.nivel.lower())
     if profile.nivel.lower() == "diretor":
@@ -77,7 +69,7 @@ def my_pendings(request):
         p_pendencia.save()
     profile = Profile.get_or_create_profile(request.user)
     if profile.nivel.lower() == '':
-        nivel = Nivel.objects.get(nivel=NivelChoices.APPRENTICE[0])
+        nivel = Nivel.objects.get(nivel=NivelChoices.APPRENTICE)
     else:
         nivel = Nivel.objects.get(nivel=profile.nivel.lower())
     nivel = nivel.proximo_nivel()
@@ -98,17 +90,14 @@ def my_pendings(request):
 @login_required(login_url='login')
 def user_pending(request, username):
     user = Users.objects.get(username=username)
-    profile = Profile.get_or_create_profile(user)
-    if profile.nivel.lower() == '':
-        nivel = Nivel.objects.get(nivel=NivelChoices.APPRENTICE[0])
-    else: 
-        nivel = Nivel.objects.get(nivel=profile.nivel.lower())
+    profile = Profile.get_or_create_profile(user)        
+    profile_pendencias = ProfilePendencia.objects.filter(profile=profile)
+    
     return render(
         request,
         'pendencias/user_pending.html', 
-        {
-            'pendencias': Pendencia.objects.filter(nivel=nivel), 
-            'profile_pendencias': ProfilePendencia.objects.filter(profile=profile).filter(nivel=nivel),
+        {            
+            'profile_pendencias': profile_pendencias,
             'usuario': user,
             'profile': profile,
         }
@@ -138,32 +127,43 @@ def add_pendencia(request):
 @user_passes_test(lambda u: u.is_superuser)
 def add_rating_point(request):
     if request.method == 'POST':
-        id = request.POST.get('select-user')
+        ids = request.POST.getlist('usuarios')
         atividade_id = request.POST.get('select-atividade')
         pontuacao = request.POST.get('pontuacao')
-                
-        profile = Profile.objects.get(user_id=id)
-        atividade = Atividade.objects.get(id=atividade_id)  
         
         if pontuacao == None:
+            atividade = Atividade.objects.get(id=atividade_id)
             pontuacao = str(atividade.pontuacao)
-
-        if str.isdigit(pontuacao) and pontuacao != '0':            
+        
+        if not str.isdigit(pontuacao) and pontuacao == '0':
+            messages.warning(request, 'Adicione uma pontuação válida!')
+            
+        for id in ids:     
+            profile = Profile.objects.get(user_id=id)                               
             LogRating.add_log_rating(profile, int(pontuacao), request.user.id, atividade)
-            if profile.nivel.lower() != 'diretor' and len(ProfilePendencia.get_pendencias(profile)) == 0 and profile.is_next_level():                
+            if profile.nivel.lower() != NivelChoices.GUARDIAN and len(ProfilePendencia.get_pendencias(profile)) == 0 and profile.is_next_level():                
                 profile.change_level()
             profile.pontuacao += int(pontuacao)
-            profile.save() 
-        else:
-            messages.warning(request, 'Adicione uma pontuação válida!')
+            profile.save()
+            
         return redirect('logs')
-    users = Users.objects.filter(is_fraguista=True)
+    query = request.GET.get("busca")    
+    usuarios_list = UsersQuery.get_users_by_query(query)
+    paginas = Paginator(usuarios_list, 25)
+    try:
+        page = int(request.GET.get('page', '1'))
+    except ValueError:
+        page = 1
+    try:
+        usuarios = paginas.page(page)
+    except (EmptyPage, InvalidPage):
+        usuarios = paginas.page(paginas.num_pages)
     atividades = Atividade.objects.all()
     return render(
         request,
         'add_rating.html',
         {
-            'users': users,
+            'usuarios': usuarios,
             'atividades': atividades,
         }
     )
@@ -203,7 +203,7 @@ def edita_pendencia(request, id: int):
             'pendencia': pendencia,
         })
     if request.method == 'POST':
-        nivel_id = request.POST.get('select_nivel', 1)
+        nivel_id = request.POST.get('select-nivel', '1')
         pendencia_nome = request.POST.get('pendencia', '')
         pendencia = Pendencia.objects.get(id=id)
         nivel = Nivel.objects.get(id=nivel_id)
@@ -211,3 +211,53 @@ def edita_pendencia(request, id: int):
         pendencia.nivel = nivel
         pendencia.save()
         return redirect('add_pendencia')
+    
+@user_passes_test(lambda u: u.is_superuser)
+def add_pendencia_usuario(request, id: int):
+    if request.method == 'GET':
+        pendencias = Pendencia.objects.all()
+        usuario = Users.objects.get(id=id)
+        return render(request, 'pendencias/usuarios/add_pendencia_usuario.html', {
+            'pendencias': pendencias,
+            'usuario': usuario,
+        })
+    if request.method == 'POST':
+        usuario = request.POST.get('usuario', None)
+        pendencia_id = request.POST.get('select-pendencia', None)
+        usuario = Users.objects.get(username=usuario)
+        pendencia = Pendencia.objects.get(id=pendencia_id)
+        profile = Profile.get_or_create_profile(usuario)
+        ProfilePendencia.add_pendencias(profile, [pendencia])
+        return redirect('user_pending', username=usuario.username)
+
+@user_passes_test(lambda u: u.is_superuser)
+def finaliza_pendencia_usuario(request, profile_pendencia_id: int):
+    if request.method == 'POST':
+        profile_pendencia = ProfilePendencia.objects.get(id=profile_pendencia_id)
+        ProfilePendencia.update_pendencia_status(2, profile_pendencia)
+        return redirect('user_pending', username=profile_pendencia.profile.user.username)
+    
+@user_passes_test(lambda u: u.is_superuser)
+def remove_pendencia_usuario(request, profile_pendencia_id: int):
+    if request.method == 'POST':
+        profile_pendencia = ProfilePendencia.objects.get(id=profile_pendencia_id)
+        profile_pendencia.delete()
+        messages.success(request, 'Pendência removida com sucesso!')
+        return redirect('user_pending', username=profile_pendencia.profile.user.username)
+    
+@user_passes_test(lambda u: u.is_superuser)
+def editar_pontuacao(request, user_id: int):
+    if request.method == 'GET':
+        user = Users.objects.get(id=user_id)
+        profile = Profile.get_or_create_profile(user)
+        return render(request, 'editar_pontuacao.html', {'profile': profile})
+    if request.method == 'POST':
+        pontuacao = request.POST.get('pontos', 0)
+        user = Users.objects.get(id=user_id)
+        profile = Profile.get_or_create_profile(user)
+        LogRating.add_log_rating(profile, int(pontuacao), user.id)
+        if profile.nivel.lower() != NivelChoices.GUARDIAN and len(ProfilePendencia.get_pendencias(profile)) == 0 and profile.is_next_level():                
+            profile.change_level()
+        profile.pontuacao += int(pontuacao)
+        profile.save()
+        return redirect('user_log_rating', username=user.username)

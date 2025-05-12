@@ -13,17 +13,19 @@
     <div class="row text-center">
         <h2 class="h2">Cadastro de Pendências</h2>
     </div>
+    <br>
+    <br>
     <form method="POST" id="form-add">
         {% csrf_token %}
         <div class="row text-end">
-            <div class="col">        
+            <div class="col">
                 <select class="form-select" name="select-nivel" id="select-nivel">
                     {% for nivel in niveis %}
-                        <option id="nivel" value="{{ nivel.nivel }}">{{ nivel.nivel }}</option>
+                    <option id="nivel" value="{{ nivel.nivel }}">{{ nivel.nivel }}</option>
                     {% endfor %}
                 </select>
             </div>
-            <div class="col">                
+            <div class="col">
                 <input class="form-control" name="pendencia" id="pendencia" placeholder="Pendencia">
             </div>
             <div class="col">
@@ -34,10 +36,10 @@
             </div>
         </div>
     </form>
+    <br>
     <form method="POST">
         <div class="table-responsive text-center">
-            <table
-                class="table">
+            <table class="table table-striped table-hover">
                 <thead>
                     <tr>
                         <th>Nivel</th>
@@ -45,7 +47,7 @@
                         <th>Ação</th>
                     </tr>
                 </thead>
-                <tbody>                
+                <tbody>
                     {% for pendencia in pendencias %}
                     <tr>
                         <td>{{ pendencia.nivel.nivel }}</td>

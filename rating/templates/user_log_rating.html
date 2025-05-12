@@ -13,43 +13,28 @@
     <form method="GET">
         <div class="row text-end">
             <div class="col">
-                <input type="date" class="form-control" name="data_inicial" id="data_inicial" >
+                <input type="date" class="form-control" name="data_inicial" id="data_inicial">
             </div>
             <div class="col">
-                <input type="date" class="form-control" name="data_final" id="data_final" >
+                <input type="date" class="form-control" name="data_final" id="data_final">
             </div>
             <div class="col">
                 <input type="submit" class="btn btn-primary" id="filtro" value="Filtrar">
             </div>
         </div>
-        
-        <table class="table">
-            <thead>
-                <th>Usuário</th>
-                <th>Pontuação Anterior</th>
-                <th>Pontuação Ganha</th>
-                <th>Atividade</th>
-                <th>Data</th>
-            </thead>
-            <tbody>
-                {% for log in logs %}
-                <tr>
-                    <td>{{ log.user_id }}</td>
-                    <td>{{ log.pontuacao }}</td>
-                    <td>{{ log.pontuacao_ganha}}
-                    <td>{{ log.atividade.nome_atividade }}</td>
-                    <td>{{ log.updated_at }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+
+        {% include "partials/log_table.html" with logs=logs %}
     </form>
+
+    <div class="row text-end">
+        <a class="btn btn-secondary" href="{% url 'editar_pontuacao' user_id=profile.user.id %}">Editar Pontuação</a>
+    </div>
 </div>
 
 <script>
     function validaData() {
-        
-        if(dataInicial.value > dataFinal.value){
+
+        if (dataInicial.value > dataFinal.value) {
             dataInicial.value = dataFinal.value;
         }
     };
