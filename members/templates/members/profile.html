@@ -58,7 +58,7 @@
             <div id="div_utils">
                 <div class="row">
                     <div class="col">
-                        <a href="{% url 'user_log_rating' %}"><i class="bi bi-trophy" style="font-size: 24px; padding-left: 10px;"></i></a>
+                        <a href="{% url 'user_log_rating' username=member.username %}"><i class="bi bi-trophy" style="font-size: 24px; padding-left: 10px;"></i></a>
                         <p>{{ profile.pontuacao }} pts </p>
                     </div>
                     <div class="col">

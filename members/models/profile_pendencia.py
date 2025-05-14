@@ -39,17 +39,15 @@ class ProfilePendencia(models.Model):
         if profile.nivel_id is None:
             profile.nivel_id = Nivel.objects.get(nivel=profile.nivel)
         if profile.nivel.lower() == NivelChoices.GUARDIAN:
-            return []
-        prx_nivel = profile.nivel_id.proximo_nivel()
-        pendencias = Pendencia.objects.filter(nivel=prx_nivel)
-        pendencias_done = ProfilePendencia.objects.filter(profile=profile).filter(pendencia_status=2)
-        pendencias_done = [ p.pendencia for p in pendencias_done]
+            return []        
+        pendencias = Pendencia.objects.filter(nivel=profile.nivel_id)
+        p_pendencias = ProfilePendencia.objects.filter(profile=profile)
+        for pendencia in pendencias:
+            p = p_pendencias.filter(pendencia=pendencia)            
+        
         pendencias_faltantes = []
         if pendencias is None:
             return []
-        for pendencia in pendencias:
-            if not pendencia in pendencias_done:
-                pendencias_faltantes.append(pendencia)
         return pendencias_faltantes
     
     def get_all_pendencias(profile: Profile):

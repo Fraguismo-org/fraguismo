@@ -15,7 +15,7 @@ class ProfileAdmin(admin.ModelAdmin):
             'escudeiro': 15,
             'cavaleiro': 30,
             'conselheiro': 40,
-            'guradiao': 40,
+            'guardiao': 40,
         }
         
         pontos_proximo_nivel = niveis.get(nivel_atual)  # 40 é o máximo para diretor

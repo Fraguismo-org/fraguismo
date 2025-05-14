@@ -14,6 +14,7 @@ from rating.models.nivel import Nivel
 from rating.models.nivel_choices import NivelChoices
 from rating.models.pendencia import Pendencia
 from members.models.profile_pendencia import ProfilePendencia
+from django.core.paginator import Paginator, InvalidPage, EmptyPage
 
 
 @user_passes_test(lambda u: u.is_superuser)
@@ -24,30 +25,49 @@ def log_rating(request):
         logs = LogRatingQuery.get_log_rating_by_query(query, usuarios_list)
     else:
         logs = LogRating.objects.all().order_by("-updated_at")
+    paginas = Paginator(logs, 25)
+    try:
+        page = int(request.GET.get('page', '1'))
+    except ValueError:
+        page = 1
+    try:
+        logs = paginas.page(page)
+    except (EmptyPage, InvalidPage):
+        logs = paginas.page(paginas.num_pages)
     return render(request, 'log_rating.html', {'logs': logs})
 
 
 @login_required(login_url='login')
-def user_log_rating(request):
+def user_log_rating(request, username=None):
     data_inicial = request.GET.get("data_inicial")
     data_final = request.GET.get("data_final")
-    profile = Profile.get_or_create_profile(request.user)
+    usuario = Users.objects.get(username=username) if username else request.user
+    profile = Profile.get_or_create_profile(usuario)
     if profile.nivel.lower() == '':
         nivel = Nivel.objects.get(nivel=NivelChoices.APPRENTICE)
     else:
         nivel = Nivel.objects.get(nivel=profile.nivel.lower())
-    if profile.nivel.lower() == "diretor":
-        pts_prx_nivel = 0
-    else:
+    pts_prx_nivel = 0
+    if profile.nivel.lower() != NivelChoices.GUARDIAN:    
         pts_prx_nivel = nivel.proximo_nivel().pontuacao_base - profile.pontuacao
     proximo_nivel = (nivel.proximo_nivel().nivel,  pts_prx_nivel if pts_prx_nivel >= 0 else 0)
 
-    logs = LogRating.objects.filter(user_id=request.user).order_by("-updated_at")
+    logs = LogRating.objects.filter(user_id=usuario).order_by("-updated_at")
 
     if data_inicial:
         logs = logs.filter(updated_at__gte=data_inicial)
     if data_final:
         logs = logs.filter(updated_at__lte=data_final)
+        
+    paginas = Paginator(logs, 25)
+    try:
+        page = int(request.GET.get('page', '1'))
+    except ValueError:
+        page = 1
+    try:
+        logs = paginas.page(page)
+    except (EmptyPage, InvalidPage):
+        logs = paginas.page(paginas.num_pages)
 
     return render(
         request,
@@ -55,7 +75,8 @@ def user_log_rating(request):
         {
             'logs': logs,
             'profile': profile,
-            'proximo_nivel': proximo_nivel, 
+            'proximo_nivel': proximo_nivel,
+            'usuario': usuario,
         }
     )
 
@@ -91,7 +112,7 @@ def my_pendings(request):
 def user_pending(request, username):
     user = Users.objects.get(username=username)
     profile = Profile.get_or_create_profile(user)        
-    profile_pendencias = ProfilePendencia.objects.filter(profile=profile)
+    profile_pendencias = ProfilePendencia.get_pendencias(profile)
     
     return render(
         request,
@@ -212,6 +233,7 @@ def edita_pendencia(request, id: int):
         pendencia.save()
         return redirect('add_pendencia')
     
+    
 @user_passes_test(lambda u: u.is_superuser)
 def add_pendencia_usuario(request, id: int):
     if request.method == 'GET':
@@ -229,6 +251,7 @@ def add_pendencia_usuario(request, id: int):
         profile = Profile.get_or_create_profile(usuario)
         ProfilePendencia.add_pendencias(profile, [pendencia])
         return redirect('user_pending', username=usuario.username)
+    
 
 @user_passes_test(lambda u: u.is_superuser)
 def finaliza_pendencia_usuario(request, profile_pendencia_id: int):
@@ -236,6 +259,7 @@ def finaliza_pendencia_usuario(request, profile_pendencia_id: int):
         profile_pendencia = ProfilePendencia.objects.get(id=profile_pendencia_id)
         ProfilePendencia.update_pendencia_status(2, profile_pendencia)
         return redirect('user_pending', username=profile_pendencia.profile.user.username)
+    
     
 @user_passes_test(lambda u: u.is_superuser)
 def remove_pendencia_usuario(request, profile_pendencia_id: int):
@@ -245,12 +269,13 @@ def remove_pendencia_usuario(request, profile_pendencia_id: int):
         messages.success(request, 'Pendência removida com sucesso!')
         return redirect('user_pending', username=profile_pendencia.profile.user.username)
     
+    
 @user_passes_test(lambda u: u.is_superuser)
 def editar_pontuacao(request, user_id: int):
     if request.method == 'GET':
         user = Users.objects.get(id=user_id)
         profile = Profile.get_or_create_profile(user)
-        return render(request, 'editar_pontuacao.html', {'profile': profile})
+        return render(request, 'editar_pontuacao.html', {'profile': profile, 'usuario': user})
     if request.method == 'POST':
         pontuacao = request.POST.get('pontos', 0)
         user = Users.objects.get(id=user_id)

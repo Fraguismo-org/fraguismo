@@ -2,7 +2,40 @@
 
 {% block content %}
 {% load static %}
-<link rel="stylesheet" href="{% static '/css/styles.css' %}">
+
 <div class="shadow p-4 mb-5 bg-body rounded">
+    <h1 class="text-center"><strong>Editar Pontuação</strong></h1>
+    <br>
+    <form method="POST" action="{% url 'editar_pontuacao' user_id=usuario.id %}" ">
+        {% csrf_token %}
+        <div class="row">
+            <div class="col mb-2">
+                <label for="pontos-atuais" class="form-label">Pontos Atuais</label>
+                <input type="number" class="form-control" id="pontos-atuais" name="pontos-atuais"
+                    value="{{ profile.pontuacao }}" disabled>
+            </div>
+            <div class="col mb-2">
+                <label for="pontos" class="form-label">Adicionar pontos</label>
+                <input type="number" class="form-control" id="pontos" name="pontos" required>
+            </div>
+            <div class="col mb-2">
+                <label for="resultado" class="form-label">Resultado Pontuação</label>
+                <input type="number" class="form-control" id="resultado" name="resultado" required>
+            </div>
+        </div>
+        <div class="text-end">
+            <button type="submit" class="btn btn-primary">Salvar</button>
+            <a href="{% url 'profile' username=usuario.username %}" class="btn btn-secondary">Voltar</a>
+        </div>
+    </form>
+
+    <script>
+        document.getElementById('pontos').addEventListener('input', function () {
+            const pontosAtuais = parseInt(document.getElementById('pontos-atuais').value);
+            const adicionar = parseInt(this.value);
+            const resultado = pontosAtuais + adicionar;
+            document.getElementById('resultado').value = resultado;
+        });
+    </script>
 </div>
 {% endblock content %}

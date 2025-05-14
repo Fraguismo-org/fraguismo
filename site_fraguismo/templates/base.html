@@ -1,32 +1,36 @@
 <!DOCTYPE html>
 <html lang="eng">
+
 <head>
     {% load static %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static '/css/components.css' %}">
-    <link rel="shortcut icon" type="image/png" href="{% static '/images/favicon.ico' %}"/>
+    <link rel="shortcut icon" type="image/png" href="{% static '/images/favicon.ico' %}" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    
+
     {% load django_bootstrap5 %}
 
     {% bootstrap_css %}
     {% bootstrap_javascript %}
 
 </head>
+
 <body>
     <header id="site-header" class="site-header">
         <nav class="navbar navbar-expand-lg bg-body-tertiary">
             <div class="container-fluid">
                 <a class="navbar-brand" href="{% url 'index' %}">
-                    <img src="{% static '/images/logofraguinha.png' %}" alt="Fraguismo" width="100" height="70" style="margin: 0 20px 0 20px;">
-                </a>  
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggler1" aria-controls="navbarToggler1" aria-expanded="false" aria-label="Toggle navigation">
+                    <img src="{% static '/images/logofraguinha.png' %}" alt="Fraguismo" width="100" height="70"
+                        style="margin: 0 20px 0 20px;">
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggler1"
+                    aria-controls="navbarToggler1" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="collapse navbar-collapse" id="navbarToggler1">                                                              
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">                        
+                <div class="collapse navbar-collapse" id="navbarToggler1">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
                             <a class="nav-link active" href="{% url 'index' %}">Início</a>
                         </li>
@@ -34,7 +38,8 @@
                             <a class="nav-link active" href="https://fraguismo.org/anarcopolis/">Anarcópolis</a>
                         </li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false" href="{% url 'index' %}">Fraguismo</a>
+                            <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown"
+                                aria-expanded="false" href="{% url 'index' %}">Fraguismo</a>
                             <ul class="dropdown-menu">
                                 <li>
                                     <a class="dropdown-item" href="{% url 'sobre_nos'%}">Sobre Nós</a>
@@ -49,13 +54,15 @@
                                     <a class="dropdown-item" href="{% url 'agenda' %}">Agenda</a>
                                 </li>
                                 <li class="nav-item dropdown">
-                                    <a class="dropdown-item">Religião</a>                
+                                    <a class="dropdown-item">Religião</a>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item" href="https://fraguismo.org/religiao-educacional/">Educacional</a>
+                                    <a class="dropdown-item"
+                                        href="https://fraguismo.org/religiao-educacional/">Educacional</a>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item" href="https://fraguismo.org/galeria-de-fotos/">Galeria De Fotos</a>
+                                    <a class="dropdown-item" href="https://fraguismo.org/galeria-de-fotos/">Galeria De
+                                        Fotos</a>
                                 </li>
                                 <li>
                                     <a class="dropdown-item" href="https://fraguismo.org/faq/">FAQ</a>
@@ -71,79 +78,93 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'home' %}">Negocie em Bitcoin</a>
                         </li>
-                    {% if user.is_authenticated %}
+                        {% if user.is_authenticated %}
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'user_page' %}">Minha Área</a>
                         </li>
-                    {% endif %}
-                    {% if user.is_superuser %}
+                        {% endif %}
+                        {% if user.is_superuser %}
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'adm' %}">Administrativo</a>
                         </li>
-                    {% endif %}
+                        {% endif %}                        
+                    </ul>
+                    <ul class="navbar-nav mb-3 mb-lg-0">
+                        {% if user.is_authenticated %}
+                        {% include 'partials/consulta_usuarios.html' with url_address='lista_usuarios' %}
+                        {% endif %}
+                    </ul>
+
                     </ul>
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                         {% comment %} <li class="nav-item" style="font-size: 18px;">
                             <a class="nav-link active" title="Chat" href="https://fraguismo.org/minha-conta/chat/">
-                                <i class="bi bi-chat"  aria-hidden="true"></i>
+                                <i class="bi bi-chat" aria-hidden="true"></i>
                             </a>
-                        </li>                         {% endcomment %}
-                            <li class="nav-item" style="font-size: 18px;">
+                        </li> {% endcomment %}
+                        <li class="nav-item" style="font-size: 18px;">
                             {% if user.is_authenticated %}
-                                <a class="nav-link active" data-toggle="tooltip" title="Logout" href="{% url 'logout' %}">
-                                    <i class="bi bi-box-arrow-right" style="font-size: xx-large;"></i>
-                                </a>
+                            <a class="nav-link active" data-toggle="tooltip" title="Logout" href="{% url 'logout' %}">
+                                <i class="bi bi-box-arrow-right" style="font-size: xx-large;"></i>
+                            </a>
                             {% else %}
-                                <a class="nav-link active" data-toggle="tooltip" title="Login/Registrar" href="{% url 'login' %}">
-                                    <i class="bi bi-person" style="font-size: xx-large;"  aria-hidden="true"></i>
-                                </a>                    
-                        {% endif %}
-                            </li>
+                            <a class="nav-link active" data-toggle="tooltip" title="Login/Registrar"
+                                href="{% url 'login' %}">
+                                <i class="bi bi-person" style="font-size: xx-large;" aria-hidden="true"></i>
+                            </a>
+                            {% endif %}
+                        </li>
                         <li>
-                            <a class="btn btn-warning align-self-center" style="border-radius: 20px; margin-top: 15px;" aria-current="page" href="{% url 'cadastrar_anuncio' %}">
+                            <a class="btn btn-warning align-self-center" style="border-radius: 20px; margin-top: 15px;"
+                                aria-current="page" href="{% url 'cadastrar_anuncio' %}">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                 Publique aqui
                             </a>
-                        </li>                                                
-                    </ul>                        
-                
+                        </li>
+                    </ul>
+
                 </div>
             </div>
         </nav>
     </header>
-    
-        <div class="{% if request.resolver_match.url_name == 'index' %}container-fluid container-geral{% else %}container pb-5 ct-geral mb-2{% endif %}">
-            {% if messages %}
-                {% for message in messages %}                
-                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                        {{ message }}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
-                {% endfor %}
-            {% endif %}
 
-        {% block content %} 
-        {% endblock content %}
+    <div
+        class="{% if request.resolver_match.url_name == 'index' %}container-fluid container-geral{% else %}container pb-5 ct-geral mb-2{% endif %}">
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
+        {% endfor %}
+        {% endif %}
 
-    <footer >
+        {% block content %}
+        {% endblock content %}
+    </div>
+
+    <footer>
         <div class="footer-top-area" style="padding-top: 80px; padding-bottom: 80px;">
             <div class="container">
                 <div class="row">
                     <div class="col-lg-3 col-sm-6 col-12">
                         <div id="classima_about-2" class="widget widget_classima_about">
                             <div class="d-flex align-items-center" style="padding-bottom: 20px;">
-                                <img src="{% static '/images/logofraguinha.png' %}" width="120" height="80" alt="Fraguismo">
+                                <img src="{% static '/images/logofraguinha.png' %}" width="120" height="80"
+                                    alt="Fraguismo">
                             </div>
-                            <p class="rtin-des">Fraguismo é uma religião pautada nos princípios do jusnaturalismo e do PNA</p>
+                            <p class="rtin-des">Fraguismo é uma religião pautada nos princípios do jusnaturalismo e do
+                                PNA</p>
                             <ul class="list-group list-group-horizontal">
                                 <li class="list-group">
-                                    <a href="https://twitter.com/fraguismo" target="_blank" style="padding: 10px; padding-left: 0px;">
+                                    <a href="https://twitter.com/fraguismo" target="_blank"
+                                        style="padding: 10px; padding-left: 0px;">
                                         <i class="bi bi-twitter-x" style="font-size: 24px;"></i>
                                     </a>
                                 </li>
                                 <li class="list-group">
-                                    <a href="https://www.instagram.com/fraguismo/" target="_blank" style="padding: 10px;">
+                                    <a href="https://www.instagram.com/fraguismo/" target="_blank"
+                                        style="padding: 10px;">
                                         <i class="bi bi-instagram" style="font-size: 24px;"></i>
                                     </a>
                                 </li>
@@ -194,10 +215,12 @@
                                         <a href="#" style="text-decoration: none;">Mapa do site</a>
                                     </li>
                                     <li id="menu-item-1231" class="list-group">
-                                        <a href="{% url 'termos_condicoes' %}" style="text-decoration: none;">Termos e Condições</a>
+                                        <a href="{% url 'termos_condicoes' %}" style="text-decoration: none;">Termos e
+                                            Condições</a>
                                     </li>
                                     <li id="menu-item-1230" class="list-group">
-                                        <a href="{% url 'codigo_conduta' %}" style="text-decoration: none;">Código de Conduta</a>
+                                        <a href="{% url 'codigo_conduta' %}" style="text-decoration: none;">Código de
+                                            Conduta</a>
                                     </li>
                                 </ul>
                             </div>
@@ -229,11 +252,12 @@
                     </div>
                 </div>
             </div>
-        </div>        
+        </div>
     </footer>
     {% block javascript %}
 
     <script src="https://kit.fontawesome.com/32cd59ffee.js" crossorigin="anonymous"></script>
     {% endblock javascript %}
 </body>
+
 </html>
