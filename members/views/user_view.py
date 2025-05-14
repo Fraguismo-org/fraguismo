@@ -76,4 +76,4 @@ def lista_usuarios(request):
         usuarios = paginas.page(page)
     except (EmptyPage, InvalidPage):
         usuarios = paginas.page(paginas.num_pages)
-    return render(request, 'lista_usuarios.html', {'usuarios': usuarios,})
+    return render(request, 'members/lista_usuarios.html', {'usuarios': usuarios,})
