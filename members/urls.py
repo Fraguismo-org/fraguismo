@@ -12,6 +12,7 @@ urlpatterns = [
     path('', include('members.uris.user_urls')),
     path('', include('members.uris.profile_urls')),
     path('', include('members.uris.comunidade_urls')),
+    path('', include('members.uris.preferencias_urls')),
     
     # URLs para redefinição de senha
     path('password-reset/', PasswordResetView.as_view(template_name='authenticate/password-reset.html'), name='password-reset'),

@@ -4,7 +4,7 @@
 {% load static %}
 {% if user.is_authenticated %}
 <style>
-    .image-upload>input{
+    .image-upload>input {
         display: none;
     }
 
@@ -20,7 +20,10 @@
         z-index: 1;
     }
 
-    {% with sticker="images/niveis_stickers/"|add:profile.nivel_id.nivel|add:".png" %}
+        {
+        % with sticker="images/niveis_stickers/" |add: profile.nivel_id.nivel|add:".png" %
+    }
+
     .frame {
         width: 150px;
         height: 150px;
@@ -33,126 +36,187 @@
         top: -15px;
         left: -15px;
     }
-    {% endwith %}
+
+        {
+        % endwith %
+    }
 
     .text-error {
         color: red;
         display: none;
     }
-
-</style>    
-    <div class="shadow p-4 mb-5 bg-body rounded">
-        <form id="formRegistro" method="POST" class="col-md-8 mx-auto" enctype="multipart/form-data">            
+</style>
+<div class="shadow p-4 mb-5 bg-body rounded">
+    <form id="formRegistro" method="POST" class="col-md-8 mx-auto" enctype="multipart/form-data">
         <div class="container-lg text-center">
             {% csrf_token %}
             <div class="image-upload">
                 <label for="pic_profile">
                     <div class="profile-pic  mx-auto" id="profile-pic">
                         <div class="frame">
-                        </div>                
+                        </div>
                     </div>
-                </label>                
+                </label>
             </div>
-            
+
             <h2>{{profile.user}}</h2>
             <div id="div_utils">
                 <div class="row">
                     <div class="col">
-                        <a href="{% url 'user_log_rating' username=member.username %}"><i class="bi bi-trophy" style="font-size: 24px; padding-left: 10px;"></i></a>
+                        <a href="{% url 'user_log_rating' username=member.username %}"><i class="bi bi-trophy"
+                                style="font-size: 24px; padding-left: 10px;"></i></a>
                         <p>{{ profile.pontuacao }} pts </p>
                     </div>
                     <div class="col">
-                        <a href="{% url 'lista_cursos' username=member.username %}"><i class="bi bi-book" style="font-size: 24px; padding-left: 10px"></i></a>
+                        <a href="{% url 'lista_cursos' username=member.username %}"><i class="bi bi-book"
+                                style="font-size: 24px; padding-left: 10px"></i></a>
                         <p>Cursos</p>
                     </div>
                     <div class="col">
-                        <a href="{% url 'user_pending' username=member.username %}"><i class="bi bi-bar-chart" style="font-size: 24px; padding-left: 10px"></i></a>
+                        <a href="{% url 'user_pending' username=member.username %}"><i class="bi bi-bar-chart"
+                                style="font-size: 24px; padding-left: 10px"></i></a>
+                        {% if user.is_superuser %}
+                        <div class="d-flex align-items-center" style="width: min-content;">
+
+                            <select class="form-select form-select-sm w-auto me-1" id="select-nivel" name="select-nivel"
+                                aria-label="Nivel">
+                                {% for nivel in niveis %}
+                                {% if nivel.nivel == profile.nivel %}
+                                <option id="nivel" value="{{ nivel.id }}" selected>{{ nivel.nivel.capitalize }}
+                                </option>
+                                {% else %}
+                                <option id="nivel" value="{{ nivel.id }}">{{ nivel.nivel.capitalize }}</option>
+                                {% endif %}
+                                {% endfor %}
+                            </select>
+                            <div class="col">
+                                <button type="button" class="btn btn-primary btn-sm" id="apply_nivel" onclick="applyLevel()"><i
+                                        class="bi bi-floppy2-fill"></i></button>
+                            </div>
+                        </div>
+                        {% else %}
                         <p>{{ profile.nivel.capitalize }}</p>
-                    </div>                   
-                </div>                
-            </div>        
-        </div>                    
-            <div class="row">
-                <div class="col">
-                    <label for="username" class="form-label">Username</label>
-                    <input type="text" class="form-control" id="username" name="username" value="{{ profile.user.username }}" disabled>
-                </div>                
-            </div>
-            {% if user.is_superuser %}
-            <div class="row">
-                <div class="col">
-                    <label for="email" class="form-label">E-mail</label>
-                    <input type="email" id="email" name="email" class="form-control" value="{{ profile.user.email }}" disabled>
+                        {% endif %}
+                    </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col">
-                    <label for="first_name" class="form-label">Nome</label>
-                    <input type="text" class="form-control" id="first_name" name="first_name" value="{{ profile.user.first_name }}" disabled>
-                </div>
-            </div>
+        </div>
+        <div class="row">
             <div class="col">
-                <label for="last_name" class="form-label">Sobrenome</label>
-                <input type="text" name="last_name" id="last_name" class="form-control" value="{{ user.last_name }}" disabled>
+                <label for="username" class="form-label">Username</label>
+                <input type="text" class="form-control" id="username" name="username"
+                    value="{{ profile.user.username }}" disabled>
             </div>
+        </div>
+        {% if user.is_superuser %}
+        <div class="row">
+            <div class="col">
+                <label for="email" class="form-label">E-mail</label>
+                <input type="email" id="email" name="email" class="form-control" value="{{ profile.user.email }}"
+                    disabled>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <label for="first_name" class="form-label">Nome</label>
+                <input type="text" class="form-control" id="first_name" name="first_name"
+                    value="{{ profile.user.first_name }}" disabled>
+            </div>
+        </div>
+        <div class="col">
+            <label for="last_name" class="form-label">Sobrenome</label>
+            <input type="text" name="last_name" id="last_name" class="form-control" value="{{ profile.user.last_name }}"
+                disabled>
+        </div>
+        <div class="row">
+            <div class="col">
+                <label for="fone" class="form-label">Telefone</label>
+                <input type="text" id="fone" name="fone" class="form-control" value="{{ member.fone }}" disabled>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <label for="bsc_wallet" class="form-label">Polygon Wallet</label>
+                <input type="text" class="form-control" id="bsc_wallet" name="bsc_wallet"
+                    value="{{ member.bsc_wallet }}" disabled>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <label for="lightning_wallet" class="form-label">Bitcoin Lightning Wallet</label>
+                <input type="text" class="form-control" name="lightning_wallet" id="lightning_wallet"
+                    value="{{ member.lightning_wallet }}" disabled>
+            </div>
+        </div>
+        {% endif %}
+        <div id="div_profile">
             <div class="row">
                 <div class="col">
-                    <label for="fone" class="form-label">Telefone</label>
-                    <input type="text" id="fone" name="fone" class="form-control" value="{{ member.fone }}" disabled>
+                    <label for="city" class="form-label">Localidade</label>
+                    <input type="text" id="city" name="city" class="form-control" value="{{ member.city }}" disabled>
                 </div>
             </div>
+
             <div class="row">
                 <div class="col">
-                    <label for="bsc_wallet" class="form-label">Polygon Wallet</label>
-                    <input type="text" class="form-control" id="bsc_wallet" name="bsc_wallet" value="{{ member.bsc_wallet }}" disabled>
+                    <label for="instagram" class="form-label">Instagram</label>
+                    <input type="text" id="instagram" name="instagram" class="form-control"
+                        value="{{ member.instagram }}" disabled>
                 </div>
             </div>
+
             <div class="row">
                 <div class="col">
-                    <label for="lightning_wallet" class="form-label">Bitcoin Lightning Wallet</label>
-                    <input type="text" class="form-control" name="lightning_wallet" id="lightning_wallet" value="{{ member.lightning_wallet }}" disabled>
-                </div>
-            </div>            
-            {% endif %}
-            <div id="div_profile">                
-                <div class="row">
-                    <div class="col">
-                        <label for="city" class="form-label">Localidade</label>
-                        <input type="text" id="city" name="city" class="form-control" value="{{ member.city }}" disabled>                
-                    </div>
-                </div>
-                
-                <div class="row">
-                    <div class="col">
-                        <label for="instagram" class="form-label">Instagram</label>
-                        <input type="text" id="instagram" name="instagram" class="form-control" value="{{ member.instagram }}" disabled>
-                    </div>
-                </div>
-                
-                <div class="row">
-                    <div class="col">
-                        <label for="birth" class="form-label">Idade</label>
-                        <input type="text" class="form-control" id="birth" name="birth" value=" {{ idade }}
+                    <label for="birth" class="form-label">Idade</label>
+                    <input type="text" class="form-control" id="birth" name="birth" value=" {{ idade }}
                                                                                                 {% if idade != 'Não informado' %}
                                                                                                     anos
                                                                                                 {% endif %}" disabled>
-                    </div>
                 </div>
-                
-                <div class="row">
-                    <div class="col">
-                        <label for="job_title" class="form-label">Profissão</label>
-                        <input type="text" class="form-control" id="job_title" name="job_title" value="{{ member.job_title }}" disabled>
-                    </div>
-                </div>                                     
             </div>
-        </form>
-    </div>    
+
+            <div class="row">
+                <div class="col">
+                    <label for="job_title" class="form-label">Profissão</label>
+                    <input type="text" class="form-control" id="job_title" name="job_title"
+                        value="{{ member.job_title }}" disabled>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
 {% else %}
-    <h2>
-        Área restrita    
-    </h2>
-    <small class="text-body-secondary"> Efetue o <a href="{% url 'login' %}">login</a> para acessar esta página!</small>
+<h2>
+    Área restrita
+</h2>
+<small class="text-body-secondary"> Efetue o <a href="{% url 'login' %}">login</a> para acessar esta página!</small>
 {% endif %}
+<script>
+    async function applyLevel() {
+        const selectedLevel = document.getElementById('select-nivel');
+        
+        await fetch("{% url 'alterar_nivel' %}", {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': "{{ csrf_token }}",
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: new URLSearchParams({
+                'nivel_id': selectedLevel.value,
+                'user_id': "{{ profile.user.id }}",
+            })
+        })
+        .then(response => {
+            if (! response.ok) throw new Error('Erro na requisicao!');
+            return response;
+        })
+        .then(data => {
+            location.reload();
+        })
+        .catch(error => {
+            alert(error);
+        });        
+    }
+</script>
 
 {% endblock content %}

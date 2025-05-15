@@ -26,9 +26,11 @@
         {% include "partials/log_table.html" with logs=logs %}
     </form>
     <br>
+    {% if user.is_superuser %}
     <div class="row text-end">
         <a class="btn btn-secondary" href="{% url 'editar_pontuacao' user_id=profile.user.id %}">Editar Pontuação</a>
     </div>
+    {% endif %}
 </div>
 
 <script>

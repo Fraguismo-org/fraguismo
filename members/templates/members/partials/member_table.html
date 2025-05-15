@@ -17,7 +17,7 @@
         {% for usuario in usuarios %}
         <tr>
             <td>
-                <input type="checkbox" id="usuarios" name="usuarios" value="{{ usuario.id }}">
+                <input type="checkbox" id="usuarios[]" name="usuarios[]" value="{{ usuario.id }}">
             </td>
             <td>
                 <a href="{% url 'profile' username=usuario.username %}">{{ usuario.username }}

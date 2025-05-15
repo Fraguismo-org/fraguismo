@@ -7,6 +7,7 @@ from django.core.paginator import Paginator, InvalidPage, EmptyPage
 from members.models.profile import Profile
 from members.models.users import Users
 from members.query.users_query import UsersQuery
+from rating.models.nivel import Nivel
 
 
 @login_required(login_url='login')
@@ -18,6 +19,7 @@ def comunidade(request):
 def user_page(request): 
     profile = Profile.get_or_create_profile(user_request=request.user)
     member = Users.get_or_create_member(user_request=request.user)
+    niveis = Nivel.objects.all()
     if request.method == 'POST':
         member.email = request.POST.get('email', None)
         member.is_fraguista = request.POST.get('fraguista', None) == 'on'
@@ -58,7 +60,8 @@ def user_page(request):
             'members/user_page.html',
             {
                 'profile': profile,
-                'member': member
+                'member': member,
+                'niveis': niveis
             }
         )
         

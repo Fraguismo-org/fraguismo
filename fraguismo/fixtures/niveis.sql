@@ -21,4 +21,4 @@ UPDATE `members_profile` SET `nivel` = CASE
     WHEN `nivel` = 'diretor' THEN 'guardião'
     ELSE `nivel`
 END
-WHERE user_id <> NULL;
+WHERE user_id > 0;
