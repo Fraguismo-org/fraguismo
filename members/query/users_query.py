@@ -29,4 +29,4 @@ class UsersQuery:
                 
             case _:
                 usuarios = Users.objects.all()
-        return usuarios
+        return usuarios    

@@ -6,6 +6,7 @@ from django.core.paginator import Paginator, InvalidPage, EmptyPage
 
 from members.models.profile import Profile
 from members.models.users import Users
+from members.query.profiles_query import ProfilesQuery
 from members.query.users_query import UsersQuery
 from rating.models.nivel import Nivel
 
@@ -71,14 +72,17 @@ def user_page(request):
 @login_required(login_url='login')
 def lista_usuarios(request):
     query = request.GET.get("busca")
-    usuarios_list = UsersQuery.get_users_by_query(query)
-    paginas = Paginator(usuarios_list, 25)
+    lista_perfil = ProfilesQuery.get_profiles_by_query(query)
+    for perfil in lista_perfil:
+        print(perfil.user.fone)
+    
+    paginas = Paginator(lista_perfil, 25)
     try:
         page = int(request.GET.get('page', '1'))
     except ValueError:
         page = 1
     try:
-        usuarios = paginas.page(page)
+        perfis = paginas.page(page)
     except (EmptyPage, InvalidPage):
-        usuarios = paginas.page(paginas.num_pages)
-    return render(request, 'members/lista_usuarios.html', {'usuarios': usuarios,})
+        perfis = paginas.page(paginas.num_pages)    
+    return render(request, 'members/lista_usuarios.html', {'profiles': perfis,})

@@ -1,4 +1,4 @@
-<table class="table table-hover">
+<table class="table table-hover table-responsive">
     <colgroup>
         <col style="width: 8%;">
         <col style="width: 12%;">
@@ -9,28 +9,38 @@
     <thead>
         <th><input type="checkbox" name="select_all" id="select_all"> </th>
         <th>Username</th>
+        {% if user.is_superuser %}
         <th>Nome</th>
         <th>Email</th>
         <th>Telefone</th>
+        {% endif %}
+        <th>Nível</th>
     </thead>
     <tbody>
-        {% for usuario in usuarios %}
+        {% for profile in profiles %}
         <tr>
             <td>
                 <input type="checkbox" id="usuarios[]" name="usuarios[]" value="{{ usuario.id }}">
             </td>
             <td>
-                <a href="{% url 'profile' username=usuario.username %}">{{ usuario.username }}
+                <a href="{% url 'profile' username=profile.user.username %}">{{ profile.user.username }}
+            </td>
+            {% if user.is_superuser %}
+            <td>
+                {{ profile.user.first_name|add:' '|add:profile.user.last_name }}
             </td>
             <td>
-                {{ usuario.first_name|add:' '|add:usuario.last_name }}
+                {{ profile.user.email }}
+                <script>
+                    console.log('{{ profile.user.fone }}');
+                </script>
             </td>
             <td>
-
-                {{ usuario.email }}
+                {{ profile.user.fone }}
             </td>
+            {% endif %}
             <td>
-                {{usuario.fone}}
+                {{ profile.nivel }}
             </td>
         </tr>
         {% endfor %}
@@ -38,17 +48,17 @@
 </table>
 <div class="pagination">
     <span class="step-links">
-        {% if usuarios.has_previous %}
+        {% if profiles.has_previous %}
         <a href="?page=1"><i class="bi bi-caret-left-square-fill"></i></a>
-        <a href="?page={{ usuarios.previous_page_number }}"><i class="bi bi-caret-left-fill"></i></a>
+        <a href="?page={{ profiles.previous_page_number }}"><i class="bi bi-caret-left-fill"></i></a>
         {% endif %}
         <span class="current">
-            Página {{ usuarios.number }} de {{ usuarios.paginator.num_pages }}
+            Página {{ profiles.number }} de {{ profiles.paginator.num_pages }}
         </span>
 
-        {% if usuarios.has_next %}
-        <a href="?page={{ usuarios.next_page_number }}"><i class="bi bi-caret-right-fill"></i></a>
-        <a href="?page={{ usuarios.paginator.num_pages }}"><i class="bi bi-caret-right-square-fill"></i></a>
+        {% if profiles.has_next %}
+        <a href="?page={{ profiles.next_page_number }}"><i class="bi bi-caret-right-fill"></i></a>
+        <a href="?page={{ profiles.paginator.num_pages }}"><i class="bi bi-caret-right-square-fill"></i></a>
         {% endif %}
     </span>
 </div>

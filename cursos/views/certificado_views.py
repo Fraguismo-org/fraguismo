@@ -5,6 +5,7 @@ from django.core.paginator import Paginator, InvalidPage, EmptyPage
 
 from cursos.models.certificado import Certificado
 from members.models.users import Users
+from members.query.profiles_query import ProfilesQuery
 from members.query.users_query import UsersQuery
 
 
@@ -21,14 +22,14 @@ def add_certificado(request):
             cert.save()
         messages.success(request,'Certificado adicionado com sucesso!')
     query = request.GET.get("busca")
-    usuarios_list = UsersQuery.get_users_by_query(query)
-    paginas = Paginator(usuarios_list, 25)
+    profile_list = ProfilesQuery.get_profiles_by_query(query)
+    paginas = Paginator(profile_list, 25)
     try:
         page = int(request.GET.get('page', '1'))
     except ValueError:
         page = 1
     try:
-        usuarios = paginas.page(page)
+        profiles = paginas.page(page)
     except (EmptyPage, InvalidPage):
-        usuarios = paginas.page(paginas.num_pages)
-    return render(request, 'add_certificados.html', {'usuarios': usuarios})
+        profiles = paginas.page(paginas.num_pages)
+    return render(request, 'add_certificados.html', {'profiles': profiles})

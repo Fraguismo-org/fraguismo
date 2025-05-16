@@ -6,6 +6,7 @@ from django.core.paginator import Paginator, InvalidPage, EmptyPage
 from members.models.profile import Profile
 from members.models.profile_pendencia import ProfilePendencia
 from members.models.users import Users
+from members.query.profiles_query import ProfilesQuery
 from members.query.users_query import UsersQuery
 from rating.models.atividade import Atividade
 from rating.models.log_rating import LogRating
@@ -101,22 +102,22 @@ def add_rating_point(request):
             
         return redirect('logs')
     query = request.GET.get("busca")    
-    usuarios_list = UsersQuery.get_users_by_query(query)
-    paginas = Paginator(usuarios_list, 25)
+    profiles_list = ProfilesQuery.get_profiles_by_query(query)
+    paginas = Paginator(profiles_list, 25)
     try:
         page = int(request.GET.get('page', '1'))
     except ValueError:
         page = 1
     try:
-        usuarios = paginas.page(page)
+        profiles = paginas.page(page)
     except (EmptyPage, InvalidPage):
-        usuarios = paginas.page(paginas.num_pages)
+        profiles = paginas.page(paginas.num_pages)
     atividades = Atividade.objects.all()
     return render(
         request,
         'add_rating.html',
         {
-            'usuarios': usuarios,
+            'profiles': profiles,
             'atividades': atividades,
         }
     )

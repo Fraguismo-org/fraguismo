@@ -7,6 +7,7 @@
         <h1 class="text-center">Certificados</h1>
     </div>
     <form method="GET" class="col-md-8 mx-auto" enctype="multipart/form-data">
+        {% csrf_token %}
         <table class="table">
             <tbody class="body">
                 {% for certificado in certificados %}
@@ -20,6 +21,11 @@
                     <i class="bi bi-patch-check-fill" style="color: red;">Falhou</i>
                     {% endif %}
                     </td>
+                    {% if user.is_superuser %}
+                    <td>
+                        <a href="#" onclick="removeCertificado('{{ certificado.id }}')" ><i class="bi bi-trash3"></i></a>
+                    </td>
+                    {% endif %}
                 </tr>
                 {% endfor %}            
             </tbody>            
@@ -29,4 +35,33 @@
         <i class="bi bi-patch-check-fill" style="color: red;">Falhou</i></p>
     </form>
 </div>
+<script>
+    async function removeCertificado(certificadoId) {
+        const usuarioId = "{{ profile.user.user_ptr_id }}";
+        try {
+            const response = await fetch("{% url  'remove_curso' %}", {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': "{{ csrf_token }}",
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    'usuario_id': usuarioId,
+                    'certificado_id': certificadoId,
+                }),
+            });
+
+            if (response.ok) {
+                alert('Certificado removido com sucesso!');
+                location.reload();
+            } else {
+                alert('Erro ao remover certificado.');
+                location.reload();
+            }
+        } catch(error) {
+            alert('Falha ao tentar remover certificado.');
+        }
+        
+    }
+</script>
 {% endblock %}

@@ -3,11 +3,11 @@ from rating.models.nivel import Nivel
 from rating.models.nivel_choices import NIVEL_CHOICES
 from members.models.squad_choices import SQUAD_CHOICES
 from members.models.squad import Squad
-from django.contrib.auth.models import User
+from members.models.users import Users
 
 
 class Profile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(Users, on_delete=models.CASCADE)
     nivel = models.CharField(max_length=20, choices=NIVEL_CHOICES, default='aprendiz')
     nivel_id = models.ForeignKey(Nivel, null=True, on_delete=models.DO_NOTHING)
     squad_id = models.ForeignKey(Squad, null=True, on_delete=models.DO_NOTHING)
