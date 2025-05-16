@@ -80,7 +80,7 @@ def user_log_rating(request, username=None):
 @user_passes_test(lambda u: u.is_superuser)
 def add_rating_point(request):
     if request.method == 'POST':
-        ids = request.POST.getlist('usuarios')
+        ids = request.POST.getlist('usuarios[]')
         atividade_id = request.POST.get('select-atividade')
         pontuacao = request.POST.get('pontuacao')
         
