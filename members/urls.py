@@ -8,11 +8,10 @@ from django.contrib.auth.views import (
 )
 
 urlpatterns = [
-    path('', include('members.uris.auth_urls')),
-    path('', include('members.uris.user_urls')),
-    path('', include('members.uris.profile_urls')),
-    path('', include('members.uris.comunidade_urls')),
-    path('', include('members.uris.preferencias_urls')),
+    path('', include('members.routes.auth_urls')),
+    path('', include('members.routes.user_urls')),
+    path('', include('members.routes.profile_urls')),
+    path('', include('members.routes.comunidade_urls')),    
     
     # URLs para redefinição de senha
     path('password-reset/', PasswordResetView.as_view(template_name='authenticate/password-reset.html'), name='password-reset'),

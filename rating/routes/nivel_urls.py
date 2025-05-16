@@ -3,5 +3,5 @@ from rating.views import nivel_views
 
 
 urlpatterns = [
-    path('/alterar_nivel', view=nivel_views.alterar_nivel, name='alterar_nivel'),
+    path('alterar_nivel/', view=nivel_views.alterar_nivel, name='alterar_nivel'),
 ]

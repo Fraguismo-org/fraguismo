@@ -1,0 +1,97 @@
+<div class="card mb-4">
+    <div class="card-header">⚙️ Visibilidade</div>
+    <form id="visibilidadeForm">        
+        <div class="card-body">
+            <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" name="toggleEmail" id="toggleEmail" {% if visibilidade.email %} checked {% endif %}>
+                <label class="form-check-label" for="toggleEmail">E-mail</label>
+            </div>
+            <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" name="toggleNome" id="toggleNome" {% if visibilidade.nome %} checked {% endif %}>
+                <label class="form-check-label" for="toggleNome">Nome</label>
+            </div>
+            <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" name="toggleSobrenome" id="toggleSobrenome" {% if visibilidade.sobrenome %} checked {% endif %}>
+                <label class="form-check-label" for="toggleSobrenome">Sobrenome</label>
+            </div>
+            <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" name="toggleTelefone" id="toggleTelefone" {% if visibilidade.telefone %} checked {% endif %}>
+                <label class="form-check-label" for="toggleTelefone">Telefone</label>
+            </div>
+            <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" name="toggleLocalidade" id="toggleLocalidade" {% if visibilidade.localidade %} checked {% endif %}>
+                <label class="form-check-label" for="toggleLocalidade">Localidade</label>
+            </div>
+            <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" name="toggleInstagram" id="toggleInstagram" {% if visibilidade.instagram %} checked {% endif %}>
+                <label class="form-check-label" for="toggleInstagram">Instagram</label>
+            </div>
+            <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" name="toggleIdade" id="toggleIdade" {% if visibilidade.idade %} checked {% endif %}>
+                <label class="form-check-label" for="toggleIdade">Idade</label>
+            </div>
+            <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" name="toggleProfissao" id="toggleProfissao" {% if visibilidade.profissao %} checked {% endif %}>
+                <label class="form-check-label" for="toggleProfissao">Profissão</label>
+            </div>
+            <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" name="togglePolygon" id="togglePolygon" {% if visibilidade.polygon %} checked {% endif %}>
+                <label class="form-check-label" for="togglePolygon">Carteira Polygon</label>
+            </div>
+            <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" name="toggleLightining" id="toggleLightining" {% if visibilidade.lightining %} checked {% endif %}>
+                <label class="form-check-label" for="toggleLightining">Carteira Lightning</label>
+            </div>
+            <div class="card-footer text-end">
+                <input type="submit" class="btn btn-primary w-1" value="Salvar">
+            </div>
+
+        </div>
+    </form>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const form = document.getElementById('visibilidadeForm');
+
+    form.addEventListener('submit', async function (event) {
+        event.preventDefault();
+
+        const csrfToken = "{{csrf_token }}";
+
+        const data = {
+            email: document.getElementById('toggleEmail').checked,
+            nome: document.getElementById('toggleNome').checked,
+            sobrenome: document.getElementById('toggleSobrenome').checked,
+            telefone: document.getElementById('toggleTelefone').checked,
+            localidade: document.getElementById('toggleLocalidade').checked,
+            instagram: document.getElementById('toggleInstagram').checked,
+            idade: document.getElementById('toggleIdade').checked,
+            profissao: document.getElementById('toggleProfissao').checked,
+            polygon: document.getElementById('togglePolygon').checked,
+            lightining: document.getElementById('toggleLightining').checked,
+        };
+
+        try {
+            const response = await fetch('{% url "visibilidade" user_id=user.id %}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': csrfToken,
+                },
+                body: JSON.stringify(data)
+            });
+
+            if (response.ok) {
+                alert('✔️ Configurações salvas com sucesso!');
+            } else {
+                const err = await response.json();
+                alert('❗Erro ao salvar configurações: ' + JSON.stringify(err));
+            }
+        } catch (error) {
+            console.error('Erro na requisição:', error);
+            alert('❗Erro inesperado ao enviar o formulário.');
+        }
+    });
+});
+</script>

@@ -1,6 +1,7 @@
 from pyexpat.errors import messages
 from django.shortcuts import redirect, render
 from django.contrib.auth.decorators import user_passes_test, login_required
+from django.http import HttpResponse
 
 from members.models.profile import Profile
 from members.models.profile_pendencia import ProfilePendencia
@@ -127,16 +128,23 @@ def add_pendencia_usuario(request, id: int):
 @user_passes_test(lambda u: u.is_superuser)
 def finaliza_pendencia_usuario(request, profile_pendencia_id: int):
     if request.method == 'POST':
-        profile_pendencia = ProfilePendencia.objects.get(id=profile_pendencia_id)
-        ProfilePendencia.update_pendencia_status(2, profile_pendencia)
-        return redirect('user_pending', username=profile_pendencia.profile.user.username)
+        try:
+            profile_pendencia = ProfilePendencia.objects.get(id=profile_pendencia_id)
+            ProfilePendencia.update_pendencia_status(2, profile_pendencia)
+            return HttpResponse('Pendência finalizada com sucesso.', status=200)
+        except Exception as e:
+            return HttpResponse('Erro ao finalizar pendência.', status=500)
+    return HttpResponse('Método não suportado.', status=403)
     
     
 @user_passes_test(lambda u: u.is_superuser)
 def remove_pendencia_usuario(request, profile_pendencia_id: int):
     if request.method == 'POST':
-        profile_pendencia = ProfilePendencia.objects.get(id=profile_pendencia_id)
-        profile_pendencia.delete()
-        messages.success(request, 'Pendência removida com sucesso!')
-        return redirect('user_pending', username=profile_pendencia.profile.user.username)
+        try:
+            profile_pendencia = ProfilePendencia.objects.get(id=profile_pendencia_id)
+            profile_pendencia.delete()
+            return HttpResponse('Pendência removida com sucesso.', status=200)
+        except Exception as e:
+            return HttpResponse('Erro ao remover pendência.', status=500)
+    return HttpResponse('Método não suportado.', status=403)
     

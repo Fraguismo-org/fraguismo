@@ -109,39 +109,39 @@
             </div>
         </div>
         {% if user.is_superuser %}
-        <div class="row">
+        <div class="row" {% if not configs.email %} hidden {% endif %}>
             <div class="col">
                 <label for="email" class="form-label">E-mail</label>
                 <input type="email" id="email" name="email" class="form-control" value="{{ profile.user.email }}"
                     disabled>
             </div>
         </div>
-        <div class="row">
+        <div class="row" {% if not configs.nome %} hidden {% endif %}>
             <div class="col">
                 <label for="first_name" class="form-label">Nome</label>
                 <input type="text" class="form-control" id="first_name" name="first_name"
                     value="{{ profile.user.first_name }}" disabled>
             </div>
         </div>
-        <div class="col">
+        <div class="col" {% if not configs.sobrenome %} hidden {% endif %}>
             <label for="last_name" class="form-label">Sobrenome</label>
             <input type="text" name="last_name" id="last_name" class="form-control" value="{{ profile.user.last_name }}"
                 disabled>
         </div>
-        <div class="row">
+        <div class="row" {% if not configs.telefone %} hidden {% endif %}>
             <div class="col">
                 <label for="fone" class="form-label">Telefone</label>
                 <input type="text" id="fone" name="fone" class="form-control" value="{{ member.fone }}" disabled>
             </div>
         </div>
-        <div class="row">
+        <div class="row" {% if not configs.polygon %} hidden {% endif %}>
             <div class="col">
                 <label for="bsc_wallet" class="form-label">Polygon Wallet</label>
                 <input type="text" class="form-control" id="bsc_wallet" name="bsc_wallet"
                     value="{{ member.bsc_wallet }}" disabled>
             </div>
         </div>
-        <div class="row">
+        <div class="row" {% if not configs.lightining %} hidden {% endif %}>
             <div class="col">
                 <label for="lightning_wallet" class="form-label">Bitcoin Lightning Wallet</label>
                 <input type="text" class="form-control" name="lightning_wallet" id="lightning_wallet"
@@ -149,7 +149,7 @@
             </div>
         </div>
         {% endif %}
-        <div id="div_profile">
+        <div id="div_profile" {% if not configs.localidade %} hidden {% endif %}>
             <div class="row">
                 <div class="col">
                     <label for="city" class="form-label">Localidade</label>
@@ -157,7 +157,7 @@
                 </div>
             </div>
 
-            <div class="row">
+            <div class="row" {% if not configs.instagram %} hidden {% endif %}>
                 <div class="col">
                     <label for="instagram" class="form-label">Instagram</label>
                     <input type="text" id="instagram" name="instagram" class="form-control"
@@ -165,7 +165,7 @@
                 </div>
             </div>
 
-            <div class="row">
+            <div class="row" {% if not configs.idade %} hidden {% endif %}>
                 <div class="col">
                     <label for="birth" class="form-label">Idade</label>
                     <input type="text" class="form-control" id="birth" name="birth" value=" {{ idade }}
@@ -175,7 +175,7 @@
                 </div>
             </div>
 
-            <div class="row">
+            <div class="row" {% if not configs.profissao %} hidden {% endif %}>
                 <div class="col">
                     <label for="job_title" class="form-label">Profissão</label>
                     <input type="text" class="form-control" id="job_title" name="job_title"

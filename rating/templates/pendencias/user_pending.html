@@ -1,7 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
 {% load static %}
-<link rel="stylesheet" href="{% static '/css/styles.css' %}">
 <div class="shadow p-4 mb-5 bg-body rounded">
     <div class="text-center">
         <h3>Pendências {{ usuario.username }}</h3>
@@ -25,7 +24,7 @@
             <tr>
                 <td style="display: none;">{{ p_pendencia.id }}</td>
                 <td>{{ p_pendencia.nivel.nivel.capitalize }}</td>
-                <td>{{ p_pendencia.pendencia }}</td>
+                <td>{{ p_pendencia.pendencia.pendencia }}</td>
                 <td>
                     {% if p_pendencia.pendencia_status == 0 %}
                     Pendente
@@ -66,55 +65,70 @@
 </div>
 
 <script>
-    {% if user.is_superuser %}
-    function finalizaPendencia(profilePendenciaId) {
+    async function finalizaPendencia(profilePendenciaId) {
         const confirmation = confirm("Você tem certeza que deseja finalizar pendência?");
+
         if (!confirmation) {
             return;
         }
 
         const url = "{% url 'finaliza_pendencia_usuario' profile_pendencia_id=0 %}".replace('0', profilePendenciaId);
         console.log(url);
+        try {
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': "{{ csrf_token }}",
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: new URLSearchParams({
+                    'usuario_id': "{{ usuario.id }}",
+                })
+            });
 
-        fetch(url, {
-            method: 'POST',
-            headers: {
-                'X-CSRFToken': "{{ csrf_token }}",
-                'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            body: new URLSearchParams({
-                'usuario_id': "{{ usuario.id }}",
-            })
-        })
-            .then(response => response.text())
-            .then(data => console.log(data))
-            .catch(error => console.error(error));
-        location.reload();
+            if (response.ok) {
+                alert('✔️ Pendência finalizada com sucesso!');
+                location.reload();
+            } else {
+                alert('❗Erro ao finalizar pendências.');
+                location.reload();
+            }
+
+        } catch (error) {
+            alter('❗Erro inesperado ao enviar o formulário.')
+        }
     }
 
-    function removePendencia(profilePendenciaId) {
-        const confirmation = confirm("Você tem certeza que deseja finalizar pendência?");
+    async function removePendencia(profilePendenciaId) {
+        const confirmation = confirm("Você tem certeza que deseja remover pendência?");
         if (!confirmation) {
             return;
         }
 
         const url = "{% url 'remove_pendencia_usuario' profile_pendencia_id=0 %}".replace('0', profilePendenciaId);
-        fetch(url, {
-            method: 'POST',
-            headers: {
-                'X-CSRFToken': "{{ csrf_token }}",
-                'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            body: new URLSearchParams({
-                'profile_pendencia_id': profilePendenciaId
-            })
-        })
-            .then(response => response.text())
-            .then(data => console.log(data))
-            .catch(error => console.error(error));
-        location.reload();
+        try {
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': "{{ csrf_token }}",
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: new URLSearchParams({
+                    'profile_pendencia_id': profilePendenciaId
+                })
+            });
+
+            if (response.ok) {
+                alert('Pendência apagada com sucesso!');
+                location.reload();
+            } else {
+                alert('Erro ao remover pendência.');
+                location.reload();
+            }
+        } catch (error) {
+            alert('Erro ao tentar remover pendência.');
+        }
     }
-    {% endif %}
 </script>
 
 {% endblock %}

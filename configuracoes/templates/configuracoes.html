@@ -1,0 +1,13 @@
+{% extends 'base.html '%}
+{% load static %}
+{% block content %}
+<div class="shadow p-4 mb-5 bg-body rounded">
+    <div class="row text-center">
+        <h1>Configurações</h1>
+    </div>
+    <br>
+    {% include 'partials/visibilidade.html' with visibilidade=configuracoes.visibilidade %}
+    
+</div>
+
+{% endblock content %}

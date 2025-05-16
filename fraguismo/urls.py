@@ -13,6 +13,7 @@ urlpatterns = [
     path('administrador/', include('administrador.urls')),
     path('cursos/', include('cursos.urls')),
     path('marketplace/', include('marketplace.urls')),
+    path('config/', include('configuracoes.urls')),
 ]
 
 if settings.DEBUG:
