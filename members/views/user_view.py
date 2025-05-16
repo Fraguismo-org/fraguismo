@@ -22,7 +22,8 @@ def user_page(request):
     niveis = Nivel.objects.all()
     if request.method == 'POST':
         member.email = request.POST.get('email', None)
-        member.is_fraguista = request.POST.get('fraguista', None) == 'on'
+        if not member.is_fraguista:
+            member.is_fraguista = request.POST.get('fraguista', None) == 'on'
         if (member.is_fraguista):
             member.first_name = request.POST.get('first_name', None)
             member.last_name = request.POST.get('last_name', None)        
@@ -33,7 +34,8 @@ def user_page(request):
             member.job_title = request.POST.get('job_title', None)
             member.bsc_wallet = request.POST.get('bsc_wallet', None)
             member.lightning_wallet = request.POST.get('lightning_wallet', None)
-            member.codigo_conduta = request.POST.get('codigo_conduta', None) == 'on'
+            if not member.codigo_conduta:
+                member.codigo_conduta = request.POST.get('codigo_conduta', None) == 'on'
         
         if 'pic_profile' in request.FILES:
             old_img = profile.pic_profile.path

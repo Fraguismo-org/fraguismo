@@ -20,10 +20,7 @@
         z-index: 1;
     }
 
-        {
-        % with sticker="images/niveis_stickers/" |add: profile.nivel_id.nivel|add:".png" %
-    }
-
+    {% with sticker="images/niveis_stickers/"|add:profile.nivel_id.nivel|add:".png" %}
     .frame {
         width: 150px;
         height: 150px;
@@ -37,9 +34,7 @@
         left: -15px;
     }
 
-        {
-        % endwith %
-    }
+    {% endwith %}
 
     .text-error {
         color: red;

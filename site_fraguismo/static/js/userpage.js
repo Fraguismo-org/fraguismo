@@ -180,7 +180,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function validaPhone(){
         document.getElementById("validation-phone").style.display = 'none';
-        const regex = /^(\+?\d{1,3})? ?(\(?\d{2,3}\)?)? ?\d{4,5}-?\d{4}$/;
+        const regex = /^(\+?\d{1,3})[\s.-](\(?\d{2,4}\)?)[\s.-](\d{1,4})[\s.-](\d{2,5})[\s.-]?(\d{4})?/;
         if (regex.test(phone.value)) {
             return true;
         }
@@ -233,4 +233,5 @@ document.addEventListener('DOMContentLoaded', function () {
         }
         return chkCodigoConduta.checked
     }
+    
 });
