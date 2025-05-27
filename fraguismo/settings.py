@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     'marketplace',
     'services',
     'configuracoes',
+    'log',
 ]
 
 MIDDLEWARE = [

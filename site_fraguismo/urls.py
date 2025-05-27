@@ -17,5 +17,5 @@ urlpatterns = [
     path('dao/', views.dao, name='dao'),
     path('daoregras/', views.daoregras, name='daoregras'),
     path('hierarquia/', views.hierarquia, name='hierarquia'),
-    path('cursofraguista/', views.cursofraguista, name='cursofraguista'),
+    path('cursofraguista/', views.cursofraguista, name='cursofraguista'),    
 ]

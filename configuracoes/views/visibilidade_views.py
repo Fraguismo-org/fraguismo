@@ -3,6 +3,7 @@ from django.http import HttpResponse
 import json
 
 from configuracoes.models.configuracao_visibilidade import ConfiguracaoVisibilidade
+from log.models.log import Log
 from members.models.users import Users
 
 
@@ -26,5 +27,6 @@ def salva_configuracoes(request, user_id):
             config_visibilidade.save()
             return HttpResponse("Configuracao salva com sucesso!", status=200)
         except Exception as e:
+            Log.salva_log(e)
             return HttpResponse("Falha ao salvar as configurações de visibilidade!", status=400)
         

@@ -3,6 +3,7 @@ from django.shortcuts import redirect, render
 from django.contrib.auth.decorators import user_passes_test
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
 
+from log.models.log import Log
 from members.models.profile import Profile
 from members.models.profile_pendencia import ProfilePendencia
 from members.models.users import Users
@@ -64,12 +65,15 @@ def editar_pontuacao(request, user_id: int):
         profile = Profile.get_or_create_profile(user)
         return render(request, 'editar_pontuacao.html', {'profile': profile, 'usuario': user})
     if request.method == 'POST':
-        pontuacao = request.POST.get('pontos', 0)
-        user = Users.objects.get(id=user_id)
-        profile = Profile.get_or_create_profile(user)
-        LogRating.add_log_rating(profile, int(pontuacao), user.id)
-        if profile.nivel.lower() != NivelChoices.GUARDIAN and len(ProfilePendencia.get_pendencias(profile)) == 0 and profile.is_next_level():                
-            profile.change_level()
-        profile.pontuacao += int(pontuacao)
-        profile.save()
-        return redirect('user_log_rating', username=user.username)
+        try:
+            pontuacao = request.POST.get('pontos', 0)
+            user = Users.objects.get(id=user_id)
+            profile = Profile.get_or_create_profile(user)
+            LogRating.add_log_rating(profile, int(pontuacao), user.id)
+            if profile.nivel.lower() != NivelChoices.GUARDIAN and len(ProfilePendencia.get_pendencias(profile)) == 0 and profile.is_next_level():                
+                profile.change_level()
+            profile.pontuacao += int(pontuacao)
+            profile.save()
+            return redirect('user_log_rating', username=user.username)
+        except Exception as e:
+            Log.salva_log(e)

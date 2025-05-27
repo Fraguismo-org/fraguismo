@@ -3,6 +3,7 @@ from django.shortcuts import redirect, render
 from django.contrib.auth.decorators import user_passes_test, login_required
 from django.http import HttpResponse
 
+from log.models.log import Log
 from members.models.profile import Profile
 from members.models.profile_pendencia import ProfilePendencia
 from members.models.users import Users
@@ -59,11 +60,15 @@ def user_pending(request, username):
 @user_passes_test(lambda u: u.is_superuser)
 def add_pendencia(request):
     if request.method == "POST":
-        nivel = Nivel.objects.get(nivel=request.POST.get('select-nivel', None))
-        pendencia = Pendencia()
-        pendencia.nivel = nivel
-        pendencia.pendencia = request.POST.get('pendencia', None)
-        pendencia.save()
+        try:
+            nivel = Nivel.objects.get(nivel=request.POST.get('select-nivel', None))
+            pendencia = Pendencia()
+            pendencia.nivel = nivel
+            pendencia.pendencia = request.POST.get('pendencia', None)
+            pendencia.save()
+        except Exception as e:
+            Log.salva_log(e)
+        return redirect('add_pendencia')
     pendencias = Pendencia.objects.all()
     niveis = Nivel.objects.all()
     return render(
@@ -81,8 +86,11 @@ def remove_pendencia(request, id: int):
         pendencia = Pendencia.objects.get(id=id)
         return render(request, 'pendencias/remove_pendencia.html', {'pendencia': pendencia})
     if request.method == 'POST':
-        pendencia = Pendencia.objects.get(id=id)
-        pendencia.delete()
+        try:
+            pendencia = Pendencia.objects.get(id=id)
+            pendencia.delete()
+        except Exception as e:
+            Log.salva_log(e)
         return redirect('add_pendencia')
 
 
@@ -96,13 +104,16 @@ def edita_pendencia(request, id: int):
             'pendencia': pendencia,
         })
     if request.method == 'POST':
-        nivel_id = request.POST.get('select-nivel', '1')
-        pendencia_nome = request.POST.get('pendencia', '')
-        pendencia = Pendencia.objects.get(id=id)
-        nivel = Nivel.objects.get(id=nivel_id)
-        pendencia.pendencia = pendencia_nome
-        pendencia.nivel = nivel
-        pendencia.save()
+        try:
+            nivel_id = request.POST.get('select-nivel', '1')
+            pendencia_nome = request.POST.get('pendencia', '')
+            pendencia = Pendencia.objects.get(id=id)
+            nivel = Nivel.objects.get(id=nivel_id)
+            pendencia.pendencia = pendencia_nome
+            pendencia.nivel = nivel
+            pendencia.save()
+        except Exception as e:
+            Log.salva_log(e)
         return redirect('add_pendencia')
     
     
@@ -116,13 +127,17 @@ def add_pendencia_usuario(request, id: int):
             'usuario': usuario,
         })
     if request.method == 'POST':
-        usuario = request.POST.get('usuario', None)
-        pendencia_id = request.POST.get('select-pendencia', None)
-        usuario = Users.objects.get(username=usuario)
-        pendencia = Pendencia.objects.get(id=pendencia_id)
-        profile = Profile.get_or_create_profile(usuario)
-        ProfilePendencia.add_pendencias(profile, [pendencia])
-        return redirect('user_pending', username=usuario.username)
+        try:
+            usuario = request.POST.get('usuario', None)
+            pendencia_id = request.POST.get('select-pendencia', None)
+            usuario = Users.objects.get(username=usuario)
+            pendencia = Pendencia.objects.get(id=pendencia_id)
+            profile = Profile.get_or_create_profile(usuario)
+            ProfilePendencia.add_pendencias(profile, [pendencia])
+            return redirect('user_pending', username=usuario.username)
+        except Exception as e:
+            Log.salva_log(e)
+        return redirect('add_pendencia')
     
 
 @user_passes_test(lambda u: u.is_superuser)
@@ -133,6 +148,7 @@ def finaliza_pendencia_usuario(request, profile_pendencia_id: int):
             ProfilePendencia.update_pendencia_status(2, profile_pendencia)
             return HttpResponse('Pendência finalizada com sucesso.', status=200)
         except Exception as e:
+            Log.salva_log(e)
             return HttpResponse('Erro ao finalizar pendência.', status=500)
     return HttpResponse('Método não suportado.', status=403)
     
@@ -145,6 +161,7 @@ def remove_pendencia_usuario(request, profile_pendencia_id: int):
             profile_pendencia.delete()
             return HttpResponse('Pendência removida com sucesso.', status=200)
         except Exception as e:
+            Log.salva_log(e)
             return HttpResponse('Erro ao remover pendência.', status=500)
     return HttpResponse('Método não suportado.', status=403)
     

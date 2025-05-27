@@ -3,6 +3,7 @@ from django.shortcuts import redirect, render
 from django.contrib.auth.decorators import user_passes_test, login_required
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
 
+from log.models.log import Log
 from members.models.profile import Profile
 from members.models.profile_pendencia import ProfilePendencia
 from members.models.users import Users
@@ -81,24 +82,27 @@ def user_log_rating(request, username=None):
 @user_passes_test(lambda u: u.is_superuser)
 def add_rating_point(request):
     if request.method == 'POST':
-        ids = request.POST.getlist('usuarios[]')
-        atividade_id = request.POST.get('select-atividade')
-        pontuacao = request.POST.get('pontuacao')
-        
-        if pontuacao == None:
-            atividade = Atividade.objects.get(id=atividade_id)
-            pontuacao = str(atividade.pontuacao)
-        
-        if not str.isdigit(pontuacao) and pontuacao == '0':
-            messages.warning(request, 'Adicione uma pontuação válida!')
+        try: 
+            ids = request.POST.getlist('usuarios[]')
+            atividade_id = request.POST.get('select-atividade')
+            pontuacao = request.POST.get('pontuacao')
             
-        for id in ids:     
-            profile = Profile.objects.get(user_id=id)                               
-            LogRating.add_log_rating(profile, int(pontuacao), request.user.id, atividade)
-            if profile.nivel.lower() != NivelChoices.GUARDIAN and len(ProfilePendencia.get_pendencias(profile)) == 0 and profile.is_next_level():                
-                profile.change_level()
-            profile.pontuacao += int(pontuacao)
-            profile.save()
+            if pontuacao == None:
+                atividade = Atividade.objects.get(id=atividade_id)
+                pontuacao = str(atividade.pontuacao)
+            
+            if not str.isdigit(pontuacao) and pontuacao == '0':
+                messages.warning(request, 'Adicione uma pontuação válida!')
+                
+            for id in ids:     
+                profile = Profile.objects.get(user_id=id)                               
+                LogRating.add_log_rating(profile, int(pontuacao), request.user.id, atividade)
+                if profile.nivel.lower() != NivelChoices.GUARDIAN and len(ProfilePendencia.get_pendencias(profile)) == 0 and profile.is_next_level():                
+                    profile.change_level()
+                profile.pontuacao += int(pontuacao)
+                profile.save()
+        except Exception as e:
+            Log.salva_log(e)
             
         return redirect('logs')
     query = request.GET.get("busca")    
@@ -106,11 +110,13 @@ def add_rating_point(request):
     paginas = Paginator(profiles_list, 25)
     try:
         page = int(request.GET.get('page', '1'))
-    except ValueError:
+    except ValueError as e:
+        Log.salva_log(e)
         page = 1
     try:
         profiles = paginas.page(page)
-    except (EmptyPage, InvalidPage):
+    except (EmptyPage, InvalidPage) as e:
+        Log.salva_log(e)
         profiles = paginas.page(paginas.num_pages)
     atividades = Atividade.objects.all()
     return render(

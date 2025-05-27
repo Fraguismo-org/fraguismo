@@ -1,6 +1,7 @@
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.template import loader
+from log.models.log import Log
 from site_fraguismo.models import Mensagem
 
 
@@ -18,12 +19,15 @@ def sobre_nos(request):
 
 def contato(request):
     if request.method  == 'POST':
-        mensagem = Mensagem()
-        mensagem.nome = request.POST.get('nome')
-        mensagem.email = request.POST.get('email')
-        mensagem.assunto = request.POST.get('assunto')
-        mensagem.mensagem = request.POST.get('mensagem')
-        mensagem.save()
+        try:
+            mensagem = Mensagem()
+            mensagem.nome = request.POST.get('nome')
+            mensagem.email = request.POST.get('email')
+            mensagem.assunto = request.POST.get('assunto')
+            mensagem.mensagem = request.POST.get('mensagem')
+            mensagem.save()
+        except Exception as e:
+            Log.salva_log(e)
         return redirect('index')
     return render(request, 'contato.html')
 

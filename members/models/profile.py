@@ -1,4 +1,5 @@
 from django.db import models
+from log.models.log import Log
 from rating.models.nivel import Nivel
 from rating.models.nivel_choices import NIVEL_CHOICES
 from members.models.squad_choices import SQUAD_CHOICES
@@ -25,7 +26,8 @@ class Profile(models.Model):
             if profile.nivel_id is None:
                 profile.nivel_id = Nivel.objects.get(nivel=profile.nivel)
             return profile
-        except:
+        except Exception as e:
+            Log.salva_log(e)
             profile = Profile()
             profile.user = user_request
             profile.nivel_id = Nivel.objects.get(id=1)
