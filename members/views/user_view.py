@@ -4,6 +4,7 @@ from PIL import Image, ImageOps
 from django.shortcuts import render, redirect
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
 
+from log.models.log import Log
 from members.models.profile import Profile
 from members.models.users import Users
 from members.query.profiles_query import ProfilesQuery
@@ -71,18 +72,21 @@ def user_page(request):
 
 @login_required(login_url='login')
 def lista_usuarios(request):
-    query = request.GET.get("busca")
-    lista_perfil = ProfilesQuery.get_profiles_by_query(query)
-    for perfil in lista_perfil:
-        print(perfil.user.fone)
-    
-    paginas = Paginator(lista_perfil, 25)
     try:
-        page = int(request.GET.get('page', '1'))
-    except ValueError:
-        page = 1
-    try:
-        perfis = paginas.page(page)
-    except (EmptyPage, InvalidPage):
-        perfis = paginas.page(paginas.num_pages)    
-    return render(request, 'members/lista_usuarios.html', {'profiles': perfis,})
+        query = request.GET.get("busca")
+        lista_perfil = ProfilesQuery.get_profiles_by_query(query)
+        for perfil in lista_perfil:
+            print(perfil.user.fone)
+        
+        paginas = Paginator(lista_perfil, 25)
+        try:
+            page = int(request.GET.get('page', '1'))
+        except ValueError:
+            page = 1
+        try:
+            perfis = paginas.page(page)
+        except (EmptyPage, InvalidPage):
+            perfis = paginas.page(paginas.num_pages)    
+        return render(request, 'members/lista_usuarios.html', {'profiles': perfis,})
+    except Exception as e:
+        Log.salva_log(e)
