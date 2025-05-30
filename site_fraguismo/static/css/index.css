@@ -525,6 +525,7 @@ button:hover {
         margin: 15px 0;
     } 
 }
+
 @media (max-width: 587px) {
     .content-curso {
         left: 50%;

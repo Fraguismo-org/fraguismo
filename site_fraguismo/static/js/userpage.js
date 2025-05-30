@@ -1,3 +1,6 @@
+import { Validation } from "./utils/validation.js";
+
+
 document.addEventListener('DOMContentLoaded', function () {
     const picProfile = document.getElementById('pic_profile');
     const isFraguista = document.getElementById('fraguista');
@@ -101,136 +104,90 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function validaEmail(){
-        document.getElementById('validation-email').style.display = 'none';
-        const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-        if (regex.test(email.value)) {
-            return true;
-        }
-
-        document.getElementById('validation-email').style.display = 'inline';
-        return false;
-    }
-
-    function validaPassword(){
-        let result = true;
-        if (senha.value.length < 8) {
-            passLength.style.color = 'red';
-            result =  result && false;
-        } else {
-            passLength.style.color = 'green';
-            result =  result && true;
-        }
-    
-        if (/^\d+$/.test(senha.value)) {
-            passNumeric.style.color = 'red';
-            result =  result && false;
-        } else {
-            passNumeric.style.color = 'green';
-            result =  result && true;
-        }
-    
-        if (!/[A-Za-z]/.test(senha.value) || !/\d/.test(senha.value)) {
-            passAlphnumeric.style.color = 'red';
-            result = result && false;
-        } else {
-            passAlphnumeric.style.color = 'green';
-            result =  result && true
-        }
-    
-        if (senha.value !== senha2.value) {
-            passEqual.style.color = 'red';
-            result =  result && false;
-        } else {
-            passEqual.style.color = 'green';
-            result =  result && true;
-        }
-
-        return result;
+        const emailValidation = Validation.validaEmail(email.value);        
+        
+        emailValidation 
+            ? document.getElementById('validation-email').style.display = 'none' 
+            : document.getElementById('validation-email').style.display = 'inline';
+        
+        return emailValidation;
     }
     
     function validaNome(){
-        document.getElementById("validation-nome").style.display = 'none';
-        if (nome.value !== '') {
-            return true;
-        };
-
-        document.getElementById("validation-nome").style.display = 'inline';
-        return false;
+        const nomeValidation = Validation.validaNome(nome.value);
+        
+        nomeValidation 
+            ? document.getElementById("validation-nome").style.display = 'none' 
+            : document.getElementById("validation-nome").style.display = 'inline';
+        
+        return nomeValidation;
     }
 
     function validaSobrenome(){
-        document.getElementById("validation-sobrenome").style.display = 'none';
-        if (sobreNome.value !== '') {
-            return true;
-        };
-
-        document.getElementById("validation-sobrenome").style.display = 'inline';
-        return false;
+        const sobrenomeValidation = Validation.validaSobrenome(sobreNome.value);
+        
+        sobrenomeValidation 
+            ? document.getElementById("validation-sobrenome").style.display = 'none' 
+            : document.getElementById("validation-sobrenome").style.display = 'inline';
+        
+        return sobrenomeValidation;
     }
     
     function validaLocalidade() {
-        document.getElementById("validation-city").style.display = 'none';
-        if (localidade.value !== '') {
-            return true;
-        };
-
-        document.getElementById("validation-city").style.display = 'inline';
-        return false;
+        const localidadeValidation = Validation.validaLocalidade(localidade.value);        
+        
+        localidadeValidation 
+            ? document.getElementById("validation-city").style.display = 'none' 
+            : document.getElementById("validation-city").style.display = 'inline';
+        
+        return localidadeValidation;
     }
 
     function validaPhone(){
-        document.getElementById("validation-phone").style.display = 'none';
-        const regex = /^(\+?\d{1,3})[\s.-](\(?\d{2,4}\)?)[\s.-](\d{1,4})[\s.-](\d{2,5})[\s.-]?(\d{4})?/;
-        if (regex.test(phone.value)) {
-            return true;
-        }
-
-        document.getElementById("validation-phone").style.display = 'inline';
-        return false;
+        const phoneValidation = Validation.validaPhone(phone.value);        
+        
+        phoneValidation 
+            ? document.getElementById("validation-phone").style.display = 'none' 
+            : document.getElementById("validation-phone").style.display = 'inline';
+        
+        return phoneValidation;
     }
     
     function validaInstagram(){
-        document.getElementById("validation-instagram").style.display = 'none';
-        const regex = /^[a-zA-Z0-9._]{1,30}$/;
-        if (regex.test(instagram.value) || instagram.value === '') {
-            return true;
-        }
+        const instagramValidation = Validation.validaInstagram(instagram.value);        
 
-        document.getElementById("validation-instagram").style.display = 'inline';
-        return false;
+        instagramValidation 
+            ? document.getElementById("validation-instagram").style.display = 'none' 
+            : document.getElementById("validation-instagram").style.display = 'inline';
+        
+        return instagramValidation;
     }
 
     function validaBirth(){
-        document.getElementById("validation-birth").style.display = 'none';
-        const nascimento = new Date(birth.value);
-        const dataAtual = new Date();
-        const dataMinima = new Date();
-        dataMinima.setFullYear(dataAtual.getFullYear() - 13);
+        const birthValidation = Validation.validaBirth(birth.value);        
+
+        birthValidation 
+            ? document.getElementById("validation-birth").style.display = 'none' 
+             : document.getElementById("validation-birth").style.display = 'inline';
         
-        if (nascimento <= dataMinima) {
-            return true;
-        }
-
-        document.getElementById("validation-birth").style.display = 'inline';
-        return false;
-
+        return birthValidation;
     }
 
     function validaJobTitle(){
-        document.getElementById("validation-jobtitle").style.display = 'none';
-        if (jobTitle.value !== '') {
-            return true;
-        }
-
-        document.getElementById("validation-jobtitle").style.display = 'inline';
-        return false;
+        const jobTitleValidation = Validation.validaJobTitle(jobTitle.value);
+                
+        jobTitleValidation 
+            ? document.getElementById("validation-jobtitle").style.display = 'none' 
+            : document.getElementById("validation-jobtitle").style.display = 'inline';
+        
+        return jobTitleValidation;
     }
 
-    function validaCodigoConduta() {
-        document.getElementById("validation-codigo_conduta").style.display = 'none';
-        if (! chkCodigoConduta.checked) {
-            document.getElementById("validation-codigo_conduta").style.display = 'inline';
-        }
+    function validaCodigoConduta() {               
+        chkCodigoConduta.checked 
+            ? document.getElementById("validation-codigo_conduta").style.display = 'none' 
+            : document.getElementById("validation-codigo_conduta").style.display = 'inline';
+        
         return chkCodigoConduta.checked
     }
     

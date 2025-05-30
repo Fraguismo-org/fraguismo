@@ -18,7 +18,7 @@ class ProfileAdmin(admin.ModelAdmin):
             'guardiao': 40,
         }
         
-        pontos_proximo_nivel = niveis.get(nivel_atual)  # 40 é o máximo para diretor
+        pontos_proximo_nivel = niveis.get(nivel_atual)
         if pontos_atual is None or pontos_proximo_nivel is None:
             return 0
         
