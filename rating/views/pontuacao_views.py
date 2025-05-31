@@ -11,6 +11,7 @@ from members.query.users_query import UsersQuery
 from rating.models.atividade import Atividade
 from rating.models.log_rating import LogRating
 from rating.models.nivel_choices import NivelChoices
+from utils.paginator import pagina_lista
 
 
 @user_passes_test(lambda u: u.is_superuser)
@@ -38,15 +39,8 @@ def add_rating_point(request):
         return redirect('logs')
     query = request.GET.get("busca")    
     usuarios_list = UsersQuery.get_users_by_query(query)
-    paginas = Paginator(usuarios_list, 25)
-    try:
-        page = int(request.GET.get('page', '1'))
-    except ValueError:
-        page = 1
-    try:
-        usuarios = paginas.page(page)
-    except (EmptyPage, InvalidPage):
-        usuarios = paginas.page(paginas.num_pages)
+    usuarios = pagina_lista(request, usuarios_list, 25)
+    
     atividades = Atividade.objects.all()
     return render(
         request,
@@ -77,3 +71,4 @@ def editar_pontuacao(request, user_id: int):
             return redirect('user_log_rating', username=user.username)
         except Exception as e:
             Log.salva_log(e)
+            return redirect('user_log_rating', username=user.username)

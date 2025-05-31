@@ -1,7 +1,6 @@
 from django.contrib import messages
 from django.shortcuts import redirect, render
 from django.contrib.auth.decorators import user_passes_test, login_required
-from django.core.paginator import Paginator, InvalidPage, EmptyPage
 
 from log.models.log import Log
 from members.models.profile import Profile
@@ -14,6 +13,7 @@ from rating.models.log_rating import LogRating
 from rating.models.nivel import Nivel
 from rating.models.nivel_choices import NivelChoices
 from rating.query.log_rating_query import LogRatingQuery
+from utils.paginator import pagina_lista
 
 
 @user_passes_test(lambda u: u.is_superuser)
@@ -24,15 +24,8 @@ def log_rating(request):
         logs = LogRatingQuery.get_log_rating_by_query(query, usuarios_list)
     else:
         logs = LogRating.objects.all().order_by("-updated_at")
-    paginas = Paginator(logs, 25)
-    try:
-        page = int(request.GET.get('page', '1'))
-    except ValueError:
-        page = 1
-    try:
-        logs = paginas.page(page)
-    except (EmptyPage, InvalidPage):
-        logs = paginas.page(paginas.num_pages)
+    logs = pagina_lista(request, logs, 25)
+    
     return render(request, 'log_rating.html', {'logs': logs})
 
 
@@ -58,15 +51,7 @@ def user_log_rating(request, username=None):
     if data_final:
         logs = logs.filter(updated_at__lte=data_final)
         
-    paginas = Paginator(logs, 25)
-    try:
-        page = int(request.GET.get('page', '1'))
-    except ValueError:
-        page = 1
-    try:
-        logs = paginas.page(page)
-    except (EmptyPage, InvalidPage):
-        logs = paginas.page(paginas.num_pages)
+    logs = pagina_lista(request, logs, 25)
 
     return render(
         request,
@@ -105,19 +90,10 @@ def add_rating_point(request):
             Log.salva_log(e)
             
         return redirect('logs')
-    query = request.GET.get("busca")    
+    query = request.GET.get("busca")
     profiles_list = ProfilesQuery.get_profiles_by_query(query)
-    paginas = Paginator(profiles_list, 25)
-    try:
-        page = int(request.GET.get('page', '1'))
-    except ValueError as e:
-        Log.salva_log(e)
-        page = 1
-    try:
-        profiles = paginas.page(page)
-    except (EmptyPage, InvalidPage) as e:
-        Log.salva_log(e)
-        profiles = paginas.page(paginas.num_pages)
+    profiles = pagina_lista(request, profiles_list, 25)
+    
     atividades = Atividade.objects.all()
     return render(
         request,

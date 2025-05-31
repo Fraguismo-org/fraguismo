@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.core.paginator import Paginator
-from django.db.models import Q  # Import necessário para busca avançada
+from django.db.models import Q  
 from marketplace.models.anuncio import Anuncio
 from marketplace.forms.anuncio_form import AnuncioForm
 from marketplace.models.image import Images
@@ -27,24 +27,20 @@ DEPARTAMENTOS = [
 ]
 
 def home(request):
-    departamento = request.GET.get('departamento')  # Obtém o departamento selecionado
-    localidade = request.GET.get('localidade')  # Obtém a localidade selecionada
-    ordernar = request.GET.get('ordernar')  # Obtém o critério de ordenação
-    busca = request.GET.get('q')  # Obtém o texto do campo de busca
-    page = request.GET.get('page', 1)  # Obtém o número da página atual
+    departamento = request.GET.get('departamento')  
+    localidade = request.GET.get('localidade')  
+    ordernar = request.GET.get('ordernar')  
+    busca = request.GET.get('q')  
+    page = request.GET.get('page', 1)  
 
-    # Base queryset
     anuncios = Anuncio.objects.all()
-
-    # Filtrar por departamento se válido
+    
     if departamento and departamento.isdigit():
         anuncios = anuncios.filter(departamento=int(departamento))
-
-    # Filtrar por localidade se válido
+    
     if localidade and localidade != 'None':
         anuncios = anuncios.filter(localidade=localidade)
-
-    # Filtrar por texto de busca no título, descrição ou localidade
+    
     if busca:
         anuncios = anuncios.filter(
             Q(titulo__icontains=busca) |
@@ -52,7 +48,6 @@ def home(request):
             Q(localidade__icontains=busca)
         )
 
-    # Ordenação
     if ordernar == 'data_asc':
         anuncios = anuncios.order_by('-created_at')
     elif ordernar == 'data_desc':
@@ -62,21 +57,19 @@ def home(request):
     elif ordernar == 'preco_desc':
         anuncios = anuncios.order_by('-preco')
 
-    # Paginação
-    paginator = Paginator(anuncios, 6)  # Mostra 6 anúncios por página
+    paginator = Paginator(anuncios, 6)  
     anuncios_paginados = paginator.get_page(page)
-
-    # Obter localidades únicas para o filtro
+    
     localidades = Anuncio.objects.values_list('localidade', flat=True).distinct()
 
     return render(request, 'home.html', {
-        'anuncios': anuncios_paginados,  # Use os anúncios paginados
+        'anuncios': anuncios_paginados,  
         'DEPARTAMENTOS': DEPARTAMENTOS,
-        'localidades': localidades,  # Passar as localidades para o template
-        'selected_department': departamento,  # Passar o departamento selecionado
-        'selected_localidade': localidade,  # Passar a localidade selecionada
-        'selected_order': ordernar,  # Passar a ordenação selecionada
-        'search_query': busca,  # Passar o texto de busca para o template
+        'localidades': localidades,  
+        'selected_department': departamento,  
+        'selected_localidade': localidade,  
+        'selected_order': ordernar,  
+        'search_query': busca,  
     })
 
 @login_required

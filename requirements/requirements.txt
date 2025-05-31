@@ -10,3 +10,4 @@ python-decouple==3.8
 python-dotenv==1.0.1
 soupsieve==2.5
 sqlparse==0.5.1
+tzdata==2025.2

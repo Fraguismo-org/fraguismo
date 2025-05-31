@@ -10,6 +10,7 @@ from members.models.users import Users
 from members.query.profiles_query import ProfilesQuery
 from members.query.users_query import UsersQuery
 from rating.models.nivel import Nivel
+from utils.paginator import pagina_lista
 
 
 @login_required(login_url='login')
@@ -26,7 +27,7 @@ def user_page(request):
         member.email = request.POST.get('email', None)
         if not member.is_fraguista:
             member.is_fraguista = request.POST.get('fraguista', None) == 'on'
-        if (member.is_fraguista):
+        if member.is_fraguista:
             member.first_name = request.POST.get('first_name', None)
             member.last_name = request.POST.get('last_name', None)        
             member.birth = request.POST.get('birth', None)
@@ -72,21 +73,14 @@ def user_page(request):
 
 @login_required(login_url='login')
 def lista_usuarios(request):
+    perfis = None
     try:
         query = request.GET.get("busca")
         lista_perfil = ProfilesQuery.get_profiles_by_query(query)
-        for perfil in lista_perfil:
-            print(perfil.user.fone)
-        
-        paginas = Paginator(lista_perfil, 25)
-        try:
-            page = int(request.GET.get('page', '1'))
-        except ValueError:
-            page = 1
-        try:
-            perfis = paginas.page(page)
-        except (EmptyPage, InvalidPage):
-            perfis = paginas.page(paginas.num_pages)    
-        return render(request, 'members/lista_usuarios.html', {'profiles': perfis,})
+        perfis = pagina_lista(request=request, lista=lista_perfil, paginas=25)        
     except Exception as e:
         Log.salva_log(e)
+        lista = Profile.objects.all()
+        perfis = pagina_lista(request, lista, 25)        
+    finally:
+        return render(request, 'members/lista_usuarios.html', {'profiles': perfis,})
