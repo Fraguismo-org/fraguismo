@@ -14,9 +14,9 @@ class Users(User):
     lightning_wallet = models.CharField(max_length=400, blank=True)
     como_conheceu = models.CharField(max_length=20, blank=True)
     quem_indicou = models.CharField(max_length=100, blank=True)
-    aonde = models.CharField(max_length=100)
+    aonde = models.CharField(max_length=100)    
     codigo_conduta = models.BooleanField(null=True)
-
+    
     def clone(self, user: User):
         self.user_ptr = user
         self.username = user.username

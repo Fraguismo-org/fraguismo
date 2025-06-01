@@ -1,0 +1,38 @@
+<table class="table table-hover table-striped table-responsive">
+    <thead>
+        <th>Usuário</th>
+        <th>Pontução Atual</th>
+        <th>Pontuação Anterior</th>
+        <th>Pontuação Ganha</th>
+        <th>Atividade</th>
+        <th>Data</th>
+    </thead>
+    <tbody>
+        {% for log in logs %}
+        <tr>
+            <td>{{ log.user_id }}</td>
+            <td>{{ log.pontuacao|add:log.pontuacao_ganha }}</td>
+            <td>{{ log.pontuacao }}</td>
+            <td>{{ log.pontuacao_ganha}}
+            <td>{{ log.atividade.nome_atividade }}</td>
+            <td>{{ log.updated_at }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<div class="pagination">
+    <span class="step-links">
+        {% if logs.has_previous %}
+        <a href="?page=1"><i class="bi bi-caret-left-square-fill"></i></a>
+        <a href="?page={{ logs.previous_page_number }}"><i class="bi bi-caret-left-fill"></i></a>
+        {% endif %}
+        <span class="current">
+            Página {{ logs.number }} de {{ logs.paginator.num_pages }}
+        </span>
+
+        {% if logs.has_next %}
+        <a href="?page={{ logs.next_page_number }}"><i class="bi bi-caret-right-fill"></i></a>
+        <a href="?page={{ logs.paginator.num_pages }}"><i class="bi bi-caret-right-square-fill"></i></a>
+        {% endif %}
+    </span>
+</div>

@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% load static %}
+<div class="shadow p-4 mb-5 bg-body rounded">
+    <div class="text-center">
+        <h1>Lista de usuários</h1>
+    </div>
+    <br>
+    <br>
+    <div class="consulta">
+        <form method="GET" action="{% url 'lista_usuarios' %}">
+            <div class="row">
+                <div class="col">
+                    <input class="form-control" type="text" name="busca" placeholder="Pesquisar usuário">
+                </div>
+                <div class="col">
+                    <button class="btn btn-primary" type="submit"><i class="bi bi-search"></i></button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <br>    
+    {% include 'partials/member_table.html' with profiles=profiles%}
+</div>
+{% endblock %}

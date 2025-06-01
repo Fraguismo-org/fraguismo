@@ -11,14 +11,14 @@ class ProfileAdmin(admin.ModelAdmin):
         nivel_atual = profile.nivel
         
         niveis = {
-            'membro': 5,
-            'assessor': 15,
-            'lider': 30,
-            'executivo': 40,
-            'diretor': 40
+            'aprendiz': 5,
+            'escudeiro': 15,
+            'cavaleiro': 30,
+            'conselheiro': 40,
+            'guardiao': 40,
         }
         
-        pontos_proximo_nivel = niveis.get(nivel_atual)  # 40 é o máximo para diretor
+        pontos_proximo_nivel = niveis.get(nivel_atual)
         if pontos_atual is None or pontos_proximo_nivel is None:
             return 0
         

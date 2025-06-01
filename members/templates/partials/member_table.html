@@ -1,0 +1,66 @@
+<table class="table table-hover table-responsive">
+    <colgroup>
+        <col style="width: 8%;">
+        <col style="width: 12%;">
+        <col style="width: 30%;">
+        <col style="width: 30%;">
+        <col style="width: 20%;">
+    </colgroup>
+    <thead>
+        <th><input type="checkbox" name="select_all" id="select_all"> </th>
+        <th>Username</th>
+        {% if user.is_superuser %}
+        <th>Nome</th>
+        <th>Email</th>
+        <th>Telefone</th>
+        {% endif %}
+        <th>Nível</th>
+    </thead>
+    <tbody>
+        {% for profile in profiles %}
+        {% if profile.user and profile.user.username %}
+        <tr>
+            <td>
+                <input type="checkbox" id="usuarios[]" name="usuarios[]" value="{{ usuario.id }}">
+            </td>
+            <td>
+                <a href="{% url 'profile' username=profile.user.username %}">{{ profile.user.username }}
+            </td>
+            {% if user.is_superuser %}
+            <td>
+                {{ profile.user.first_name|add:' '|add:profile.user.last_name }}
+            </td>
+            <td>
+                {{ profile.user.email }}
+                <script>
+                    console.log('{{ profile.user.fone }}');
+                </script>
+            </td>
+            <td>
+                {{ profile.user.fone }}
+            </td>
+            {% endif %}
+            <td>
+                {{ profile.nivel }}
+            </td>
+        </tr>
+        {% endif %}
+        {% endfor %}
+    </tbody>
+</table>
+<div class="pagination">
+    <span class="step-links">
+        {% if profiles.has_previous %}
+        <a href="?page=1"><i class="bi bi-caret-left-square-fill"></i></a>
+        <a href="?page={{ profiles.previous_page_number }}"><i class="bi bi-caret-left-fill"></i></a>
+        {% endif %}
+        <span class="current">
+            Página {{ profiles.number }} de {{ profiles.paginator.num_pages }}
+        </span>
+
+        {% if profiles.has_next %}
+        <a href="?page={{ profiles.next_page_number }}"><i class="bi bi-caret-right-fill"></i></a>
+        <a href="?page={{ profiles.paginator.num_pages }}"><i class="bi bi-caret-right-square-fill"></i></a>
+        {% endif %}
+    </span>
+</div>

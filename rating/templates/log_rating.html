@@ -8,46 +8,14 @@
     </div>
     <form method="GET">
         <div class="row">
-            <div class="input-group" style="padding-bottom: 20px;">
-                <div class="col">
-                    <input type="text" class="form-control" name="busca" placeholder="Buscar usuário">
-                </div>
-                <select class="form-select" id="filter_field" name="filter_field" aria-label="Filtro">
-                    <option id="first_name" value="first_name">Nome</option>
-                    <option id="username" value="username">Usuário</option>
-                    <option id="email" value="email">E-mail</option>
-                </select>
-                <div class="row">
-                    <div class="col">
-                        <span class="input-group-btn">
-                            <button class="btn btn-success" type="submit"> Pesquisar</button>
-                        </span>
-                    </div>
-                </div>
+            <div class="col">
+                <input class="form-control" type="text" name="busca" placeholder="Pesquisar usuário">
+            </div>
+            <div class="col">
+                <button class="btn btn-primary" type="submit"><i class="bi bi-search"></i></button>
             </div>
         </div>
-        <table class="table">
-            <thead>
-                <th>Usuário</th>
-                <th>Pontução Atual</th>
-                <th>Pontuação Anterior</th>
-                <th>Pontuação Ganha</th>
-                <th>Atividade</th>
-                <th>Data</th>
-            </thead>
-            <tbody>
-                {% for log in logs %}
-                <tr>
-                    <td>{{ log.user_id }}</td>
-                    <td>{{ log.pontuacao|add:log.pontuacao_ganha }}</td>
-                    <td>{{ log.pontuacao }}</td>
-                    <td>{{ log.pontuacao_ganha}}
-                    <td>{{ log.atividade.nome_atividade }}</td>
-                    <td>{{ log.updated_at }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+        {% include "partials/log_table.html" with logs=logs %}
     </form>
     <div class="row text-end">
         <div class="col">

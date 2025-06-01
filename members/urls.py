@@ -1,5 +1,4 @@
-from django.urls import path
-from members import views
+from django.urls import path, include
 from django.contrib.auth.views import (
     LogoutView, 
     PasswordResetView, 
@@ -9,12 +8,10 @@ from django.contrib.auth.views import (
 )
 
 urlpatterns = [
-    path('login_user/', views.login_user, name='login'),
-    path('logout_user/', views.logout_user, name='logout'),
-    path('register_user/', views.register_user, name='register'),
-    path('user_page/', views.user_page, name='user_page'),
-    path('profile/<str:username>', views.profile, name='profile'),
-    path('comunidade/', views.comunidade, name='comunidade'),
+    path('', include('members.routes.auth_urls')),
+    path('', include('members.routes.user_urls')),
+    path('', include('members.routes.profile_urls')),
+    path('', include('members.routes.comunidade_urls')),    
     
     # URLs para redefinição de senha
     path('password-reset/', PasswordResetView.as_view(template_name='authenticate/password-reset.html'), name='password-reset'),

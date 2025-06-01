@@ -6,21 +6,30 @@
     <div class="row">
         <h1 class="text-center">Adicionar Certificados</h1>
     </div>
-    <form method="POST" class="col-md-8 mx-auto" enctype="multipart/form-data" style="padding-top: 20px;">
-        {% csrf_token %}
-        <div class="row">
-            <div class="col">
-                <label for="select-user" class="form-label">Usuários</label>
-                <select class="form-select" id="select-user" name="select-user" aria-label="Usuários">                    
-                    {% for user in users %}
-                    <option id="username" value="{{ user.id }}">{{ user.username }}</option>
-                    {% endfor %}
-                </select>
+    <br>
+    <br>
+    <div class="consulta">
+        <form method="GET" action="{% url 'add_certificados' %}">
+            <div class="row">
+                <div class="col">
+                    <input class="form-control" type="text" name="busca" placeholder="Pesquisar usuário">
+                </div>
+                <div class="col">
+                    <button class="btn btn-primary" type="submit"><i class="bi bi-search"></i></button>
+                </div>
             </div>
+        </form>
+    </div>   
+
+    <form method="POST" class="mx-auto" enctype="multipart/form-data" style="padding-top: 20px;">
+        {% csrf_token %}
+        {% include "partials/member_table.html" with profiles=profiles %}
+        <br>
+        <div class="row p-4 mb-5 bg-body rounded" style="border: 1px solid #000;">
             <div class="col">
                 <label for="certificado" class="form-label">Certificado</label>
                 <input type="text" class="form-control" id="certificado" name="certificado">
-            </div> 
+            </div>
             <div class="col">
                 <label for="select-status" class="form-label">Status</label>
                 <select class="form-select" id="select-status" name="select-status" aria-label="Status">
@@ -36,5 +45,7 @@
             </div>
         </div>
     </form>
+
+    <script src="{% static 'js/cursos/addCertificados.js' %}"></script>
 </div>
 {% endblock %}

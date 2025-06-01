@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.core.paginator import Paginator
-from django.db.models import Q  # Import necessário para busca avançada
+from django.db.models import Q  
 from marketplace.models.anuncio import Anuncio
 from marketplace.forms.anuncio_form import AnuncioForm
 from marketplace.models.image import Images
@@ -27,24 +27,20 @@ DEPARTAMENTOS = [
 ]
 
 def home(request):
-    departamento = request.GET.get('departamento')  # Obtém o departamento selecionado
-    localidade = request.GET.get('localidade')  # Obtém a localidade selecionada
-    ordernar = request.GET.get('ordernar')  # Obtém o critério de ordenação
-    busca = request.GET.get('q')  # Obtém o texto do campo de busca
-    page = request.GET.get('page', 1)  # Obtém o número da página atual
+    departamento = request.GET.get('departamento')  
+    localidade = request.GET.get('localidade')  
+    ordernar = request.GET.get('ordernar')  
+    busca = request.GET.get('q')  
+    page = request.GET.get('page', 1)  
 
-    # Base queryset
     anuncios = Anuncio.objects.all()
-
-    # Filtrar por departamento se válido
+    
     if departamento and departamento.isdigit():
         anuncios = anuncios.filter(departamento=int(departamento))
-
-    # Filtrar por localidade se válido
+    
     if localidade and localidade != 'None':
         anuncios = anuncios.filter(localidade=localidade)
-
-    # Filtrar por texto de busca no título, descrição ou localidade
+    
     if busca:
         anuncios = anuncios.filter(
             Q(titulo__icontains=busca) |
@@ -52,7 +48,6 @@ def home(request):
             Q(localidade__icontains=busca)
         )
 
-    # Ordenação
     if ordernar == 'data_asc':
         anuncios = anuncios.order_by('-created_at')
     elif ordernar == 'data_desc':
@@ -62,21 +57,19 @@ def home(request):
     elif ordernar == 'preco_desc':
         anuncios = anuncios.order_by('-preco')
 
-    # Paginação
-    paginator = Paginator(anuncios, 6)  # Mostra 6 anúncios por página
+    paginator = Paginator(anuncios, 6)  
     anuncios_paginados = paginator.get_page(page)
-
-    # Obter localidades únicas para o filtro
+    
     localidades = Anuncio.objects.values_list('localidade', flat=True).distinct()
 
     return render(request, 'home.html', {
-        'anuncios': anuncios_paginados,  # Use os anúncios paginados
+        'anuncios': anuncios_paginados,  
         'DEPARTAMENTOS': DEPARTAMENTOS,
-        'localidades': localidades,  # Passar as localidades para o template
-        'selected_department': departamento,  # Passar o departamento selecionado
-        'selected_localidade': localidade,  # Passar a localidade selecionada
-        'selected_order': ordernar,  # Passar a ordenação selecionada
-        'search_query': busca,  # Passar o texto de busca para o template
+        'localidades': localidades,  
+        'selected_department': departamento,  
+        'selected_localidade': localidade,  
+        'selected_order': ordernar,  
+        'search_query': busca,  
     })
 
 @login_required
@@ -86,6 +79,8 @@ def listar_anuncios(request):
 
 @login_required(login_url='login')
 def cadastrar_anuncio(request):
+    anuncio_form = None
+    imagem_form = None
     if request.method == 'POST':
         anuncio_form = AnuncioForm(request.POST)
         imagem_form = ImagesForm(request.POST)
@@ -94,17 +89,24 @@ def cadastrar_anuncio(request):
             anuncio.user = request.user
             anuncio.save()
             if request.FILES:
-                for image in request.FILES.getlist('images'):
-                    img = Images(image=image, anuncio=anuncio)
+                id = 1
+                for imagem in request.FILES.getlist('images'):
+                    imagem.name = str(anuncio.cod_anuncio) + str(id) + ".jpg"
+                    id += 1
+                    img = Images(image=imagem, anuncio=anuncio)
+                    rate = img.height/1000 if img.height > img.width else img.width/1000
+                    if img.height > 1000 or img.width > 1000:
+                        output_size = (img.width/rate, img.height/rate)
+                        img.thumbnail(output_size)
                     img.save()
             messages.success(request, "Anúncio cadastrado com sucesso!")
             return redirect('listar_anuncios')
     else:
         anuncio_form = AnuncioForm()
-        images_form = ImagesForm()
+        imagem_form = ImagesForm()
     return render(request, "anuncio/cadastrar.html", {
         'anuncio_form': anuncio_form, 
-        'images_form': images_form
+        'images_form': imagem_form
     })
 
 @login_required

@@ -28,6 +28,10 @@ INSTALLED_APPS = [
     'administrador',
     'cursos',
     'marketplace',
+    'services',
+    'configuracoes',
+    'log',
+    'utils',
 ]
 
 MIDDLEWARE = [
