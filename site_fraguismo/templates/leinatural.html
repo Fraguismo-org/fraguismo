@@ -6,6 +6,70 @@
 <link rel="stylesheet" href="{% static '/css/triadefraguista.css' %}"/>
 <link rel="stylesheet" href="{% static '/css/components.css' %}"/>
 
+<style>
+/* Estilos únicos da página lei natural*/
+    .container-vpl {
+        width: 100vw;
+        position: relative;
+        left: 50%;
+        right: 50%;
+        margin-left: -50vw;
+        margin-right: -50vw;
+    }
+    
+    @media (min-width: 400px) {
+        .img-side {
+            height: 700px;
+        }
+        .content-law {
+            padding: 0 15%;
+        }
+        .content-law p {
+            padding: 0 1%;
+        }
+    }
+
+    @media (min-width: 1700px) {
+        .img-side {
+            height: 730px;
+        }
+        .content-law {
+            padding: 0 10%;
+        }
+        .content-law p {
+            padding: 0;
+        }
+    }
+
+    @media (min-width: 1900px) {
+        .img-side {
+            height: 880px;
+        }
+    }
+
+    @media (max-width: 767px) {
+        .bg-img, .bg-img-2 {
+            display: none;
+        }
+        .content-law, .content-law p {
+            padding: 0 0;
+        }
+    }
+
+    @media (min-width: 300px) {
+        .CT-title {
+            margin-bottom: 3%;
+        }
+    }
+
+    @media (min-width: 1024px) {
+        .CT-title {
+            margin-bottom: 2%;
+        }
+    }
+</style>
+
+
 <section class="apresentation apresentation-LN">
     <div class="container head-title">
         <h1>
@@ -27,12 +91,14 @@
 <section class="leis mt-5 mb-5 hidden-on-scroll">
     <div class="container d-flex align-items-center justify-content-center flex-column position-relative">
         <div class="bg-img">
-            <img src="{% static '/images/plantas.webp' %}" alt="balança" width="600" height="500" class="img-fluid img-side" style="height: 500px;"/>
+            <img src="{% static '/images/plantas.webp' %}" alt="plantas" width="575" class="img-fluid img-side"/>
         </div>
         <div class="bg-img-2">
-            <img src="{% static '/images/gavel.webp' %}" alt="balança" width="600" height="500" class="img-fluid img-side" style="height: 500px;"/>
+            <img src="{% static '/images/gavel.png' %}" alt="Gavel" width="575" class="img-fluid img-side"/>
         </div>
-        <h1 style="font-size: clamp(1.2rem, 3vw, 3rem);">Lei Natural vs Lei Positiva</h1>
+        <h1 style="font-size: clamp(1.7rem, 3vw, 3rem);">
+            Lei Natural vs Lei Positivada
+        </h1>
         <div class="blackline" style="width: 70%; background-color: black; height: 3px; border-radius: 100%; margin-top: 2%; margin-bottom: 2%;"></div>
         <div class="content-law">
             <p>
@@ -49,25 +115,65 @@
                 </figcaption>
             </figure>
             <p>
-                A principal diferença entre a Lei Natural e a Lei Positiva está no fato de que o <strong>Direito Natural defende que certos direitos são inalienáveis e
-                independem da legislação estatal</strong>, enquanto o <strong>Direito Positivado considera que os direitos existem apenas se forem reconhecidos e regulamentados pelo Estado. </strong>
-                Isso levanta questões sobre a legitimidade de leis que contrariam princípios naturais, 
-                como aconteceu ao longo da história, quando regimes democráticos ou ditatoriais aprovaram normas discriminatórias ou injustas.
+               A principal diferença entre a Lei Natural e a Lei Positiva está no fato de que o <strong>Direito Natural defende que certos
+                direitos são inalienáveis e independem da legislação estatal,</strong> enquanto o <strong>Direito Positivado considera que os direitos 
+                existem apenas se forem reconhecidos e regulamentados pelo Estado. </strong>
+            </p>
+            <p>
+                A Lei Natural é auto evidente e é uma lei negativa, ou seja para seguir ela basta não agir. Ex: não roube, não mate… 
+            </p>
+            <p>
+                Já a Lei Positivada são direitos de segunda geração, que exigem uma obrigação de ação de outras pessoas para realizar aquele direito.
+                Ex: direito à educação, atendimento médico, moradia, alimentação…
+            </p>
+            <p>
+                Leis Positivadas que infringem no direito à vida, propriedade e liberdade de outras pessoas para existirem, são leis antiéticas. 
+                Não é possível ter um sistema judiciário justo, que desrespeite às Leis Naturais.
             </p>
         </div>
     </div>
 </section>
 
 <div class="container-fluid d-flex align-items-center justify-content-center text-center mt-1 container-vpl">
-    <h4 class="hidden-on-scroll" style=" padding: 0 4%;">
-        <i class="hidden-on-scroll">
-            Os três pilares da Lei Natural são:<br/><br/>
-            <span class="highlight-text hidden-on-scroll" 
-            style="font-size: clamp(1.4rem, 2.5vw, 2rem) !important; padding: 0 4%;">
-                Vida, Propriedade e Liberdade</span>
-                <br/><br/> 
-                direitos inalienáveis que existem independentemente de qualquer lei estatal.
-        </i>
+    <h4 class="hidden-on-scroll" style="padding: 0 4%; margin-top: 2%; margin-bottom: 4%;">
+        <p style="font-size: clamp(0.90rem, 1.5vw, 3rem) !important; margin-bottom: 3%">
+            <i>Os três pilares da Lei Natural são:</i>
+        </p>
+    <div class="container-fluid d-flex align-items-center justify-content-center hidden-on-scroll">
+        <div class="row d-flex text-center align-items-center justify-content-center mt-2 mb-2 ml-2 mr-2" style="margin: 4% 3%; width: 100%">
+
+            <!--Coluna Vida-->
+            <div class="col-12 col-md-4 px-0 col-pilar hidden-on-scroll">
+                <div class="hidden-on-scroll wrapper-col-pilar">
+                    <img src="{% static '/images/vida.png' %}" alt="vida" style="filter: brightness(50%);"/>
+                    <p>
+                        VIDA
+                    </p>
+                </div>
+            </div>
+            <!--Coluna Propriedade-->
+            <div class="col-12 col-md-4 px-0 col-pilar hidden-on-scroll">
+                <div class="hidden-on-scroll wrapper-col-pilar">
+                    <img src="{% static '/images/propriedade.png' %}" alt="vida" style="filter: brightness(50%);"/>
+                    <p>
+                        PROPRIEDADE
+                    </p>
+                </div>
+            </div>
+            <!--Coluna Liberdade-->
+            <div class="col-12 col-md-4 px-0 col-pilar hidden-on-scroll">
+                <div class="hidden-on-scroll wrapper-col-pilar">
+                    <img src="{% static '/images/liberdade.png' %}" alt="vida" style="filter: brightness(50%);"/>
+                    <p>
+                        LIBERDADE
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+        <p style="font-size: clamp(0.90rem, 1.5vw, 3rem) !important; margin-top: 3%;">
+            <i>Direitos inalienáveis que existem independentemente de qualquer lei estatal.</i>
+        </p>
     </h4>
 </div>
 
@@ -75,31 +181,35 @@
     <div class="container-fluid">
         <div class="row d-flex">
             <div class="col-12 col-md-6 column-rights">
+
+                <!--Direito a vida -->
                 <h4 class="hidden-on-scroll">Direito a vida</h4>
                 <p class="hidden-on-scroll">
-                    O Direito à Vida é o mais fundamental, pois sem ele nenhum outro direito pode existir. 
-                    Isso significa que nenhum indivíduo ou governo tem o direito legítimo de tirar a vida de outra pessoa injustamente. 
-                    Esse princípio condena assassinatos, agressões e qualquer forma de violência contra a vida humana, e serve como base tanto 
-                    para a <strong>autodefesa</strong> quanto para a <strong>punição de crimes</strong> que atentam contra esse direito.
+                    O Direito à Vida, nenhum indivíduo ou governo tem o direito legítimo de tirar a vida de outra pessoa injustamente. 
+                    Esse princípio condena assassinatos, agressões e qualquer forma de violência contra a vida humana, e serve como base 
+                    tanto para a autodefesa quanto para a punição de crimes que atentam contra esse direito.
                 </p>
-                <h4 class="hidden-on-scroll">Direito a propriedade</h4>
+
+                <!--Direito a propriedade -->
+                <h4 class="hidden-on-scroll" style="margin-top: 6%;">Direito a propriedade</h4>
                 <p class="hidden-on-scroll">
-                    O direito à propriedade parte do princípio da auto-propriedade, ou seja, o direito sobre o próprio corpo físico. 
-                    Entendemos que somos donos de nossos corpos e, como consequência, tudo o que criamos ou adquirimos por meio do uso dele nos pertence. 
-                    Isso inclui tudo o que adquirimos de maneira voluntária, seja por compra, troca ou doação.<br/><br/>
+                    O direito à propriedade parte do princípio da <strong>auto propriedade</strong>, ou seja, o direito sobre o próprio corpo físico e a
+                    nossas vidas. Entendemos que somos donos de nossos corpos e, como consequência, tudo o que criamos ou adquirimos por meio do uso dele 
+                    nos pertence. Isso inclui tudo o que adquirimos de maneira voluntária, seja por compra, troca ou doação.<br/>
                     É importante ressaltar que a ideia comunista de que "o trabalhador tudo produz, portanto, tudo a ele pertence" não é verdadeira. 
                     Isso porque os meios, ferramentas e matérias-primas utilizados na produção dos bens não pertencem ao trabalhador. 
                     Portanto, a ele pertence apenas o salário, acordado com o patrão, referente ao seu trabalho.
                 </p>
-                <h4 class="hidden-on-scroll">Direito a liberdade</h4>
+
+                <!--Direito a liberdade -->
+                <h4 class="hidden-on-scroll" style="margin-top: 6%;">Direito a liberdade</h4>
                 <p class="hidden-on-scroll">
                     O direito à liberdade decorre do fato de que os seres humanos são racionais e capazes de tomar decisões sobre suas próprias vidas.<br/> 
-                    Isso inclui a liberdade de pensamento, expressão, religião e escolha de como viver. Desde que sua liberdade não interfira na propriedade alheia.<br/>
+                    Isso inclui a liberdade de pensamento, expressão, religião e escolha de como viver. <strong>Desde que sua liberdade não interfira na propriedade alheia.</strong><br/>
                     Qualquer forma de coerção injustificada — seja por leis tirânicas ou por ações de terceiros — viola esse princípio.<br/> 
                     Assim, sistemas políticos e sociais que restringem autonomia individual são considerados contrários à Lei Natural.<br /><br/>
-                    Aqui no Fraguismo nós defendemos a Lei Áurea:<br/>
-                    <i>- "Não faça aos outros o que não gostaria que fizessem contigo."<br /><strong>(Que deve ser sempre na forma negativa)</strong></i><br />
-                    e<br />
+                    Aqui no Fraguismo nós defendemos a <strong>Lei Áurea:</strong><br/>
+                    <i>- "Não faça aos outros o que não gostaria que fizessem contigo."<br />(Que deve ser sempre na forma negativa)</i><br />
                     <i>- "A sua liberdade termina onde começa a propriedade do outro." </i>  
                 </p>
             </div>
@@ -115,9 +225,9 @@
         <div class="row mx-0 pt-0 pb-0 content">
             <div class="col-sm-6">
                 <div class="column-topics">
-                    <h3>Principais Características da Lei Natural:</h3>
+                    <h3 style="margin-bottom: 3%;">Principais Características da Lei Natural:</h3>
                     <ul>
-                        <br/><li><strong>Universalidade:</strong> Aplica-se a todos os seres humanos, independentemente de cultura ou época.</li>
+                        <li><strong>Universalidade:</strong> Aplica-se a todos os seres humanos, independentemente de cultura ou época.</li>
                         <li><strong>Imutabilidade:</strong> Seus princípios fundamentais não mudam com o tempo.</li>
                         <li><strong>Fundamentação na Razão:</strong> Pode ser compreendida pela racionalidade humana, sem a necessidade de revelação divina ou imposição estatal.</li>
                         <li><strong>Hierarquia sobre Leis Positivas:</strong> Serve como critério para avaliar a justiça das leis criadas pelos homens (leis positivas).<br/></li>
@@ -126,7 +236,7 @@
             </div>
             <div class="col-sm-6">
                 <div class="column-topics">
-                    <h3>Principais pensadores e influências:</h3>
+                    <h3 class="CT-title">Principais pensadores e influências:</h3>
                     <ul>
                         <li><strong>Aristóteles:</strong> Relacionou a Lei Natural à busca pela felicidade e ao propósito humano.</li>
                         <li><strong>Cícero:</strong> Defendia que a Lei Natural era superior às leis dos homens.</li>
