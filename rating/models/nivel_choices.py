@@ -7,6 +7,7 @@ NIVEL_CHOICES = [
         ('cavaleiro', 'Cavaleiro'),
         ('conselheiro', 'Conselheiro'),
         ('guradiao', 'Guardião'),
+        ('nao_fraguista', 'Não Fraguista')
     ]
 
 class NivelChoices:
@@ -15,4 +16,5 @@ class NivelChoices:
     KNIGHT = 'cavaleiro'
     COUNSELOR = 'conselheiro'
     GUARDIAN = 'guardiao'
+    NOFRAGUISTA = 'nao_fraguista'
     
