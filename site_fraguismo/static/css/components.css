@@ -145,6 +145,14 @@ header {
     text-transform: none; /* Remove transformações */
 }
 
+li .dropdown-item, li .nav-link {
+    text-shadow: none;
+}
+
+.nav-item, .nav-link, .btn-publish {
+    font-size: clamp(0.90rem, 1vw, 1.1rem) !important;
+}
+
 .navbar-nav .nav-link:hover {
     color: #007bff; /* Cor ao passar o mouse (opcional) */
 }

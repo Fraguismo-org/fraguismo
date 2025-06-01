@@ -6,6 +6,76 @@
 <link rel="stylesheet" href="{% static '/css/triadefraguista.css' %}"/>
 <link rel="stylesheet" href="{% static '/css/components.css' %}"/>
 
+<style>
+    /* Estilos únicos da página regras de DAO*/
+    .wrapper-hierarquia {
+        border-radius: 12px;
+        background-color: rgba(0, 0, 0, 0.466);
+        color: white;
+        padding: 3% 0;
+    }
+    .wrapper-hierarquia p {
+        padding: 0 3%;
+    }
+    .column-topics li, .column-topics h3, .column-topics h6, .column-topics h5 {
+        margin: 1% 0;
+    }
+
+    @media (min-width: 700px) {
+        .content-law {
+            padding: 0 15%;
+        }
+        .content-law p {
+            padding: 0 1%;
+        }
+    }
+
+    @media (min-width: 600px) {
+        .img-side {
+            height: 480px;
+        }
+    }
+
+    @media (min-width: 768px) {
+        .img-side {
+            height: 430px;
+        }
+    }
+
+    @media (min-width: 1000px) {
+        .img-side {
+            height: 350px;
+        }
+    }
+
+    @media (min-width: 1558px) {
+        .img-side {
+            height: 390px;
+        }
+    }
+
+    @media (min-width: 1690px) {
+        .img-side {
+            height: 410px;
+        }
+    }
+
+    @media (min-width: 1800px) {
+        .img-side {
+            height: 570px;
+        }
+    }
+
+    @media (max-width: 620px) {
+        .bg-img, .bg-img-2 {
+            display: none;
+        }
+        .content-law, .content-law p {
+            padding: 0 0;
+        }
+    }
+</style>
+
 <section class="apresentation apresentation-REGRAS">
     <div class="container head-title">
         <h1>
@@ -27,10 +97,10 @@
 <section class="missões mt-5 hidden-on-scroll">
     <div class="container d-flex align-items-center justify-content-center flex-column position-relative">
         <div class="bg-img">
-            <img src="{% static '/images/bandeiraancap.webp' %}" alt="balança" width="600" height="300" class="img-fluid img-side"/>
+            <img src="{% static '/images/ancapflag.png' %}" alt="ancapflag" width="600" class="img-fluid img-side"/>
         </div>
         <div class="bg-img-2">
-            <img src="{% static '/images/btcbg.webp' %}" alt="balança" width="600" height="300" class="img-fluid img-side"/>
+            <img src="{% static '/images/btcbalanca.png' %}" alt="balança" width="600" class="img-fluid img-side"/>
         </div>
         <h1>Missão e Objetivo:</h1>
         <div class="blackline" style="width: 70%; background-color: black; height: 3px; border-radius: 100%; margin-top: 2%; margin-bottom: 2%;"></div>
@@ -51,44 +121,60 @@
     </div>
 </section>
 
+<div class="container-fluid d-flex align-items-center justify-content-center mt-5 mb-5">
+    <div class="row text-center hidden-on-scroll bg-hierarquia" style="padding: 4% 15%; box-shadow: 0 0 10px rgba(0, 0, 0, 0.596); border-radius: 24px;">
+        <div class="wrapper-hierarquia">
+            <h4 class="hidden-on-scroll">
+                <strong>HIERARQUIA:</strong>
+            </h4>
+            <p class="hidden-on-scroll">
+                O Fraguismo tem uma escala hierárquica onde o conhecimento e a participação no projeto são os pré-requisitos para ascensão.
+                Nenhum entrave político pode ser usado para impedir alguém de subir na hierarquia.<br/>
+            </p>
+        </div>
+    </div>
+</div>
+
 <section class="body-text mt-5 mb-5">
     <div class="container-fluid">
         <div class="row d-flex">
             <div class="col-12 col-md-6 column-rights">
-                <p class="hidden-on-scroll">
-                   <strong>HIERARQUIA:</strong>
-                </p>
-                   <p class="hidden-on-scroll">
-                    <br/>- O Fraguismo tem uma escala hierárquica onde o conhecimento e a participação no projeto são os pré-requisitos para ascensão.<br/><br/>
-                    </p>
-                    <p class="hidden-on-scroll">- Nenhum entrave político pode ser usado para impedir alguém de subir na hierarquia.<br/><br/>
-                    </p>
-                    <p class="hidden-on-scroll"><strong>- Para subir de nível, o Fraguista deve:<br/><br/></strong>
-                         - <strong>1.</strong>
-                         Completar os módulos referentes ao seu nível do curso de formação Fraguista, lendo os livros e materiais obrigatórios; 
-                         e sendo aprovado na prova.<br/><br/>
-                         - <strong>2.</strong>
-                         Ter o número suficiente de pontos de participação. (verificar, no site, a quantidade de pontuação necessária para cada nível);
-                         <br/><br/>
-                         - <strong>3.</strong>
-                         Para alcançar o nível de Guardião, além de cumprir os requisitos anteriores, o Fraguista precisará adquirir pelo menos um Token 
-                         do Fraguismo, que será o peso do seu voto.<br/><br/>
+                    <h4 class="hidden-on-scroll" style="margin-bottom: 4%;"><strong>Para subir de nível, o Fraguista deve:</strong></h4>
+                         <p class="hidden-on-scroll"><strong>1.</strong>
+                            Completar os módulos referentes ao seu nível do <a href="/cursofraguista">curso de formação fraguista</a>, lendo os livros e materiais obrigatórios; 
+                            e sendo aprovado na prova.<br/>
+                        </p>
+                        <p class="hidden-on-scroll">
+                            <strong>2.</strong>
+                            Ter o número suficiente de pontos de participação. (verificar no site, a quantidade de pontuação necessária para cada nível). <a href="/rating/user_log_rating">Verificar pontuação</a>;
+                            <br/>
+                        </p>
+                        <p class="hidden-on-scroll">
+                            <strong>3.</strong>
+                            Para alcançar o nível de Guardião, além de cumprir os requisitos anteriores, o Fraguista precisará adquirir pelo menos um Token 
+                            do Fraguismo, que será o peso do seu voto.
+                        </p>
                     </p>
                     <p class="hidden-on-scroll">
-                        - Apenas a partir do nível Guardião é possível votar nas decisões do Fraguismo. Todo Guardião deve ter pelo menos um Token.<br/><br/>
+                       • Apenas a partir do nível Guardião é possível votar nas decisões do Fraguismo. Todo Guardião deve ter pelo menos um Token.
                     </p>
                     <p class="hidden-on-scroll">
-                        - Cada nível tem regras e acesso à informações diferentes, quanto mais o Fraguista sobe na hierarquia mais conhecimento 
-                        sobre o Fraguismo ele tem e mais participação ativa ele poderá ter no projeto.<br/><br/>
+                        • Cada nível tem regras e acesso à informações diferentes, quanto mais o Fraguista sobe na hierarquia mais conhecimento 
+                        sobre o Fraguismo ele tem e mais participação ativa ele poderá ter no projeto.
                     </p>
                     <p class="hidden-on-scroll">
-                    - <strong>Conflitos entre Fraguistas</strong>, caso não exista contrato determinando outro foro arbitral, serão arbitrados pela CAL. (Câmara Arbitral Libertária) ou qualquer outro meio de arbitragem com anuência de ambas as partes - <strong>contrato de adesão.<br/><br/></strong>
-                    - Todos os cargos administrativos do Fraguismo (CEO, Financeiro, Marketing, Adm...) podem ser substituídos por outras pessoas, basta alguém se candidatar e ser votado pelos Guardiões.<br/><br/>
-                    - Para a abertura de um novo CNPJ Fraguista é necessário que, pelo menos, o presidente seja um Guardião do Fraguismo.
+                    <strong>• Conflitos entre Fraguistas</strong>, caso não exista contrato determinando outro foro arbitral, serão arbitrados pela CAL. 
+                    (Câmara Arbitral Libertária) ou qualquer outro meio de arbitragem com anuência de ambas as partes - <strong>contrato de adesão.<br/></strong> 
                     </p>
+                    <p class="hidden-on-scroll">
+                        • Todos os cargos administrativos do Fraguismo (CEO, Financeiro, Marketing, Adm...) podem ser substituídos por 
+                        outras pessoas, basta alguém se candidatar e ser votado pelos Guardiões.<br/>
+                    </p>
+                    <p class="hidden-on-scroll">• Para a abertura de um novo CNPJ Fraguista é necessário que, pelo menos, o presidente seja um Guardião do Fraguismo.</p>
+                   
                 </div>
-            <div class="col-12 col-lg-6 hidden-on-scroll column-img column-img-DAO" style="position: relative;">
-                <img src="{% static '/images/btcfreedom.webp' %}" alt="Tres-direitos" class="img-fluid display-img" style="border-radius: 10px; object-fit: cover; position: relative; z-index: 2; min-height: 100%;"/>
+            <div class="col-12 col-lg-6 hidden-on-scroll column-img" style="position: relative;">
+                <img src="{% static '/images/bitcoincolonizacao.png' %}" alt="Tres-direitos" class="img-fluid" style="border-radius: 10px; object-fit: cover; position: relative; z-index: 2; min-height: 100%;"/>
             </div>
         </row>
     </div>
@@ -103,9 +189,10 @@
             width: 100%;
             padding: 10px 0;"
             >
+            <!--Coluna votação-->
                 <div class="column-topics">
                     <h3>Votação</h3>
-                    <h6 style="font-size: clamp(0.85rem, 1vw, 1.1rem);">
+                    <h6 style="font-size: clamp(0.85rem, 1.1vw, 1.4rem);">
                         Os Guardiões+ são os responsáveis pelas tomadas de decisão do Fraguismo, 
                         o peso do seu voto é proporcional ao número de Tokens de Governança (FRAGs) que ele possui, 
                         isso mantém os incentivos financeiros corretos, aumentando as chances do Fraguismo ter projetos bem sucedidos e 
@@ -117,7 +204,7 @@
                         </li>
                         <li>
                             Satisfeito o quesito do Quórum mínimo, para aprovar um projeto, 
-                            é necessário que mais de 50% dos Tokens dos Guardiões votantes, tenham sido favoráveis a aprovação. 
+                            é necessário que mais de 50% dos Tokens dos <strong>Guardiões votantes,</strong> tenham sido favoráveis a aprovação. 
                             (Ex: se somando os Tokens de 8 Guardiões tivermos 1.000 Tokens, seriam necessários, no mínimo, 501 Tokens votando favorável a proposta,
                              para ela ser considerada aprovada.) *levando em consideração o sistema anti-takeover descrito abaixo.
                         </li>
@@ -129,12 +216,12 @@
                             O voto é individual, indelegável e intrasferível.
                         </li>
                         <li>
-                            Existem 4 opções de voto: APROVADO, NEGADO, INDEFINIDO e ABSTENÇÃO (*). 
+                            Existem 4 opções de voto: <strong>APROVADO, NEGADO, INDEFINIDO e ABSTENÇÃO (*).</strong> 
                             Se tivermos um número maior do que 50% dos Guardiões votantes como indefinidos, a votação deve ser adiada por uma semana para que 
                             eles possam se informar melhor sobre o assunto e definirem seu voto. Se novamente mais de 50% estiverem indefinidos (pela segunda vez) 
-                            o resultado será executado independente disso.<br/><br/>
-                            Indefinido: aquele que reconhece não ter informações para opinar, mas gostaria de opinar, por isso precisa de mais informações e reflexão;<br/><br/>
-                            Abstenção: aquele que, tendo as informações que julgue suficientes, optar por não opinar.<br/><br/>
+                            o resultado será executado independente disso.<br/>
+                            Indefinido: aquele que reconhece não ter informações para opinar, mas gostaria de opinar, por isso precisa de mais informações e reflexão;<br/>
+                            Abstenção: aquele que, tendo as informações que julgue suficientes, optar por não opinar.<br/>
                         </li>
                         <li>
                             Guardiões que possuam conflitos de interesse, como ganhos financeiros diretos com um projeto específico, 
@@ -150,8 +237,8 @@
             width: 100%;
             padding: 10px 0;"
             >
+                <!--Coluna Transparência-->
                 <div class="column-topics">
-                    <h3>Transparência e Sistema ANTI-TAKEOVER:</h3>
                     <ul>
                         <h5>Transparência:</h5>
                             <li>
@@ -161,17 +248,17 @@
                                 informações sobre as decisões tomadas e a gestão dos recursos.
                             </li>
                             <li>
-                                Um relatório mensal de Fluxo de caixa (entradas, distribuições e saídas) deve ser publicado para acesso de Cavaleiros+<br/><br/>
+                                Um relatório mensal de Fluxo de caixa (entradas, distribuições e saídas) deve ser publicado para acesso de Cavaleiros+<br/>
                             </li>
-                        <h5>Sistema ANTI-TAKEOVER:</h5>
+                        <h5>Sistema Anti-Takeover:</h5>
                             <li>
                                 Para evitar uma tomada hostil, — em que um agente externo mal-intencionado possa adquirir uma quantidade significativa de tokens e tomar controle do projeto —. 
                                 Implementamos um mecanismo de limitação de poder de voto. 
-                                Esse sistema previne que a compra em massa de tokens seja utilizada de forma a prejudicar a integridade da governança do projeto.<br/><br/>
+                                Esse sistema previne que a compra em massa de tokens seja utilizada de forma a prejudicar a integridade da governança do projeto.<br/>
                             </li>
-                        <h6>
+                        <p>
                             Os percentuais máximos que um guardião tem numa votação diminuem quanto mais Guardiões estiverem votando.
-                        </h6>
+                        </p>
                             <li>
                                 de 05 a 09 Guardiões votantes:<br/>
                                 máximo de poder de voto é 25% por Guardião;<br/>
