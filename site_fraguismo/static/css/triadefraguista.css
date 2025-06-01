@@ -1,7 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Ballet:opsz@16..72&family=Charm:wght@400;700&family=Cookie&display=swap');
 
+* {
+    box-sizing: border-box;
+}
+
 p, span {
-    font-size: clamp(0.90rem, 1.1vw, 3rem) !important;
+    font-size: clamp(0.90rem, 1.1vw, 3rem);
 }
 
 span {
@@ -14,23 +18,24 @@ li {
 }
 
 h4 {
-    font-size: clamp(1rem, 2.5vw, 1.7rem) !important;
+    font-size: clamp(1rem, 2.3vw, 2rem);
 }
 
 h5 {
-    font-size: clamp(0.95rem, 2.2vw, 1.5rem) !important;
+    font-size: clamp(0.95rem, 2.2vw, 1.8rem) !important;
 }
 
-* {
-    box-sizing: border-box;
+h1, h2, h3, h4, h5, h6, p, span, ul, li {
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5) !important;
 }
 
 html, body {
     overflow-x: hidden !important;
+    overflow-y: auto;
+    background-color: rgb(221, 221, 221);
 }
 
 /* Efeito de scrollagem */
-
 .hidden-on-scroll {
     opacity: 0;
     transform: translateY(20px);
@@ -50,12 +55,9 @@ html, body {
     align-items: center;
     justify-content: center;
 }
-
-
 /**/
 
 /* Shapes */
-
 .custom-shape-divider-top-1744652616 {
     position: absolute;
     top: 0;
@@ -76,10 +78,7 @@ html, body {
     fill: #FFFFFF;
 }
 
-/**/
-
-/* */
-
+/* Titulo das páginas */
 .apresentation {
     position: relative;
     display: flex;
@@ -110,7 +109,7 @@ html, body {
     background: url('/static/images/regrasdao.png') no-repeat center/cover;
 }
 
-.apresentation-hierarquia {
+.apresentation-hierarquia, .bg-hierarquia {
     background: url('/static/images/hierarquia.png') no-repeat center/cover;
 }
 
@@ -119,51 +118,19 @@ html, body {
 }
 
 .head-title h1 {
-    font-size: 4rem;
+    font-size: clamp(2.3rem, 2.8vw, 4rem);
     color: rgb(243, 243, 243);
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-}
-
-.column-rights {
-    max-height: fit-content;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5) !important;
 }
 
 .head-title h4 {
     font-weight: 200;
     padding: 10px 15px;
-    color:rgb(0, 0, 0);
-    background-color: rgba(240, 255, 255, 0.596);
-    text-shadow: 2px 2px 4px rgba(22, 18, 18, 0.5);
+    color:rgb(255, 255, 255);
+    background-color: rgba(0, 0, 0, 0.466);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
-
-.highlight-text {
-    font-family: "Charm", cursive;
-    font-size: 2rem;
-    border: solid;
-    border-top: none;
-    border-left: none;
-    border-right: none;
-    border-radius: 8px;
-}
-
-.container-vpl {
-    width: 100vw;
-    position: relative;
-    left: 50%;
-    right: 50%;
-    margin-left: -50vw;
-    margin-right: -50vw;
-}
-
-.column-topics {
-    background-color: rgba(0, 0, 0, 0.699);
-    border-radius: 10px;
-    padding: 15px;
-    color: white;
-    min-height: 300px;
-    width: fit-content;
-}
-
+/* Seção com duas imagens laterais */
 .bg-img, .bg-img-2 {
     position: absolute;
     z-index: 1;
@@ -176,7 +143,7 @@ html, body {
     left: 50%;
     top: 0%;
     right: 50%;
-    margin-left: -74vw;
+    margin-left: -71vw;
     margin-right: -50vw;
   }
   
@@ -184,7 +151,7 @@ html, body {
     left: 50%;
     top: 0%;
     right: 100%;
-    margin-left: 34vw;
+    margin-left: 31vw;
     margin-right: -50vw;
 }
 
@@ -192,22 +159,73 @@ html, body {
     border-radius: 10px;
     object-fit: cover;
     width: 100%;
-  }
+    object-fit: cover;
+}
 
 .content-law {
    text-align: center;
     padding: 0 12%;
 }
 
+/*Coluna com texto e imagem lateral*/
+.column-rights {
+   height: fit-content;
+}
+
+.column-rights h4 {
+    margin-bottom: 3%;
+}
+
+.column-img img {
+    border-radius: 10px !important;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.596);
+}
+
+.display-img {
+    border-radius: 10px; 
+    object-fit: cover; 
+    position: relative; 
+    z-index: 2; 
+    min-height: fit-content; 
+    max-height: max-content;
+}
+
+/* Coluna de tópicos */
+.column-topics {
+    background-color: rgb(175, 175, 175);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.596);
+    border-radius: 10px;
+    padding: 15px;
+    color: black;
+    min-height: 300px;
+    width: fit-content;
+}
+
+/* Botões */
+.bg-btn-curso {
+    height: 21dvh;
+    margin: 3% 0;
+    border-radius: 16px;
+}
+
+.bg-btn-curso img {
+    width: 100%;
+    filter: brightness(50%);
+    height: 100%;
+    object-fit: cover;
+    border-radius: 16px;
+}
+
 .dao-button {
     padding: 10px 15px;
     background-color: #FFFFFF;
-    box-shadow: rgb(185, 140, 3) 0 0 80px;
+    box-shadow: rgb(185, 140, 3) 0 0 30px;
     border-radius: 10px;
     border: solid;
     border-width: 2px;
     border-color: rgb(185, 140, 3);
     color: black;
+    font-size: clamp(1.1rem, 1.1vw, 2rem);
     transition: all 0.5s ease-in-out;
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
@@ -222,16 +240,48 @@ html, body {
     background-color: rgb(185, 140, 3);
 }
 
+/* Vida Propriedade e liberdade*/
+.wrapper-col-pilar {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 12px;
+    background-color: black;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.596);
+}
+
+.wrapper-col-pilar p {
+    position: absolute;
+    color: black;
+    padding: 7% 7%;
+    font-size: clamp(0.55rem, 1.5vw, 3rem) !important;
+    border-radius: 12px;
+    background-color: rgba(223, 223, 223, 0.733);
+    text-shadow: 1px 1px 3px rgba(255, 255, 255, 0.5);
+}
+
+.wrapper-col-pilar img {
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    border-radius: 12px;
+    object-fit: cover;
+}
+
+.col-pilar {
+    width: 25%;
+    transition: 0.3s all ease-in-out;
+}
+
+.col-pilar:hover {
+    width: 26%;
+}
+
 /* ajuste para telas menores */
 @media (max-width: 992px) {
-    .bg-img, .bg-img-2 {
-      display: none;
-    }
-
-    .content-law {
-        padding: 0 0;
-    }
-
     .content {
         padding-top: 0 !important;
         margin-top: 0 !important;
@@ -261,10 +311,6 @@ html, body {
 
     .column-img-LN {
         background: url('/static/images/lawwomansmall.PNG') no-repeat center/cover;
-    }
-
-    .column-img-DAO{
-        background: url('/static/images/network.webp') no-repeat center/cover;
     }
 
     .column-img-CF {

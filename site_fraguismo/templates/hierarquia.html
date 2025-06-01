@@ -6,6 +6,56 @@
 <link rel="stylesheet" href="{% static '/css/triadefraguista.css' %}"/>
 <link rel="stylesheet" href="{% static '/css/components.css' %}"/>
 
+<style>
+    /* Estilos únicos da página hierarquia*/
+    @media (min-width: 400px) {
+       .img-side {
+            height: 600px;
+       }   
+    }
+    @media (min-width: 768px) {
+        .img-side {
+            height: 500px;
+        }
+    }
+    @media (min-width: 1000px) {
+        .img-side {
+            height: 420px;
+        }
+    }
+
+    @media (min-width: 1622px) {
+        .img-side {
+            height: 500px;
+        }
+    }
+
+    @media (min-width: 1800px) {
+        .img-side {
+            height: 620px;
+        }
+    }
+
+    @media (min-width: 700px) {
+        .content-law {
+            padding: 0 15%;
+        }
+        .content-law p {
+            padding: 0 1%;
+        }
+    }
+
+    @media (max-width: 620px) {
+        .bg-img, .bg-img-2 {
+            display: none;
+        }
+        .content-law, .content-law p {
+            padding: 0 0;
+        }
+    }
+
+</style>
+
 <section class="apresentation apresentation-hierarquia">
     <div class="container head-title">
         <h1>
@@ -26,12 +76,12 @@
 </section>
 
 <section class="niveis pb-5 mt-5 mb-5 hidden-on-scroll">
-    <div class="container d-flex align-items-center justify-content-center flex-column position-relative">
+    <div class="container-fluid d-flex align-items-center justify-content-center flex-column position-relative">
         <div class="bg-img">
-            <img src="{% static '/images/bandeiraancap.webp' %}" alt="balança" width="600" height="300" class="img-fluid img-side"/>
+            <img src="{% static '/images/ancapflag.png' %}" alt="Ancap flag" width="600" class="img-fluid img-side"/>
         </div>
         <div class="bg-img-2">
-            <img src="{% static '/images/bandeiraancap.webp' %}" alt="balança" width="600" height="300" class="img-fluid img-side"/>
+            <img src="{% static '/images/ancapflag.png' %}" alt="Ancap flag" width="600" class="img-fluid img-side"/>
         </div>
         <h1>Níveis</h1>
         <div class="blackline" style="width: 70%; background-color: black; height: 3px; border-radius: 100%; margin-top: 2%; margin-bottom: 2%;"></div>
@@ -52,7 +102,7 @@
                 A cada novo nível o participante tem acesso a mais privilégios dentro do Fraguismo que vão de networking a ajuda maior da instituição.
                 A descentralização da hierarquia evita que o Fraguismo se torne um projeto pessoal de poder, 
                 onde uma figura de autoridade detenha poder absoluto. Isso assegura que o movimento permaneça 
-                iel aos valores originais de respeito à <strong>vida, propriedade e liberdade</strong>, e que a liderança seja 
+                fiel aos valores originais de respeito à <strong>vida, propriedade e liberdade</strong>, e que a liderança seja 
                 realmente representativa dos membros mais comprometidos com o projeto e que tenham profundo conhecimento e respeito por esses valores.
              </p>
         </div>

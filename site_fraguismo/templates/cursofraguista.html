@@ -6,15 +6,49 @@
 <link rel="stylesheet" href="{% static '/css/triadefraguista.css' %}"/>
 <link rel="stylesheet" href="{% static '/css/components.css' %}"/>
 
+<style>
+    /* Estilos únicos da página curso fraguista*/
+    p {
+        font-size: clamp(0.90rem, 1.1vw, 3rem) !important; 
+    }
+    .subtitle {
+        font-size: clamp(0.75rem, 2.8vw, 2rem) !important;
+    }
+    .cta-btn-curso {
+        position: absolute;
+        -webkit-box-reflect: below 1px linear-gradient(transparent, #0005);
+        box-shadow: 0 0 5px #ebbe5b, 0 0 15px #ebbe5b, 0 0 25px #ebbe5b, 0 0 100px #ebbe5b;
+        padding: 10px 15px;
+        border-radius: 10px;
+        border-width: 2px !important;
+        border-color: rgb(185, 140, 3) !important;
+        font-size: clamp(0.95rem, 1.3vw, 2rem);
+        color: black;
+        border: solid;
+        text-align: center;
+        transition: all 0.4s ease-in-out;
+        background-color: #FFFF;
+    }
+    .cta-btn-curso:hover, .cta-btn-curso:active {
+        transform: scale(1.1);
+        background-color: white;
+        color: black;
+        transition: all 0.4s ease-in-out;
+        box-shadow: 0 0 10px #ebbe5b, 0 0 20px #ebbe5b, 0 0 30px #ebbe5b, 0 0 200px #ebbe5b;
+    }
+
+</style>
+
 <section class="apresentation apresentation-CF">
-    <div class="container head-title">
+    <div class="container head-title" style="margin-top: 5%">
         <h1>
-            Curso de formação fraguista
+            Curso de Formação Fraguista
         </h1>
-        <h4>
-            O Curso de Formação Fraguista é destinado aos membros da nossa comunidade, com o objetivo de garantir que cada fraguista 
-            tenha um conhecimento mínimo sobre Libertarianismo. Por meio da leitura e discussão de obras validadas no meio libertário, 
-            ele oferece uma base sólida para a compreensão dos princípios que norteiam nossa fé.
+        <h4 class="subtitle">
+            O <strong>Curso de Formação Fraguista</strong> é destinado aos membros da nossa comunidade, com o objetivo de garantir que cada Fraguista 
+            tenha o conhecimento apropriado sobre <strong>Libertarianismo</strong> a cada nível na sua ascensão dentro da nossa instituição. O estudo 
+            é feito por meio da leitura e discussão de obras validadas no meio libertário, ele oferece uma base sólida para a compreensão 
+            dos princípios que norteiam nossa fé.
         </h4>
     </div>
     <div class="custom-shape-divider-top-1744652616">
@@ -28,45 +62,50 @@
     <div class="container-fluid">
         <div class="row d-flex">
             <div class="col-12 col-md-6 column-rights">
-                <h4 class="hidden-on-scroll">Curso: Funcionamento e Sobre</h4>
+                <h4 class="hidden-on-scroll" style="margin-bottom: 3%;">Curso: Funcionamento e Sobre</h4>
                 <p class="hidden-on-scroll">
-                    O curso é dividido em quatro níveis, sendo cada um composto por quatro livros, cuidadosamente selecionados. 
-                    Além das leituras, o aluno terá acesso a audiobooks e vídeos complementares, que ajudarão na assimilação do conteúdo. 
-                    Também oferecemos tutores, um grupo no WhatsApp e duas reuniões online mensais, para garantir apoio contínuo durante o processo de aprendizado.
+                    O curso é dividido em <strong>quatro níveis,</strong> sendo cada um composto por <strong>quatro livros,</strong> cuidadosamente selecionados. 
+                    Além das leituras, o aluno terá acesso a <strong>audiobooks e vídeos complementares,</strong> que ajudarão na assimilação do conteúdo. 
+                    Cada aluno é encaminhado a um <strong>tutor,</strong> que servirá de apoio contínuo durante o processo de aprendizado, além disso 
+                    disponibilizamos acesso a um <strong>grupo no WhatsApp</strong> e <strong>duas reuniões online mensais</strong> para quem tiver 
+                    interesse em discutir e  aprofundar sua compreensão sobre os conceitos dos livros.
                 </p>
                 <p class="hidden-on-scroll">
-                    As obras são organizadas de forma didática, com níveis progressivos de dificuldade. 
-                    Ao concluir cada nível, o aluno deve realizar uma prova, composta por duas questões sobre cada livro estudado. 
-                    Com base no desempenho, o aluno será considerado apto a seguir para o próximo nível ou inapto, podendo refazer o curso conforme necessário.
+                    As obras são organizadas de forma didática, com <strong>níveis progressivos de dificuldade.</strong>
+                    Ao concluir cada nível, o aluno deve realizar uma <strong>prova,</strong> composta por duas questões sobre cada livro estudado. 
+                    Com base no desempenho, o aluno será considerado <strong>apto</strong> a seguir para o próximo nível ou <strong>inapto,</strong> podendo refazer o curso conforme necessário.
                 </p>
                 <p class="hidden-on-scroll">
                     As provas não têm o objetivo de testar a memória do aluno em relação a datas, nomes ou passagens. 
                     O que pretendemos com essas leituras é que o aluno compreenda e internalize os conceitos que fazem parte da nossa crença no jusnaturalismo 
                     e na economia austríaca. Portanto, fique tranquilo para agendar sua prova e priorize a compreensão dos conceitos ao estudar.
                 </p>
-                <div class="blackline hidden-on-scroll" style="width: 100%; background-color: black; height: 3px; border-radius: 100%; margin: 13px 0;"></div>
-                <h4 class="hidden-on-scroll">Finalidade</h4>
+                <div class="blackline hidden-on-scroll" style="width: 100%; background-color: black; height: 3px; border-radius: 100%; margin: 5% 0;"></div>
+                <h5 class="hidden-on-scroll" style="margin-bottom: 3%;">Finalidade</h5>
                 <p class="hidden-on-scroll">
                     Vale ressaltar que o objetivo do curso não é formar libertários, já que acreditamos que qualquer pessoa pode buscar conhecimento por conta própria, 
-                    por meio de livros e outros recursos.<br/><br/>O que buscamos é garantir que os fraguistas tenham familiaridade com as obras fundamentais, pois, 
+                    por meio de livros e outros recursos.<br/>
+                </p>
+                <p class="hidden-on-scroll">
+                    O que buscamos é garantir que os fraguistas tenham familiaridade com as obras fundamentais, pois, 
                     ao ascenderem a posições de liderança em nossa comunidade, eles terão um papel crucial nas decisões que guiarão o Fraguismo. 
                     Para isso, um conhecimento básico dessas obras é essencial.
                 </p>
                 <p class="hidden-on-scroll">
-                    Além disso, o curso oferece uma oportunidade de integração com a comunidade, especialmente através do contato direto com o tutor, 
-                    favorecendo o estreitamento dos laços de amizade e confiança entre os membros.<br/><br/>
-                    O curso é hospedado na Plataforma Hotmart e tem um custo de R$10,00. Para se inscrever, basta acessar o link abaixo:
+                    Além disso, o curso oferece uma <strong>oportunidade de integração</strong> com a comunidade, especialmente através do contato direto com o <strong>tutor,</strong> 
+                    favorecendo o estreitamento dos laços de amizade e confiança entre os membros.
                 </p>
             </div>
             <div class="col-12 col-lg-6 hidden-on-scroll column-img column-img-CF" style="position: relative;">
-                <img src="{% static '/images/donttreadonmeLG.webp' %}" alt="Dont Tread On Me" class="img-fluid display-img" style="border-radius: 10px; object-fit: cover; position: relative; z-index: 2; height: 100%;"/>
+                <img src="{% static '/images/donttreadonmeLG.webp' %}" alt="Dont Tread On Me" class="img-fluid display-img" style="border-radius: 10px; object-fit: cover; position: relative; z-index: 2; min-height: 100%;"/>
             </div>
         </div>
     </div>
 </section>
 
-<div class="container-fluid d-flex align-items-center justify-content-center text-center hidden-on-scroll mt-5 pt-5 mb-5 pb-5">
-    <a href="https://pay.hotmart.com/E87143607R?off=2e84h9lw&bid=1702246507502" class="fs-3 dao-button">Inscreva-se agora!</a>
+<div class="container-fluid d-flex align-items-center justify-content-center hidden-on-scroll bg-btn-curso">
+    <img src="{% static '/images/bgicons.svg' %}" alt="icons" />
+        <a href="https://pay.hotmart.com/E87143607R?off=2e84h9lw&bid=1702246507502" class="cta-btn-curso">Inscreva-se agora!</a>
 </div>
 
 <script>
