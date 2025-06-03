@@ -41,7 +41,11 @@
             </td>
             {% endif %}
             <td>
+                {% if profile.user.is_fraguista %}
                 {{ profile.nivel }}
+                {% else %}
+                <p>Não Fraguista</p>
+                {% endif %}
             </td>
         </tr>
         {% endif %}

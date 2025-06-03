@@ -90,6 +90,10 @@
                             </div>
                         </div>
                         {% else %}
+                        {% endif %}
+                        {% if not member.is_fraguista %}
+                        <p>Não Fraguista</p>
+                        {% else %}
                         <p>{{ profile.nivel.capitalize }}</p>
                         {% endif %}
                     </div>
