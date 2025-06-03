@@ -17,9 +17,9 @@ STATUS_PENDENCIA = (
 
 class ProfilePendencia(models.Model):
     id = models.AutoField(primary_key=True)
-    profile = models.ForeignKey(Profile, on_delete=models.DO_NOTHING)
-    pendencia = models.ForeignKey(Pendencia, on_delete=models.DO_NOTHING)
-    nivel = models.ForeignKey(Nivel, default=1, on_delete=models.DO_NOTHING)
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    pendencia = models.ForeignKey(Pendencia, on_delete=models.CASCADE)
+    nivel = models.ForeignKey(Nivel, default=1, on_delete=models.CASCADE)
     pendencia_status = models.IntegerField(choices=STATUS_PENDENCIA, default=0)
     updated_at = models.DateTimeField(default=datetime.now)
     
@@ -58,7 +58,8 @@ class ProfilePendencia(models.Model):
             if not p.exists():
                 ProfilePendencia.add_pendencia(profile, pendencia)
         return ProfilePendencia.objects.filter(
-            ~Q(pendencia_status=3), 
+            ~Q(pendencia_status=3),
+            ~Q(pendencia=None),
             profile=profile
         )
     
