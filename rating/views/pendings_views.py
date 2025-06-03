@@ -158,7 +158,7 @@ def remove_pendencia_usuario(request, profile_pendencia_id: int):
     if request.method == 'POST':
         try:
             profile_pendencia = ProfilePendencia.objects.get(id=profile_pendencia_id)
-            profile_pendencia.delete()
+            ProfilePendencia.update_pendencia_status(3, profile_pendencia=profile_pendencia)
             return HttpResponse('Pendência removida com sucesso.', status=200)
         except Exception as e:
             Log.salva_log(e)

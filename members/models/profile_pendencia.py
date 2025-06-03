@@ -1,9 +1,11 @@
 from rating.models.pendencia import Pendencia
 from members.models.profile import Profile
 from rating.models.nivel import Nivel
-from django.db import models
-from datetime import datetime
 from rating.models.nivel_choices import NivelChoices
+
+from django.db import models
+from django.db.models import Q
+from datetime import datetime
 
 
 STATUS_PENDENCIA = (
@@ -55,7 +57,10 @@ class ProfilePendencia(models.Model):
             p = p_pendencias.filter(pendencia=pendencia)
             if not p.exists():
                 ProfilePendencia.add_pendencia(profile, pendencia)
-        return ProfilePendencia.objects.filter(profile=profile)
+        return ProfilePendencia.objects.filter(
+            ~Q(pendencia_status=3), 
+            profile=profile
+        )
     
     def get_all_pendencias(profile: Profile):
         return ProfilePendencia.objects.filter(profile=profile)
