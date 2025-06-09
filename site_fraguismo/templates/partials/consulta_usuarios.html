@@ -1,11 +1,26 @@
+<style>
+    .search-icon:hover {
+        background-color: cadetblue;
+    }
+    .search-icon:active{
+        background-color: gray;
+    }
+</style>
 <div class="consulta">
     <form method="GET" action="{% url url_address %}">
         <div class="row">
             <div class="input-group mb-3">
                 <input class="form-control" type="text" name="busca" placeholder="Buscar fraguista">
-                <span class="input-group-text" id="search-icon"><i class="bi bi-search"></i></span>
-            </div>
-            
+                <span class="input-group-text search-icon" id="search-icon"><i class="bi bi-search"></i></span>
+            </div>            
         </div>
     </form>
 </div>
+
+<script>
+    const searchIcon = document.getElementById('search-icon');
+
+    searchIcon.addEventListener('click', () => {
+        searchIcon.closest('form').submit();
+    });
+</script>

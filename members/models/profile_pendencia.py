@@ -55,7 +55,7 @@ class ProfilePendencia(models.Model):
         p_pendencias = ProfilePendencia.objects.filter(profile=profile)
         for pendencia in pendencias:
             p = p_pendencias.filter(pendencia=pendencia)
-            if not p.exists():
+            if not p:
                 ProfilePendencia.add_pendencia(profile, pendencia)
         return ProfilePendencia.objects.filter(
             ~Q(pendencia_status=3),

@@ -34,6 +34,9 @@ def register_user(request):
         user.codigo_conduta = request.POST.get('codigo_conduta', None) == 'on'
         user.username = request.POST.get('username', None)
         user.email = request.POST.get('email', None)
+        if Users.objects.filter(username=user.username).exists():
+            messages.warning(request, f'Usuário {user.username} já está em uso!')
+            return render(request, 'authenticate/register_user.html')
         if Users.objects.filter(email=user.email).exists():
             messages.error(request, f'E-mail {user.email} já está em uso!')
             return render(request, 'authenticate/register_user.html')
@@ -67,7 +70,7 @@ def register_user(request):
         auth_user = authenticate(request, username=user.username, password=password)
         login(request, auth_user)
         messages.success(request, ("Conta criada com sucesso!"))       
-        return redirect('https://fraguismo.org')        
+        return redirect('user_page')
     return render(request, 'authenticate/register_user.html')
 
 def indicacao(request, user):

@@ -21,7 +21,7 @@
         {% if profile.user and profile.user.username %}
         <tr>
             <td>
-                <input type="checkbox" id="usuarios[]" name="usuarios[]" value="{{ usuario.id }}">
+                <input type="checkbox" id="usuarios[]" name="usuarios[]" value="{{ profile.user.id }}">
             </td>
             <td>
                 <a href="{% url 'profile' username=profile.user.username %}">{{ profile.user.username }}

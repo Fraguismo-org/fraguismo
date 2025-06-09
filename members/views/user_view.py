@@ -1,14 +1,14 @@
 import os
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from PIL import Image, ImageOps
 from django.shortcuts import render, redirect
-from django.core.paginator import Paginator, InvalidPage, EmptyPage
 
+from members.models.users import Users
 from log.models.log import Log
 from members.models.profile import Profile
 from members.models.users import Users
 from members.query.profiles_query import ProfilesQuery
-from members.query.users_query import UsersQuery
 from rating.models.nivel import Nivel
 from utils.paginator import pagina_lista
 
@@ -24,7 +24,19 @@ def user_page(request):
     member = Users.get_or_create_member(user_request=request.user)
     niveis = Nivel.objects.all()
     if request.method == 'POST':
-        member.email = request.POST.get('email', None)
+        email = request.POST.get('email', None)
+        if member.email != email and Users.objects.filter(email=email):
+            messages.warning(request, f'E-mail já em uso!')
+            return render(
+            request,
+            'members/user_page.html',
+            {
+                'profile': profile,
+                'member': member,
+                'niveis': niveis
+            }
+        )
+        member.email = email
         if not member.is_fraguista:
             member.is_fraguista = request.POST.get('fraguista', None) == 'on'
         if member.is_fraguista:

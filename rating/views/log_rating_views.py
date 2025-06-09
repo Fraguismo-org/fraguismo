@@ -88,6 +88,7 @@ def add_rating_point(request):
                 profile.save()
         except Exception as e:
             Log.salva_log(e)
+            messages.warning(request, 'Erro ao adicionar pontuação.')
             
         return redirect('logs')
     query = request.GET.get("busca")
