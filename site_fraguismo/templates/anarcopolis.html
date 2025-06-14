@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<link rel="stylesheet" href="{% static '/css/anarcopolis.css' %}"/>
+<link rel="stylesheet" href="{% static '/css/components.css' %}"/>
+
+<section class="hero-section">
+    <div class="container-fluid h-100">
+        <img src="{% static '/images/anarcopolis.webp' %}" alt="anarcopolis-2025" class="img-fluid" />
+    </div>
+</section>
+
+{% endblock content %}
