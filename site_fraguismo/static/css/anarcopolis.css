@@ -99,3 +99,21 @@
     font-size: clamp(1rem, 1.2vw, 1.2rem);
 }
 
+.ingressos {
+    min-height: 100dvh;
+    background: linear-gradient(135deg, #f8923e, #6f0062);
+    position: relative;
+}
+
+.ingressos .container h4 {
+    color: white;
+    font-size: clamp(2rem, 2.5vw, 5rem);
+}
+
+.container-ingressos {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%)
+}
+
