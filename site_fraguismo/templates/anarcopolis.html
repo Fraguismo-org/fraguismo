@@ -8,8 +8,11 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 
 <section class="hero-section">
-    <div class="wrapper-img-bg">
+    <div class="wrapper-img-bg" id="carousel">
+         <img src="{% static '/images/anarcopolis1.webp' %}" alt="anarcopolis-2025" class="img-fluid active" />
+         <img src="{% static '/images/anarcopolis.webp' %}" alt="anarcopolis-2025" class="img-fluid" />
          <img src="{% static '/images/anarcopolis1.webp' %}" alt="anarcopolis-2025" class="img-fluid" />
+         <img src="{% static '/images/anarcopolis.webp' %}" alt="anarcopolis-2025" class="img-fluid" />
     </div>
     <div class="container-fluid d-flex align-items-center justify-content-center hero-content">
         <div class="wrapper-hr-section">
@@ -34,6 +37,7 @@
 <section class="ingressos">
     <div class="container d-flex align-items-center justify-content-center">
         <h4 class="mt-5">INGRESSOS</h4>
+        <h6 class="mt-5">Escolha sua experiência no maior encontro libertário do Brasil</h6>
     </div>
     <div class="container d-flex justify-content-center align-items-center px-0 text-center container-ingressos">
         <div class="row w-100 justify-content-center d-flex flex-wrap">
@@ -95,5 +99,15 @@
         </div>
     </div>
 </section>
+
+
+<script>
+    let i = 0, imgs = document.querySelectorAll("#carousel img");
+    setInterval(() => {
+    imgs[i].classList.remove("active");
+    i = (i + 1) % imgs.length;
+    imgs[i].classList.add("active");
+    }, 3000);
+</script>
 
 {% endblock content %}
