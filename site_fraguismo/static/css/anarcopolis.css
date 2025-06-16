@@ -129,7 +129,7 @@ html, body {
     max-height: fit-content;
     width: 100vw;
     /*background: linear-gradient(135deg, #f8923e, #6f0062); */
-    background: url('/site_fraguismo/static/images/sunset.webp') no-repeat center/cover;
+    background: url('/static/images/sunset.webp') no-repeat center/cover;
     position: relative;
     display: flex;
     flex-direction: column;
