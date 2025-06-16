@@ -19,4 +19,5 @@ urlpatterns = [
     path('hierarquia/', views.hierarquia, name='hierarquia'),
     path('cursofraguista/', views.cursofraguista, name='cursofraguista'),
     path('anarcopolis/', views.anarcopolis, name='anarcopolis'),
+    path('anarcopolisinfo/', views.anarcopolisinfo, name='anarcopolisinfo'),
 ]

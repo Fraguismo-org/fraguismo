@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<style>
+    .ct-geral {
+        box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.567);
+    }
+    p {
+        font-size: clamp(0.80rem, 1.5vw, 1.2rem);
+    }
+</style>
+<link rel="stylesheet" href="{% static '/css/components.css' %}"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+<div class="container">
+    <h3>1. DATA E LOCAL</h3>
+    <br>
+    <p><strong>Dias:</strong> 29/11 até 04/12</p>
+    <p><strong>Local:</strong> Hotel Porto Sol Ingleses - Florianópolis SC - Rua do Marisco 80, Ingleses Norte, Florianópolis SC, 88058-090 | <a href="https://www.hoteisportosol.com.br/hoteis/ingleses">Site do hotel</a></p>
+    <p><a href="https://www.google.com/maps/place/Hotel+Porto+Sol+Ingleses/@-27.4301065,-48.4013713,16z/data=!3m1!4b1!4m9!3m8!1s0x952742008cbeaa39:0x9a8ead9221c20455!5m2!4m1!1i2!8m2!3d-27.4301065!4d-48.398791!16s%2Fg%2F1tgz1s0c?entry=ttu&g_ep=EgoyMDI1MDYwNC4wIKXMDSoASAFQAw%3D%3D">
+    <i class="fa-solid fa-up-right-from-square"></i> Coordenadas do hotel
+    </a></p>
+    <br>
+    <h3>2. INGRESSOS - O QUE É INCLUSO</h3>
+    <br>
+    <p><strong>Normal:</strong> Acesso a todas as palestras e eventos sociais, acesso aos workshops no
+        dia 03/12 (sujeito a cobrança a parte pelo palestrante), brindes do evento.<br/>
+        <strong>VIP:</strong> Acesso a todas as palestras e eventos sociais, acesso aos workshops no dia
+        03/12 (sujeito a cobrança a parte pelo palestrante), brindes do evento
+        + lugares mais próximos ao palco
+        + almoço exclusivo com os palestrantes (3 dias: 30/11, 01/12 e 02/12)
+        + gravações das edições passadas e atual
+        + brindes exclusivos
+    </p>
+    <h4>Ingresso Vitalicio:</h4>
+    <p>O ingresso da Anarcópolis é vitalício, ou seja, caso você compre o ingresso e não possa
+        participar nessa edição ele fica válido para a próxima!
+        Como fazer isso?
+        Basta nos avisar com o máximo de antecedência que você não poderá mais participar do
+        evento. Se seu ingresso for o Normal, é só isso mesmo. Caso seja um ingresso VIP,
+        pedimos que nos avise com pelo menos 1 mês de antecedência, caso contrário será
+        impossível cancelar o custo do seus almoços. Sendo assim, se você só conseguir nos
+        avisar em cima da hora e quiser manter o ingresso VIP na próxima edição, cobraremos
+        apenas o custo dos almoços a parte. Caso contrário, você receberá um ingresso Normal
+        para a próxima edição.
+    </p>
+    <br>
+    <h3>3. INFORMAÇÕES SOBRE HOSPEDAGEM</h3>
+    <br>
+    <p>• Check-in: 15:00h</p>
+    <p>• Check-out: 12:00h</p>
+    <h4>O que inclui na hospedagem:</h4>
+    <p><strong>5 noites com café da manhã</strong><br>
+    • Quartos 25m2 equipados com: cama box com pillow top, frigobar, ar condicionado, jogos
+    de cama e banho, toalhas de praia, televisão, banheiro no quarto com: ducha higiênica,
+    itens de higiene e secador de cabelo.<br>
+    • Hotel oferece: quadra poliesportiva rápida (futebol e tênis), quadra de beach (vôlei de
+    praia, beach-tennis, futevôlei), piscina ao ar livre, piscina aquecida ao ar livre com vista.</p>
+    <h4>Tipos de hospedagem:</h4>
+    <p>• Quartos privativos:<br>
+    - quarto individual (R$ 1.680)<br>
+     quarto de casal (R$ 1.910)
+    </p>
+    <p>
+        • Quartos compartilhados com participantes do evento:<br>
+        - cama de solteiro em quarto Triplo (R$ 790)<br>
+        - cama de solteiro em quarto Quádruplo (R$ 720) 
+    </p>
+    <h4>Ingresso Vitalicio - Hospedagem:</h4>
+    <p>
+        Caso você tenha adquirido a hospedagem conosco e não possa participar do
+        evento, nos avise o quanto antes, assim poderemos procurar algum outro
+        participante que queira substituir o seu lugar. Caso o aviso seja muito em cima da
+        hora e não conseguirmos substituir a sua vaga, infelizmente, você perderá o valor
+        pago. Mas tentaremos ao máximo reduzir o seu prejuízo.
+    </p>
+    <h5>Observações:</h5>
+    <p><strong>Necessário reservar a hospedagem até o dia 10 de Agosto 2025 para garantir a estadia,
+        após essa data não garantimos que teremos vagas disponíveis.
+        **Não é obrigatória a hospedagem no Hotel para a participação no evento, porém é
+        recomendada para a melhor experiência do participante.</strong>
+    </p>
+    <h3>4. CRONOGRAMA GERAL</h3>
+    <br>
+    <p>
+        29/11: noite de boas-vindas e check in.<br>
+        30/11: palestras durante o dia e evento social à noite.<br>
+        01/12: palestras durante o dia e evento social à noite.<br>
+        02/12: palestras durante o dia e evento social à noite.<br>
+        03/12: workshops e atividades de lazer e esporte durante o dia e evento social à
+        noite.<br>
+        04/12: café da manhã no Hotel (hóspedes) e check out as 12:00.
+    </p>
+    <h3>CRONOGRAMA DETALHADO (em breve)</h3>
+    <br>
+    <p>
+        Serão 5 palestras por dia, 2 de manhã e 3 a tarde de 1:30h
+        cada. Nos dias 30/11, 01/12 e 02/12
+        No dia 03/12: Workshops e atividades de lazer durante todo o dia. (Os workshops serão
+        oferecidos por palestrantes e pela comunidade, quem tiver interesse pode entrar em contato com
+        a organização do evento para a divulgação)
+    </p>
+</div>
+
+{% endblock content %}

@@ -54,3 +54,6 @@ def cursofraguista(request):
 
 def anarcopolis(request):
     return render(request, 'anarcopolis.html')
+
+def anarcopolisinfo(request):
+    return render(request, 'anarcopolisinfo.html')
