@@ -58,6 +58,7 @@ html, body {
 .wrapper-hr-section {
     text-align: center !important;
     width: 40%;
+    position: static;
 }
 
 .wrapper-hr-section h5 {
@@ -128,7 +129,7 @@ html, body {
     max-height: fit-content;
     width: 100vw;
     /*background: linear-gradient(135deg, #f8923e, #6f0062); */
-    background: url('/static/images/sunset.webp') no-repeat center/cover;
+    background: url('/site_fraguismo/static/images/sunset.webp') no-repeat center/cover;
     position: relative;
     display: flex;
     flex-direction: column;
@@ -394,8 +395,8 @@ html, body {
 
 /* RETROSPECTIVE */
 .retrospective {
-    min-height: fit-content;
-    max-height: 100dvh;
+    min-height: 100dvh;
+    max-height: fit-content;
     width: 100vw;
     position: relative;
     display: flex;
@@ -418,6 +419,8 @@ html, body {
 .col-cards {
     min-height: fit-content;
     max-height: 400px !important;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 .card {
@@ -466,6 +469,13 @@ html, body {
     .wrapper-hr-section {
         width: 95%;
     }
+    .row-cards {
+        overflow: hidden;
+    }
+    .card a img {
+        height: 400px;
+        object-fit: cover;
+    }
 }
 
 @media (min-width: 695px) {
@@ -497,6 +507,6 @@ html, body {
 
 @media (min-width: 1400px) {
     .wrapper-hr-section {
-        width: 40%;
+        width: 60%;
     }
 }
