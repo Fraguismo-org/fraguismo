@@ -392,6 +392,29 @@ html, body {
     background-color: rgb(90, 0, 0);
 }
 
+/* RETROSPECTIVE */
+.retrospective {
+    min-height: fit-content;
+    max-height: 100dvh;
+    width: 100vw;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.retrospective .container h4 {
+    color: rgb(202, 179, 43);
+    font-size: clamp(2rem, 2.5vw, 5rem);
+    font-weight: 800;
+    text-shadow: 2px 2px 4px #000000;
+} .retrospective .container h6 {
+    color: white;
+    font-size: clamp(1rem, 1.8vw, 3.6rem);
+    font-weight: 300;
+    text-shadow: 2px 2px 4px #000000;
+}
+
 @media (min-width: 300px) {
     .wrapper-hr-section {
         width: 95%;
