@@ -2,6 +2,10 @@
     box-sizing: border-box;
 }
 
+html, body {
+    overflow-x: hidden;
+}
+
 .container-geral {
     padding: 0 !important;
     margin: 0 !important;
@@ -37,6 +41,7 @@
     height: 100%;
     position: absolute;
     opacity: 0;
+    object-fit: cover;
     filter: brightness(40%) !important;
     transition: opacity 1s;
 }
@@ -88,6 +93,7 @@
     color: white;
     font-size: clamp(1rem, 2vw, 1.6rem);
     margin: 0 0 6% 0;
+    text-shadow: 2px 2px 4px #000000;
 }
     .wrapper-hr-section p i {
         color: #e0822f;
@@ -97,6 +103,7 @@
     color: white;
     font-size: clamp(1.5rem, 1.8vw, 1.8rem);
     padding: 0 3%;
+    text-shadow: 2px 2px 4px #000000;
 }
 
 .wrapper-btn-hr {
@@ -114,21 +121,134 @@
     font-size: clamp(1rem, 1.2vw, 1.2rem);
 }
 
-.ingressos {
+/*ÁREA DE INGRESSOS*/
+.ticket {
     min-height: 100dvh;
-    background: linear-gradient(135deg, #f8923e, #6f0062);
+    max-height: fit-content;
+    width: 100vw;
+    /*background: linear-gradient(135deg, #f8923e, #6f0062); */
+    background: url('/site_fraguismo/static/images/sunset.webp') no-repeat center/cover;
     position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
-.ingressos .container h4 {
+.ticket .container h4 {
     color: white;
     font-size: clamp(2rem, 2.5vw, 5rem);
+    font-weight: 800;
+    text-shadow: 2px 2px 4px #000000;
+} .ticket .container h6 {
+    color: white;
+    font-size: clamp(1rem, 1.8vw, 3.6rem);
+    font-weight: 300;
+    text-shadow: 2px 2px 4px #000000;
 }
 
-.container-ingressos {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%)
+.wrapper-img-sunset {
+    position: relative;
+    height: 100%;
+    width: 100%;
 }
 
+.wrapper-img-sunset img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(40%);
+    position: absolute;
+}
+
+.wrapper-ticket {
+    border-style: ridge;
+    border-radius: 12px;
+    border-color:#e0822f;
+    border-width: 4px;
+    padding: 5%;
+    backdrop-filter: blur(50px);
+}
+
+.wrapper-ticket p {
+    padding-left: 5%;
+    color: rgb(109, 20, 0);
+    font-size: clamp(0.90rem, 2vw, 1.1rem);
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+.wrapper-ticket i {
+    padding-right: 3%;
+    color: rgb(0, 216, 0);
+    text-shadow: 2px 2px 4px #000000;
+}
+
+.wrapper-ticket h2, .wrapper-ticket i, .price-ticket {
+    align-self: center;
+}
+
+.price-ticket {
+    font-size: clamp(1.4rem, 2vw, 1.8rem) !important;
+    color: white !important;
+    padding: 0 !important;
+}
+
+#icon-ticket {
+    font-size: 2rem;
+    color: white;
+    margin-bottom: 4%;
+    padding: 0 !important;
+}
+
+.wrapper-notify {
+    border: solid;
+    border-width: 3%;
+    border-color: #5a0000;
+    border-radius: 12px;
+    backdrop-filter: blur(50px);
+    padding: 3%;
+}
+
+.wrapper-notify p {
+    color: black;
+    font-size: clamp(1.2rem, 1.7vw, 1.4rem);
+}
+
+.wrapper-notify i {
+    padding-right: 12px;
+    color: #ffad64 !important;
+    text-shadow: 2px 2px 4px #000000;
+}
+
+.wrapper-notify p span {
+    color: #5a0000;
+    font-weight: 600;
+}
+
+.btn-buy {
+    font-size: 1.2rem;
+    color: azure;
+    background: linear-gradient(135deg, #f8923e, #6f0062);
+    padding: 25px 35px;
+    border-radius: 12px;
+    font-weight: 500;
+}
+
+@media (min-width: 500px) {
+    .wrapper-hr-section {
+        width: 95%;
+    }
+}
+
+@media (min-width: 1024px) { 
+    .wrapper-hr-section {
+        width: 60%;
+    }
+}
+
+@media (min-width: 1400px) {
+    .wrapper-hr-section {
+        width: 40%;
+    }
+}

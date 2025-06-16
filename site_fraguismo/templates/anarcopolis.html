@@ -10,9 +10,9 @@
 <section class="hero-section">
     <div class="wrapper-img-bg" id="carousel">
          <img src="{% static '/images/anarcopolis1.webp' %}" alt="anarcopolis-2025" class="img-fluid active" />
-         <img src="{% static '/images/anarcopolis.webp' %}" alt="anarcopolis-2025" class="img-fluid" />
-         <img src="{% static '/images/anarcopolis1.webp' %}" alt="anarcopolis-2025" class="img-fluid" />
-         <img src="{% static '/images/anarcopolis.webp' %}" alt="anarcopolis-2025" class="img-fluid" />
+         <img src="{% static '/images/anarcopolis2.webp' %}" alt="anarcopolis-2025" class="img-fluid" />
+         <img src="{% static '/images/anarcopolis3.webp' %}" alt="anarcopolis-2025" class="img-fluid" />
+         <img src="{% static '/images/anarcopolis6.webp' %}" alt="anarcopolis-2025" class="img-fluid" />
     </div>
     <div class="container-fluid d-flex align-items-center justify-content-center hero-content">
         <div class="wrapper-hr-section">
@@ -27,73 +27,83 @@
                  Hotel Porto Sol Ingleses • 6 dias de imersão total • Palestras, workshops e networking com a comunidade libertária
             </p>
             <div class="wrapper-btn-hr">
-                <a href="#" class="btn-buy"><i class="fa-solid fa-up-right-from-square"></i> COMPRE AQUI</a>
-                <a href="#" class="btn-info"><i class="fa-solid fa-circle-info"></i> MAIS INFORMAÇÕES</a>
+                <a href="#"><i class="fa-solid fa-up-right-from-square"></i> COMPRE AQUI</a>
+                <a href="#"><i class="fa-solid fa-circle-info"></i> MAIS INFORMAÇÕES</a>
             </div>
         </div>
     </div>
 </section>
 
-<section class="ingressos">
-    <div class="container d-flex align-items-center justify-content-center">
+<section class="ticket">
+    <div class="container d-flex flex-column align-items-center justify-content-center" style="position: relative;">
         <h4 class="mt-5">INGRESSOS</h4>
-        <h6 class="mt-5">Escolha sua experiência no maior encontro libertário do Brasil</h6>
+        <h6 class="mt-4">Escolha sua experiência no maior encontro libertário do Brasil</h6>
     </div>
-    <div class="container d-flex justify-content-center align-items-center px-0 text-center container-ingressos">
-        <div class="row w-100 justify-content-center d-flex flex-wrap">
+    <div class="container d-flex justify-content-center align-items-center px-0 container-ticket mt-5">
+        <div class="row w-100 justify-content-center d-flex flex-wrap" style="padding: 0 5%;">
 
             <!--Coluna lei natural-->
-            <div class="col-md-4 d-flex flex-column" id="container-cards">
+            <div class="col-lg-6 d-flex flex-column" id="container-cards">
                 <div class="wrapper-container d-flex flex-column h-100">
-                    <div class="wrapper-bio-alt flex-grow-1 d-flex flex-column">
-                        <!-- ICON HERE-->
+                    <div class="wrapper-ticket flex-grow-1 d-flex flex-column">
+                        <i class="fa-solid fa-circle-user" id="icon-ticket"></i>
                         <h2 class="pb-12">NORMAL</h2>
-                        <p>
+                        <p class="price-ticket">
                             R$ 439
                         </p>
                         <p>
-                            Acesso a todas as palestras
+                            <i class="fa-regular fa-circle-check"></i> Acesso a todas as palestras
                         </p>
                         <p>
-                            Eventos sociais
+                           <i class="fa-regular fa-circle-check"></i> Eventos sociais
                         </p>
                         <p>
-                            Workshops dia 03/12
+                           <i class="fa-regular fa-circle-check"></i> Workshops dia 03/12
                         </p>
                         <p>
-                            Brindes do evento
+                           <i class="fa-regular fa-circle-check"></i> Brindes do evento
                         </p>
                     </div>
                 </div>
             </div>
 
             <!--Coluna lei natural-->
-            <div class="col-md-4 d-flex flex-column" id="container-cards">
+            <div class="col-lg-6 d-flex flex-column" id="container-cards">
                 <div class="wrapper-container d-flex flex-column h-100">
-                    <div class="wrapper-bio-alt flex-grow-1 d-flex flex-column">
+                    <div class="wrapper-ticket ticket-vip flex-grow-1 d-flex flex-column">
+                        <i class="fa-solid fa-crown" id="icon-ticket"></i>
                         <h2 class="pb-12">VIP</h2>
-                        <p>
+                        <p class="price-ticket">
                             R$ 749
                         </p>
                         <p>
-                            Tudo do ingresso normal
+                           <i class="fa-regular fa-circle-check"></i> Tudo do ingresso normal
                         </p>
                         <p>
-                            Lugares próximos ao palco
+                          <i class="fa-regular fa-circle-check"></i> Lugares próximos ao palco
                         </p>
                         <p>
-                            Almoço com palestrantes (3 dias)
+                           <i class="fa-regular fa-circle-check"></i> Almoço com palestrantes (3 dias)
                         </p>
                         <p>
-                            Gravações das edições
+                           <i class="fa-regular fa-circle-check"></i> Gravações das edições
                         </p>
                         <p>
-                            Brindes exclusivos
+                           <i class="fa-regular fa-circle-check"></i> Brindes exclusivos
                         </p>
                     </div>
                 </div>
             </div>
             <div class="container d-flex align-items-center justify-content-center mt-5">
+                <div class="wrapper-notify">
+                    <p><i class="fa-solid fa-triangle-exclamation"></i><span>ATENÇÃO - CASO COMPRE E NÃO COMPAREÇA NESTA EDIÇÃO</span> <br/>
+                    Você poderá usar este mesmo ingresso para uma edição futura.<br/>
+                    Ingressos normais: Avise com antecedência.<br/>
+                    Ingressos vip's: Avise com 1 mês de antecedência.
+                    </p>
+                </div>
+            </div>
+            <div class="container d-flex align-items-center justify-content-center mt-5 mb-5 pb-5">
                 <a href="#" class="btn-buy"><i class="fa-solid fa-up-right-from-square"></i> COMPRE AQUI</a>
             </div>
         </div>
