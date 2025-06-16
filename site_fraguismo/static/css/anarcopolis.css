@@ -239,8 +239,8 @@ html, body {
 
 /* HOSPEDAGEM (HOST) */
 .host {
-    min-height: fit-content;
-    max-height: 100dvh;
+    min-height: 100dvh;
+    max-height: fit-content;
     width: 100vw;
     position: relative;
     display: flex;
@@ -288,7 +288,7 @@ html, body {
 
 .ct-info-host {
     width: 100vw;
-    height: 50dvh;
+    height: 90dvh;
     display: flex;
     align-items: center !important;
     justify-content: center !important;
@@ -350,8 +350,8 @@ html, body {
 
 /* CRONOGRAMA (timeline)*/
 .timeline {
-    min-height: fit-content;
-    max-height: 100dvh;
+    min-height: 100dvh;
+    max-height: fit-content;
     width: 100vw;
     position: relative;
     display: flex;
@@ -467,7 +467,7 @@ html, body {
 
 @media (min-width: 300px) {
     .wrapper-hr-section {
-        width: 95%;
+        width: 100%;
     }
     .row-cards {
         overflow: hidden;
@@ -475,6 +475,20 @@ html, body {
     .card a img {
         height: 400px;
         object-fit: cover;
+    }
+    .ct-rooms {
+        align-items: center;
+        justify-content: center;
+    }
+    #container-cards {
+        margin-top: 1%;
+        margin-bottom: 1%;
+    }
+}
+
+@media (min-width: 360px) {
+    .ct-info-host {
+        height: 50dvh;
     }
 }
 
@@ -496,6 +510,10 @@ html, body {
     .ct-rooms {
         justify-content: end;
         margin-right: 3%;
+    }
+    #container-cards {
+        margin-top: 0;
+        margin-bottom: 0;
     }
 }
 
