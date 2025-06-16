@@ -415,6 +415,37 @@ html, body {
     text-shadow: 2px 2px 4px #000000;
 }
 
+.col-cards {
+    min-height: fit-content;
+    max-height: 400px !important;
+}
+
+.card {
+    transition: all 0.3s ease-in-out;
+}
+
+.card i {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: none;
+}
+
+.card:hover {
+    border: solid;
+    border-width: 2px;
+    border-color: #ffe62b;
+    filter: brightness(60%);
+    transition: all 0.3s ease-in-out;
+}
+
+.col-cards:hover .card i {
+    display: block;
+    font-size: 3rem;
+    color: #ffe62b;
+}
+
 @media (min-width: 300px) {
     .wrapper-hr-section {
         width: 95%;
