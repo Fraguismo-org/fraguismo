@@ -446,6 +446,22 @@ html, body {
     color: #ffe62b;
 }
 
+.ct-midia h5 {
+    color: white;
+    font-size: 2rem;
+    text-shadow: 2px 2px 4px #000000;
+}
+
+.ct-midia a {
+    color: rgb(255, 255, 255);
+    background: linear-gradient(135deg, #f8923e, #6f0062);
+    padding: 2%;
+    margin: 1% 0;
+    border-radius: 12px;
+    font-size: clamp(0.90rem, 2vw, 1.1rem);
+    font-weight: 600;
+}
+
 @media (min-width: 300px) {
     .wrapper-hr-section {
         width: 95%;
