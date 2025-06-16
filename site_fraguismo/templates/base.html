@@ -39,7 +39,7 @@
     </header>
 
     <div
-        class="{% if request.resolver_match.url_name == 'index' %}container-fluid container-geral{% else %}container pb-5 ct-geral mb-2{% endif %}">
+        class="{% if request.resolver_match.url_name == 'index' or request.resolver_match.url_name == 'anarcopolis' %}container-fluid container-geral{% else %}container pb-5 ct-geral mb-2{% endif %}">
         {% if messages %}
         {% for message in messages %}
         <div class="alert alert-warning alert-dismissible fade show" role="alert">

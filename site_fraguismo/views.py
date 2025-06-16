@@ -51,3 +51,6 @@ def hierarquia(request):
 
 def cursofraguista(request):
     return render(request, 'cursofraguista.html')
+
+def anarcopolis(request):
+    return render(request, 'anarcopolis.html')
