@@ -42,7 +42,7 @@
     <div class="container d-flex justify-content-center align-items-center px-0 container-ticket mt-5">
         <div class="row w-100 justify-content-center d-flex flex-wrap" style="padding: 0 5%;">
 
-            <!--Coluna lei natural-->
+            <!--Coluna NORMAL-->
             <div class="col-lg-6 d-flex flex-column" id="container-cards">
                 <div class="wrapper-container d-flex flex-column h-100">
                     <div class="wrapper-ticket flex-grow-1 d-flex flex-column">
@@ -67,7 +67,7 @@
                 </div>
             </div>
 
-            <!--Coluna lei natural-->
+            <!--Coluna VIP-->
             <div class="col-lg-6 d-flex flex-column" id="container-cards">
                 <div class="wrapper-container d-flex flex-column h-100">
                     <div class="wrapper-ticket ticket-vip flex-grow-1 d-flex flex-column">
@@ -96,10 +96,19 @@
             </div>
             <div class="container d-flex align-items-center justify-content-center mt-5">
                 <div class="wrapper-notify">
-                    <p><i class="fa-solid fa-triangle-exclamation"></i><span>ATENÇÃO - CASO COMPRE E NÃO COMPAREÇA NESTA EDIÇÃO</span> <br/>
+                    <p><i class="fa-solid fa-triangle-exclamation"></i><span><strong>ATENÇÃO - CASO COMPRE E NÃO COMPAREÇA NESTA EDIÇÃO</strong></span> <br/>
                     Você poderá usar este mesmo ingresso para uma edição futura.<br/>
-                    Ingressos normais: Avise com antecedência.<br/>
-                    Ingressos vip's: Avise com 1 mês de antecedência.
+                    <strong>Ingressos vip's:</strong> Avise com pelo menos <strong>1 mês</strong> de antecedência.<br>
+                    <button onclick="window.location.href='/anarcopolisinfo'" 
+                    style=
+                    "text-decoration: none; 
+                    color: rgb(30, 101, 226);
+                    border: none;
+                    background-color: rgba(240, 248, 255, 0);
+                    border-bottom: solid;
+                    font-size: clamp(1.2rem, 1.7vw, 1.4rem);
+                    padding: 0;
+                    "><strong>Clique aqui para mais informações</strong></button>
                     </p>
                 </div>
             </div>
@@ -234,7 +243,7 @@
             <div class="col-md-6 mb-4 col-cards">
                 <div class="card">
                 <a href="https://www.instagram.com/reel/DCrSZ5lxHXW/?igsh=MTlrbDVuYWZkd3AycA==">
-                    <img src="{% static '/images/anarcopolis7.webp' %}" class="card-img-top img-fluid" alt="card">
+                    <img src="{% static '/images/anarcopolis5.webp' %}" class="card-img-top img-fluid" alt="card">
                     <i class="fa-solid fa-arrow-up-right-from-square"></i>
                 </a>
                 </div>
@@ -243,9 +252,9 @@
         </div>
         <div class="container d-flex flex-column align-items-center justify-content-center mt-5 ct-midia">
             <h5>Na mídia</h5>
-            <div class="d-flex flex-row gap-4 w-100 align-items-center justify-content-center">
-                <a href="https://livecoins.com.br/anarcopolis-vai-ensinar-brasileiros-a-criar-carteira-de-bitcoin-e-realizar-transacoes/">LiveCoins - Bitcoins e transações <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
-                <a href="https://www.poder360.com.br/opiniao/o-anarcocapitalismo-e-a-lei-natural/">Paula Schmidt - Poder 360 <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+            <div class="d-flex flex-row gap-4 w-100 align-items-center justify-content-center" id="row-midia">
+                <a href="https://livecoins.com.br/anarcopolis-vai-ensinar-brasileiros-a-criar-carteira-de-bitcoin-e-realizar-transacoes/">Livecoins: Anarcópolis, maior conferência libertária do Brasil <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+                <a href="https://www.poder360.com.br/opiniao/o-anarcocapitalismo-e-a-lei-natural/">Paula Schmitt - Poder 360: “O Anarcocapitalismo e a Lei Natural” <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
             </div>
         </div>
     </div>

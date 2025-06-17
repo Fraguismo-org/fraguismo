@@ -73,7 +73,7 @@ html, body {
 .wrapper-hr-section h3 {
     font-size: clamp(2.6rem, 5vw, 7rem);
     margin: 0 0 2% 0;
-    background-image: linear-gradient(135deg, rgb(45, 199, 204), rgb(209, 66, 66));
+    background-image: linear-gradient(135deg, rgb(0, 247, 255), rgb(255, 67, 67));
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -121,6 +121,11 @@ html, body {
     padding: 2% 4%;
     border-radius: 12px;
     font-size: clamp(1rem, 1.2vw, 1.2rem);
+    transition: all 0.3s ease-in-out;
+}
+
+.wrapper-btn-hr a:hover {
+    box-shadow: 0 0 25px #e0822f;
 }
 
 /*ÁREA DE INGRESSOS*/
@@ -129,7 +134,7 @@ html, body {
     max-height: fit-content;
     width: 100vw;
     /*background: linear-gradient(135deg, #f8923e, #6f0062); */
-    background: url('/static/images/sunset.webp') no-repeat center/cover;
+    background: url('/site_fraguismo/static/images/sunset.webp') no-repeat center/cover;
     position: relative;
     display: flex;
     flex-direction: column;
@@ -144,9 +149,10 @@ html, body {
     text-shadow: 2px 2px 4px #000000;
 } .ticket .container h6 {
     color: white;
-    font-size: clamp(1rem, 1.8vw, 3.6rem);
+    font-size: clamp(1.2rem, 1.8vw, 3.6rem);
     font-weight: 300;
     text-shadow: 2px 2px 4px #000000;
+    text-align: center;
 }
 
 .wrapper-img-sunset {
@@ -229,12 +235,18 @@ html, body {
 }
 
 .btn-buy {
-    font-size: 1.2rem;
+    font-size: clamp(0.90rem, 1vw, 1.2rem);
     color: azure;
     background: linear-gradient(135deg, #f8923e, #6f0062);
     padding: 25px 35px;
     border-radius: 12px;
     font-weight: 500;
+    transition: all 0.3s ease-in-out;
+}
+
+.btn-buy:hover {
+    box-shadow: 0 0 20px #6f0062;
+    transition: all 0.3s ease-in-out;
 }
 
 /* HOSPEDAGEM (HOST) */
@@ -425,6 +437,7 @@ html, body {
 
 .card {
     transition: all 0.3s ease-in-out;
+    border-width: 2px;
 }
 
 .card i {
@@ -463,6 +476,12 @@ html, body {
     border-radius: 12px;
     font-size: clamp(0.90rem, 2vw, 1.1rem);
     font-weight: 600;
+    transition: all 0.3s ease-in-out;
+}
+
+.ct-midia a:hover {
+    box-shadow: 0 0 20px #6f0062;
+    transition: all 0.3s ease-in-out;
 }
 
 @media (min-width: 300px) {
@@ -526,5 +545,12 @@ html, body {
 @media (min-width: 1400px) {
     .wrapper-hr-section {
         width: 60%;
+    }
+}
+
+@media (max-width: 818px) {
+    #row-midia {
+        flex-direction: column !important;
+        gap: 10px !important;
     }
 }
