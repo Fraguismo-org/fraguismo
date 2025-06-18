@@ -442,6 +442,9 @@ button:hover {
         flex-direction: column;
         height: fit-content;
     }
+    .custom-shape-divider-top-1741632460 svg, .custom-shape-divider-bottom-1741633164 svg {
+        height: 10px;
+    }
 }
 
 @media (max-width: 993px) {

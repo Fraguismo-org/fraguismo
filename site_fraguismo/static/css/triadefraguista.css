@@ -98,19 +98,19 @@ html, body {
 }
 
 .apresentation-LN {
-    background: url('/static/images/forest.png') no-repeat center/cover;
+    background: url('/static/images/forest.webp') no-repeat center/cover;
 }
 
 .apresentation-DAO{
-    background: url('/static/images/blockchain.png') no-repeat center/cover;
+    background: url('/static/images/blockchain.webp') no-repeat center/cover;
 }
 
 .apresentation-REGRAS {
-    background: url('/static/images/regrasdao.png') no-repeat center/cover;
+    background: url('/static/images/regrasdao.webp') no-repeat center/cover;
 }
 
 .apresentation-hierarquia, .bg-hierarquia {
-    background: url('/static/images/hierarquia.png') no-repeat center/cover;
+    background: url('/static/images/hierarquia.webp') no-repeat center/cover;
 }
 
 .apresentation-CF {
@@ -310,7 +310,7 @@ html, body {
     } 
 
     .column-img-LN {
-        background: url('/static/images/lawwomansmall.PNG') no-repeat center/cover;
+        background: url('/static/images/lw-small.webp') no-repeat center/cover;
     }
 
     .column-img-CF {
