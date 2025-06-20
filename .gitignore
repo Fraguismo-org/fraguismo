@@ -7,3 +7,4 @@
 **/.vscode
 **/.vscode/*
 fraguismo/media/*
+!.env.example
