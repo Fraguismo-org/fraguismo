@@ -10,6 +10,7 @@ from marketplace.forms.image_form import ImagesForm
 from members.models.profile import Profile
 from members.models.users import Users
 from datetime import datetime
+from PIL import Image
 
 DEPARTAMENTOS = [
     (0, "Outros"),
@@ -94,11 +95,13 @@ def cadastrar_anuncio(request):
                     imagem.name = str(anuncio.cod_anuncio) + str(id) + ".jpg"
                     id += 1
                     img = Images(image=imagem, anuncio=anuncio)
-                    rate = img.height/1000 if img.height > img.width else img.width/1000
-                    if img.height > 1000 or img.width > 1000:
-                        output_size = (img.width/rate, img.height/rate)
-                        img.thumbnail(output_size)
                     img.save()
+                    img_obj = Image.open(img.image.path)
+                    rate = img_obj.height/1000 if img_obj.height > img_obj.width else img_obj.width/1000
+                    if img_obj.height > 1000 or img_obj.width > 1000:
+                        output_size = (img_obj.width/rate, img_obj.height/rate)
+                        img_obj.thumbnail(output_size)
+                    img_obj.save(img.image.path)
             messages.success(request, "Anúncio cadastrado com sucesso!")
             return redirect('listar_anuncios')
     else:
