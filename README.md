@@ -1,9 +1,9 @@
 # Configurando o projeto
 
 1. Clone o repositório
-2. Crie uma virtual environment com python
+2. Crie uma virtual environment com Python
 `$python -m venv .venv`
-3. ative a virtual environment
+3. Ative a virtual environment
 **Windows**
 `.venv/Script/Activate.ps1`
 **Linux**
