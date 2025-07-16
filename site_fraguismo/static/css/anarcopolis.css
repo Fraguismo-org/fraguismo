@@ -4,7 +4,7 @@
 
 html, body {
     overflow-x: hidden;
-    background: linear-gradient(to bottom, #090023, #090023, #42587e);
+    background: linear-gradient(to bottom, #889ddc, #090023, #090023, #42587e);
 }
 
 .container-geral {
@@ -126,6 +126,7 @@ html, body {
 
 .wrapper-btn-hr a:hover {
     box-shadow: 0 0 25px #e0822f;
+    cursor: pointer;
 }
 
 /*ÁREA DE INGRESSOS*/
@@ -247,6 +248,7 @@ html, body {
 .btn-buy:hover {
     box-shadow: 0 0 20px #6f0062;
     transition: all 0.3s ease-in-out;
+    cursor: pointer;
 }
 
 /* HOSPEDAGEM (HOST) */
@@ -300,7 +302,6 @@ html, body {
 
 .ct-info-host {
     width: 100vw;
-    height: 90dvh;
     display: flex;
     align-items: center !important;
     justify-content: center !important;
@@ -454,6 +455,7 @@ html, body {
     border-color: #ffe62b;
     filter: brightness(60%);
     transition: all 0.3s ease-in-out;
+    cursor: pointer;
 }
 
 .col-cards:hover .card i {
@@ -482,6 +484,7 @@ html, body {
 .ct-midia a:hover {
     box-shadow: 0 0 20px #6f0062;
     transition: all 0.3s ease-in-out;
+    cursor: pointer;
 }
 
 @media (min-width: 300px) {
@@ -507,12 +510,16 @@ html, body {
 
 @media (min-width: 360px) {
     .ct-info-host {
-        height: 50dvh;
+        min-height: 53vh;
+        max-height: fit-content;
+        margin: 2% 0;
     }
 }
 
 @media (min-width: 695px) {
     .ct-info-host {
+        min-height: 40vh;
+        max-height: fit-content;
         margin-top: 5%;
         margin-bottom: 5%;
     }
@@ -520,6 +527,8 @@ html, body {
 
 @media (min-width: 992px) {
     .ct-info-host {
+        min-height: 53dvh;
+        max-height: fit-content;
         flex-direction: row;
         margin-bottom: 0;
         margin-top: 0;
@@ -552,5 +561,26 @@ html, body {
     #row-midia {
         flex-direction: column !important;
         gap: 10px !important;
+    }
+}
+
+/*Asus Zenbook Fold*/
+@media (width: 853px) and (height: 1280px){
+    .ct-info-host {
+        min-height: 15dvh;
+        max-height: fit-content;
+        flex-direction: row;
+    }
+}
+
+/*IPad*/
+@media (width: 768px) and (height: 1024px) {
+    .ct-info-host {
+        flex-direction: row;
+        min-height: 10dvh;
+        max-height: fit-content;
+    }
+    .host, .timeline {
+        min-height: 50dvh;
     }
 }
