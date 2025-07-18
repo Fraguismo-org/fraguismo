@@ -3,4 +3,49 @@
 
 {% block content %}
 
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="mb-0">Nova Proposta</h4>
+                </div>
+                <div class="card-body">
+                    
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="id_titulo" class="form-label">Título da Proposta</label>
+                            <input type="text" class="form-control" id="id_titulo" name="titulo" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="id_valor" class="form-label">Valor da Proposta</label>
+                            <div class="input-group">
+                                <span class="input-group-text">R$</span>
+                                <input type="number" step="0.01" min="0.01" class="form-control" id="id_valor" name="valor" required>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="id_arquivo" class="form-label">Arquivo da Proposta</label>
+                            <input type="file" class="form-control" id="id_arquivo" name="arquivo" required>
+                            <small class="text-muted">Formatos permitidos: txt, pdf, doc, docx, xls, xlsx, ppt, pptx. Tamanho máximo: 5MB.</small>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Verificação de Integridade</label>
+                            <p class="text-muted">O sistema irá gerar automaticamente um hash SHA256 do arquivo para garantir sua integridade.</p>
+                        </div>
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary">Enviar Proposta</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+
+
+
 {% endblock content %}
