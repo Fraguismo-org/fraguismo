@@ -1,0 +1,176 @@
+@import 'variables';
+@import 'mixins';
+
+html, body {
+  margin: 0;
+  padding: 0;
+}
+html {
+    height: 100%;
+}
+body {
+  min-height: 100%;
+  @include flexbox($aling-items: auto, $justify-content: auto, $direction: column);
+}
+
+footer {
+  margin-top: auto;
+  .footer-top-area {
+    background-color: $footer-bg;
+
+    .widget {
+      color: $gray;
+      > h3 {
+        color: $white;
+      }
+      a {
+        color: $gray;
+        &:hover, &:active {
+          color: $link-hover;
+        }
+      }
+    }
+  }
+
+  .footer-bottom-area {
+    background-color: $footer-bottom;
+    color: #ababab;
+  }
+
+  .footer-style-2 .widget .menu li a {
+    &:hover {
+      color: $link-hover;
+      &::after {
+        background-color: $link-hover;
+      }
+    }
+  }
+}
+
+form label.required::after {
+  content: " *";
+  color: red;
+}
+
+a, u {
+  text-decoration: none;
+}
+
+.password-instructions {
+  list-style: disc;
+  padding: 0;
+  margin-top: 5px;
+  li {
+    color: red;
+    font-size: 14px;
+    margin-left: 18px;
+  }
+}
+
+.password-strength {
+  font-weight: bold;
+}
+
+.password-requirements {
+  font-style: italic;
+}
+
+.text-error {
+  color: red;
+  display: none;
+}
+
+.image-container {
+  width: 18rem;
+  overflow: hidden;
+
+  .resized-image {
+    max-width: 100%;
+    max-height: 100%;
+    display: block;
+    margin: auto;
+  }
+}
+
+.preco-card {
+  color: $gold;
+  font-weight: bolder;
+  font-size: x-large;
+}
+
+.departamento-display {
+  color: $light-gray;
+  font-size: small;
+}
+
+.card {
+  &:hover .zoom-image {
+    transform: scale(1.2);
+  }
+}
+
+.zoom-image {
+  width: 100%;
+  transition: transform 0.3s ease;
+}
+
+#star:hover {
+  color: $gold;
+  font-size: large;
+}
+
+.content {
+  padding: 50px 0;
+}
+
+.btc-cta {
+  color: $white;
+  font-weight: 500;
+  &:hover {
+    color: $link-hover;
+  }
+}
+
+header {
+  z-index: 9999 !important;
+  position: relative !important;
+  width: 100%;
+  height: fit-content;
+}
+
+.navbar {
+  &-nav {
+    font-size: 1rem;
+    .nav-link {
+      color: $navbar-link;
+      font-weight: normal;
+      font-size: 1rem;
+      text-transform: none;
+      &:hover {
+        color: #007bff;
+      }
+    }
+  }
+
+  &-brand {
+    color: $navbar-link;
+    font-weight: normal;
+    font-size: 1.2rem;
+    text-transform: none;
+  }
+
+  &-toggler {
+    border: none;
+    &-icon {
+      background-color: transparent;
+    }
+  }
+}
+
+.nav-item, .nav-link, .btn-publish {
+  @include responsive-font(0.90rem, 1vw, 1.1rem) 
+}
+
+li .dropdown-item, li .nav-link {
+  text-shadow: none;
+}

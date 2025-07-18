@@ -1,0 +1,29 @@
+@import 'mixins';
+@import 'variables';
+
+// Reset e base
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  overflow-x: hidden !important;
+  overflow-y: auto;
+  background-color: $bg-main;
+}
+
+// Shapes
+.custom-shape-divider-top-1744652616 {
+  @include custom-shape(absolute);
+  svg {
+    @include shape-svg(50px);
+  }
+  .shape-fill {
+    fill: #FFFFFF;
+  }
+}
+
+.hero-section {
+    @include apresentation;
+    @include background-fixed-cover('/site_fraguismo/static/images/forest.webp');
+}

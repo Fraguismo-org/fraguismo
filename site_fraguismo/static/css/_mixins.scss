@@ -1,0 +1,113 @@
+@mixin flexbox($aling-items, $justify-content, $direction: null) {
+  display: flex !important;
+  align-items: $aling-items;
+  justify-content: $justify-content;
+  @if $direction {
+  flex-direction: $direction;
+  }
+}
+
+@mixin element-size($height, $width) {
+    height: $height;
+    width: $width;
+}
+
+@mixin text-shadow {
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+@mixin responsive-font($min, $ideal, $max) {
+  font-size: clamp($min, $ideal, $max) !important;
+}
+
+@mixin container-master($padding, $margin) {
+    .container-geral {
+        padding: $padding !important;
+        margin: $margin !important;
+    }
+}
+
+@mixin bordas($color, $type, $radius, $width) {
+    border: $type;
+    border-width: $width;
+    border-color: $color;
+    border-radius: $radius;
+}
+
+@mixin blur($value) {
+    backdrop-filter: blur($value);
+}
+
+@mixin background-fixed-cover($url, $attachment: null) {
+  background: url($url) no-repeat center/cover;
+  @if $attachment{
+    background-attachment: $attachment;
+  }
+  
+}
+
+@mixin shape-svg($height, $z: null) {
+  position: relative;
+  display: block;
+  width: calc(100% + 1.3px);
+  height: $height;
+  @if $z {
+    z-index: $z;
+  }
+}
+
+@mixin custom-shape($position, $deg: null, $bottom: null) {
+  position: $position;
+  @if $bottom {
+    bottom: $bottom;
+  } @else {
+    top: 0;
+  }
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+  @if $deg {
+    transform: rotate($deg);
+  }
+}
+
+@mixin hidden-on-scroll {
+  .hidden-on-scroll {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 1s ease-out;
+  }
+  .visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@mixin apresentation {
+  @include flexbox(center, left);
+  @include element-size(58dvh, 100dvw);
+  margin: 0 -50vw;
+  position: relative;
+  left: 50%;
+  right: 50%;
+  image-rendering: auto smooth high-quality;
+  image-rendering: -webkit-optimize-contrast;
+  filter: contrast(105%);
+// Títulos
+.head-title {
+  h1 {
+    font-size: clamp(2.3rem, 2.8vw, 4rem);
+    color: rgb(243, 243, 243);
+    @include text-shadow();
+  }
+
+  h4 {
+    font-weight: 200;
+    padding: 10px 15px;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.466);
+    @include text-shadow();
+  }
+}
+}

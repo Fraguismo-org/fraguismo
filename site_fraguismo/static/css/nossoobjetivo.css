@@ -1,0 +1,57 @@
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  overflow-x: hidden !important;
+  overflow-y: auto;
+  background-color: rgb(221, 221, 221);
+}
+
+.custom-shape-divider-top-1744652616 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+}
+.custom-shape-divider-top-1744652616 svg {
+  position: relative;
+  display: block;
+  width: calc(100% + 1.3px);
+  height: 50px;
+}
+.custom-shape-divider-top-1744652616 .shape-fill {
+  fill: #FFFFFF;
+}
+
+.hero-section {
+  display: flex !important;
+  align-items: center;
+  justify-content: left;
+  height: 58dvh;
+  width: 100dvw;
+  margin: 0 -50vw;
+  position: relative;
+  left: 50%;
+  right: 50%;
+  image-rendering: auto smooth high-quality;
+  image-rendering: -webkit-optimize-contrast;
+  filter: contrast(105%);
+  background: url("/site_fraguismo/static/images/forest.webp") no-repeat center/cover;
+}
+.hero-section .head-title h1 {
+  font-size: clamp(2.3rem, 2.8vw, 4rem);
+  color: rgb(243, 243, 243);
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+.hero-section .head-title h4 {
+  font-weight: 200;
+  padding: 10px 15px;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.466);
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+/*# sourceMappingURL=nossoobjetivo.css.map */

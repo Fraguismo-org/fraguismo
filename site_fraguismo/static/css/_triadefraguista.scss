@@ -1,0 +1,278 @@
+// Importação de fontes
+@import url('https://fonts.googleapis.com/css2?family=Ballet:opsz@16..72&family=Charm:wght@400;700&family=Cookie&display=swap');
+@import 'variables';
+@import 'mixins';
+
+@mixin transition-default {
+  transition: all 0.5s ease-in-out;
+}
+// Reset e base
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  overflow-x: hidden !important;
+  overflow-y: auto;
+  background-color: $bg-main;
+}
+
+p, span {
+  font-size: clamp(0.90rem, 1.1vw, 3rem);
+}
+
+li {
+  font-size: clamp(0.80rem, 1.1vw, 1.2rem) !important;
+}
+
+h4 {
+  font-size: clamp(1rem, 2.3vw, 2rem);
+}
+
+h5 {
+  font-size: clamp(0.95rem, 2.2vw, 1.8rem) !important;
+}
+
+h1, h2, h3, h4, h5, h6, p, span, ul, li {
+  @include text-shadow;
+}
+
+// Efeitos
+@include hidden-on-scroll;
+
+// Centralização
+.content {
+  @include flexbox(center, center);
+}
+
+// Shapes
+.custom-shape-divider-top-1744652616 {
+  @include custom-shape(absolute);
+  svg {
+    @include shape-svg(50px);
+  }
+  .shape-fill {
+    fill: #FFFFFF;
+  }
+}
+
+// Apresentações
+.apresentation{
+  @include apresentation;
+}
+.apresentation-LN { @include background-fixed-cover('/site_fraguismo/static/images/forest.webp'); }
+.apresentation-DAO { @include background-fixed-cover('/static/images/blockchain.webp'); }
+.apresentation-REGRAS { @include background-fixed-cover('/static/images/regrasdao.webp'); }
+.apresentation-hierarquia, .bg-hierarquia { @include background-fixed-cover('/static/images/hierarquia.webp'); }
+.apresentation-CF { @include background-fixed-cover('/static/images/donttreadonmeBG.webp'); }
+
+// Títulos
+.head-title {
+  h1 {
+    font-size: clamp(2.3rem, 2.8vw, 4rem);
+    color: rgb(243, 243, 243);
+    @include text-shadow();
+  }
+
+  h4 {
+    font-weight: 200;
+    padding: 10px 15px;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.466);
+    @include text-shadow();
+  }
+}
+
+// Imagens laterais
+.bg-img, .bg-img-2 {
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  width: 100vw;
+  max-width: 40vw;
+}
+
+.bg-img {
+  left: 50%;
+  margin-left: -71vw;
+}
+
+.bg-img-2 {
+  left: 50%;
+  margin-left: 31vw;
+}
+
+.img-side {
+  border-radius: 10px;
+  object-fit: cover;
+  width: 100%;
+}
+
+.content-law {
+  text-align: center;
+  padding: 0 12%;
+}
+
+// Colunas
+.column-rights {
+  height: fit-content;
+
+  h4 {
+    margin-bottom: 3%;
+  }
+}
+
+.column-img {
+  img {
+    border-radius: 10px !important;
+    box-shadow: 0 0 10px $box-shadow-dark;
+  }
+}
+
+.display-img {
+  border-radius: 10px;
+  object-fit: cover;
+  position: relative;
+  z-index: 2;
+  min-height: fit-content;
+  max-height: max-content;
+}
+
+.column-topics {
+  background-color: rgb(175, 175, 175);
+  box-shadow: 0 0 10px $box-shadow-dark;
+  border-radius: 10px;
+  padding: 15px;
+  color: black;
+  min-height: 300px;
+  width: fit-content;
+}
+
+// Botões
+.bg-btn-curso {
+  height: 21dvh;
+  margin: 3% 0;
+  border-radius: 16px;
+
+  img {
+    width: 100%;
+    height: 100%;
+    filter: brightness(50%);
+    object-fit: cover;
+    border-radius: 16px;
+  }
+}
+
+.dao-button {
+  padding: 10px 15px;
+  background-color: #fff;
+  box-shadow: $gold 0 0 30px;
+  border: 2px solid $gold;
+  border-radius: 10px;
+  color: black;
+  font-size: clamp(1.1rem, 1.1vw, 2rem);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  @include transition-default;
+
+  &:hover,
+  &:active {
+    background-color: $gold;
+    color: white;
+  }
+}
+
+// Pilar
+.wrapper-col-pilar {
+  @include element-size(100%, 100%);
+  @include flexbox(center, center, column);
+  border-radius: 12px;
+  background-color: black;
+  box-shadow: 0 0 30px $box-shadow-dark;
+
+  p {
+    position: absolute;
+    color: black;
+    padding: 7%;
+    font-size: clamp(0.55rem, 1.5vw, 3rem) !important;
+    border-radius: 12px;
+    background-color: rgba(223, 223, 223, 0.733);
+    text-shadow: 1px 1px 3px rgba(255, 255, 255, 0.5);
+  }
+
+  img {
+    width: 100%;
+    height: 100%;
+    border-radius: 12px;
+    object-fit: cover;
+  }
+}
+
+.col-pilar {
+  width: 25%;
+  transition: 0.3s all ease-in-out;
+
+  &:hover {
+    width: 26%;
+  }
+}
+
+// Responsivo
+@media (max-width: 992px) {
+  .content {
+    padding-top: 0 !important;
+    margin-top: 0 !important;
+  }
+}
+
+@media (max-height: 658px) {
+  .head-title h1 {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 1024px) {
+  .column-rights {
+    width: 100%;
+  }
+
+  .column-img {
+    min-height: 400px;
+    min-width: 100%;
+    @include flexbox(center, center);
+    border-radius: 10px;
+  }
+
+  .column-img-LN { @include background-fixed-cover('/static/images/lw-small.webp'); }
+  .column-img-CF { @include background-fixed-cover('/static/images/ancapsnake.webp'); }
+
+  .display-img {
+    display: none;
+  }
+
+  .content {
+    flex-direction: column;
+
+    .col-sm-6 {
+      width: 100%;
+      padding: 10px 0;
+    }
+  }
+}
+
+@media (min-width: 1024px) {
+  .column-rights p {
+    font-size: clamp(0.90rem, 1.5vw, 3rem);
+  }
+}
+
+@media (min-width: 1280px) {
+  .column-rights p {
+    font-size: clamp(0.90rem, 1vw, 3rem);
+  }
+}
+
+@media (min-width: 1400px) {
+  .column-rights p {
+    font-size: clamp(1rem, 1.2vw, 3rem);
+  }
+}
