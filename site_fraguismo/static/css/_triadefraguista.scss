@@ -60,7 +60,7 @@ h1, h2, h3, h4, h5, h6, p, span, ul, li {
 .apresentation{
   @include apresentation;
 }
-.apresentation-LN { @include background-fixed-cover('/site_fraguismo/static/images/forest.webp'); }
+.apresentation-LN { @include background-fixed-cover('/static/images/forest.webp'); }
 .apresentation-DAO { @include background-fixed-cover('/static/images/blockchain.webp'); }
 .apresentation-REGRAS { @include background-fixed-cover('/static/images/regrasdao.webp'); }
 .apresentation-hierarquia, .bg-hierarquia { @include background-fixed-cover('/static/images/hierarquia.webp'); }
