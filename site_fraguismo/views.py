@@ -57,3 +57,6 @@ def anarcopolis(request):
 
 def anarcopolisinfo(request):
     return render(request, 'anarcopolisinfo.html')
+
+def nossoobjetivo(request):
+    return render(request, 'nossoobjetivo.html')
