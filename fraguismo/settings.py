@@ -32,6 +32,7 @@ INSTALLED_APPS = [
     'configuracoes',
     'log',
     'utils',
+    'propostas',
 ]
 
 MIDDLEWARE = [

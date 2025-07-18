@@ -16,6 +16,7 @@ urlpatterns = [
     path('cursos/', include('cursos.urls')),
     path('marketplace/', include('marketplace.urls')),
     path('config/', include('configuracoes.urls')),
+    path('propostas/', include('propostas.urls')),
 ]
 
 handler404 = errors_views.custom_page_not_found_view
