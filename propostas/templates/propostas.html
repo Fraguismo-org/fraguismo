@@ -12,7 +12,7 @@
                 </div>
                 <div class="card-body">
                     
-                    <form method="post" enctype="multipart/form-data">
+                    <form action="{% url 'criar_proposta' %}" method="post" enctype="multipart/form-data">
                         {% csrf_token %}
                         <div class="mb-3">
                             <label for="id_titulo" class="form-label">Título da Proposta</label>
