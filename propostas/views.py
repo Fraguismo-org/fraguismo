@@ -86,4 +86,7 @@ def create_proposal(request):
 def show_proposal(request):
     proposal = Proposta.objects.all().order_by('-data_criacao')
     return render(request, 'listar_propostas.html', {'propostas': proposal})
+
+def details_proposal(request):
+    return render(request, 'details_propostas.html')
 # Create your views here.
