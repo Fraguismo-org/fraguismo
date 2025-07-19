@@ -10,6 +10,8 @@ from django.shortcuts import redirect, render
 from django.contrib import messages
 import hashlib
 from .models import Proposta
+from propostas.utils import can_create_proposal
+
 
 def propostas(request):
     return render(request, 'propostas.html')
@@ -46,38 +48,42 @@ def enviar_proposta(request):
     return render(request, 'propostas.html')
 """
 
-def criar_proposta(request):
+def create_proposal(request):
+    if not can_create_proposal(request.user):
+        messages.error(request, 'Você não tem permissão para criar propostas.')
+        return redirect('show_proposal')
+    
     if request.method == 'POST':
-        titulo = request.POST.get('titulo')
-        valor = request.POST.get('valor')
-        arquivo = request.FILES.get('arquivo')
+        title = request.POST.get('titulo')
+        value = request.POST.get('valor')
+        file = request.FILES.get('arquivo')
 
         # Validação básica
-        if not titulo or not valor or not arquivo:
+        if not title or not value or not file:
             messages.error(request, 'Preencha todos os campos obrigatórios.')
-            return redirect('criar_proposta')
+            return redirect('create_proposal')
 
         # Verificação de tamanho (máx 5MB)
-        if arquivo.size > 5 * 1024 * 1024:
+        if file.size > 5 * 1024 * 1024:
             messages.error(request, 'O arquivo excede o limite de 5MB.')
-            return redirect('criar_proposta')
+            return redirect('create_proposal')
 
         # Gerar hash SHA256 do arquivo
-        hash_sha256 = hashlib.sha256(arquivo.read()).hexdigest()
-        arquivo.seek(0)  # Reposiciona ponteiro do arquivo após ler
+        hash_sha256 = hashlib.sha256(file.read()).hexdigest()
+        file.seek(0)  # Reposiciona ponteiro do arquivo após ler
 
         # Salvar no banco
-        proposta = Proposta(
-            titulo=titulo,
-            valor=valor,
-            arquivo=arquivo
+        proposal = Proposta(
+            titulo=title,
+            valor=value,
+            arquivo=file
         )
-        proposta.save()
+        proposal.save()
 
         messages.success(request, f'Proposta enviada com sucesso! Hash do arquivo: {hash_sha256}')
         return redirect('listar_propostas')  # redireciona pra view de listagem
 
-def listar_propostas(request):
-    propostas = Proposta.objects.all().order_by('-data_criacao')
-    return render(request, 'listar_propostas.html', {'propostas': propostas})
+def show_proposal(request):
+    proposal = Proposta.objects.all().order_by('-data_criacao')
+    return render(request, 'listar_propostas.html', {'propostas': proposal})
 # Create your views here.
