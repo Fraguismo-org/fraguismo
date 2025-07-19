@@ -67,7 +67,17 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'user_page' %}">Minha Área</a>
                 </li>
+                <li>
+                    <a class="nav-link" href="{% url 'propostas' %}">Nova proposta</a>
+                </li>
                 {% endif %}
+                <!---
+                {% if can_create_proposal %}
+                <li>
+                    <a class="nav-link" href="{% url 'propostas' %}">Ver propostas</a>
+                </li>  
+                {% endif %}
+                -->
                 {% if user.is_superuser %}
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'adm' %}">Administrativo</a>
