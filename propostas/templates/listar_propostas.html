@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+
+{% load static %}
+
+<div class="container my-5">
+    <h2 class="mb-4">Propostas Enviadas</h2>
+
+    {% if propostas %}
+        <div class="row row-cols-1 row-cols-md-2 g-4">
+            {% for proposta in propostas %}
+                <div class="col">
+                    <div class="card shadow-sm h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ proposta.titulo }}</h5>
+                            <p class="card-text"><strong>Valor:</strong> R$ {{ proposta.valor }}</p>
+                            <p class="card-text"><strong>Enviado em:</strong> {{ proposta.data_criacao|date:"d/m/Y H:i" }}</p>
+                            <a href="{{ proposta.arquivo.url }}" target="_blank" class="btn btn-outline-primary btn-sm">Ver Arquivo</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p class="text-muted">Nenhuma proposta cadastrada ainda.</p>
+    {% endif %}
+</div>
+</body>
+</html>
+
+
+
+{% endblock content %}

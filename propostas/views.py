@@ -75,8 +75,9 @@ def criar_proposta(request):
         proposta.save()
 
         messages.success(request, f'Proposta enviada com sucesso! Hash do arquivo: {hash_sha256}')
-        return redirect('criar_proposta')
+        return redirect('listar_propostas')  # redireciona pra view de listagem
 
-    return render(request, 'proposta.html')
-
+def listar_propostas(request):
+    propostas = Proposta.objects.all().order_by('-data_criacao')
+    return render(request, 'listar_propostas.html', {'propostas': propostas})
 # Create your views here.
