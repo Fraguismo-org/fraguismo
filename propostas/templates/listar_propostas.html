@@ -17,7 +17,7 @@
                             <p class="card-text"><strong>Valor:</strong> R$ {{ proposta.valor }}</p>
                             <p class="card-text"><strong>Enviado em:</strong> {{ proposta.data_criacao|date:"d/m/Y H:i" }}</p>
                             <a href="{{ proposta.arquivo.url }}" target="_blank" rel="noopener noreferrer" class="btn btn-outline-primary btn-sm">Ver Arquivo</a>
-                            <button onclick="window.location.href='detalhes_proposta'" target="_blank" rel="noopener noreferrer" class="btn btn-outline-primary btn-sm">Ver Detalhes</button>
+                            <a href="{% url 'details_proposal' proposta.id %}" target="_blank" class="btn btn-outline-primary btn-sm">Ver Detalhes</a>
                         </div>
                     </div>
                 </div>

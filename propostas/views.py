@@ -6,7 +6,7 @@ referente a função de retornar URLs e criar proposta(criar_proposta) para ser 
 
 
 # import requests
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib import messages
 import hashlib
 from .models import Proposta
@@ -76,17 +76,28 @@ def create_proposal(request):
         proposal = Proposta(
             titulo=title,
             valor=value,
-            arquivo=file
+            arquivo=file,
+            hash_arquivo=hash_sha256
         )
         proposal.save()
 
         messages.success(request, f'Proposta enviada com sucesso! Hash do arquivo: {hash_sha256}')
-        return redirect('listar_propostas')  # redireciona pra view de listagem
+        return redirect('show_proposal')  # redireciona pra view de listagem
 
 def show_proposal(request):
     proposal = Proposta.objects.all().order_by('-data_criacao')
     return render(request, 'listar_propostas.html', {'propostas': proposal})
 
-def details_proposal(request):
-    return render(request, 'details_propostas.html')
+def details_proposal(request, proposta_id):
+    proposta = get_object_or_404(Proposta, id=proposta_id)
+
+    conteudo_txt = None
+    if proposta.arquivo.name.endswith('.txt'):
+        with proposta.arquivo.open('r') as f:
+            conteudo_txt = f.read()
+
+    return render(request, 'details_propostas.html', {
+        'proposta': proposta,
+        'conteudo_txt': conteudo_txt,
+    })
 # Create your views here.
