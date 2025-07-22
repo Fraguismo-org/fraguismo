@@ -23,6 +23,28 @@
                     Baixar Arquivo
                 </a>
             {% endif %}
+            <div class="mt-3">
+                <h5>Votos</h5>
+                <p>A favor: {{ votos_favor }}</p>
+                <p>Contra: {{ votos_contra }}</p>
+            </div>
+            {% if pode_votar %}
+                <a href="{% url 'vote_proposal' proposta.id %}" class="btn btn-primary mt-2">Votar nesta proposta</a>
+            {% endif %}
+            <h5 class="mt-3">Quem votou:</h5>
+            <ul>
+                {% for voto in votos %}
+                    <li>{{ voto.usuario.username }} — 
+                        {% if voto.votos %}
+                            A favor
+                        {% else %}
+                            Contra
+                        {% endif %}
+                    </li>
+                {% empty %}
+                    <li>Ninguém votou ainda.</li>
+                {% endfor %}
+            </ul>
         </div>
     </div>
 </div>
