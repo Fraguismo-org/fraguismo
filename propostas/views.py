@@ -1,52 +1,14 @@
-"""
-
-referente a função de retornar URLs e criar proposta(criar_proposta) para ser salva no banco de dados
-
-"""
-
-
-# import requests
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib import messages
 import hashlib
-from .models import Proposta
+
+from members.models.profile import Profile
+from .models import Proposta, Voto
 from propostas.utils import can_create_proposal
 
 
 def propostas(request):
     return render(request, 'propostas.html')
-
-"""
-def enviar_proposta(request):
-    if request.method == 'POST':
-        titulo = request.POST.get('titulo')
-        valor = request.POST.get('valor')
-        arquivo = request.FILES.get('arquivo')
-
-        url_api = 'https://guepardprotocol.com/fraguismovotos/public/submit_proposal.php'
-
-        files = {
-            'proposal_file': (arquivo.name, arquivo.read(), arquivo.content_type)
-        }
-
-        data = {
-            'title': titulo,
-            'amount': valor
-        }
-
-        try:
-            response = requests.post(url_api, data=data, files=files) # tentando envia dado
-            if response.status_code == 200:
-                messages.success(request, 'Proposta enviada com sucesso!')
-            else:
-                messages.error(request, 'Erro ao enviar proposta: código {}'.format(response.status_code))
-        except Exception as e:
-            messages.error(request, f'Erro ao conectar com a API: {str(e)}')
-
-        return redirect('enviar_proposta')
-
-    return render(request, 'propostas.html')
-"""
 
 def create_proposal(request):
     if not can_create_proposal(request.user):
@@ -70,7 +32,7 @@ def create_proposal(request):
 
         # Gerar hash SHA256 do arquivo
         hash_sha256 = hashlib.sha256(file.read()).hexdigest()
-        file.seek(0)  # Reposiciona ponteiro do arquivo após ler
+        file.seek(0) 
 
         # Salvar no banco
         proposal = Proposta(
@@ -82,7 +44,7 @@ def create_proposal(request):
         proposal.save()
 
         messages.success(request, f'Proposta enviada com sucesso! Hash do arquivo: {hash_sha256}')
-        return redirect('show_proposal')  # redireciona pra view de listagem
+        return redirect('show_proposal')
 
 def show_proposal(request):
     proposal = Proposta.objects.all().order_by('-data_criacao')
@@ -90,6 +52,10 @@ def show_proposal(request):
 
 def details_proposal(request, proposta_id):
     proposta = get_object_or_404(Proposta, id=proposta_id)
+    pode_votar = can_create_proposal(request.user)
+    votos_favor = Voto.objects.filter(proposta=proposta, votos=True).count()
+    votos_contra = Voto.objects.filter(proposta=proposta, votos=False).count()
+    votos = Voto.objects.filter(proposta=proposta).select_related('usuario')
 
     conteudo_txt = None
     if proposta.arquivo.name.endswith('.txt'):
@@ -99,5 +65,42 @@ def details_proposal(request, proposta_id):
     return render(request, 'details_propostas.html', {
         'proposta': proposta,
         'conteudo_txt': conteudo_txt,
+        'pode_votar': pode_votar,
+        'votos_favor': votos_favor,
+        'votos_contra': votos_contra,
+        'votos': votos,
     })
+
+def vote_proposal(request, proposta_id):
+    proposta = get_object_or_404(Proposta, id=proposta_id)
+    voto_existente = Voto.objects.filter(proposta=proposta, usuario=request.user).first()
+
+    if not request.user.is_authenticated:
+        messages.error(request, "Você precisa estar logado para votar.")
+        return redirect('login')
+
+    if voto_existente:
+        messages.error(request, "Você já votou nesta proposta e não pode trocar seu voto.")
+        return redirect('details_proposal', proposta_id=proposta.id)
+
+    # Verifica pontuação do usuário
+    profile = Profile.get_or_create_profile(request.user)
+    nivel_user = profile.nivel_id
+    if nivel_user.pontuacao_base < 40:
+        messages.error(request, "Você não tem pontuação suficiente para votar.")
+        return redirect('propostas')
+
+    if request.method == 'POST':
+        voto_valor = request.POST.get('voto') == 'favor'
+
+        # Evita votos duplicados
+        Voto.objects.update_or_create(
+            proposta=proposta,
+            usuario=request.user,
+            defaults={'voto': voto_valor}
+        )
+        messages.success(request, "Voto registrado com sucesso.")
+        return redirect('details_proposal', proposta_id=proposta.id)
+
+    return render(request, 'vote.html', {'proposta': proposta})
 # Create your views here.
