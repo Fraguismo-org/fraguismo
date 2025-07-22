@@ -97,7 +97,7 @@ def vote_proposal(request, proposta_id):
         Voto.objects.update_or_create(
             proposta=proposta,
             usuario=request.user,
-            defaults={'voto': voto_valor}
+            defaults={'votos': voto_valor}
         )
         messages.success(request, "Voto registrado com sucesso.")
         return redirect('details_proposal', proposta_id=proposta.id)
