@@ -4,7 +4,7 @@ import hashlib
 
 from members.models.profile import Profile
 from .models import Proposta, Voto
-from propostas.utils import can_create_proposal
+from propostas.utils import can_create_proposal, can_vote_proposal
 
 
 def propostas(request):
@@ -19,10 +19,18 @@ def create_proposal(request):
         title = request.POST.get('titulo')
         value = request.POST.get('valor')
         file = request.FILES.get('arquivo')
+        user = request.user
 
         # Validação básica
         if not title or not value or not file:
             messages.error(request, 'Preencha todos os campos obrigatórios.')
+            return redirect('create_proposal')
+
+        if file.content_type not in ['text/plain', 'application/pdf', 'application/msword',
+                             'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+                             'application/vnd.ms-excel', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                             'application/vnd.ms-powerpoint', 'application/vnd.openxmlformats-officedocument.presentationml.presentation']:
+            messages.error(request, 'Formato de arquivo inválido. Use txt, pdf, doc, docx, xls, xlsx, ppt ou pptx.')
             return redirect('create_proposal')
 
         # Verificação de tamanho (máx 5MB)
@@ -36,6 +44,7 @@ def create_proposal(request):
 
         # Salvar no banco
         proposal = Proposta(
+            user=user,
             titulo=title,
             valor=value,
             arquivo=file,
@@ -52,7 +61,7 @@ def show_proposal(request):
 
 def details_proposal(request, proposta_id):
     proposta = get_object_or_404(Proposta, id=proposta_id)
-    pode_votar = can_create_proposal(request.user)
+    pode_votar = can_vote_proposal(request.user, proposta)
     votos_favor = Voto.objects.filter(proposta=proposta, votos=True).count()
     votos_contra = Voto.objects.filter(proposta=proposta, votos=False).count()
     votos = Voto.objects.filter(proposta=proposta).select_related('usuario')
@@ -86,7 +95,7 @@ def vote_proposal(request, proposta_id):
     # Verifica pontuação do usuário
     profile = Profile.get_or_create_profile(request.user)
     nivel_user = profile.nivel_id
-    if nivel_user.pontuacao_base < 40:
+    if nivel_user.id < 5:
         messages.error(request, "Você não tem pontuação suficiente para votar.")
         return redirect('propostas')
 
