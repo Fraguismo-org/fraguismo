@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<h3>Você quer aprovar esta proposta?</h3>
+<p><strong>Título:</strong> {{ proposta.titulo }}</p>
+<p><strong>Valor:</strong> {{ proposta.valor }}</p>
+
+<form method="post">
+    {% csrf_token %}
+    <button name="voto" value="favor" class="btn btn-success">A Favor</button>
+    <button name="voto" value="contra" class="btn btn-danger">Não A Favor</button>
+</form>
+
+
+{% endblock content %}

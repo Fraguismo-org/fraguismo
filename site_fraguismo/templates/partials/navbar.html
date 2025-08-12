@@ -70,7 +70,26 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'user_page' %}">Minha Área</a>
                 </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false"
+                        href="{% url 'index' %}">Propostas</a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a class="dropdown-item" href="{% url 'propostas' %}">Nova Proposta</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="{% url 'show_proposal' %}">Ver propostas</a>
+                        </li>
+                    </ul>
+                </li>
                 {% endif %}
+                <!---
+                {% if can_create_proposal %}
+                <li>
+                    <a class="nav-link" href="{% url 'propostas' %}">Ver propostas</a>
+                </li>  
+                {% endif %}
+                -->
                 {% if user.is_superuser %}
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'adm' %}">Administrativo</a>

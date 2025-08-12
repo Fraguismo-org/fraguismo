@@ -1,0 +1,88 @@
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  overflow-x: hidden !important;
+  overflow-y: auto;
+  background-color: rgb(221, 221, 221);
+}
+
+.hidden-on-scroll {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 1s ease-out;
+}
+
+.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.custom-shape-divider-top-1744652616 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+}
+.custom-shape-divider-top-1744652616 svg {
+  position: relative;
+  display: block;
+  width: calc(100% + 1.3px);
+  height: 50px;
+}
+.custom-shape-divider-top-1744652616 .shape-fill {
+  fill: #FFFFFF;
+}
+
+.hero-section {
+  display: flex !important;
+  align-items: center;
+  justify-content: left;
+  height: 58dvh;
+  width: 100dvw;
+  margin: 0 -50vw;
+  position: relative;
+  left: 50%;
+  right: 50%;
+  image-rendering: auto smooth high-quality;
+  image-rendering: -webkit-optimize-contrast;
+  filter: contrast(105%);
+  background: url("/site_fraguismo/static/images/forest.webp") no-repeat center/cover;
+}
+.hero-section .head-title h1 {
+  font-size: clamp(2.3rem, 2.8vw, 4rem);
+  color: rgb(243, 243, 243);
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+.hero-section .head-title h4 {
+  font-weight: 200;
+  padding: 10px 15px;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.466);
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.roadmap {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  margin: 5% 0;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.596) !important;
+  border-radius: 12px;
+}
+.roadmap .container h1 {
+  margin: 2% 0;
+}
+.roadmap .container p {
+  font-size: clamp(0.9rem, 1.1vw, 1.5rem) !important;
+  margin-left: 30px;
+  line-height: 200%;
+}
+.roadmap .container p span {
+  font-size: clamp(1.2rem, 1.8vw, 2rem) !important;
+}
+
+/*# sourceMappingURL=nossoobjetivo.css.map */

@@ -3,6 +3,8 @@ from django.shortcuts import redirect, render
 from django.template import loader
 from log.models.log import Log
 from site_fraguismo.models import Mensagem
+# import requests
+# from django.shortcuts import render
 
 
 def index(request):    
@@ -57,3 +59,34 @@ def anarcopolis(request):
 
 def anarcopolisinfo(request):
     return render(request, 'anarcopolisinfo.html')
+
+def nossoobjetivo(request):
+    return render(request, 'nossoobjetivo.html')
+
+"""
+Futura integração com Notion + HTML. Automatizando assim as alterações das paginas.
+
+NOTION_TOKEN = 'secret_abc...'
+PAGE_ID = '22d0f2b3d35c80c18c01cb47146f1617' # id roadmap fraguismo
+
+def notion_roadmap(request):
+    url = f"https://api.notion.com/v1/blocks/{PAGE_ID}/children"
+    headers = {
+        "Authorization": f"Bearer {NOTION_TOKEN}",
+        "Notion-Version": "2022-06-28",
+    }
+    response = requests.get(url, headers=headers)
+    data = response.json()
+    
+    # Exemplo simples: pegar texto do primeiro bloco de parágrafo
+    text = ""
+    for block in data.get("results", []):
+        if block["type"] == "paragraph":
+            texts = block["paragraph"]["text"]
+            if texts:
+                text = texts[0]["plain_text"]
+                break
+    
+    return render(request, 'nossoobjetivo.html', {"notion_text": text})
+
+   """
