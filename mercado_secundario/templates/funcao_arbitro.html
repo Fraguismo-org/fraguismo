@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow-sm border-0 rounded-3">                    
+                <div class="card-body">
+                    <h2 class="text-center">Função do Árbitro</h2>
+                    <div class="border p-3 mb-3">
+                        <input type="text" id="ordemConfirma" class="form-control mb-3" placeholder="ID da Ordem (Confirma)">
+                        <button type="button" class="btn btn-primary" onclick="confirmaPagamento()">Confirmar Pagamento</button>
+                    </div>
+                    <div class="border p-3 mb-3">
+                        <input type="text" class="form-control mb-3" id="ordemReverte" placeholder="ID da ordem (Reverte)">
+                        <button type="button" class="btn btn-danger" onclick="reverterTransacao()">Reverter Transação</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="{% static 'js/mercado_secundario/mercadoSecundario.js' %}"></script>
+<script src="{% static 'js/web3/web3.js' %}"></script>
+<script src="{% static 'js/web3/connect.js' %}"></script>
+<script src="{% static 'js/web3/979_connect.js' %}"></script>
+{% endblock%}

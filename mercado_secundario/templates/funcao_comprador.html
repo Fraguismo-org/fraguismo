@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% load static %}
+{% block content %}
+<div class="container my-5">
+    <h3 class="text-center">Ordens Disponíveis</h3>
+    <table border="1" cellpadding="5" cellspacing="0" style="width:100%">
+          <thead>
+          <tr>
+            <th>#</th>
+            <th>Vendedor</th>
+            <th>Quantidade</th>
+            <th>Valor (BRL)</th>
+            <th>Status</th>
+            <th>Comprador</th>
+            <th>Bloco</th>
+            <th>Garantia</th>
+            <th>Ações</th> <!-- 👈 nova coluna -->
+          </tr>
+        </thead>
+
+          <tbody id="corpoTabelaOrdens">
+            <!-- Ordens serão inseridas aqui via JavaScript -->
+          </tbody>
+        </table>
+</div>
+<script src="{% static 'js/mercado_secundario/mercadoSecundario.js' %}"></script>
+<script src="{% static 'js/web3/web3.js' %}"></script>
+<script src="{% static 'js/web3/connect.js' %}"></script>
+<script src="{% static 'js/web3/979_connect.js' %}"></script>
+{% endblock %}

@@ -5,7 +5,6 @@ from log.models.log import Log
 from rating.models.atividade import Atividade
 
 
-
 @user_passes_test(lambda u: u.is_superuser)
 def register_activity(request):
     if request.method == 'POST':

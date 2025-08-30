@@ -1,10 +1,10 @@
-from django.shortcuts import get_object_or_404, redirect, render
-from django.contrib import messages
 import hashlib
+from profile import Profile
+from django.contrib import messages
+from django.shortcuts import get_object_or_404, redirect, render
 
-from members.models.profile import Profile
-from .models import Proposta, Voto
-from propostas.utils import can_create_proposal, can_vote_proposal
+from propostas.models import Proposta, Voto
+from propostas.utils import can_create_proposal, can_create_proposal, can_vote_proposal
 
 
 def propostas(request):
@@ -112,4 +112,3 @@ def vote_proposal(request, proposta_id):
         return redirect('details_proposal', proposta_id=proposta.id)
 
     return render(request, 'vote.html', {'proposta': proposta})
-# Create your views here.

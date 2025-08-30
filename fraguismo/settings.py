@@ -33,6 +33,8 @@ INSTALLED_APPS = [
     'log',
     'utils',
     'propostas',
+    'mercado_secundario',
+    'graca',
 ]
 
 MIDDLEWARE = [
