@@ -230,6 +230,10 @@ html, body {
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
+.ct-btn-buy {
+  gap: 30px;
+}
+
 .btn-buy {
   font-size: clamp(0.9rem, 1vw, 1.2rem) !important;
   color: azure;
@@ -293,7 +297,7 @@ html, body {
 .timeline .container h4,
 .retrospective .container h4, .host .container h4 {
   color: rgb(202, 179, 43);
-  font-size: clamp(2rem, 2.5vw, 5rem) !important;
+  font-size: clamp(1.6rem, 2.5vw, 5rem) !important;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
   font-weight: 800;
 }
@@ -379,8 +383,7 @@ html, body {
   gap: 1rem;
 }
 .ct-timeline .carousel-wrapper {
-  flex: 1 1 50%;
-  max-width: 40%;
+  width: 100%;
 }
 .ct-timeline .carousel-wrapper #carouselExampleControls, .ct-timeline .carousel-wrapper #carouselExampleControls2 {
   width: 100%;
@@ -461,6 +464,9 @@ html, body {
   }
   .ct-timeline {
     flex-direction: row;
+  }
+  .carousel-wrapper {
+    width: 40% !important;
   }
 }
 @media (min-width: 1024px) {
