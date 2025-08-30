@@ -1,3 +1,4 @@
+@charset "UTF-8";
 * {
   box-sizing: border-box;
 }
@@ -371,6 +372,40 @@ html, body {
   cursor: pointer;
 }
 
+/* escopo opcional no bloco onde está o carrossel */
+.ct-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.ct-timeline .carousel-wrapper {
+  flex: 1 1 50%;
+  max-width: 40%;
+}
+.ct-timeline .carousel-wrapper #carouselExampleControls, .ct-timeline .carousel-wrapper #carouselExampleControls2 {
+  width: 100%;
+  max-width: 920px;
+  margin-inline: auto;
+  overflow: hidden;
+  position: relative;
+  contain: layout paint;
+  transform: translateZ(0);
+}
+.ct-timeline .carousel-wrapper #carouselExampleControls .carousel-inner, .ct-timeline .carousel-wrapper #carouselExampleControls2 .carousel-inner {
+  height: fit-content;
+  overflow: hidden;
+}
+.ct-timeline .carousel-wrapper #carouselExampleControls .carousel-item, .ct-timeline .carousel-wrapper #carouselExampleControls2 .carousel-item {
+  flex: 0 0 100%;
+  max-width: 100%;
+}
+.ct-timeline .carousel-wrapper #carouselExampleControls .carousel-item img, .ct-timeline .carousel-wrapper #carouselExampleControls2 .carousel-item img {
+  display: block;
+  width: 100% !important;
+  height: 100%;
+  object-fit: cover;
+}
+
 @media (min-width: 300px) {
   .wrapper-hr-section {
     width: 100%;
@@ -423,6 +458,9 @@ html, body {
   #container-cards {
     margin-top: 0;
     margin-bottom: 0;
+  }
+  .ct-timeline {
+    flex-direction: row;
   }
 }
 @media (min-width: 1024px) {
