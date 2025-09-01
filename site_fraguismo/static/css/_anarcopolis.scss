@@ -241,10 +241,13 @@ html, body {
   }
 }
 
+<<<<<<< HEAD
 .ct-btn-buy { 
   gap: 30px;
 }
 
+=======
+>>>>>>> main
 .btn-buy {
   @include responsive-font(0.9rem, 1vw, 1.2rem);
   color: azure;
@@ -313,7 +316,11 @@ html, body {
 .retrospective .container, .host .container {
   h4 {
     color: rgb(202, 179, 43);
+<<<<<<< HEAD
     @include responsive-font(1.6rem, 2.5vw, 5rem);
+=======
+    @include responsive-font(2rem, 2.5vw, 5rem);
+>>>>>>> main
     @include text-shadow();
     font-weight: 800;
   }
@@ -402,6 +409,7 @@ html, body {
   }
 }
 
+<<<<<<< HEAD
 
 
 /* escopo opcional no bloco onde está o carrossel */
@@ -445,6 +453,8 @@ html, body {
 
 
 
+=======
+>>>>>>> main
 @media (min-width: 300px) {
     .wrapper-hr-section {
         width: 100%;
@@ -501,6 +511,7 @@ html, body {
         margin-top: 0;
         margin-bottom: 0;
     }
+<<<<<<< HEAD
 
     .ct-timeline {
       flex-direction: row;
@@ -508,6 +519,8 @@ html, body {
     .carousel-wrapper {
       width: 40% !important;
     }
+=======
+>>>>>>> main
 }
 
 @media (min-width: 1024px) { 

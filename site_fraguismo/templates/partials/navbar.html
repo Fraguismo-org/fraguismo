@@ -20,71 +20,20 @@
                     <a class="nav-link active" href="{% url 'index' %}">Início</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link active" href="https://academiafraguista.com/">Academia Fraguista</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link active" href="{% url 'anarcopolis' %}">Anarcópolis</a>
                 </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false"
-                        href="{% url 'index' %}">Fraguismo</a>
-                    <ul class="dropdown-menu">
-                        <li>
-                            <a class="dropdown-item" href="{% url 'sobre_nos'%}">Sobre Nós</a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item" href="{% url 'contato' %}">Contato</a>
-                        </li>
-                        <!-- <li>
-                                    <a class="dropdown-item" href="{% url 'administrativo'%}">Administrativo</a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="{% url 'agenda' %}">Agenda</a>
-                                </li>
-                                <li class="nav-item dropdown">
-                                    <a class="dropdown-item">Religião</a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item"
-                                        href="https://fraguismo.org/religiao-educacional/">Educacional</a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="https://fraguismo.org/galeria-de-fotos/">Galeria De
-                                        Fotos</a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="https://fraguismo.org/faq/">FAQ</a>
-                                </li> -->
-                    </ul>
-                </li>
+                {% include 'partials/navbar_components/fraguismo_dropdown.html' %}
                 <li class="nav-item">
                     <a class="nav-link active" href="https://ancapsu.com/site/artigos">Artigos</a>
                 </li>
-                {% comment %} <li class="nav-item">
-                    <a class="nav-link" href="https://fraguismo.org/stores/">Lojas</a>
-                </li> {% endcomment %}
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'home' %}">Negocie em Bitcoin</a>
                 </li>
                 {% if user.is_authenticated %}
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'user_page' %}">Minha Área</a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false"
-                        href="{% url 'index' %}">Propostas</a>
-                    <ul class="dropdown-menu">
-                        <li>
-                            <a class="dropdown-item" href="{% url 'propostas' %}">Nova Proposta</a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item" href="{% url 'show_proposal' %}">Ver propostas</a>
-                        </li>
-                    </ul>
-                </li>
-                {% endif %}
-                <!---
-                {% if can_create_proposal %}
-                <li>
-                    <a class="nav-link" href="{% url 'propostas' %}">Ver propostas</a>
-                </li>  
+                {% include "partials/navbar_components/minha_area_dropdown.html" %}
                 {% endif %}
                 -->
                 {% if user.is_superuser %}
@@ -98,25 +47,9 @@
                 {% include 'partials/consulta_usuarios.html' with url_address='lista_usuarios' %}
                 {% endif %}
             </ul>
-
-            </ul>
-            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                {% comment %} <li class="nav-item" style="font-size: 18px;">
-                    <a class="nav-link active" title="Chat" href="https://fraguismo.org/minha-conta/chat/">
-                        <i class="bi bi-chat" aria-hidden="true"></i>
-                    </a>
-                </li> {% endcomment %}
-                <li class="nav-item" style="font-size: 18px;">
-                    {% if user.is_authenticated %}
-                    <a class="nav-link active" data-toggle="tooltip" title="Logout" href="{% url 'logout' %}">
-                        <i class="bi bi-box-arrow-right" style="font-size: xx-large;"></i>
-                    </a>
-                    {% else %}
-                    <a class="nav-link active" data-toggle="tooltip" title="Login/Registrar" href="{% url 'login' %}">
-                        <i class="bi bi-person" style="font-size: xx-large;" aria-hidden="true"></i>
-                    </a>
-                    {% endif %}
-                </li>
+            
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">                
+                {% include "partials/navbar_components/login_section.html" %}
                 <li>
                     <a class="btn btn-warning align-self-center btn-publish"
                         style="border-radius: 20px; margin-top: 15px;" aria-current="page"

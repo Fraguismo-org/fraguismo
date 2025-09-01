@@ -1,0 +1,30 @@
+<div class="border p-3 mb-3">
+    <h3>Comprar Tokens</h3>
+    <div class="input-group mb-3">
+        <input type="text" id="buyProposeHash" placeholder="Hash da Proposta" class="form-control">
+    </div>
+    <div class="input-group mb-3">
+        <input type="text" id="buyTo" placeholder="Endereço para receber Tokens" class="form-control">
+    </div>
+    <div class="input-group mb-3">
+        <input type="number" id="bnbValue" placeholder="Valor em pessoal" class="form-control">
+    </div>
+    <button type="button" class="btn btn-primary" onclick="buyTokens()">Comprar Tokens</button>
+</div>
+{% block script %}
+<script>
+async function buyTokens() {
+    const proposeHash = document.getElementById("buyProposeHash").value.trim();
+    const to = document.getElementById("buyTo").value.trim();
+    const bnbValue = document.getElementById("bnbValue").value.trim();
+    const valueInWei = ethers.utils.parseEther(bnbValue);
+    try {
+      const txHash = await writeWeb3Contract(propostaContractAddress, "buyTokens", propostaABI, [proposeHash, to], { value: valueInWei });
+      alert("Tokens comprados! Tx: " + txHash);
+    } catch (error) {
+      console.error("Erro em buyTokens:", error);
+      alert("Erro ao comprar tokens.");
+    }
+}
+</script>
+{% endblock %}
