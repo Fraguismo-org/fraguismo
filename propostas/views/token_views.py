@@ -8,6 +8,7 @@ def operacoes_token(request):
 
 @login_required(login_url='login')
 def proposer(request):
+    
     return render(request, 'proposer.html')
 
 @user_passes_test(lambda u: u.is_superuser)

@@ -1,3 +1,4 @@
+@charset "UTF-8";
 * {
   box-sizing: border-box;
 }
@@ -15,7 +16,11 @@ html, body {
 .hero-section {
   min-height: 90dvh;
   width: 100%;
+<<<<<<< HEAD
+  display: flex !important;
+=======
   display: flex;
+>>>>>>> main
   align-items: center;
   justify-content: center;
   flex-direction: auto;
@@ -23,14 +28,24 @@ html, body {
 
 .wrapper-img-bg {
   position: relative;
+<<<<<<< HEAD
+  height: 100dvh;
+  width: 100%;
+=======
   width: 100vw;
   height: 100dvh;
+>>>>>>> main
   background-size: cover;
   overflow: hidden;
 }
 .wrapper-img-bg img {
+<<<<<<< HEAD
+  height: 100%;
+  width: 100%;
+=======
   width: 100%;
   height: 100%;
+>>>>>>> main
   position: absolute;
   opacity: 0;
   object-fit: cover;
@@ -95,7 +110,11 @@ html, body {
 }
 
 .wrapper-btn-hr {
+<<<<<<< HEAD
+  display: flex !important;
+=======
   display: flex;
+>>>>>>> main
   align-items: center;
   justify-content: center;
   flex-direction: auto;
@@ -229,6 +248,11 @@ html, body {
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
+<<<<<<< HEAD
+.ct-btn-buy {
+  gap: 30px;
+}
+
 .btn-buy {
   font-size: clamp(0.9rem, 1vw, 1.2rem) !important;
   color: azure;
@@ -243,6 +267,22 @@ html, body {
   cursor: pointer;
 }
 
+=======
+.btn-buy {
+  font-size: clamp(0.9rem, 1vw, 1.2rem) !important;
+  color: azure;
+  background: linear-gradient(135deg, #f8923e, #6f0062);
+  padding: 25px 35px;
+  border-radius: 12px;
+  font-weight: 500;
+  transition: all 0.3s ease-in-out;
+}
+.btn-buy:hover {
+  box-shadow: 0 0 20px #6f0062;
+  cursor: pointer;
+}
+
+>>>>>>> main
 .ct-rooms {
   justify-content: center;
   width: fit-content;
@@ -268,7 +308,11 @@ html, body {
 
 .ct-info-host {
   width: 100vw;
+<<<<<<< HEAD
+  display: flex !important;
+=======
   display: flex;
+>>>>>>> main
   align-items: center;
   justify-content: center;
   flex-direction: column;
@@ -292,7 +336,11 @@ html, body {
 .timeline .container h4,
 .retrospective .container h4, .host .container h4 {
   color: rgb(202, 179, 43);
+<<<<<<< HEAD
+  font-size: clamp(1.6rem, 2.5vw, 5rem) !important;
+=======
   font-size: clamp(2rem, 2.5vw, 5rem) !important;
+>>>>>>> main
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
   font-weight: 800;
 }
@@ -365,10 +413,50 @@ html, body {
   font-size: clamp(0.9rem, 2vw, 1.1rem) !important;
   font-weight: 600;
   transition: all 0.3s ease-in-out;
+<<<<<<< HEAD
 }
 .ct-midia a:hover {
   box-shadow: 0 0 20px #6f0062;
   cursor: pointer;
+}
+
+/* escopo opcional no bloco onde está o carrossel */
+.ct-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.ct-timeline .carousel-wrapper {
+  width: 100%;
+}
+.ct-timeline .carousel-wrapper #carouselExampleControls, .ct-timeline .carousel-wrapper #carouselExampleControls2 {
+  width: 100%;
+  max-width: 920px;
+  margin-inline: auto;
+  overflow: hidden;
+  position: relative;
+  contain: layout paint;
+  transform: translateZ(0);
+}
+.ct-timeline .carousel-wrapper #carouselExampleControls .carousel-inner, .ct-timeline .carousel-wrapper #carouselExampleControls2 .carousel-inner {
+  height: fit-content;
+  overflow: hidden;
+}
+.ct-timeline .carousel-wrapper #carouselExampleControls .carousel-item, .ct-timeline .carousel-wrapper #carouselExampleControls2 .carousel-item {
+  flex: 0 0 100%;
+  max-width: 100%;
+}
+.ct-timeline .carousel-wrapper #carouselExampleControls .carousel-item img, .ct-timeline .carousel-wrapper #carouselExampleControls2 .carousel-item img {
+  display: block;
+  width: 100% !important;
+  height: 100%;
+  object-fit: cover;
+=======
+}
+.ct-midia a:hover {
+  box-shadow: 0 0 20px #6f0062;
+  cursor: pointer;
+>>>>>>> main
 }
 
 @media (min-width: 300px) {
@@ -424,6 +512,15 @@ html, body {
     margin-top: 0;
     margin-bottom: 0;
   }
+<<<<<<< HEAD
+  .ct-timeline {
+    flex-direction: row;
+  }
+  .carousel-wrapper {
+    width: 40% !important;
+  }
+=======
+>>>>>>> main
 }
 @media (min-width: 1024px) {
   .wrapper-hr-section {

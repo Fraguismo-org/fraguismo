@@ -241,6 +241,13 @@ html, body {
   }
 }
 
+<<<<<<< HEAD
+.ct-btn-buy { 
+  gap: 30px;
+}
+
+=======
+>>>>>>> main
 .btn-buy {
   @include responsive-font(0.9rem, 1vw, 1.2rem);
   color: azure;
@@ -309,7 +316,11 @@ html, body {
 .retrospective .container, .host .container {
   h4 {
     color: rgb(202, 179, 43);
+<<<<<<< HEAD
+    @include responsive-font(1.6rem, 2.5vw, 5rem);
+=======
     @include responsive-font(2rem, 2.5vw, 5rem);
+>>>>>>> main
     @include text-shadow();
     font-weight: 800;
   }
@@ -398,6 +409,52 @@ html, body {
   }
 }
 
+<<<<<<< HEAD
+
+
+/* escopo opcional no bloco onde está o carrossel */
+.ct-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  .carousel-wrapper {  
+    width: 100%;
+  #carouselExampleControls, #carouselExampleControls2 {
+    width: 100%;
+    max-width: 920px;      
+    margin-inline: auto;
+    overflow: hidden;      
+    position: relative;    
+
+    contain: layout paint; 
+    transform: translateZ(0); 
+
+    .carousel-inner {
+      height: fit-content;
+      overflow: hidden;    
+    }
+
+    .carousel-item {
+      flex: 0 0 100%;     
+      max-width: 100%;
+
+      img {
+        display: block;
+        width: 100% !important; 
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+  }
+}
+}
+
+
+
+
+
+=======
+>>>>>>> main
 @media (min-width: 300px) {
     .wrapper-hr-section {
         width: 100%;
@@ -454,6 +511,16 @@ html, body {
         margin-top: 0;
         margin-bottom: 0;
     }
+<<<<<<< HEAD
+
+    .ct-timeline {
+      flex-direction: row;
+    }
+    .carousel-wrapper {
+      width: 40% !important;
+    }
+=======
+>>>>>>> main
 }
 
 @media (min-width: 1024px) { 

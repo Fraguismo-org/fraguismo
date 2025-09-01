@@ -1,7 +1,7 @@
 from django.urls import include, path
 
+from propostas.views.proposta_views import create_proposal, details_proposal, propostas, show_proposal, vote_proposal
 from propostas.views.token_views import config_owner, operacoes_token, proposer
-from .views.proposta_views import propostas, create_proposal, show_proposal, details_proposal, vote_proposal
 
 urlpatterns = [
     path('', propostas, name='propostas'),

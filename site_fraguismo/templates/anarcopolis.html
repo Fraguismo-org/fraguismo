@@ -111,8 +111,9 @@
                     </p>
                 </div>
             </div>
-            <div class="container d-flex align-items-center justify-content-center mt-5 mb-5 pb-5">
+            <div class="container d-flex align-items-center justify-content-center mt-5 mb-5 pb-5 ct-btn-buy">
                 <a href="https://goingressos.com.br/evento/anarcopolis-2025" class="btn-buy"><i class="fa-solid fa-up-right-from-square"></i> COMPRE AQUI</a>
+                <a href="https://2akyw44s.forms.app/anarcopolis2025" class="btn-buy"><i class="fa-solid fa-up-right-from-square"></i> PAGAMENTO VIA BITCOIN</a>
             </div>
         </div>
     </div>
@@ -150,7 +151,8 @@
     <div class="container d-flex align-items-center justify-content-center" style="margin-bottom: 2%;">
         <div class="wrapper-alert">
             <p><i class="fa-solid fa-clock"></i><span>ATENÇÃO - PRAZO LIMITE</span>  <br/>
-            Reservas de hospedagem devem ser feitas até <strong>10 de Agosto de 2025</strong> para garantir disponibilidade.<br/>
+            Reserve sua hospedagem em quartos compartilhados até 31/08. Após essa data as reservas de hospedagem serão 
+            apenas de quartos privativos e direto com o hotel.<br>Pelo WhatsApp: +55 (48) 99187-8625<br>
             <a href="/anarcopolisinfo" target="_blank" rel="noopener noreferrer">Clique aqui para mais informações sobre</a>
             </p>
         </div>
@@ -159,35 +161,105 @@
 
 <section class="timeline">
     <div class="container d-flex flex-column align-items-center justify-content-center" style="position: relative;">
-        <h4 class="mt-5">CRONOGRAMA</h4>
+        <h4 class="mt-5">CRONOGRAMA & PALESTRANTES</h4>
         <h6 class="mt-4">
             6 dias de imersão total na filosofia libertária
         </h6>
     </div>  
-    <div class="container d-flex flex-column text-aling-left justify-content-center mt-5 pt-5 ct-timeline">
-        <div class="col-lg-6 d-flex">
-            <span style="background-color: rgb(202, 179, 43); color: black; padding: 15px 15px;">29/11<br/>Sábado</span>
-            <p><strong>Boas vindas</strong><br>Check-in às 15:00h e noite de boas-vindas</p>
+        <div class="container d-flex text-aling-left justify-content-center mt-5 pt-5 ct-timeline">
+        <div class="carousel-wrapper">
+            <div id="carouselExampleControls" class="carousel slide carousel-fade" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img class="d-block w-100" src="{% static 'images/29nov.jpg' %}" alt="Primeiro Slide">
+                    </div>
+                    <div class="carousel-item">
+                        <img class="d-block w-100" src="{% static 'images/30nov.jpg' %}" alt="Segundo Slide">
+                    </div>
+                    <div class="carousel-item">
+                        <img class="d-block w-100" src="{% static 'images/01dez.jpg' %}" alt="Terceiro Slide">
+                    </div>
+                    <div class="carousel-item">
+                        <img class="d-block w-100" src="{% static 'images/02dez.jpg' %}" alt="Quarto Slide">
+                    </div>
+                    <div class="carousel-item">
+                        <img class="d-block w-100" src="{% static 'images/03dez.jpg' %}" alt="Quinto Slide">
+                    </div>
+                    <div class="carousel-item">
+                        <img class="d-block w-100" src="{% static 'images/04dez.jpg' %}" alt="Sexto Slide">
+                    </div>
+                </div>
+           
+
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Anterior</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Próximo</span>
+        </button>
         </div>
-         <div class="col-lg-6 d-flex">
-            <span class="red" style="padding: 20px 10px; color: white;">30/11<br/>Domingo</span>
-            <p><strong>Palestras + Social</strong><br> 5 palestras durante o dia e evento social à noite</p>
         </div>
-         <div class="col-lg-6 d-flex">
-            <span class="red" style="padding: 15px 10px; color: white;">01/12<br/>Segunda</span>
-            <p><strong>Palestras + Social</strong><br> 5 palestras durante o dia e evento social à noite</p>
+        <div class="carousel-wrapper">
+            <div id="carouselExampleControls2" class="carousel slide carousel-fade" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img class="d-block w-100" src="{% static 'images/palestrantesconfirmados.jpg' %}" alt="Primeiro Slide">
+                    </div>
+                    <div class="carousel-item">
+                        <img class="d-block w-100" src="{% static 'images/palestrante1.jpg' %}" alt="Segundo Slide">
+                    </div>
+                    <div class="carousel-item">
+                        <img class="d-block w-100" src="{% static 'images/palestrante2.jpg' %}" alt="Terceiro Slide">
+                    </div>
+                    <div class="carousel-item">
+                        <img class="d-block w-100" src="{% static 'images/palestrante3.jpg' %}" alt="Quarto Slide">
+                    </div>
+                    <div class="carousel-item">
+                        <img class="d-block w-100" src="{% static 'images/palestrante4.jpg' %}" alt="Quinto Slide">
+                    </div>
+                    <div class="carousel-item">
+                        <img class="d-block w-100" src="{% static 'images/palestrante5.jpg' %}" alt="Sexto Slide">
+                    </div>
+                    <div class="carousel-item">
+                        <img class="d-block w-100" src="{% static 'images/palestrante6.jpg' %}" alt="Setimo Slide">
+                    </div>
+                    <div class="carousel-item">
+                        <img class="d-block w-100" src="{% static 'images/palestrante7.jpg' %}" alt="Oitavo Slide">
+                    </div>
+                    <div class="carousel-item">
+                        <img class="d-block w-100" src="{% static 'images/palestrante8.jpg' %}" alt="Nono Slide">
+                    </div>
+                    <div class="carousel-item">
+                        <img class="d-block w-100" src="{% static 'images/palestrante9.jpg' %}" alt="Décimo Slide">
+                    </div>
+                    <div class="carousel-item">
+                        <img class="d-block w-100" src="{% static 'images/palestrante10.jpg' %}" alt="Décimo primeiro Slide">
+                    </div>
+                    <div class="carousel-item">
+                        <img class="d-block w-100" src="{% static 'images/palestrante11.jpg' %}" alt="Décimo segundo Slide">
+                    </div>
+                    <div class="carousel-item">
+                        <img class="d-block w-100" src="{% static 'images/palestrante12.jpg' %}" alt="Décimo terceiro Slide">
+                    </div>
+                    <div class="carousel-item">
+                        <img class="d-block w-100" src="{% static 'images/palestrante13.jpg' %}" alt="Décimo quarto Slide">
+                    </div>
+                    <div class="carousel-item">
+                        <img class="d-block w-100" src="{% static 'images/artefinal.jpg' %}" alt="Décimo quinto Slide">
+                    </div>
+                </div>
+
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls2" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Anterior</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls2" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Próximo</span>
+        </button>
         </div>
-         <div class="col-lg-6 d-flex">
-            <span class="red" style="padding: 15px 20px; color: white;">02/12<br/>Terça</span>
-            <p><strong>Palestras + Social</strong><br> 5 palestras durante o dia e evento social à noite</p>
-        </div>
-         <div class="col-lg-6 d-flex">
-            <span style="background-color: rgb(202, 179, 43); color: black; padding: 15px 15px;">03/12<br/>Quarta</span>
-            <p><strong>Workshop + Lazer</strong><br> Workshops, atividades esportivas e evento social</p>
-        </div>
-         <div class="col-lg-6 d-flex">
-            <span style="background-color: rgb(128, 128, 128); color: white; padding: 15px 15px;">04/12<br/>Quinta</span>
-            <p><strong>Despedida</strong><br> Café da manhã e check-out às 12:00h</p>
         </div>
     </div>
 </section>

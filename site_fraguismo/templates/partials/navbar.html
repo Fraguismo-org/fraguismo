@@ -34,7 +34,7 @@
                 </li>
                 {% if user.is_authenticated %}
                 {% include "partials/navbar_components/minha_area_dropdown.html" %}
-                {% endif %}
+                {% endif %}                
                 {% if user.is_superuser %}
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'adm' %}">Administrativo</a>
