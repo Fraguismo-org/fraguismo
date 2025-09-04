@@ -127,7 +127,7 @@ html, body {
 }
 
 .ticket {
-  background: url('/static/images/sunset.webp') no-repeat center/cover;
+  background: url('/site_fraguismo/static/images/sunset.webp') no-repeat center/cover;
 
   .container {
     h4, h6 {
@@ -242,23 +242,23 @@ html, body {
 }
 
 .ct-btn-buy { 
-  gap: 30px;
-}
+  .btn-buy {
+    @include responsive-font(0.90rem, 1vw, 1.2rem);
+    color: azure;
+    background: linear-gradient(135deg, #f8923e, #6f0062);
+    padding: 2.6% 3.2%;
+    border-radius: 12px;
+    font-weight: 500;
+    transition: all 0.3s ease-in-out;
+    margin: 1% 1%;
 
-.btn-buy {
-  @include responsive-font(0.9rem, 1vw, 1.2rem);
-  color: azure;
-  background: linear-gradient(135deg, #f8923e, #6f0062);
-  padding: 25px 35px;
-  border-radius: 12px;
-  font-weight: 500;
-  transition: all 0.3s ease-in-out;
-
-  &:hover {
-    box-shadow: 0 0 20px #6f0062;
-    cursor: pointer;
+    &:hover {
+      box-shadow: 0 0 20px #6f0062;
+      cursor: pointer;
+    }
   }
 }
+
 
 .ct-rooms {
   justify-content: center;
@@ -289,7 +289,6 @@ html, body {
 .ct-info-host {
   width: 100vw;
   @include flexbox(center, center, column);
-  flex-direction: column;
   margin: 15% 0;
 
   p {
@@ -326,26 +325,39 @@ html, body {
   }
 }
 
-.ct-timeline .col-lg-6 {
-  margin-bottom: 4%;
+.ct-timeline {
+  @include flexbox(center, center, column);
+  gap: 1rem;
+  .carousel-wrapper {  
+    width: 100%;
+  #carouselExampleControls, #carouselExampleControls2 {
+    width: 100%;
+    max-width: 920px;      
+    margin-inline: auto;
+    overflow: hidden;      
+    position: relative;    
 
-  span {
-    text-align: center;
-    margin-right: 7%;
-    border-radius: 50%;
-    font-weight: bold;
-  }
+    contain: layout paint; 
+    transform: translateZ(0); 
 
-  p {
-    @include responsive-font(1rem, 1.6vw, 1.3rem);
-    color: $white;
-    font-weight: 400;
-    @include text-shadow();
+    .carousel-inner {
+      height: fit-content;
+      overflow: hidden;    
+    }
+
+    .carousel-item {
+      flex: 0 0 100%;     
+      max-width: 100%;
+
+      img {
+        display: block;
+        width: 100% !important; 
+        height: 100%;
+        object-fit: cover;
+      }
+    }
   }
 }
-
-.red {
-  background-color: rgb(90, 0, 0);
 }
 
 .col-cards {
@@ -402,49 +414,7 @@ html, body {
   }
 }
 
-
-
-/* escopo opcional no bloco onde está o carrossel */
-.ct-timeline {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  .carousel-wrapper {  
-    width: 100%;
-  #carouselExampleControls, #carouselExampleControls2 {
-    width: 100%;
-    max-width: 920px;      
-    margin-inline: auto;
-    overflow: hidden;      
-    position: relative;    
-
-    contain: layout paint; 
-    transform: translateZ(0); 
-
-    .carousel-inner {
-      height: fit-content;
-      overflow: hidden;    
-    }
-
-    .carousel-item {
-      flex: 0 0 100%;     
-      max-width: 100%;
-
-      img {
-        display: block;
-        width: 100% !important; 
-        height: 100%;
-        object-fit: cover;
-      }
-    }
-  }
-}
-}
-
-
-
-
-
+// MEDIAS 
 @media (min-width: 300px) {
     .wrapper-hr-section {
         width: 100%;
@@ -463,6 +433,9 @@ html, body {
     #container-cards {
         margin-top: 1%;
         margin-bottom: 1%;
+    }
+    .ct-btn-buy {
+      @include flexbox(center, center, column);
     }
 }
 
@@ -501,12 +474,14 @@ html, body {
         margin-top: 0;
         margin-bottom: 0;
     }
-
     .ct-timeline {
-      flex-direction: row;
+      flex-direction: row !important;
     }
     .carousel-wrapper {
       width: 40% !important;
+    }
+    .ct-btn-buy {
+      @include flexbox(center, center, row);
     }
 }
 
