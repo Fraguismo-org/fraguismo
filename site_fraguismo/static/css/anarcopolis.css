@@ -1,3 +1,4 @@
+@charset "UTF-8";
 * {
   box-sizing: border-box;
 }
@@ -126,7 +127,7 @@ html, body {
 }
 
 .ticket {
-  background: url("/site_fraguismo/static/images/sunset.webp") no-repeat center/cover;
+  background: url("/static/images/sunset.webp") no-repeat center/cover;
 }
 .ticket .container h4, .ticket .container h6 {
   color: rgb(243, 243, 243);
@@ -162,6 +163,17 @@ html, body {
   padding-right: 3%;
   color: rgb(0, 216, 0);
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.wrapper-esgotado {
+  height: fit-content;
+  width: fit-content;
+  position: absolute;
+}
+.wrapper-esgotado img {
+  max-width: 260px; /* limite */
+  width: 100%; /* ocupa o espaço disponível */
+  height: auto;
 }
 
 .price-ticket, #icon-ticket {
@@ -212,25 +224,32 @@ html, body {
   font-size: clamp(1rem, 1.7vw, 1.4rem) !important;
 }
 .wrapper-alert p span {
-  color: red;
+  color: rgb(218, 199, 59);
   font-weight: 600;
-}
-.wrapper-alert p a {
-  color: #81afff;
-  font-weight: 500;
-  border: solid;
-  border-top: none;
-  border-right: none;
-  border-left: none;
 }
 .wrapper-alert i {
   padding-right: 12px;
-  color: #e92828 !important;
+  color: rgb(218, 199, 59) !important;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
+.btn-info {
+  font-size: clamp(0.9rem, 2vw, 1.1rem) !important;
+  color: azure;
+  background: linear-gradient(135deg, #f8923e, #6f0062);
+  padding: 1% 1.8%;
+  border-radius: 12px;
+  font-weight: 500;
+  transition: all 0.3s ease-in-out;
+  margin: 1% 1%;
+}
+.btn-info:hover {
+  box-shadow: 0 0 20px #6f0062;
+  cursor: pointer;
+}
+
 .ct-btn-buy .btn-buy {
-  font-size: clamp(0.9rem, 1vw, 1.2rem) !important;
+  font-size: clamp(0.9rem, 2vw, 1.1rem) !important;
   color: azure;
   background: linear-gradient(135deg, #f8923e, #6f0062);
   padding: 2.6% 3.2%;
@@ -313,11 +332,11 @@ html, body {
   gap: 1rem;
 }
 .ct-timeline .carousel-wrapper {
-  width: 100%;
+  margin: auto 2%;
 }
 .ct-timeline .carousel-wrapper #carouselExampleControls, .ct-timeline .carousel-wrapper #carouselExampleControls2 {
   width: 100%;
-  max-width: 920px;
+  max-width: 890px;
   margin-inline: auto;
   overflow: hidden;
   position: relative;
@@ -337,6 +356,7 @@ html, body {
   width: 100% !important;
   height: 100%;
   object-fit: cover;
+  border-radius: 16px;
 }
 
 .col-cards {
@@ -356,7 +376,7 @@ html, body {
 }
 .col-cards .card:hover {
   border: 2px solid #ffe62b;
-  filter: brightness(60%);
+  transform: scale(1.04);
   cursor: pointer;
 }
 .col-cards .card:hover i {
@@ -371,18 +391,31 @@ html, body {
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 .ct-midia a {
-  color: rgb(243, 243, 243);
-  background: linear-gradient(135deg, #f8923e, #6f0062);
-  padding: 2%;
-  margin: 1% 0;
-  border-radius: 12px;
   font-size: clamp(0.9rem, 2vw, 1.1rem) !important;
-  font-weight: 600;
+  color: azure;
+  background: linear-gradient(135deg, #f8923e, #6f0062);
+  padding: 2% 2%;
+  border-radius: 12px;
+  font-weight: 500;
   transition: all 0.3s ease-in-out;
+  margin: 1% 1%;
 }
 .ct-midia a:hover {
   box-shadow: 0 0 20px #6f0062;
   cursor: pointer;
+}
+
+.ct-img {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  flex-direction: auto;
+  width: 100%;
+}
+.ct-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 
 @media (min-width: 300px) {
@@ -410,6 +443,15 @@ html, body {
     justify-content: center;
     flex-direction: column;
   }
+  .wrapper-esgotado {
+    top: 79%;
+    bottom: 100%;
+    right: 0;
+    left: 59%;
+  }
+  .carousel-wrapper {
+    width: 60%;
+  }
 }
 @media (min-width: 360px) {
   .ct-info-host {
@@ -424,6 +466,12 @@ html, body {
     max-height: fit-content;
     margin-top: 5%;
     margin-bottom: 5%;
+  }
+  .wrapper-esgotado {
+    top: 70%;
+    bottom: 100%;
+    right: 0;
+    left: 70%;
   }
 }
 @media (min-width: 992px) {
@@ -447,14 +495,20 @@ html, body {
   .ct-timeline {
     flex-direction: row !important;
   }
-  .carousel-wrapper {
-    width: 40% !important;
-  }
   .ct-btn-buy {
     display: flex !important;
     align-items: center;
     justify-content: center;
     flex-direction: row;
+  }
+  .wrapper-esgotado {
+    top: 78%;
+    bottom: 100%;
+    right: 0;
+    left: 63%;
+  }
+  .carousel-wrapper {
+    width: 40% !important;
   }
 }
 @media (min-width: 1024px) {
@@ -465,6 +519,15 @@ html, body {
 @media (min-width: 1400px) {
   .wrapper-hr-section {
     width: 60%;
+  }
+  .wrapper-esgotado {
+    top: 66%;
+    bottom: 100%;
+    right: 0;
+    left: 56%;
+  }
+  .carousel-wrapper {
+    width: 36% !important;
   }
 }
 @media (max-width: 818px) {
