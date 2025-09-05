@@ -1,0 +1,39 @@
+{% load static %}
+
+<li class="nav-item dropend"> 
+    <a class="dropdown-item dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false"
+        href="{% url 'index' %}">Graça</a>
+    <ul class="dropdown-menu">
+        <li>
+            <a class="dropdown-item" href="{% url 'consultas'%}">Consultas</a>
+        </li>
+        <li>
+            <a class="dropdown-item" href="{% url 'tranca_distribuicao' %}">Tranca Distribuição</a>
+        </li>
+        <li>
+            <a class="dropdown-item" href="{% url 'votacao' %}">Votação</a>
+        </li>
+        {% if user.is_admin %}
+        <li>
+            <a class="dropdown-item" href="{% url 'graca_admin' %}">Admin</a>
+        </li>
+        {% endif %}
+    </ul>
+</li>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    let subMenuToggles = document.querySelectorAll('.dropdown-menu .dropdown-toggle');
+
+    subMenuToggles.forEach(function (toggle) {
+        toggle.addEventListener('click', function (e) {            
+            e.stopPropagation();
+            e.preventDefault();
+            let subMenu = this.nextElementSibling;
+            if (subMenu && subMenu.classList.contains('dropdown-menu')) {
+                subMenu.classList.toggle('show');
+            }
+        });
+    });
+});
+</script>

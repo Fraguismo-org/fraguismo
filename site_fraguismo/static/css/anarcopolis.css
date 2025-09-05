@@ -311,7 +311,7 @@ html, body {
 .timeline .container h4,
 .retrospective .container h4, .host .container h4 {
   color: rgb(202, 179, 43);
-  font-size: clamp(1.6rem, 2.5vw, 5rem) !important;
+  font-size: clamp(2rem, 2.5vw, 5rem) !important;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
   font-weight: 800;
 }

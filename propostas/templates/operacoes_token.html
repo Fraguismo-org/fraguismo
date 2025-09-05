@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% load static %}
+{% block content %}
+<div class="container my-5">
+    <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card shadow-sm border-0 rounded-3">                    
+                    <div class="card-body">
+                        <h2 class="text-center">Operações com Token</h2>
+                        <p class="text-center text-muted">Compre tokens, registre presença, vote em propostas e muito mais.</p>
+                        {% include "partials/listar_propostas_ativas.html" %}
+                        {% include "partials/consultar_detalhes_proposta.html" %}
+                        {% include "partials/registrar_presenca.html" %}
+                        {% include "partials/votar_proposta.html" %}
+                        {% include "partials/encerrar_votacao.html" %}
+                        {% include "partials/comprar_token.html" %}                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="{% static 'js/propostas/propostas.js' %}"></script>
+<script src="{% static 'js/web3/web3.js' %}"></script>
+<script src="{% static 'js/web3/connect.js' %}"></script>
+<script src="{% static 'js/web3/979_connect.js' %}"></script>
+{% endblock %}

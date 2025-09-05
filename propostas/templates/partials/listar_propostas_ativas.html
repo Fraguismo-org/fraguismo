@@ -1,0 +1,32 @@
+<div class="border p-3 mb-3">
+    <h3>Listar Propostas Ativas</h3>            
+    <button type="button" class="btn btn-primary" onclick="listOpenProposals()">Listar Propostas Ativas</button>
+    <div id="openProposalsResult" style="margin-top:10px; font-weight:bold;"></div>
+</div>
+{% block script %}
+<script>
+    async function listOpenProposals() {
+        try {
+            const openProposals = await readWeb3Contract(propostaContractAddress, "getOpenProposals", propostaABI, []);
+            let result = "Propostas Ativas:<br>";
+            for (let i = 0; i < openProposals.length; i++) {
+            result += `<a href="#" onclick="preencher('${openProposals[i]}')">${openProposals[i]}</a><br>`;
+            }
+            document.getElementById("openProposalsResult").innerHTML = result;
+        } catch (error) {
+            console.error("Erro em getOpenProposals:", error);
+            alert("Erro ao listar propostas ativas.");
+        }
+    }
+
+    function preencher(hash) {
+        // Exemplo: Preencher os campos com o valor do hash
+        document.getElementById("voteHash").value = hash;
+        document.getElementById("endVoteHash").value = hash;
+        document.getElementById("buyProposeHash").value = hash;
+        document.getElementById("queryProposeHash").value = hash;
+        getProposalDetails();
+        buyTo.value = web3Account.address;
+    }
+</script>
+{% endblock %}

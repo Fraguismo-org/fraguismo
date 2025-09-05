@@ -20,21 +20,21 @@
 </style>
 
 <div class="shadow p-4 mb-5 bg-body rounded container">
-    <div class="row">
-        <div class="col-sm-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-4">
             <div class="row">
                 <h1>Nossos contatos</h1>
             </div>
             <div class="row">            
-                <div class="col-sm-1">
+                <div class="col-sm-2">
                     <p><a href="https://www.youtube.com/@fraguismo"><i class="bi bi-youtube" style="font-size: xx-large; color: gray;"></i></a></p>
                 </div>
                 <div class="col" style="margin-top: 0.7rem;">
-                    <a class="text" href="https://www.youtube.com/@fraguismo"><p style="font-weight: 400; font-size: large; color: black;">YouTube</p></a>
+                    <a class="text" href="https://www.youtube.com/@fraguismo"><p style="font-weight: 400; font-size: large; color: black;"> YouTube</p></a>
                 </div>            
             </div>
             <div class="row">
-                <div class="col-sm-1">
+                <div class="col-sm-2">
                     <p><a href="https://www.instagram.com/fraguismo"><i class="bi bi-instagram" style="font-size: xx-large; color: gray;"></i></a></p>
                 </div>
                 <div class="col" style="margin-top: 0.7rem;">
@@ -42,23 +42,23 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-sm-1">
-                    <p><a href="https:fraguismo.org"><i class="bi bi-building" style="font-size: xx-large; color: gray;"></i></a></p>
+                <div class="col-sm-2">
+                    <p><a href="{% url 'index' %}"><i class="bi bi-building" style="font-size: xx-large; color: gray;"></i></a></p>
                 </div>
                 <div class="col" style="margin-top: 0.7rem;">
-                    <a href="https:fraguismo.org"><p style="font-weight: 400; font-size: large; color: black;">CNPJ: 54.635.670/0001-03</p></a>
+                    <a href="{% url 'index' %}"><p style="font-weight: 400; font-size: large; color: black;">CNPJ: 54.635.670/0001-03</p></a>
                 </div>
             </div>
             <div class="row">
-                <div class="col-sm-1">
+                <div class="col-sm-2">
                     <p><a href="https://wa.me/7193737167"><i class="bi bi-whatsapp" style="font-size: xx-large; color: gray;"></i></a></p>
                 </div>
                 <div class="col" style="margin-top: 0.7rem;">
-                    <a href="https://wa.me/7193737167"><p style="font-weight: 400; font-size: large; color: black;">CNPJ: 54.635.670/0001-03</p></a>
+                    <a href="https://wa.me/7193737167"><p style="font-weight: 400; font-size: large; color: black;">whatsApp: +55 (71) 99373-7167</p></a>
                 </div>
             </div>
             <div class="row">
-                <div class="col-sm-1">
+                <div class="col-sm-2">
                     <p>
                         <a href="mailto:fraguismo@protonmail.com?subject=O que é o Fraguismo?&body=Gostaria de saber mais sobre o que é o Fraguismo.">
                             <i class="bi bi-envelope-at icon" style="font-size: xx-large; color: gray;"></i>
@@ -71,32 +71,7 @@
                     </a>
                 </div>
             </div>
-        </div>
-        <div class="col-sm-6">
-            <div class="row">
-                <h1>Envia-nos uma mensagem</h1>
-            </div>
-            <form method="post">
-                {% csrf_token %}
-                <div class="row form-rows">
-                    <input type="text" class="form-control" name="nome" id="nome" placeholder="Nome *" required>
-                </div>
-                <div class="row form-rows">
-                    <input type="email" class="form-control" name="email" id="email" placeholder="E-mail *" required>
-                </div>
-                <div class="row form-rows">
-                    <input type="text" class="form-control" name="assunto" id="assunto" placeholder="Assunto *" required>
-                </div>
-                <div class="row form-rows">
-                    <textarea name="mensagem" id="mensagem" class="form-control" placeholder="Mensagem *" required></textarea>
-                </div>
-                <div class="row form-rows">
-                    <div class="col text-end">
-                        <input type="submit" class="btn btn-primary">
-                    </div>
-                </div>
-            </form>
-        </div>
+        </div>       
     </div>
 </div>
 {% endblock content %}

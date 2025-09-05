@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<div class="container my-5">
+    <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card shadow-sm border-0 rounded-3">                
+                    <div class="card-body">
+                        <h2 class="text-center">Admin (Owner)</h2>
+                    {% with admin="partials/admin" %}
+                        {% include admin|add:"/alterar_carteira_gastos.html" %}
+                        {% include admin|add:"/iniciar_votacao.html" %}                        
+                    {% endwith %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="{% static 'js/graca/graca.js' %}"></script>
+<script src="{% static 'js/web3/web3.js' %}"></script>
+<script src="{% static 'js/web3/connect.js' %}"></script>
+<script src="{% static 'js/web3/979_connect.js' %}"></script>
+{% endblock %}
