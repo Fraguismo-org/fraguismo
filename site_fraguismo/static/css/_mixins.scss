@@ -111,3 +111,21 @@
   }
 }
 }
+
+@mixin btn-sunset ($ptop: null, $pbottom: null) {
+   @include responsive-font(0.9rem, 2vw, 1.1rem);
+    color: azure;
+    background: linear-gradient(135deg, #f8923e, #6f0062);
+    @if $ptop and $pbottom {
+      padding: $ptop $pbottom;
+    }
+    border-radius: 12px;
+    font-weight: 500;
+    transition: all 0.3s ease-in-out;
+    margin: 1% 1%;
+
+    &:hover {
+      box-shadow: 0 0 20px #6f0062;
+      cursor: pointer;
+    }
+}
