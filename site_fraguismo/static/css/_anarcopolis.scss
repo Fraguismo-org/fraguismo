@@ -305,11 +305,7 @@ html, body {
 .retrospective .container, .host .container {
   h4 {
     color: rgb(202, 179, 43);
-<<<<<<< HEAD
     @include responsive-font(1.6rem, 2.5vw, 5rem);
-=======
-    @include responsive-font(2rem, 2.5vw, 5rem);
->>>>>>> main
     @include text-shadow();
     font-weight: 800;
   }
