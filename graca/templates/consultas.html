@@ -17,10 +17,19 @@
             </div>
         </div>
     </div>
+    <div class="mb-5">
+        <button onclick="connectWallet()">Connect Wallet</button>
+        <div id="status"></div>
+    </div>
 </div>
 
 <script src="{% static 'js/graca/graca.js' %}"></script>
 <script src="{% static 'js/web3/web3.js' %}"></script>
 <script src="{% static 'js/web3/connect.js' %}"></script>
 <script src="{% static 'js/web3/979_connect.js' %}"></script>
+<script>
+    function connectWallet() {
+        web3modal.openModal();
+    }
+</script>
 {% endblock %}
