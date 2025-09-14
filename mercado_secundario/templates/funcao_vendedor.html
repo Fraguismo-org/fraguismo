@@ -14,7 +14,7 @@
                                 <input type="number" id="quantidade" placeholder="Quantidade de Tokens a vender" class="form-control">
                             </div>
                             <div class="input-group mb-3">
-                                <input type="text" id="valor_brl" placeholder="Valor em BRL" class="form-control">
+                                <input type="text" id="valorBRL" placeholder="Valor em BRL" class="form-control">
                             </div>        
                             <button type="button" class="btn btn-primary" onclick="criarOrdem()">Criar Ordem</button>
                         </div>
@@ -31,8 +31,14 @@
         </div>
     </div>
 </div>
+{% include "partials/wallet_connection.html" %}
 <script src="{% static 'js/mercado_secundario/mercadoSecundario.js' %}"></script>
+<script src="{% static 'js/web3/muriloethereum.js' %}"></script>
 <script src="{% static 'js/web3/web3.js' %}"></script>
 <script src="{% static 'js/web3/connect.js' %}"></script>
-<script src="{% static 'js/web3/979_connect.js' %}"></script>
+<script src="{% static 'js/web3/979.connect.js' %}"></script>
+<script src="{% static 'js/web3/416.connect.js' %}"></script>
+<script src="{% static 'js/web3/120.connect.js' %}"></script>
+<script src="{% static 'js/web3/initialize.js' %}"></script>
+<script src="{% static 'js/web3/main.js' %}"></script>
 {% endblock %}

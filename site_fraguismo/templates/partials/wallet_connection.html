@@ -1,21 +1,19 @@
-<div class="wallet-connection">
-  <div id="prepare">
-    <h2>Conecte sua carteira</h2>
-    <p>Por favor, conecte sua carteira para continuar.</p>
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/wallet_connection.css' %}">
+<div id="connect-pane" class="aside-float-connection">
+  <div class="wallet-connection">
+    <div id="prepare">
+      <h2>Conecte sua carteira</h2>
+      <p>Conecte-se efetuar as operações.</p>
 
-    <button class="btn btn-primary">Conectar Carteira</button>
+      <button class="btn btn-primary" id="btn-connect">Conectar Carteira</button>
+    </div>
+
+    <div id="connected" style="display: none;">
+      <h2>Carteira Conectada</h2>
+      <p>Endereço: <span id="wallet-address"></span></p>
+      {% comment %} <p>Saldo: <span id="wallet-balance"></span> ETH</p> {% endcomment %}
+      <button class="btn btn-danger" id="btn-disconnect">Desconectar</button>
+    </div>
   </div>
-
-  <div id="connected" style="display: none;">
-    <h2>Carteira Conectada</h2>
-    <p>Endereço: <span id="wallet-address"></span></p>
-    <p>Saldo: <span id="wallet-balance"></span> ETH</p>
-    <button class="btn btn-danger" id="disconnect-button">Desconectar</button>
-  </div>
-
-  <script type="text/javascript" src="https://unpkg.com/web3@1.2.11/dist/web3.min.js"></script>
-  <script type="text/javascript" src="https://unpkg.com/web3modal@1.9.0/dist/index.js"></script>
-  <script type="text/javascript" src="https://unpkg.com/evm-chains@0.2.0/dist/umd/index.min.js"></script>
-  <script type="text/javascript" src="https://unpkg.com/@walletconnect/web3-provider@1.2.1/dist/umd/index.min.js"></script>
-  <script type="text/javascript" src="https://unpkg.com/fortmatic@2.0.6/dist/fortmatic.js"></script>
 </div>
