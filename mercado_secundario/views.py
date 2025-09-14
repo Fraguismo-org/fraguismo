@@ -17,3 +17,7 @@ def funcao_vendedor(request):
 @login_required(login_url='login')
 def funcao_disputa(request):
     return render(request, 'funcao_disputa.html')
+
+@login_required(login_url='login')
+def comprar_token(request):
+    return render(request, 'comprar_token.html')
