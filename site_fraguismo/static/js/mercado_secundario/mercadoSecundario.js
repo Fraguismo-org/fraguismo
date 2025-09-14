@@ -800,7 +800,7 @@ async function criarOrdem() {
             fragaTokenAddress,
             "allowance",
             tokenABI,
-            ["0xba2Bd85C6622e76E16ab06477Ba32574D4D872b7", contratoEndereco]
+            [web3Account.address, contratoEndereco]
         );
 
         if (BigInt(allowance) < BigInt(quantidadeWei)) {
