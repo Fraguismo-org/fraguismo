@@ -60,4 +60,4 @@ const readWeb3Contract = async (address, functionName, abi, args) => {
     return data;
 }
 
-var web3Account = getAccount();
+// var web3Account = getAccount();

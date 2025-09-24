@@ -1,24 +1,7 @@
 <div class="border p-3 mb-3">
     <h3>Encerrar Votação</h3>
     <div class="input-group mb-3">
-        <input type="text" id="hash_proposta" placeholder="Hash da Proposta" class="form-control mb-3">
+        <input type="text" id="endVoteHash" placeholder="Hash da Proposta" class="form-control mb-3">
     </div>
-    <button type="button" class="btn btn-primary" onclick="endVoting()">Encerrar Votação</button>
-</div>
-
-{% block script %}
-<script>
-    async function endVoting() {
-        const proposeHash = document.getElementById("endVoteHash").value.trim();
-        try {
-        const txHash = await writeWeb3Contract(propostaContractAddress, "endVote", propostaABI, [proposeHash]);
-        alert("Votação encerrada! Tx: " + txHash);
-        } catch (error) {
-        console.error("Erro em endVote:", error);
-        alert("Erro ao encerrar votação.");
-        }
-    }
-</script>
-{% endblock %}
-
-   
+    <button type="button" class="btn btn-primary" id="endVoting">Encerrar Votação</button>
+</div>   

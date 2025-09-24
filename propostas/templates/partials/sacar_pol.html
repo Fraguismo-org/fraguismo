@@ -5,9 +5,9 @@
     <div class="input-group mb-3"> 
         <input type="text" id="sacar_pos" placeholder="Hash da Proposta" class="form-control mb-3">
     </div>
-    <input type="button" value="Sacar" class="btn btn-primary" onclick="withdraw()">
+    <input type="button" value="Sacar" class="btn btn-primary" id="withdraw">
 </div>
-
+{% comment %} 
 {% block script %}
 <script>
     async function withdraw() {
@@ -21,4 +21,4 @@
         }
     }
 </script>
-{% endblock %}
+{% endblock %} {% endcomment %}

@@ -9,16 +9,16 @@
                     <div class="card-body">
                         <h2 class="text-center">Config (Owner) </h2>
                         <div class="row border p-3 mb-3">                            
-                            <button onclick="abrirVotacao()" class="btn btn-primary">Abrir Votação</button>
+                            <button id="abrirVotacao" class="btn btn-primary">Abrir Votação</button>
                         </div>
                         <div class="row border p-3 mb-3">
-                            <button onclick="clearPresence()" class="btn btn-primary">Limpar Registros de Presença</button>
+                            <button id="clearPresence" class="btn btn-primary">Limpar Registros de Presença</button>
                         </div>
                         <div class="row border p-3 mb-3">
-                            <button onclick="killContract()" class="btn btn-primary">Kill Contract</button>
+                            <button id="killContract" class="btn btn-primary">Kill Contract</button>
                         </div>
                         <div class="row border p-3 mb-3">
-                            <button onclick="getBlocksUntilVotingEnds()" class="btn btn-primary">Consultar Blocos Restantes</button>
+                            <button id="getBlocksUntilVotingEnds" class="btn btn-primary">Consultar Blocos Restantes</button>
                         </div>
                         <div id="blocksResult" style="margin-top:10px; font-weight:bold;"></div>
                     </div>
@@ -28,7 +28,7 @@
     </div>
 </div>
 {% include "partials/wallet_connection.html" %}
-<script src="{% static 'js/propostas/propostas.js' %}"></script>
+<script type="module" src="{% static 'js/propostas/owner.js' %}"></script>
 <script src="{% static 'js/web3/muriloethereum.js' %}"></script>
 <script src="{% static 'js/web3/web3.js' %}"></script>
 <script src="{% static 'js/web3/connect.js' %}"></script>
@@ -36,5 +36,4 @@
 <script src="{% static 'js/web3/416.connect.js' %}"></script>
 <script src="{% static 'js/web3/120.connect.js' %}"></script>
 <script src="{% static 'js/web3/initialize.js' %}"></script>
-<script src="{% static 'js/web3/main.js' %}"></script>
 {% endblock %}

@@ -10,15 +10,15 @@
                     <h2 class="text-center">Disputa de Tokens</h2>
                         <div class="border p-3 mb-3">
                             <div class="row p-3">
-                                <input type="text" id="ordemRecebida" placeholder="ID da Ordem Recebida" class="form-control mb-3">
+                                <input type="text" id="ordemRecebidaComprador" placeholder="ID da Ordem Recebida" class="form-control mb-3" value={{ ordem_id|default_if_none:'' }}>
                             </div>
-                            <button type="button" class="btn btn-primary" onclick="abrirDisputaComprador()">Abrir Disputa (Comprador)</button>
+                            <button type="button" class="btn btn-primary" id="abrirDisputaComprador">Abrir Disputa (Comprador)</button>
                         </div>
                         <div class="border p-3 mb-3">
                             <div class="row p-3">
-                                <input type="text" class="form-control mb-3" placeholder="ID Ordem Recebida (Vendedor)">
+                                <input type="text" id="ordemRecebidaVendedor" class="form-control mb-3" placeholder="ID Ordem Recebida (Vendedor)" value={{ ordem_id|default_if_none:'' }}>
                             </div>
-                            <button type="button" class="btn btn-secondary" onclick="abrirDisputa()">Abrir Disputa (Vendedor)</button>
+                            <button type="button" class="btn btn-secondary" id="abrirDisputa">Abrir Disputa (Vendedor)</button>
                         </div>
                         </div>
                     </div>
@@ -28,7 +28,7 @@
     </div>
 </div>
 {% include "partials/wallet_connection.html" %}
-<script src="{% static 'js/mercado_secundario/mercadoSecundario.js' %}"></script>
+<script type="module" src="{% static 'js/mercado_secundario/funcaoDisputa.js' %}"></script>
 <script src="{% static 'js/web3/muriloethereum.js' %}"></script>
 <script src="{% static 'js/web3/web3.js' %}"></script>
 <script src="{% static 'js/web3/connect.js' %}"></script>
@@ -36,5 +36,4 @@
 <script src="{% static 'js/web3/416.connect.js' %}"></script>
 <script src="{% static 'js/web3/120.connect.js' %}"></script>
 <script src="{% static 'js/web3/initialize.js' %}"></script>
-<script src="{% static 'js/web3/main.js' %}"></script>
 {% endblock %}
