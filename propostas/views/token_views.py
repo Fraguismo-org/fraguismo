@@ -11,6 +11,6 @@ def proposer(request):
     
     return render(request, 'proposer.html')
 
-@user_passes_test(lambda u: u.is_superuser)
+# @user_passes_test(lambda u: u.is_superuser)
 def config_owner(request):
     return render(request, 'config_owner.html')

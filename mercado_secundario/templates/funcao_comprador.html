@@ -4,18 +4,29 @@
 {% block content %}
 <div class="container my-5">
     <h3 class="text-center">Ordens Disponíveis</h3>
-    <table border="1" cellpadding="5" cellspacing="0" style="width:100%">
+    <div class="row">
+      <div class="col">
+        <div class="input-group">
+          <input class="form-control" id="ordemNegociar" placeholder="ID da ordem para negociar">
+          <button class="btn btn-secondary" id="iniciarNegociacao">Iniciar Negociação</button>
+        </div>
+      </div>
+      <div class="col">
+        <input type="number" id="valorBNB" placeholder="Valor da garantia em BNB" hidden>
+      </div>
+    </div>
+    <table class="table table-striped table-hover" style="width:100%">
           <thead>
           <tr>
-            <th>#</th>
-            <th>Vendedor</th>
-            <th>Quantidade</th>
-            <th>Valor (BRL)</th>
-            <th>Status</th>
-            <th>Comprador</th>
-            <th>Bloco</th>
-            <th>Garantia</th>
-            <th>Ações</th> <!-- 👈 nova coluna -->
+            <th scope="row">#</th>
+            <th scope="row">Vendedor</th>
+            <th scope="row">Quantidade</th>
+            <th scope="row">Valor (BRL)</th>
+            <th scope="row">Status</th>
+            <th scope="row">Comprador</th>
+            <th scope="row">Bloco</th>
+            <th scope="row">Garantia</th>
+            <th scope="row">Ações</th> <!-- 👈 nova coluna -->
           </tr>
         </thead>
 
@@ -23,9 +34,23 @@
             <!-- Ordens serão inseridas aqui via JavaScript -->
           </tbody>
         </table>
+
+        <script>
+          function preencherInputOrdem(ordemId) {
+            document.getElementById("ordemNegociar").value = ordemId;
+          }
+
+          function preencherArbitro(ordemId) {
+            window.location.href = `{% url 'funcao_arbitro' %}${ordemId}`;
+          }
+
+          function preencherDisputa(ordemId) {
+            window.location.href = `{% url 'funcao_disputa' %}${ordemId}`;
+          }
+        </script>
 </div>
 {% include "partials/wallet_connection.html" %}
-<script src="{% static 'js/mercado_secundario/mercadoSecundario.js' %}"></script>
+<script type="module" src="{% static 'js/mercado_secundario/funcaoComprador.js' %}"></script>
 <script src="{% static 'js/web3/muriloethereum.js' %}"></script>
 <script src="{% static 'js/web3/web3.js' %}"></script>
 <script src="{% static 'js/web3/connect.js' %}"></script>
@@ -33,5 +58,5 @@
 <script src="{% static 'js/web3/416.connect.js' %}"></script>
 <script src="{% static 'js/web3/120.connect.js' %}"></script>
 <script src="{% static 'js/web3/initialize.js' %}"></script>
-<script src="{% static 'js/web3/main.js' %}"></script>
+
 {% endblock %}
