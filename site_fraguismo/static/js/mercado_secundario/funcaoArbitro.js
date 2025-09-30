@@ -9,8 +9,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     async function confirmarPagamento() {
         const id = document.getElementById("ordemConfirma").value;
         try {
-
-            await writeEthersContract(contratoEndereco, "arbitroConfirmaPagamento", abi, [id]);
+            const hashOperacao = await writeEthersContract(contratoEndereco, "arbitroConfirmaPagamento", abi, [id]);
+            alert("Pagamento confirmado com sucesso!\n" + hashOperacao);
         } catch (error) {
             alert("Erro ao confirmar pagamento.", error);
         }
@@ -19,7 +19,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     async function reverterTransacao() {
         const id = document.getElementById("ordemReverte").value;
         try {
-            await writeEthersContract(contratoEndereco, "arbitroReverteTransacao", abi, [id]);
+            const hashOperacao = await writeEthersContract(contratoEndereco, "arbitroReverteTransacao", abi, [id]);
+            alert("Transação revertida com sucesso!\n" + hashOperacao);
         } catch (error) {
             alert("Erro ao reverter transação", error);
         }
