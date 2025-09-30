@@ -112,6 +112,38 @@
 }
 }
 
+@mixin rows-col ($flexdirection: null, $div-width, $v1, $v2, $v3){
+    flex-wrap: nowrap;
+    align-items: center;
+    width: fit-content;
+    @if $flexdirection {
+        flex-direction: $flexdirection;
+    }
+    div {
+      width: $div-width;
+      margin: 0;
+      p {
+        font-size: clamp($v1, $v2, $v3);
+      }
+  }
+}
+
+@mixin full-flex {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+@mixin img-flex-adapter ($min-width, $max-width, $min-height, $max-height) {
+  display: flex;
+  min-width: $min-width;
+  max-width: $max-width; 
+  min-height: $min-height; 
+  max-height: $max-height;
+}
+
 @mixin btn-sunset ($ptop: null, $pbottom: null) {
    @include responsive-font(0.9rem, 2vw, 1.1rem);
     color: azure;

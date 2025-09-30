@@ -9,7 +9,7 @@ html {
 
 body {
   min-height: 100%;
-  display: flex;
+  display: flex !important;
   align-items: auto;
   justify-content: auto;
   flex-direction: column;
@@ -25,7 +25,7 @@ footer .footer-top-area .widget {
   color: #a5a5a5;
 }
 footer .footer-top-area .widget > h3 {
-  color: white;
+  color: rgb(243, 243, 243);
 }
 footer .footer-top-area .widget a {
   color: #a5a5a5;
@@ -89,7 +89,7 @@ a, u {
 }
 
 .preco-card {
-  color: gold;
+  color: rgb(185, 140, 3);
   font-weight: bolder;
   font-size: x-large;
 }
@@ -109,7 +109,7 @@ a, u {
 }
 
 #star:hover {
-  color: gold;
+  color: rgb(185, 140, 3);
   font-size: large;
 }
 
@@ -118,7 +118,7 @@ a, u {
 }
 
 .btc-cta {
-  color: white;
+  color: rgb(243, 243, 243);
   font-weight: 500;
 }
 .btc-cta:hover {
