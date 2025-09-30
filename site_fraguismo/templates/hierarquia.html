@@ -8,6 +8,13 @@
 
 <style>
     /* Estilos únicos da página hierarquia*/
+    ul li{
+        font-size: clamp(0.70rem, 1.1vw, 0.95rem) !important;
+    }
+    .col-cal p {
+        font-size: clamp(0.70rem, 1.1vw, 1.1rem) !important;
+    }
+
     @media (min-width: 400px) {
        .img-side {
             height: 600px;
@@ -109,29 +116,18 @@
     </div>
 </section>
 
-<section class="body-text mt-5">
-    <div class="container">
-        <div class="row d-flex text-center">
-            <div class="col-12 col-md-6 column-rights">
-                <h4 class="hidden-on-scroll">Fazendo parte do fraguismo:</h4>
-                <p class="hidden-on-scroll">
-                    Ao acessar sua conta, você poderá visualizar seu nível atual e descobrir o que está disponível no próximo nível da hierarquia.
-                    As informações no Fraguismo são compartimentalizadas com o propósito de proteger nossos membros e o projeto contra possíveis ataques externos. 
-                    Por isso, para conhecer os benefícios de cada nível, é necessário avançar gradualmente dentro da estrutura.
-                </p>
-                <p class="hidden-on-scroll">
-                    O primeiro passo é preencher o formulário de inscrição no nosso site. A partir desse momento, você já será considerado um 
-                    Fraguista e receberá orientações para iniciar o Curso de Formação. Após estudar os livros e o material complementar do seu módulo, 
-                    você poderá agendar sua prova. Essa avaliação tem como objetivo verificar se você compreendeu os conceitos essenciais de cada conteúdo. 
-                    Nosso foco não é testar a sua memória, mas sim sua capacidade de pensar de forma autônoma e crítica.
-                </p>
-                <p class="hidden-on-scroll">
-                    No primeiro nível (Aprendiz), a participação não é obrigatória, já que muitas vezes o Aprendiz ainda não tem acesso às reuniões internas. 
-                    A partir do segundo nível (Escudeiro), no entanto, espera-se uma participação ativa na comunidade: frequentar reuniões, 
-                    participar de eventos presenciais e zelar pelos princípios que nos orientam.
-                </p>
+<section class="body-text" style="margin-top: 4%;">
+        <div class="container text-center hidden-on-scroll">
+            <div class="hidden-on-scroll" style="width: 100%; height: 2px; background-color: black; border-radius: 100%; margin: 2% 1%;"></div>
+            <h1 style="margin-bottom: 2%;"><strong>Plataforma & Comunidade</strong></h1>
+        <div class="row d-flex row-body">
+            <div class="col-wp-img hidden-on-scroll">
+                <img src="{% static '/images/escadahierarquia.png' %}" alt="escada-hierarquia" 
+                style="
+                 border-radius: 12px;
+                 ">
             </div>
-            <div class="col-12 col-lg-6 hidden-on-scroll">
+            <div class="text-center col-conteudo hidden-on-scroll">
                 <h4 class="hidden-on-scroll">Sobre sua conta e seus níveis:</h4>
                 <p class="hidden-on-scroll">
                     Para saber o que é necessário para subir de nível, acesse o painel em nosso site após fazer o login. 
@@ -151,39 +147,100 @@
             </div>
         </div>
     </div>
-</section>
-
-<section class="topicos mt-5 hidden-on-scroll">
-    <div class="mt-5">
-        <div class="row mx-0 pt-0 pb-0 content">
-            <div class="col-sm-6">
-                <div class="column-topics">
-                    <h3>Expulsão:</h3>
-                    <h5>
-                        É fundamental destacar que qualquer pessoa pode ser expulsa do Fraguismo a qualquer momento, 
-                        caso seja comprovada a violação da propriedade alheia. Isso inclui:
-                    </h5>
-                    <ul>
-                        <li>Agressão à vida, à propriedade ou à liberdade de qualquer indivíduo, Fraguista ou não.</li>
-                        <li>Fraude ou Falsificação: prometer algo e não cumprir, o que configura quebra de contrato e má-fé.</li>
-                        <li>Violação de contratos, mesmo que não formais — incluindo acordos verbais ou informais. 
-                            Nesse caso, será necessária uma apuração mais detalhada. O descumprimento desses compromissos pode resultar em punições e até na expulsão, 
-                            caso o infrator se recuse a reparar a vítima.</li>
-                    </ul>
-                </div>
+        <div class="container">
+        <div class="row d-flex row-body">
+            <div class="text-center col-conteudo hidden-on-scroll" style="margin-top: 12px;">
+                <h4 class="hidden-on-scroll">Fazendo parte do fraguismo:</h4>
+                <p class="hidden-on-scroll">
+                    Ao acessar sua conta, você poderá visualizar seu nível atual e descobrir o que está disponível no próximo nível da hierarquia.
+                    As informações no Fraguismo são compartimentalizadas com o propósito de proteger nossos membros e o projeto contra possíveis ataques externos. 
+                    Por isso, para conhecer os benefícios de cada nível, é necessário avançar gradualmente dentro da estrutura.
+                </p>
+                <p class="hidden-on-scroll">
+                    O primeiro passo é preencher o formulário de inscrição no nosso site. A partir desse momento, você já será considerado um 
+                    Fraguista e receberá orientações para iniciar o Curso de Formação. Após estudar os livros e o material complementar do seu módulo, 
+                    você poderá agendar sua prova. Essa avaliação tem como objetivo verificar se você compreendeu os conceitos essenciais de cada conteúdo. 
+                    Nosso foco não é testar a sua memória, mas sim sua capacidade de pensar de forma autônoma e crítica.
+                </p>
+                <p class="hidden-on-scroll">
+                    No primeiro nível (Aprendiz), a participação não é obrigatória, já que muitas vezes o Aprendiz ainda não tem acesso às reuniões internas. 
+                    A partir do segundo nível (Escudeiro), no entanto, espera-se uma participação ativa na comunidade: frequentar reuniões, 
+                    participar de eventos presenciais e zelar pelos princípios que nos orientam.
+                </p>
             </div>
-            <div class="col-sm-6">
-                <div class="column-topics" style="font-size: clamp(0.80rem, 1.1vw, 1.2rem) !important;">
-                    <h3>Formas de punimento:</h3>
-                        A <strong>CAL (Câmara Arbitral Libertária)</strong> 
-                        será acionada sempre que houver uma denúncia de violação de propriedade por parte de um Fraguista.
-                        A CAL compromete-se a seguir os princípios jusnaturalistas na mediação de conflitos. O objetivo principal não é punir, 
-                        mas garantir a restituição da vítima. Se essa reparação não ocorrer, o Fraguismo adotará medidas punitivas, 
-                        com o principal intuito de proteger a comunidade, informando o maior número de pessoas sobre o mau comportamento do ex-membro.<br/><br/> 
-
-                        No início isso pode parecer pouco efetivo, porém com o tempo e a evolução do Fraguismo, 
-                        essas pessoas que escolheram desrespeitar à propriedade alheia, serão lembradas e excluídas das interações voluntárias da 
+            <div class="col-wp-img hidden-on-scroll">
+                <img src="{% static '/images/logofraguinha.png' %}" alt="fraguismo" style="border-radius: 12px;">
+            </div>
+        </div>
+        </div>
+    </div>
+</section>
+<section class="niveis hidden-on-scroll">
+    <div class="container d-flex flex-column align-items-center justify-content-center">
+        <div class="hidden-on-scroll" style="width: 100%; height: 2px; background-color: black; border-radius: 100%; margin: 2% 1%;"></div>
+        <h1 style="margin-bottom: 4%;"><strong>Subindo de nível</strong></h1>
+    </div>
+    <div class="container d-flex flex-column text-start align-items-center justify-content-center hidden-on-scroll">
+        <p style="padding: 0 5%;">
+            Para saber o que é necessário para subir de nível, acesse o painel em nosso site após fazer o login. 
+            Lá, você poderá acompanhar sua pontuação, os livros e materiais recomendados para seu nível atual.
+            Dentro da plataforma, é possível interagir com outros membros da comunidade. 
+            <a href="/members/login_user/"target="_blank" rel="noopener noreferrer">Acesse aqui</a>
+        </p>
+        <img src="{% static '/images/niveisfraguismo.jpg' %}" alt="niveis fraguismo" />
+        <p style="padding: 0 5%;">↣ Seu nível ficará visível aos demais, servindo como um indicativo do seu grau de compreensão e comprometimento com 
+            os princípios do Fraguismo. Como o site permite a oferta de produtos e serviços que aceitem bitcoin, 
+            esse sistema de verificação também funciona como um mecanismo de proteção e reputação.<br><br> 
+            ↣ Quanto mais tempo e credibilidade um membro conquista, menores são os incentivos para desrespeitar a propriedade alheia.
+            Também será possível consultar o histórico de interações de cada usuário, inclusive eventuais conflitos com outros Fraguistas. 
+            Trata-se de um sistema de reputação semelhante ao de plataformas como <strong>Mercado Livre </strong>ou <strong>Amazon</strong>, 
+            mas com foco na privacidade e na resolução voluntária de conflitos, sem recorrer ao monopólio da força estatal 
+            — em plena concordância com nossos princípios.
+        </p> 
+            
+        
+    </div>
+</section>
+<section class="topicos hidden-on-scroll">
+    <div class="container d-flex flex-column align-items-center justify-content-center">
+        <div class="hidden-on-scroll" style="width: 100%; height: 2px; background-color: black; border-radius: 100%; margin: 2% 1%;"></div>
+        <h1><strong>Normas de conduta & C.A.L</strong></h1>
+        <div class="container mt-5 mb-5">
+            <div class="row d-flex row-body-cal">
+                <div class="col-cal">
+                    <p>
+                        <strong>É fundamental destacar que qualquer pessoa pode ser expulsa do Fraguismo a qualquer momento, 
+                            caso seja comprovada a violação da propriedade alheia.</strong>
+                    </p>
+                    <ul>
+                        <p>Isso inclui:<br></p>
+                        <li>
+                            Agressão à vida, à propriedade ou à liberdade de qualquer indivíduo, Fraguista ou não
+                        </li>
+                        <li>
+                            Fraude ou Falsificação: prometer algo e não cumprir, o que configura quebra de contrato e má-fé
+                        </li>
+                        <li>
+                            Violação de contratos, mesmo que não formais — incluindo acordos verbais ou informais. 
+                            Nesse caso, será necessária uma apuração mais detalhada. O descumprimento desses compromissos 
+                            pode resultar em punições e até na expulsão, caso o infrator se recuse a reparar a vítima.
+                        </li>
+                    </ul>
+                    <p>
+                        A CAL (Câmara Arbitral Libertária) será acionada sempre que houver uma denúncia de violação de propriedade por 
+                        parte de um Fraguista.<br>A CAL compromete-se a seguir os princípios jusnaturalistas na mediação de conflitos. 
+                        O objetivo principal não é punir, mas garantir a restituição da vítima. Se essa reparação não ocorrer, 
+                        o Fraguismo adotará medidas punitivas, com o principal intuito de proteger a comunidade, informando o 
+                        maior número de pessoas sobre o mau comportamento do ex-membro.
+                    </p>
+                    <p>
+                        No início isso pode parecer pouco efetivo, porém com o tempo e a evolução do Fraguismo, essas pessoas que 
+                        escolheram desrespeitar à propriedade alheia, serão lembradas e excluídas das interações voluntárias da 
                         comunidade o que acarretará em perdas significativas comerciais e sociais.
+                    </p>
+                </div>
+                <div class="col-wp-img-cal hidden-on-scroll">
+                    <img src="{% static '/images/LogoPreta.webp' %}" alt="Justiça descentralizada">
                 </div>
             </div>
         </div>

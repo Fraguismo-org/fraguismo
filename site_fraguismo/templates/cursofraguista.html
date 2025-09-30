@@ -15,26 +15,15 @@
         font-size: clamp(0.75rem, 2.8vw, 2rem) !important;
     }
     .cta-btn-curso {
-        position: absolute;
-        -webkit-box-reflect: below 1px linear-gradient(transparent, #0005);
-        box-shadow: 0 0 5px #ebbe5b, 0 0 15px #ebbe5b, 0 0 25px #ebbe5b, 0 0 100px #ebbe5b;
-        padding: 10px 15px;
-        border-radius: 10px;
-        border-width: 2px !important;
-        border-color: rgb(185, 140, 3) !important;
-        font-size: clamp(0.95rem, 1.3vw, 2rem);
+        border: solid 2px black;
+        padding: 2%;
         color: black;
-        border: solid;
-        text-align: center;
-        transition: all 0.4s ease-in-out;
-        background-color: #FFFF;
+        transition: all 0.3s ease-in-out;
+        font-size: clamp(0.75rem, 2.8vw, 1.2rem) !important;
     }
     .cta-btn-curso:hover, .cta-btn-curso:active {
-        transform: scale(1.1);
-        background-color: white;
-        color: black;
-        transition: all 0.4s ease-in-out;
-        box-shadow: 0 0 10px #ebbe5b, 0 0 20px #ebbe5b, 0 0 30px #ebbe5b, 0 0 200px #ebbe5b;
+        transform: scale(1.05);
+        transition: all 0.3s ease-in-out;
     }
 
 </style>
@@ -103,9 +92,12 @@
     </div>
 </section>
 
-<div class="container-fluid d-flex align-items-center justify-content-center hidden-on-scroll bg-btn-curso">
-    <img src="{% static '/images/bgicons.svg' %}" alt="icons" />
-        <a href="https://academiafraguista.com/" class="cta-btn-curso">Inscreva-se agora!</a>
+<div class="container-fluid d-flex flex-column align-items-center justify-content-center hidden-on-scroll" style="margin-top: 6%;">
+        <div class="container text-center">
+            <h1><strong>Inicie sua jornada no Fraguismo</strong></h1>
+            <p style="padding: 2% 20%;">Junte-se a uma comunidade comprometida com os princípios de vida, propriedade e liberdade</p>
+        </div>
+        <a href="https://academiafraguista.com/" class="cta-btn-curso">Faça sua inscrição e inicie sua jornada</a>
 </div>
 
 <script>
