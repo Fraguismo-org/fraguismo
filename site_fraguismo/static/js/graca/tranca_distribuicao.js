@@ -1,3 +1,9 @@
+import { walletConnection } from "../web3/wallet.js";
+import { readEthersContract, writeEthersContract } from "../web3/initialize.js";
+import { fragaTokenABI } from "./fraga_token_abi.js";
+import { envioDaGracaABI } from "./envio_graca_abi.js";
+import { fragaTokenAddress, envioDaGracaAddress } from "./graca_addresses.js";
+
 document.addEventListener('DOMContentLoaded', async () => {
     const btnAprovarTokens = document.getElementById("aprovarTokens");
     const btnTrancarTokens = document.getElementById("trancarTokens");
@@ -13,17 +19,17 @@ document.addEventListener('DOMContentLoaded', async () => {
             }
 
             // Converte a quantidade para a forma com 18 decimais (padrão ERC20)
-            const quantidadeWei = ethers.utils.parseUnits(quantidade, 18);
+            const quantidadeWei = walletConnection.ethers.parseUnits(quantidade, 18);
 
             // Verifica o saldo atual do usuário
-            const saldo = await readWeb3Contract(fragaTokenAddress, "balanceOf", fragaTokenABI, [web3Account.address]);
+            const saldo = await readEthersContract(fragaTokenAddress, "balanceOf", fragaTokenABI, [walletConnection.walletAddress]);
             if (Number(saldo) < Number(quantidadeWei)) {
                 alert("Saldo insuficiente. Você tem apenas " + formatTokenAmount(saldo) + " FRAGA.");
                 return;
             }
 
             // Verifica a permissão atual
-            const permissaoAtual = await readWeb3Contract(fragaTokenAddress, "allowance", fragaTokenABI, [web3Account.address, envioDaGracaAddress]);
+            const permissaoAtual = await readEthersContract(fragaTokenAddress, "allowance", fragaTokenABI, [walletConnection.walletAddress, envioDaGracaAddress]);
 
             // Se já tem permissão suficiente, não precisa aprovar novamente
             if (Number(permissaoAtual) >= Number(quantidadeWei)) {
@@ -31,7 +37,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 return;
             }
 
-            const txHash = await writeWeb3Contract(fragaTokenAddress, "approve", fragaTokenABI, [envioDaGracaAddress, quantidadeWei]);
+            const txHash = await writeEthersContract(fragaTokenAddress, "approve", fragaTokenABI, [envioDaGracaAddress, quantidadeWei]);
             alert("Tokens FRAGA aprovados com sucesso! Tx: " + txHash);
         } catch (error) {
             console.error("Erro ao aprovar tokens:", error);
@@ -47,9 +53,13 @@ document.addEventListener('DOMContentLoaded', async () => {
                 return;
             }
 
-            const txHash = await writeWeb3Contract(envioDaGracaAddress, "trancarTokens", envioDaGracaABI, [quantidade]);
+            const txHash = await writeEthersContract(envioDaGracaAddress, "trancarTokens", envioDaGracaABI, [quantidade]);
             alert("Tokens trancados com sucesso! Tx: " + txHash);
         } catch (error) {
+            if (error.code === "ACTION_REJECTED") {
+                alert("Ação rejeitada pelo usuário.");
+                return;
+            }
             console.error("Erro ao trancar tokens:", error);
             alert("Erro ao trancar tokens. Verifique se você já aprovou o contrato para usar seus tokens FRAGA.");
         }
@@ -57,19 +67,27 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     const destrancarTokens = async () => {
         try {
-            const txHash = await writeWeb3Contract(envioDaGracaAddress, "destrancarTokens", envioDaGracaABI, []);
+            const txHash = await writeEthersContract(envioDaGracaAddress, "destrancarTokens", envioDaGracaABI, []);
             alert("Tokens destrancados com sucesso! Tx: " + txHash);
         } catch (error) {
+            if (error.code === "ACTION_REJECTED") {
+                alert("Ação rejeitada pelo usuário.");
+                return;
+            }
             console.error("Erro ao destrancar tokens:", error);
             alert("Erro ao destrancar tokens. Verifique se você possui tokens trancados e se o período de tranca já terminou.");
         }
     }
 
-    const distribuirUSDT = async () =>  {
+    const distribuirUSDT = async () => {
         try {
-            const txHash = await writeWeb3Contract(envioDaGracaAddress, "distribuir", envioDaGracaABI, []);
+            const txHash = await writeEthersContract(envioDaGracaAddress, "distribuir", envioDaGracaABI, []);
             alert("USDT distribuído com sucesso! Tx: " + txHash);
         } catch (error) {
+            if (error.code === "ACTION_REJECTED") {
+                alert("Ação rejeitada pelo usuário.");
+                return;
+            }
             console.error("Erro ao distribuir USDT:", error);
             alert("Erro ao distribuir USDT. Verifique se o contrato possui USDT e se existem stakers ativos.");
         }

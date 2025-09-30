@@ -1,1 +1,1 @@
-export const propostaContractAddress = "0xdEcFb7Da2085b7FDb3D3FA746801407CfDd46A30";
+export const propostaContractAddress =  "0x9fe46736679d2d9a65f0992f2272de9f3c7fa6e0"; //"0xdEcFb7Da2085b7FDb3D3FA746801407CfDd46A30";

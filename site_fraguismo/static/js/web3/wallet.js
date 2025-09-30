@@ -1,4 +1,4 @@
-import { ethers } from "https://cdnjs.cloudflare.com/ajax/libs/ethers/6.15.0/ethers.min.js";
+import { ethers } from "../ethers/ethers.min.js";
 
 class Wallet {
     constructor() {
@@ -26,7 +26,6 @@ class Wallet {
             return true;
         } catch (error) {
             if (error.code === 4001) {
-
                 return false;
             } else {
                 return false;

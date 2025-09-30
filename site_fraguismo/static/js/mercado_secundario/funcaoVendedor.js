@@ -2,6 +2,7 @@ import { walletConnection } from "../web3/wallet.js";
 import { contratoEndereco, fragaTokenAddress } from "./mercadoSecundarioAddress.js";
 import { abi, tokenABI } from "./abi.js";
 import { lerContrato, listarOrdensDoVendedor } from "./utils.js";
+import { writeEthersContract } from "../web3/initialize.js";
 
 document.addEventListener('DOMContentLoaded', async () => {
     const btnCriarOrdem = document.getElementById("criarOrdem");
@@ -9,9 +10,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     async function criarOrdem() {
         try {
-            const q = document.getElementById("quantidade").value.trim();
-            const v = document.getElementById("valorBRL").value.trim();
-            const quantidadeWei = walletConnection.ethers.parseUnits(q, 18);
+            const quantidade = document.getElementById("quantidade").value.trim();
+            const valorBRL = document.getElementById("valorBRL").value.trim();
+            const quantidadeWei = walletConnection.ethers.parseUnits(quantidade, 18);
 
             // Checar allowance
             const allowance = await lerContrato(
@@ -23,7 +24,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             if (BigInt(allowance) < BigInt(quantidadeWei)) {
                 alert("Permitindo o contrato movimentar os tokens...");
-                const txApprove = await writeWeb3Contract(
+                const txApprove = await writeEthersContract(
                     fragaTokenAddress,
                     "approve",
                     tokenABI,
@@ -32,12 +33,12 @@ document.addEventListener('DOMContentLoaded', async () => {
                 alert("Approve realizado. Aguardando confirmação para criar a ordem...");
             }
 
-            const txHash = await writeWeb3Contract2(
+            const txHash = await writeEthersContract(
                 contratoEndereco,
                 "criarOrdem",
                 abi,
-                [quantidadeWei.toString(), v],
-                [valortaxa]
+                [quantidadeWei.toString(), valorBRL],
+                valortaxa
             );
 
             alert("Ordem criada com sucesso! Tx: " + txHash);
@@ -53,7 +54,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     async function marcarCompleta() {
         const id = document.getElementById("ordemRecebida").value;
         try {
-            await writeWeb3Contract(contratoEndereco, "marcarComoCompleta", abi, [id]);
+            await writeEthersContract(contratoEndereco, "marcarComoCompleta", abi, [id]);
         } catch (error) {
             alert("Erro ao marcar ordem recebida.");
         }

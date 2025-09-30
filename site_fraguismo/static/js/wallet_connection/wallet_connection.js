@@ -54,7 +54,19 @@ document.addEventListener("DOMContentLoaded", async function () {
         isRetracted = !isRetracted;
     }
 
-    await walletConnection.checkConnection();
+    const checkConnection = async () => {
+        await walletConnection.checkConnection();
+        if (walletConnection.isConnected) {
+            walletAddress.innerHTML = walletConnection.formatWalletAddress();
+            walletBalance.innerHTML = walletConnection.balance;
+
+            disconnectButton.style.display = "block";
+            connectButton.style.display = "none";
+            prepare.style.display = "none";
+            connected.style.display = "block";
+        }
+    }
+    await checkConnection();
     await walletConnection.setupEventListeners();
 
     connectButton.addEventListener('click', connectWallet);

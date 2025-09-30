@@ -17,8 +17,7 @@
         </div>
     </div>
 </div>
-<script type="module" src="{% static 'js/propostas/propostas.js' %}"></script>
-<script src="{% static 'js/web3/web3.js' %}"></script>
-<script src="{% static 'js/web3/connect.js' %}"></script>
-<script src="{% static 'js/web3/979_connect.js' %}"></script>
+<script type="module" src="{% static 'js/propostas/proposer.js' %}"></script>
+<script type="module" src="{% static 'js/web3/initialize.js' %}"></script>
+{% include "partials/wallet_connection.html" %}
 {% endblock %}

@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 return;
             }
 
-            const txHash = await writeWeb3Contract(envioDaGracaAddress, "setCarteiraGastos", envioDaGracaABI, [novaCarteira]);
+            const txHash = await writeEthersContract(envioDaGracaAddress, "setCarteiraGastos", envioDaGracaABI, [novaCarteira]);
             alert("Carteira de gastos alterada com sucesso! Tx: " + txHash);
         } catch (error) {
             console.error("Erro ao alterar carteira de gastos:", error);
@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 return;
             }
 
-            const txHash = await writeWeb3Contract(envioDaGracaAddress, "iniciarVotacao", envioDaGracaABI, [novaPorcentagem]);
+            const txHash = await writeEthersContract(envioDaGracaAddress, "iniciarVotacao", envioDaGracaABI, [novaPorcentagem]);
             alert("Votação iniciada com sucesso! Tx: " + txHash);
         } catch (error) {
             console.error("Erro ao iniciar votação:", error);

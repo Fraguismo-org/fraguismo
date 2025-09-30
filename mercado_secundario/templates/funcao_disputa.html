@@ -18,7 +18,7 @@
                             <div class="row p-3">
                                 <input type="text" id="ordemRecebidaVendedor" class="form-control mb-3" placeholder="ID Ordem Recebida (Vendedor)" value={{ ordem_id|default_if_none:'' }}>
                             </div>
-                            <button type="button" class="btn btn-secondary" id="abrirDisputa">Abrir Disputa (Vendedor)</button>
+                            <button type="button" class="btn btn-secondary" id="abrirDisputaVendedor">Abrir Disputa (Vendedor)</button>
                         </div>
                         </div>
                     </div>
@@ -29,11 +29,5 @@
 </div>
 {% include "partials/wallet_connection.html" %}
 <script type="module" src="{% static 'js/mercado_secundario/funcaoDisputa.js' %}"></script>
-<script src="{% static 'js/web3/muriloethereum.js' %}"></script>
-<script src="{% static 'js/web3/web3.js' %}"></script>
-<script src="{% static 'js/web3/connect.js' %}"></script>
-<script src="{% static 'js/web3/979.connect.js' %}"></script>
-<script src="{% static 'js/web3/416.connect.js' %}"></script>
-<script src="{% static 'js/web3/120.connect.js' %}"></script>
-<script src="{% static 'js/web3/initialize.js' %}"></script>
+<script type="module" src="{% static 'js/web3/initialize.js' %}"></script>
 {% endblock %}

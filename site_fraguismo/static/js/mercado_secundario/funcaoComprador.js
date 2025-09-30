@@ -63,8 +63,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     async function iniciarNegociacao() {
         const valortaxa = 0.3;
-        const id = document.getElementById("ordemNegociar").value;
-        //const valorBNB = document.getElementById("valorBNB").value;
+        const id = document.getElementById("ordemNegociar").value;        
         try {
             await writeWeb3Contract2(contratoEndereco, "iniciarNegociacao", abi, [id], valortaxa);
         } catch (error) {

@@ -1,5 +1,6 @@
 import { contratoEndereco } from "./mercadoSecundarioAddress.js";
 import { abi } from "./abi.js";
+import { writeEthersContract } from "../web3/initialize.js";
 
 document.addEventListener("DOMContentLoaded", async () => {
     const btnConfirmaPagamento = document.getElementById("confirmaPagamento");
@@ -9,7 +10,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         const id = document.getElementById("ordemConfirma").value;
         try {
 
-            await writeWeb3Contract(contratoEndereco, "arbitroConfirmaPagamento", abi, [id]);
+            await writeEthersContract(contratoEndereco, "arbitroConfirmaPagamento", abi, [id]);
         } catch (error) {
             alert("Erro ao confirmar pagamento.", error);
         }
@@ -18,7 +19,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     async function reverterTransacao() {
         const id = document.getElementById("ordemReverte").value;
         try {
-            await writeWeb3Contract(contratoEndereco, "arbitroReverteTransacao", abi, [id]);
+            await writeEthersContract(contratoEndereco, "arbitroReverteTransacao", abi, [id]);
         } catch (error) {
             alert("Erro ao reverter transação", error);
         }

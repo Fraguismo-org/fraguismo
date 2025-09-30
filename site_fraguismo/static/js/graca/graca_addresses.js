@@ -1,2 +1,2 @@
-export const envioDaGracaAddress = "0x0909C2083b82eF27050c081eE85743d58cBB84E0";
-export const fragaTokenAddress = "0x1E93eCdb8d5026eE38bE4CE7Ae7A49A1e28E1c40";
+export const envioDaGracaAddress ="0x9fe46736679d2d9a65f0992f2272de9f3c7fa6e0"; //"0x0909C2083b82eF27050c081eE85743d58cBB84E0";
+export const fragaTokenAddress = "0x5fbdb2315678afecb367f032d93f642f64180aa3"; //"0x1E93eCdb8d5026eE38bE4CE7Ae7A49A1e28E1c40";

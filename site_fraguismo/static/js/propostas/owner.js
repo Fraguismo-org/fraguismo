@@ -1,5 +1,6 @@
 import { propostaABI } from "./propostaAbi.js";
 import { propostaContractAddress } from "./propostaAddress.js";
+import { readEthersContract, writeEthersContract } from "../web3/initialize.js";
 
 document.addEventListener('DOMContentLoaded', async () => {
     const btnAbrirVotacao = document.getElementById("abrirVotacao");
@@ -9,7 +10,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     async function abrirVotacao() {
         try {
-            const txHash = await writeWeb3Contract(propostaContractAddress, "abrirVotacao", propostaABI, []);
+            const txHash = await writeEthersContract(propostaContractAddress, "abrirVotacao", propostaABI, []);
             alert("Votação aberta! Tx: " + txHash);
         } catch (error) {
             console.error("Erro em abrirVotacao:", error);
@@ -19,7 +20,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     async function clearPresence() {
         try {
-            const txHash = await writeWeb3Contract(propostaContractAddress, "clearPresence", propostaABI, []);
+            const txHash = await writeEthersContract(propostaContractAddress, "clearPresence", propostaABI, []);
             alert("Registros de presença limpos! Tx: " + txHash);
         } catch (error) {
             console.error("Erro em clearPresence:", error);
@@ -30,7 +31,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     async function killContract() {
         if (confirm("Tem certeza que deseja executar killContract?")) {
             try {
-                const txHash = await writeWeb3Contract(propostaContractAddress, "killContract", propostaABI, []);
+                const txHash = await writeEthersContract(propostaContractAddress, "killContract", propostaABI, []);
                 alert("Contrato encerrado! Tx: " + txHash);
             } catch (error) {
                 console.error("Erro em killContract:", error);
@@ -41,7 +42,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     async function getBlocksUntilVotingEnds() {
         try {
-            const blocks = await readWeb3Contract(propostaContractAddress, "getBlocksUntilVotingEnds", propostaABI, []);
+            const blocks = await readEthersContract(propostaContractAddress, "getBlocksUntilVotingEnds", propostaABI, []);
             document.getElementById("blocksResult").innerHTML = "Blocos restantes: " + blocks;
         } catch (error) {
             console.error("Erro em getBlocksUntilVotingEnds:", error);
