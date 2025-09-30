@@ -1,3 +1,4 @@
+{% load static %}
 <li class="nav-item dropdown">
     <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false"
         href="{% url 'index' %}">Minha Área</a>
@@ -13,20 +14,5 @@
         
     </ul>
 
-    <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        let subMenuToggles = document.querySelectorAll('.dropdown-menu .dropdown-toggle');
-        
-        subMenuToggles.forEach(function(toggle) {
-            toggle.addEventListener('click', function(e) {            
-                e.stopPropagation();
-                e.preventDefault();
-                let subMenu = this.nextElementSibling;
-                if (subMenu && subMenu.classList.contains('dropdown-menu')) {
-                    subMenu.classList.toggle('show');
-                }
-            });
-        });
-    });
-    </script>
+    <script type="text/javascript" src="{% static 'js/navbar/navbar.js' %}"></script>
 </li>

@@ -19,21 +19,6 @@
         </li>
         {% endif %}
     </ul>
+
+    <script type="text/javascript" src="{% static 'js/navbar/navbar.js' %}"></script>
 </li>
-
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-    let subMenuToggles = document.querySelectorAll('.dropdown-menu .dropdown-toggle');
-
-    subMenuToggles.forEach(function (toggle) {
-        toggle.addEventListener('click', function (e) {            
-            e.stopPropagation();
-            e.preventDefault();
-            let subMenu = this.nextElementSibling;
-            if (subMenu && subMenu.classList.contains('dropdown-menu')) {
-                subMenu.classList.toggle('show');
-            }
-        });
-    });
-});
-</script>
