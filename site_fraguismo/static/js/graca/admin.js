@@ -1,4 +1,6 @@
 import { envioDaGracaABI } from './envio_graca_abi.js';
+import { writeEthersContract } from '../web3/initialize.js';
+import { envioDaGracaAddress } from './graca_addresses.js';
 
 document.addEventListener('DOMContentLoaded', async () => {
     const btnAlterarCarteiraGastos = document.getElementById("alterarCarteiraGastos");

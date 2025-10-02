@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     async function preencherTabelaOrdens() {
         try {
             const resposta = await lerContrato(
-                contratoEndereco,
+                "0xAA71fBb9bFaaE91a9AcA3EA742964db78aEd1D2e",
                 "getTodasOrdens",
                 abi,
                 [] // sem argumentos

@@ -3,9 +3,11 @@ import { contratoEndereco, fragaTokenAddress } from "./mercadoSecundarioAddress.
 import { abi, tokenABI } from "./abi.js";
 import { lerContrato } from "./utils.js";
 import { writeEthersContract } from "../web3/initialize.js";
+import { listarOrdensDoVendedor } from "./utils.js";
 
 document.addEventListener('DOMContentLoaded', async () => {
-    const valorGarantia = document.getElementById("taxaGarantia").innerText = "Taxa de garantia: 0.01 ETH";
+    const valorGarantia = 0.01;
+    document.getElementById("taxaGarantia").innerText = `Taxa de garantia:  ${valorGarantia} ETH`;
     const btnCriarOrdem = document.getElementById("criarOrdem");
     const btnMarcarCompleta = document.getElementById("marcarCompleta");
 
@@ -13,6 +15,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         try {
             const quantidade = document.getElementById("quantidade").value.trim();
             const valorBRL = document.getElementById("valorBRL").value.trim();
+            const valorDecimal = valorBRL.replace('.', '').replace(',', '.') * 100;
             const quantidadeWei = walletConnection.ethers.parseUnits(quantidade, 18);
 
             // Checar allowance
@@ -38,14 +41,14 @@ document.addEventListener('DOMContentLoaded', async () => {
                 contratoEndereco,
                 "criarOrdem",
                 abi,
-                [quantidadeWei.toString(), valorBRL],
+                [quantidadeWei.toString(), valorDecimal],
                 valorGarantia
             );
 
             alert("Ordem criada com sucesso!\n" + txHash);
-            // setTimeout(async () => {
-            //     await listarOrdensDoVendedor();
-            // }, 6000);
+            setTimeout(async () => {
+                await listarOrdensDoVendedor();
+            }, 6000);
         } catch (err) {
             console.error("Erro ao criar ordem:", err);
             alert("Erro ao criar ordem.");

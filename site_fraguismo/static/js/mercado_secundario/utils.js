@@ -1,3 +1,7 @@
+import { walletConnection } from "../web3/wallet.js";
+import { contratoEndereco, checkBalanceAddr } from "./mercadoSecundarioAddress.js";
+import { checkBalanceABI } from "./checkBalanceAbi.js";
+import { tokenABI, abi } from "./abi.js";
 
 export const lerContrato = async (address, functionName, abi, args) => {
     try {
@@ -34,7 +38,7 @@ export async function listarOrdensDoVendedor() {
             contratoEndereco,
             "getOrdensDoVendedor",
             abi,
-            [web3Account.address]
+            [walletConnection.walletAddress]
         );
 
         if (Array.isArray(ids) && ids.length > 0) {

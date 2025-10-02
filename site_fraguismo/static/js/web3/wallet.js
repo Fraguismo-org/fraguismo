@@ -16,7 +16,8 @@ class Wallet {
         }
         try {
 
-            this.provider = new this.ethers.BrowserProvider(window.ethereum);
+            //this.provider = new this.ethers.BrowserProvider(window.ethereum);
+            this.provider = new this.ethers.JsonRpcProvider();
             this.signer = await this.provider.getSigner();
             this.walletAddress = await this.signer.getAddress();
             const balanceEth = await this.provider.getBalance(this.walletAddress);

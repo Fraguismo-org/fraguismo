@@ -30,6 +30,10 @@ document.addEventListener("DOMContentLoaded", async () => {
     async function getProposalDetails() {
         const proposeHash = document.getElementById("queryProposeHash").value.trim();
         try {
+            if (proposeHash === '') {
+                alert("Campo \"Hash da Proposta\" não pode ficar vazio.");
+                return;
+            }
             const details = await readEthersContract(propostaContractAddress, "getProposalDetails", propostaABI, [proposeHash]);
             if (details === null ) {
                 document.getElementById("proposalResult").innerHTML = "Proposta não encontrada.";

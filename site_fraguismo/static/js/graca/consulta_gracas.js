@@ -87,6 +87,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    function formatTokenAmount(amount) {
+        return (Number(amount) / 1e18).toFixed(2);
+    }
+
     btnConsultarStatusVotacao.addEventListener('click', consultarStatusVotacao);
     btnConsultarPorcentagens.addEventListener('click', consultarPorcentagens);
     btnConsultaSaldoUSDT.addEventListener('click', consultarSaldoUSDT);
