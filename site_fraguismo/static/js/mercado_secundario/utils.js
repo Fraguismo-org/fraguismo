@@ -5,7 +5,7 @@ import { tokenABI, abi } from "./abi.js";
 
 export const lerContrato = async (address, functionName, abi, args) => {
     try {
-        const resp = await fetch("https://graphenesmartchain.com:3012/readContract", {
+        const resp = await fetch("http://127.0.0.1:3013/readContract", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({

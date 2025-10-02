@@ -6,6 +6,10 @@ def consultas(request):
     return render(request, 'consultas.html')
 
 @login_required(login_url='login')
+def sacar_pol(request):
+    return render(request, 'sacar_tokens.html')
+
+@login_required(login_url='login')
 def votacao(request):
     return render(request, 'votacao.html')
 

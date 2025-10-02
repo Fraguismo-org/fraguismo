@@ -2,6 +2,7 @@ import { walletConnection } from "../web3/wallet.js";
 import { contratoEndereco, fragaTokenAddress } from "./mercadoSecundarioAddress.js";
 import { abi, tokenABI } from "./abi.js";
 import { lerContrato } from "./utils.js";
+import { writeEthersContract } from "../web3/initialize.js";
 
 document.addEventListener('DOMContentLoaded', async () => {
     const btnIniciarNegociacao = document.getElementById("iniciarNegociacao");
@@ -16,11 +17,16 @@ document.addEventListener('DOMContentLoaded', async () => {
     async function preencherTabelaOrdens() {
         try {
             const resposta = await lerContrato(
-                "0xAA71fBb9bFaaE91a9AcA3EA742964db78aEd1D2e",
+                contratoEndereco,
                 "getTodasOrdens",
                 abi,
                 [] // sem argumentos
             );
+
+            if (!resposta || !resposta.vendedores) {
+                alert("Nenhuma ordem encontrada.");
+                return;
+            }
 
             const {
                 vendedores,
@@ -65,7 +71,9 @@ document.addEventListener('DOMContentLoaded', async () => {
         const valortaxa = 0.3;
         const id = document.getElementById("ordemNegociar").value;        
         try {
-            await writeWeb3Contract2(contratoEndereco, "iniciarNegociacao", abi, [id], valortaxa);
+            const hashNegociacao = await writeEthersContract(contratoEndereco, "iniciarNegociacao", abi, [id], valortaxa);
+            alert("Negociação iniciada com sucesso!\n Hash da transação: \n" + hashNegociacao);
+            await preencherTabelaOrdens(); // Atualiza a tabela após iniciar a negociação
         } catch (error) {
             alert("Erro ao iniciar negociação.");
         }

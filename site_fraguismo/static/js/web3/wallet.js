@@ -19,6 +19,9 @@ class Wallet {
             //this.provider = new this.ethers.BrowserProvider(window.ethereum);
             this.provider = new this.ethers.JsonRpcProvider();
             this.signer = await this.provider.getSigner();
+            this.walletAddress = await this.signer.getAddress();
+            this.balance = await this.provider.getBalance(this.walletAddress);
+            this.balance = this.ethers.formatEther(this.balance);            
             this.isConnected = true;
             localStorage.setItem('isWalletConnected', `${this.isConnected}`);
             return true;
