@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import { ethers } from "../ethers/ethers.min.js";
+=======
+import { ethers } from "https://cdnjs.cloudflare.com/ajax/libs/ethers/6.15.0/ethers.min.js";
+>>>>>>> 9b6414cceb786ff0275a177542c5edd967ae7c98
 
 class Wallet {
     constructor() {
@@ -16,8 +20,12 @@ class Wallet {
         }
         try {
 
+<<<<<<< HEAD
             //this.provider = new this.ethers.BrowserProvider(window.ethereum);
             this.provider = new this.ethers.JsonRpcProvider();
+=======
+            this.provider = new this.ethers.BrowserProvider(window.ethereum);
+>>>>>>> 9b6414cceb786ff0275a177542c5edd967ae7c98
             this.signer = await this.provider.getSigner();
             this.walletAddress = await this.signer.getAddress();
             const balanceEth = await this.provider.getBalance(this.walletAddress);
@@ -27,6 +35,10 @@ class Wallet {
             return true;
         } catch (error) {
             if (error.code === 4001) {
+<<<<<<< HEAD
+=======
+
+>>>>>>> 9b6414cceb786ff0275a177542c5edd967ae7c98
                 return false;
             } else {
                 return false;

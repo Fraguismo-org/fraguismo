@@ -16,7 +16,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     async function preencherTabelaOrdens() {
         try {
             const resposta = await lerContrato(
+<<<<<<< HEAD
                 "0xAA71fBb9bFaaE91a9AcA3EA742964db78aEd1D2e",
+=======
+                contratoEndereco,
+>>>>>>> 9b6414cceb786ff0275a177542c5edd967ae7c98
                 "getTodasOrdens",
                 abi,
                 [] // sem argumentos
@@ -63,7 +67,12 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     async function iniciarNegociacao() {
         const valortaxa = 0.3;
+<<<<<<< HEAD
         const id = document.getElementById("ordemNegociar").value;        
+=======
+        const id = document.getElementById("ordemNegociar").value;
+        //const valorBNB = document.getElementById("valorBNB").value;
+>>>>>>> 9b6414cceb786ff0275a177542c5edd967ae7c98
         try {
             await writeWeb3Contract2(contratoEndereco, "iniciarNegociacao", abi, [id], valortaxa);
         } catch (error) {
