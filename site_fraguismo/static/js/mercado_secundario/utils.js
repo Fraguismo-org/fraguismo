@@ -1,10 +1,7 @@
-<<<<<<< HEAD
 import { walletConnection } from "../web3/wallet.js";
 import { contratoEndereco, checkBalanceAddr } from "./mercadoSecundarioAddress.js";
 import { checkBalanceABI } from "./checkBalanceAbi.js";
 import { tokenABI, abi } from "./abi.js";
-=======
->>>>>>> 9b6414cceb786ff0275a177542c5edd967ae7c98
 
 export const lerContrato = async (address, functionName, abi, args) => {
     try {
@@ -41,11 +38,7 @@ export async function listarOrdensDoVendedor() {
             contratoEndereco,
             "getOrdensDoVendedor",
             abi,
-<<<<<<< HEAD
             [walletConnection.walletAddress]
-=======
-            [web3Account.address]
->>>>>>> 9b6414cceb786ff0275a177542c5edd967ae7c98
         );
 
         if (Array.isArray(ids) && ids.length > 0) {

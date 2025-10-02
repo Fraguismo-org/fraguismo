@@ -10,8 +10,12 @@
                     <div class="border p-3 mb-3">
                         <input type="text" id="ordemConfirma" class="form-control mb-3" placeholder="ID da Ordem (Confirma)" value="{{ ordem_id|default_if_none:'' }}">
                         <button type="button" class="btn btn-primary" id="confirmaPagamento">Confirmar Pagamento</button>
+                        <input type="text" id="ordemConfirma" class="form-control mb-3" placeholder="ID da Ordem (Confirma)" value="{{ ordem_id|default_if_none:'' }}">
+                        <button type="button" class="btn btn-primary" id="confirmaPagamento">Confirmar Pagamento</button>
                     </div>
                     <div class="border p-3 mb-3">
+                        <input type="text" class="form-control mb-3" id="ordemReverte" placeholder="ID da ordem (Reverte)" value="{{ ordem_id|default_if_none:'' }}">
+                        <button type="button" class="btn btn-danger" id="reverterTransacao">Reverter Transação</button>
                         <input type="text" class="form-control mb-3" id="ordemReverte" placeholder="ID da ordem (Reverte)" value="{{ ordem_id|default_if_none:'' }}">
                         <button type="button" class="btn btn-danger" id="reverterTransacao">Reverter Transação</button>
                     </div>

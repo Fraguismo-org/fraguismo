@@ -1,11 +1,8 @@
-<<<<<<< HEAD
 import { writeEthersContract } from '../web3/initialize.js';
 import { envioDaGracaABI } from './envio_graca_abi.js';
 import { envioDaGracaAddress } from './graca_addresses.js';
 
 
-=======
->>>>>>> 9b6414cceb786ff0275a177542c5edd967ae7c98
 document.addEventListener('DOMContentLoaded', async () => {
     const btnRegistrarPresenca = document.getElementById("registrarPresenca");
     const btnVotar = document.getElementById("votar");
@@ -13,11 +10,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     const registrarPresenca = async () => {
         try {
-<<<<<<< HEAD
             const txHash = await writeEthersContract(envioDaGracaAddress, "registrarPresenca", envioDaGracaABI, []);
-=======
-            const txHash = await writeWeb3Contract(envioDaGracaAddress, "registrarPresenca", envioDaGracaABI, []);
->>>>>>> 9b6414cceb786ff0275a177542c5edd967ae7c98
             alert("Presença registrada com sucesso! Tx: " + txHash);
         } catch (error) {
             console.error("Erro ao registrar presença:", error);
@@ -28,11 +21,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const votar = async () => {
         try {
             const decisao = document.getElementById("votoDecisao").value === "true";
-<<<<<<< HEAD
             const txHash = await writeEthersContract(envioDaGracaAddress, "votar", envioDaGracaABI, [decisao]);
-=======
-            const txHash = await writeWeb3Contract(envioDaGracaAddress, "votar", envioDaGracaABI, [decisao]);
->>>>>>> 9b6414cceb786ff0275a177542c5edd967ae7c98
             alert("Voto registrado com sucesso! Tx: " + txHash);
         } catch (error) {
             console.error("Erro ao votar:", error);
@@ -42,11 +31,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     const finalizarVotacao = async () => {
         try {
-<<<<<<< HEAD
             const txHash = await writeEthersContract(envioDaGracaAddress, "finalizarVotacao", envioDaGracaABI, []);
-=======
-            const txHash = await writeWeb3Contract(envioDaGracaAddress, "finalizarVotacao", envioDaGracaABI, []);
->>>>>>> 9b6414cceb786ff0275a177542c5edd967ae7c98
             alert("Votação finalizada com sucesso! Tx: " + txHash);
         } catch (error) {
             console.error("Erro ao finalizar votação:", error);

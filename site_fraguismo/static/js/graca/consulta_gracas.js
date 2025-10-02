@@ -1,10 +1,7 @@
 import { walletConnection } from "../web3/wallet.js";
 import { envioDaGracaABI } from "./envio_graca_abi.js";
 import { envioDaGracaAddress } from "./graca_addresses.js";
-<<<<<<< HEAD
 import { readEthersContract } from "../web3/initialize.js";
-=======
->>>>>>> 9b6414cceb786ff0275a177542c5edd967ae7c98
 
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -17,11 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
     async function consultarSaldoUSDT() {
         try {
             if (walletConnection.checkConnection()) {
-<<<<<<< HEAD
                 const saldo = await readEthersContract(walletConnection.walletAddress, "getSaldoUSDT", envioDaGracaABI, []);
-=======
-                const saldo = await readWeb3Contract(walletConnection.walletAddress, "getSaldoUSDT", envioDaGracaABI, []);
->>>>>>> 9b6414cceb786ff0275a177542c5edd967ae7c98
                 document.getElementById("saldoUSDTResult").innerHTML = "Saldo USDT: " + formatTokenAmount(saldo) + " USDT";
             }
         } catch (error) {
@@ -32,11 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function consultarPorcentagens() {
         try {
-<<<<<<< HEAD
             const porcentagens = await readEthersContract(envioDaGracaAddress, "getPorcentagens", envioDaGracaABI, []);
-=======
-            const porcentagens = await readWeb3Contract(envioDaGracaAddress, "getPorcentagens", envioDaGracaABI, []);
->>>>>>> 9b6414cceb786ff0275a177542c5edd967ae7c98
             document.getElementById("porcentagensResult").innerHTML =
                 "Porcentagem da Graça: " + porcentagens[0] + "% (para stakers)<br>" +
                 "Porcentagem de Gastos: " + porcentagens[1] + "% (para carteira_de_gastos)";
@@ -48,13 +37,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const consultaStake = async () => {
         try {
-<<<<<<< HEAD
             const address = document.getElementById("consultaStakeAddress").value.trim() || walletConnection.walletAddress;
             const stakeInfo = await readEthersContract(envioDaGracaAddress, "getStakeInfo", envioDaGracaABI, [address]);
-=======
-            const address = document.getElementById("consultaStakeAddress").value.trim() || web3Account.address;
-            const stakeInfo = await readWeb3Contract(envioDaGracaAddress, "getStakeInfo", envioDaGracaABI, [address]);
->>>>>>> 9b6414cceb786ff0275a177542c5edd967ae7c98
             let resultado = "Endereço: " + address + "<br>";
             resultado += "Quantidade: " + formatTokenAmount(stakeInfo[0]) + " FRAGA<br>";
             resultado += "Bloco Final: " + stakeInfo[1] + "<br>";

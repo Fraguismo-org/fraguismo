@@ -54,7 +54,6 @@ document.addEventListener("DOMContentLoaded", async function () {
         isRetracted = !isRetracted;
     }
 
-<<<<<<< HEAD
     const checkConnection = async () => {
         await walletConnection.checkConnection();
         if (walletConnection.isConnected) {
@@ -68,9 +67,6 @@ document.addEventListener("DOMContentLoaded", async function () {
         }
     }
     await checkConnection();
-=======
-    await walletConnection.checkConnection();
->>>>>>> 9b6414cceb786ff0275a177542c5edd967ae7c98
     await walletConnection.setupEventListeners();
 
     connectButton.addEventListener('click', connectWallet);

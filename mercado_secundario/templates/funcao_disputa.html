@@ -11,11 +11,14 @@
                         <div class="border p-3 mb-3">
                             <div class="row p-3">
                                 <input type="text" id="ordemRecebidaComprador" placeholder="ID da Ordem Recebida" class="form-control mb-3" value={{ ordem_id|default_if_none:'' }}>
+                                <input type="text" id="ordemRecebidaComprador" placeholder="ID da Ordem Recebida" class="form-control mb-3" value={{ ordem_id|default_if_none:'' }}>
                             </div>
+                            <button type="button" class="btn btn-primary" id="abrirDisputaComprador">Abrir Disputa (Comprador)</button>
                             <button type="button" class="btn btn-primary" id="abrirDisputaComprador">Abrir Disputa (Comprador)</button>
                         </div>
                         <div class="border p-3 mb-3">
                             <div class="row p-3">
+                                <input type="text" id="ordemRecebidaVendedor" class="form-control mb-3" placeholder="ID Ordem Recebida (Vendedor)" value={{ ordem_id|default_if_none:'' }}>
                                 <input type="text" id="ordemRecebidaVendedor" class="form-control mb-3" placeholder="ID Ordem Recebida (Vendedor)" value={{ ordem_id|default_if_none:'' }}>
                             </div>
                             <button type="button" class="btn btn-secondary" id="abrirDisputaVendedor">Abrir Disputa (Vendedor)</button>

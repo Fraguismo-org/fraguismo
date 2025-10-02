@@ -350,6 +350,9 @@ async function buyTokens() {
 // async function listOpenProposals() {
 
 // }
+// async function listOpenProposals() {
+
+// }
 
 function preencher(hash) {
     // Exemplo: Preencher os campos com o valor do hash
