@@ -1,2 +1,2 @@
-export const envioDaGracaAddress = "0x0909C2083b82eF27050c081eE85743d58cBB84E0";
-export const fragaTokenAddress = "0x1E93eCdb8d5026eE38bE4CE7Ae7A49A1e28E1c40";
+export const envioDaGracaAddress = "0x7E598c2EB44c58A7F69fcC3957c4f27B6cb459D5";
+export const fragaTokenAddress = "0xc86a23ca296B69e0b6E8930616Cc4FE8d4Ac32De";

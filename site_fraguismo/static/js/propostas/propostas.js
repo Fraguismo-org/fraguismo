@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     const listOpenProposals = async () => {
         try {
-            const openProposals = await readEthersContract(propostaContractAddress, "getOpenProposals", propostaABI, []);
+            const openProposals = await readEthersContract(propostaContractAddress, "getOpenProposals", propostaABI, [] ); //await readEthersContract(propostaContractAddress, "getOpenProposals", propostaABI, []);
             if (openProposals === null || openProposals.length === 0) {
                 document.getElementById("openProposalsResult").innerHTML = "Nenhuma proposta ativa.";
                 return;

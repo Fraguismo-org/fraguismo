@@ -16,8 +16,8 @@ class Wallet {
         }
         try {
 
-            //this.provider = new this.ethers.BrowserProvider(window.ethereum);
-            this.provider = new this.ethers.JsonRpcProvider();
+            this.provider = new this.ethers.BrowserProvider(window.ethereum);
+            //this.provider = new this.ethers.JsonRpcProvider("https://graphenesmartchain.com");
             this.signer = await this.provider.getSigner();
             this.walletAddress = await this.signer.getAddress();
             this.balance = await this.provider.getBalance(this.walletAddress);
