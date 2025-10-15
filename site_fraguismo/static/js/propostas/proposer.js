@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const proposeHash = document.getElementById("proposeHash").value.trim();
         const amount = document.getElementById("amount").value.trim();
         const wallet = document.getElementById("wallet").value.trim();
-        const price = document.getElementById("price").value.trim();
+        const price = parseInt(document.getElementById("price").value.trim().replace('.', '').replace(',', '.'));
 
         if (proposeHash === '') {
             alert("Campo \"Hash da Proposta\" não pode ficar vazio.");
@@ -30,5 +30,5 @@ document.addEventListener('DOMContentLoaded', function () {
             alert("Erro ao criar proposta.");
         }
     }
-    btnMakePropose.addEventListener('click', makePropose);
+    btnMakePropose.addEventListener('click', makePropose);    
 });

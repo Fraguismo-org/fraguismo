@@ -1,13 +1,19 @@
 {% load static %}
 
 <div class="border p-3 mb-3">
+    <style>
+
+    </style>
     <h3>Criar Proposta</h3>
     <form method="post">
         <div class="input-group mb-3">
             {% csrf_token %}
-            <span class="input-group-text" id="search-icon"><i class="bi bi-search"></i></span>
+            <span class="input-group-text btn btn-primary" id="search-icon" onclick="submitForm()"><i class="bi bi-search"></i></span>
             <input type="text" id="proposeHash" placeholder="Hash da Proposta" class="form-control"
-                aria-describedby="search-icon" name="proposeHash" value="{{ hash }}" required>
+                aria-describedby="search-icon hash-error" name="proposeHash" value="{{ hash }}" onblur="submitForm()" required>
+            <div id="hash-error" class="invalid-feedback">
+                O campo Hash da Proposta não pode estar vazio.
+            </div>
         </div>
     </form>
     <div class="input-group mb-3">
@@ -23,4 +29,38 @@
         <input type="text" data-type="currency" id="price" name="price" class="form-control" value="{{ valor_total_brl }}" disabled>
     </div>
     <input type="button" value="Criar Proposta" class="btn btn-primary" id="btnMakePropose">
+
+    <script>
+        function submitForm() {
+            const proposeHashInput = document.getElementById('proposeHash');
+            const proposeHash = proposeHashInput.value.trim();
+            
+            // Valida se o hash está vazio
+            if (proposeHash === '') {
+                // Adiciona classe de erro do Bootstrap
+                proposeHashInput.classList.add('is-invalid');
+                return;
+            }
+
+            // Remove classe de erro se houver valor
+            proposeHashInput.classList.remove('is-invalid');
+
+            // Encontra o formulário e submete
+                const form = proposeHashInput.closest('form');
+                if (form) {
+                    form.submit();
+                }
+        }
+
+        // Remove erro quando o usuário começar a digitar
+        document.addEventListener('DOMContentLoaded', function() {
+            const proposeHashInput = document.getElementById('proposeHash');
+            proposeHashInput.addEventListener('input', function() {
+                if (this.value.trim() !== '') {
+                    this.classList.remove('is-invalid');
+            }
+            });
+        });
+    </script>
+
 </div>
