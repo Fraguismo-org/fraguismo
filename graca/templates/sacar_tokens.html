@@ -1,0 +1,18 @@
+{% extends 'base.html'%}
+{% load static %}
+{% block content %}
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow-sm border-0 rounded-3">
+                <div class="card-body">
+                    {% include "partials/sacar_pol/sacar_pol.html" %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% include "partials/wallet_connection.html" %}
+<script type="module" src="{% static 'js/graca/withdraw.js' %}"></script>
+<script type="module" src="{% static 'js/web3/initialize.js' %}"></script>
+{% endblock %}

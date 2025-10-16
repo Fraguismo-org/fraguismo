@@ -1,63 +1,100 @@
-const writeWeb3Contract2 = async (address, functionName, abi, args=[], value=null) => {
-    console.log("Values chegaram aqui: "+value);
-    const valor = parseEther(value.toString());
-    const config = await prepareWriteContract({
-        address: address,
-        abi: abi,
-        functionName: functionName,
-        args:args,
-        value: valor
-    })
+import { walletConnection } from "./wallet.js";
 
-    if (value !== null) {
-        //config.value = parseEther(valor.toString());
+export const writeEthersContract = async (contractAddress, methodName, contractABI, params = [], value = null) => {
+    try {
+        // Verificar se a carteira está conectada
+        if (!walletConnection.isConnected) {
+            throw new Error('Carteira não conectada. Por favor, conecte sua carteira primeiro.');
+        }
+
+        // Verificar se está na rede correta antes de fazer a transação
+        const isCorrect = await walletConnection.isCorrectNetwork();
+        if (!isCorrect) {
+            const currentChainId = await walletConnection.getCurrentChainId();
+            const confirm = window.confirm(
+                `Você está na rede errada (Chain ID: ${currentChainId}).\n` +
+                `Esta transação requer a rede ${walletConnection.networkConfig.chainName} (Chain ID: ${walletConnection.requiredChainId}).\n\n` +
+                'Deseja trocar para a rede correta?'
+            );
+
+            if (confirm) {
+                await walletConnection.switchToTestNetwork();
+                // Reconectar após trocar de rede
+                await walletConnection.connect();
+            } else {
+                throw new Error('Transação cancelada: rede incorreta.');
+            }
+        }
+
+        const contract = new walletConnection.ethers.Contract(contractAddress, contractABI, walletConnection.signer);
+        const txOptions = {};
+        if (value !== null) {
+            txOptions.value = walletConnection.ethers.parseEther(value.toString());
+        }
+        const tx = await contract[methodName](...params, txOptions);
+        return tx.hash;
+    } catch (error) {
+        console.error('Erro em writeEthersContract:', error);
+        throw error;
     }
-
-    const { hash } = await writeContract(config)
-    return hash;
 }
 
-const writeWeb3Contract = async (address, functionName, abi, args=[], value=null) => {
-    const config = await prepareWriteContract({
-        address: address,
-        abi: abi,
-        functionName: functionName,
-        args:args
-    })
+export const readEthersContract = async (address, functionName, abi, args = []) => {
+    try {
+        //const resp = await fetch("https://graphenesmartchain.com:3013/readContract", { //3113 são os contratos da BSC
+        const resp = await fetch("https://graphenesmartchain.com:3012/readContract", { //3112 são os contratos da Graphene
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                address,
+                abi,
+                functionName,
+                args
+            })
+        });
 
-    if (value !== null) {
-        config.value = 'parseEther(value.toString())';
+        if (!resp.ok) {
+            throw new Error(`HTTP ${ resp.status } – ${ resp.statusText }`);
+        }
+
+        const { result, error } = await resp.json();
+        if (error) {
+            throw new Error(error);
+        }
+
+        return result;
+    } catch (err) {
+        console.error("Erro ao ler contrato:", err);
+        return 0;
     }
-
-    const { hash } = await writeContract(config)
-    return hash;
 }
 
+// export const lerContratoGraphene = async (address, functionName, abi, args) => {
+//     try {
+//         //const resp = await fetch("https://graphenesmartchain.com:3013/readContract", { //3113 são os contratos da BSC
+//         const resp = await fetch("https://graphenesmartchain.com:3012/readContract", { //3112 são os contratos da Graphene
+//             method: "POST",
+//             headers: { "Content-Type": "application/json" },
+//             body: JSON.stringify({
+//                 address,
+//                 abi,
+//                 functionName,
+//                 args
+//             })
+//         });
 
-const awaitConfirmation = async(hash)=> {
-    const data = await waitForTransaction({
-        hash: hash
-    });
-    return data;
-}
+//         if (!resp.ok) {
+//             throw new Error(`HTTP ${ resp.status } – ${ resp.statusText }`);
+//         }
 
-const sendEthereum = async(to, value)=> {
-    const config = await prepareSendTransaction({
-        to: to,
-        value: parseEther(value.toString())
-    })
-    const { hash } = await sendTransaction(config)
-    return hash;
-}
+//         const { result, error } = await resp.json();
+//         if (error) {
+//             throw new Error(error);
+//         }
 
-const readWeb3Contract = async (address, functionName, abi, args) => {
-    const data = await readContract({
-        address: address,
-        functionName: functionName,
-        abi: abi,
-        args: args
-    })
-    return data;
-}
-
-var web3Account = getAccount();
+//         return result;
+//     } catch (err) {
+//         console.error("Erro ao ler contrato:", err);
+//         return 0;
+//     }
+// };

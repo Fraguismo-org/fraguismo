@@ -3,32 +3,6 @@
     <div class="input-group mb-3">
         <input type="text" id="queryProposeHash" placeholder="Hash da Proposta" class="form-control">
     </div>
-    <button type="submit" class="btn btn-primary" onclick="getProposalDetails()">Consultar</button>
+    <button type="submit" class="btn btn-primary" id="getProposalDetails">Consultar</button>
     <div id="proposalResult" style="margin-top:10px; font-weight:bold;"></div>    
 </div>
-
-{% block script %}
-<script>
-    async function getProposalDetails() {
-        const proposeHash = document.getElementById("queryProposeHash").value.trim();
-        try {
-        const details = await readWeb3Contract(propostaContractAddress, "getProposalDetails", propostaABI, [proposeHash]);
-        console.log(details);
-        let result = "Proposer: " + details[0] + "<br>";
-        result += "Wallet: " + details[1] + "<br>";
-        result += "Amount: " + details[2] + "<br>";
-        result += "Price: " + details[3] + "<br>";
-        result += "Total Yes Weight: " +  details[4] + "<br>";
-        result += "Total No Weight: " +  details[5] + "<br>";
-        result += "Ended: " +  details[6] + "<br>";
-        result += "Approved: " +  details[7] + "<br>";
-        result += "Tokens Remaining: " +  details[8] + "<br>";
-        result += "BNB Balance: " +  details[9];
-        document.getElementById("proposalResult").innerHTML = result;
-        } catch (error) {
-        console.error("Erro em getProposalDetails:", error);
-        alert("Erro ao consultar detalhes da proposta.");
-        }
-    }
-</script>
-{% endblock %}
