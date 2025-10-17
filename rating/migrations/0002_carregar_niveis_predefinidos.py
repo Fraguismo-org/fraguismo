@@ -16,7 +16,7 @@ def carregar_niveis_predefinidos(apps, schema_editor):
     ]
 
     for nivel_data in niveis:
-        if not nivel.objects.fiter(nivel=nivel_data['nivel']).exists():
+        if not nivel.objects.filter(nivel=nivel_data['nivel']).exists():
             novo_nivel = nivel(nivel=nivel_data['nivel'], pontuacao_base=nivel_data['pontuacao_base'])
             novo_nivel.save()
 
