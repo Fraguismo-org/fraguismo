@@ -6,7 +6,7 @@ def carregar_niveis_predefinidos(apps, schema_editor):
     """
     Carrega os níveis hierárquicos predefinidos no banco de dados.
     """
-    Nivel = apps.get_model('rating','Nivel')
+    nivel = apps.get_model('rating','Nivel')
     niveis = [
         {'nivel': 'Aprendiz', 'pontuacao_base': 0},
         {'nivel': 'Escudeiro', 'pontuacao_base': 5},
@@ -16,7 +16,9 @@ def carregar_niveis_predefinidos(apps, schema_editor):
     ]
 
     for nivel_data in niveis:
-        Nivel.objects.get_or_create(nivel=nivel_data['nivel'], pontuacao_base=nivel_data['pontuacao_base'])
+        if not nivel.objects.fiter(nivel=nivel_data['nivel']).exists():
+            novo_nivel = nivel(nivel=nivel_data['nivel'], pontuacao_base=nivel_data['pontuacao_base'])
+            novo_nivel.save()
 
 def remover_niveis_predefinidos(apps, schema_editor):
     """
