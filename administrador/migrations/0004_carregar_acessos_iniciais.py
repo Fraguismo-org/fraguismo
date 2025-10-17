@@ -14,7 +14,7 @@ acessos = [
 def carrega_acessos_iniciais(apps, schema_editor):
     administrador_acesso = apps.get_model('administrador', 'Acesso')
     for nome, link in acessos:
-        if not administrador_acesso.objects.filter(link=link).exits():
+        if not administrador_acesso.objects.filter(link=link).exists():
             acesso = administrador_acesso(nome=nome, link=link)
             acesso.save()
             
