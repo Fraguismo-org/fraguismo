@@ -6,7 +6,7 @@ def carregar_niveis_predefinidos(apps, schema_editor):
     """
     Carrega os níveis hierárquicos predefinidos no banco de dados.
     """
-    Nivel = apps.get_model('Nivel')
+    Nivel = apps.get_model('rating','Nivel')
     niveis = [
         {'nivel': 'Aprendiz', 'pontuacao_base': 0},
         {'nivel': 'Escudeiro', 'pontuacao_base': 5},
@@ -22,8 +22,8 @@ def remover_niveis_predefinidos(apps, schema_editor):
     """
     Remove os níveis hierárquicos predefinidos do banco de dados.
     """
-    Nivel = apps.get_model('Nivel')
-    nomes_niveis = ['Aprendiz', 'Escudeiro', 'Cavaleiro', 'Conselheiro', 'Guardião', 'VPL']
+    Nivel = apps.get_model('rating','Nivel')
+    nomes_niveis = ['Aprendiz', 'Escudeiro', 'Cavaleiro', 'Conselheiro', 'Guardião']
     Nivel.objects.filter(nome__in=nomes_niveis).delete()
 
 class Migration(migrations.Migration):
