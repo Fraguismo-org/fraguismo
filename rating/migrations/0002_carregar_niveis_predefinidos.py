@@ -15,6 +15,7 @@ def carregar_niveis_predefinidos(apps, schema_editor):
         {'nivel': 'Guardião', 'pontuacao_base': 40},        
     ]
 
+    id = 1
     for nivel_data in niveis:
         if not nivel.objects.filter(nivel=nivel_data['nivel']).exists():
             novo_nivel = nivel(id=id, nivel=nivel_data['nivel'], pontuacao_base=nivel_data['pontuacao_base'])
