@@ -17,6 +17,6 @@ def votacao(request):
 def tranca_distribuicao(request):
     return render(request, 'tranca_distribuicao.html')
 
-# @user_passes_test(lambda u: u.is_superuser)
+@user_passes_test(lambda u: u.is_superuser)
 def graca_admin(request):
     return render(request, 'graca_admin.html')

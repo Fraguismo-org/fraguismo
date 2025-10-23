@@ -16,7 +16,7 @@
         <li>
             <a class="dropdown-item" href="{% url 'votacao' %}">Votação</a>
         </li>
-        {% if user.is_admin %}
+        {% if user.is_superuser %}
         <li>
             <a class="dropdown-item" href="{% url 'graca_admin' %}">Admin</a>
         </li>
