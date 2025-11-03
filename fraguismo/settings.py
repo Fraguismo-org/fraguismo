@@ -129,6 +129,6 @@ EMAIL_USE_TSL = config('EMAIL_USE_TSL', default=False, cast=bool)
 
 EMAIL_HOST_USER = config('EMAIL_HOST_USER', default='')
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD', default='')
-DEFAULT_FROM_EMAIL = config('EMAIL_HOST_USER', default='')
+DEFAULT_FROM_EMAIL = config('DEFAULT_FROM_EMAIL', default='')
 
 SITE_NAME = 'Fraguismo'
