@@ -1,19 +1,23 @@
 {% load static %}
 <link rel="stylesheet" href="{% static 'css/wallet_connection.css' %}">
 <div id="connect-pane" class="aside-float-connection">
-  <div class="wallet-connection">
-    <div id="prepare">
-      <h2>Conecte sua carteira</h2>
-      <p>Conecte-se efetuar as operações.</p>
+<button type="button" id="retract-panel" class="icon-button"><i class="bi bi-chevron-double-right"></i></button>
+  <div id="content-panel">
+    <div class="wallet-connection">
+      <div id="prepare">
+        <h2>Conecte sua carteira</h2>
+        <p>Conecte-se efetuar as operações.</p>
 
-      <button class="btn btn-primary" id="btn-connect">Conectar Carteira</button>
-    </div>
+        <button class="btn btn-primary" id="btn-connect">Conectar Carteira</button>
+      </div>
 
-    <div id="connected" style="display: none;">
-      <h2>Carteira Conectada</h2>
-      <p>Endereço: <span id="wallet-address"></span></p>
-      {% comment %} <p>Saldo: <span id="wallet-balance"></span> ETH</p> {% endcomment %}
-      <button class="btn btn-danger" id="btn-disconnect">Desconectar</button>
+      <div id="connected" style="display: none;">
+        <h2>Carteira Conectada</h2>
+        <p>Endereço: <span id="wallet-address"></span></p>
+        <p>Saldo: <span id="wallet-balance"></span> ETH</p>
+        <button class="btn btn-danger" id="btn-disconnect">Desconectar</button>
+      </div>
     </div>
   </div>
+<script type="module" src="{% static 'js/wallet_connection/wallet_connection.js' %}"></script>
 </div>

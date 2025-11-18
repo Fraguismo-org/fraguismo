@@ -6,7 +6,7 @@
             <div class="col-lg-8">
                 <div class="card shadow-sm border-0 rounded-3">                    
                     <div class="card-body">
-                        <h2 class="text-center">Tranca & Distrinuição</h2>
+                        <h2 class="text-center">Tranca & Distribuição</h2>                        
                         {% include "partials/tranca_distribuicao/aprovar_gastos_tokens.html" %}
                         {% include "partials/tranca_distribuicao/trancar_tokens.html" %}
                         {% include "partials/tranca_distribuicao/destrancar_tokens.html" %}
@@ -18,13 +18,7 @@
     </div>
 </div>
 {% include "partials/wallet_connection.html" %}
-<script src="{% static 'js/graca/graca.js' %}"></script>
-<script src="{% static 'js/web3/muriloethereum.js' %}"></script>
-<script src="{% static 'js/web3/web3.js' %}"></script>
-<script src="{% static 'js/web3/connect.js' %}"></script>
-<script src="{% static 'js/web3/979.connect.js' %}"></script>
-<script src="{% static 'js/web3/416.connect.js' %}"></script>
-<script src="{% static 'js/web3/120.connect.js' %}"></script>
-<script src="{% static 'js/web3/initialize.js' %}"></script>
-<script src="{% static 'js/web3/main.js' %}"></script>
+<script type="module" src="{% static 'js/graca/tranca_distribuicao.js' %}"></script>
+<script type="module" src="{% static 'js/web3/initialize.js' %}"></script>
+
 {% endblock %}

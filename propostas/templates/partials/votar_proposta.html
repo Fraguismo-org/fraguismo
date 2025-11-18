@@ -1,24 +1,11 @@
 <div class="border p-3 mb-3">
     <h3>Votar na proposta</h3>
-    <select id="voto" name="voto" class="form-control mb-3">
+    <div class="input-group mb-3">
+        <input type="text" id="voteHash" placeholder="Hash da Proposta" class="form-control">
+    </div>
+    <select id="voteDecision" name="voto" class="form-control mb-3">
         <option value="sim">Sim</option>
         <option value="nao">Não</option>
     </select>
-    <button type="button" class="btn btn-primary" onclick="doVote()">Votar</button>
+    <button type="button" class="btn btn-primary" id="doVote">Votar</button>
 </div>
-
-{% block script %}
-<script>
-    async function doVote() {
-        const proposeHash = document.getElementById("voteHash").value.trim();
-        const decision = (document.getElementById("voteDecision").value.trim() === "true");
-        try {
-            const txHash = await writeWeb3Contract(propostaContractAddress, "doVote", propostaABI, [proposeHash, decision]);
-            alert("Voto realizado! Tx: " + txHash);
-        } catch (error) {
-            console.error("Erro em doVote:", error);
-            alert("Erro ao votar.");
-        }
-    }
-</script>
-{% endblock %}

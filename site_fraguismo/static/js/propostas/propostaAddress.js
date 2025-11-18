@@ -1,0 +1,1 @@
+export const propostaContractAddress = "0x8Da66CA6615Cc698e19BA680cDE2b03433Dda4A6";
