@@ -1,1 +1,0 @@
-export const fragaTokenAddress = "0xc86a23ca296B69e0b6E8930616Cc4FE8d4Ac32De";
