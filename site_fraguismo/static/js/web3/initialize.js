@@ -40,9 +40,8 @@ export const writeEthersContract = async (contractAddress, methodName, contractA
 }
 
 export const readEthersContract = async (address, functionName, abi, args = []) => {
-    try {
-        //const resp = await fetch("https://graphenesmartchain.com:3013/readContract", { //3113 são os contratos da BSC
-        const resp = await fetch("https://graphenesmartchain.com:3012/readContract", { //3112 são os contratos da Graphene
+    try {        
+        const resp = await fetch("https://graphenesmartchain.com:3014/readContract", { //3112 são os contratos da Graphene
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
@@ -68,33 +67,3 @@ export const readEthersContract = async (address, functionName, abi, args = []) 
         return 0;
     }
 }
-
-// export const lerContratoGraphene = async (address, functionName, abi, args) => {
-//     try {
-//         //const resp = await fetch("https://graphenesmartchain.com:3013/readContract", { //3113 são os contratos da BSC
-//         const resp = await fetch("https://graphenesmartchain.com:3012/readContract", { //3112 são os contratos da Graphene
-//             method: "POST",
-//             headers: { "Content-Type": "application/json" },
-//             body: JSON.stringify({
-//                 address,
-//                 abi,
-//                 functionName,
-//                 args
-//             })
-//         });
-
-//         if (!resp.ok) {
-//             throw new Error(`HTTP ${ resp.status } – ${ resp.statusText }`);
-//         }
-
-//         const { result, error } = await resp.json();
-//         if (error) {
-//             throw new Error(error);
-//         }
-
-//         return result;
-//     } catch (err) {
-//         console.error("Erro ao ler contrato:", err);
-//         return 0;
-//     }
-// };

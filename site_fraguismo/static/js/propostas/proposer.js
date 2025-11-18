@@ -1,5 +1,5 @@
+import { poligonAbi } from '../web3/abi.js';
 import { writeEthersContract } from '../web3/initialize.js';
-import { propostaABI } from './propostaAbi.js';
 import { propostaContractAddress } from './propostaAddress.js';
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
         try {
-            const txHash = await writeEthersContract(propostaContractAddress, "makePropose", propostaABI, [amount, wallet, proposeHash, price]);
+            const txHash = await writeEthersContract(propostaContractAddress, "makePropose", poligonAbi, [amount, wallet, proposeHash, price]);
             alert("Proposta criada! Tx: " + txHash);
         } catch (error) {
             console.error("Erro em makePropose:", error);

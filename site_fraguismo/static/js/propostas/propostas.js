@@ -1,6 +1,6 @@
 import { propostaContractAddress } from "./propostaAddress.js";
-import { propostaABI } from "./propostaAbi.js";
 import { readEthersContract, writeEthersContract } from "../web3/initialize.js";
+import { poligonAbi } from "../web3/abi.js";
 
 document.addEventListener("DOMContentLoaded", async () => {
     const btnListOpenProposals = document.getElementById("listOpenProposals");
@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     const listOpenProposals = async () => {
         try {
-            const openProposals = await readEthersContract(propostaContractAddress, "getOpenProposals", propostaABI, [] ); //await readEthersContract(propostaContractAddress, "getOpenProposals", propostaABI, []);
+            const openProposals = await readEthersContract(propostaContractAddress, "getOpenProposals", poligonAbi, [] );
             if (openProposals === null || openProposals.length === 0) {
                 document.getElementById("openProposalsResult").innerHTML = "Nenhuma proposta ativa.";
                 return;
@@ -34,7 +34,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 alert("Campo \"Hash da Proposta\" não pode ficar vazio.");
                 return;
             }
-            const details = await readEthersContract(propostaContractAddress, "getProposalDetails", propostaABI, [proposeHash]);
+            const details = await readEthersContract(propostaContractAddress, "getProposalDetails", poligonAbi, [proposeHash]);
             if (details === null ) {
                 document.getElementById("proposalResult").innerHTML = "Proposta não encontrada.";
                 return;
@@ -59,7 +59,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     async function registerPresence() {
         try {
-            const txHash = await writeEthersContract(propostaContractAddress, "registerPresence", propostaABI, []);
+            const txHash = await writeEthersContract(propostaContractAddress, "registerPresence", poligonAbi, []);
             alert("Presença registrada! Tx: " + txHash);
         } catch (error) {
             console.error("Erro em registerPresence:", error);
@@ -70,7 +70,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     async function endVote() {
         const proposeHash = document.getElementById("endVoteHash").value.trim();
         try {
-            const txHash = await writeEthersContract(propostaContractAddress, "endVote", propostaABI, [proposeHash]);
+            const txHash = await writeEthersContract(propostaContractAddress, "endVote", poligonAbi, [proposeHash]);
             if (txHash === null) {
                 alert("Erro ao encerrar votação.");
                 return;
@@ -90,7 +90,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         const proposeHash = document.getElementById("voteHash").value.trim();
         const decision = (document.getElementById("voteDecision").value.trim() === "true");
         try {
-            const txHash = await writeEthersContract(propostaContractAddress, "doVote", propostaABI, [proposeHash, decision]);
+            const txHash = await writeEthersContract(propostaContractAddress, "doVote", poligonAbi, [proposeHash, decision]);
             if (txHash === null) {
                 alert("Erro ao votar.");
                 return;

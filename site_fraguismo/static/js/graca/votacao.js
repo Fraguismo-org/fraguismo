@@ -1,6 +1,5 @@
+import { poligonAbi } from '../web3/abi.js';
 import { writeEthersContract } from '../web3/initialize.js';
-import { envioDaGracaABI } from './envio_graca_abi.js';
-import { envioDaGracaAddress } from './graca_addresses.js';
 
 
 document.addEventListener('DOMContentLoaded', async () => {
@@ -10,18 +9,18 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     const registrarPresenca = async () => {
         try {
-            const txHash = await writeEthersContract(envioDaGracaAddress, "registrarPresenca", envioDaGracaABI, []);
+            const txHash = await writeEthersContract(propostaContractAddress, "registerPresence", poligonAbi, []);
             alert("Presença registrada com sucesso! Tx: " + txHash);
         } catch (error) {
             console.error("Erro ao registrar presença:", error);
-            alert("Erro ao registrar presença. Verifique se você é diretor e se o período de registro está aberto.");
+            alert("Erro ao registrar presença. Verifique se você é guardião e se o período de registro está aberto.");
         }
     }
 
     const votar = async () => {
         try {
             const decisao = document.getElementById("votoDecisao").value === "true";
-            const txHash = await writeEthersContract(envioDaGracaAddress, "votar", envioDaGracaABI, [decisao]);
+            const txHash = await writeEthersContract(propostaContractAddress, "doVote", poligonAbi, [decisao]);
             alert("Voto registrado com sucesso! Tx: " + txHash);
         } catch (error) {
             console.error("Erro ao votar:", error);
@@ -31,7 +30,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     const finalizarVotacao = async () => {
         try {
-            const txHash = await writeEthersContract(envioDaGracaAddress, "finalizarVotacao", envioDaGracaABI, []);
+            const txHash = await writeEthersContract(propostaContractAddress, "endVote", poligonAbi, []);
             alert("Votação finalizada com sucesso! Tx: " + txHash);
         } catch (error) {
             console.error("Erro ao finalizar votação:", error);
