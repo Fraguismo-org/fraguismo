@@ -14,7 +14,7 @@
 html, body {
   overflow-x: hidden !important;
   overflow-y: auto;
-  background-color: $bg-main;
+  background-color: #fffaf0;
 }
 
 p, span {
@@ -34,7 +34,7 @@ h5 {
 }
 
 h1, h2, h3, h4, h5, h6, p, span, ul, li {
-  @include text-shadow;
+  color: #333333;
 }
 
 // Efeitos
@@ -129,6 +129,17 @@ h1, h2, h3, h4, h5, h6, p, span, ul, li {
   }
 }
 
+.niveis {
+  .container {
+    img {
+      @include img-flex-adapter(30%, 50%, 30%, 50%);
+      margin-bottom: 2%;
+      border-radius: 12px;
+      box-shadow: 0 0 10px $box-shadow-dark;
+    }
+  }
+}
+
 .display-img {
   border-radius: 10px;
   object-fit: cover;
@@ -139,9 +150,8 @@ h1, h2, h3, h4, h5, h6, p, span, ul, li {
 }
 
 .column-topics {
-  background-color: rgb(175, 175, 175);
-  box-shadow: 0 0 10px $box-shadow-dark;
-  border-radius: 10px;
+  border: solid 1px rgba(0, 0, 0, 0.365);
+  border-radius: 6px;
   padding: 15px;
   color: black;
   min-height: 300px;
@@ -149,20 +159,6 @@ h1, h2, h3, h4, h5, h6, p, span, ul, li {
 }
 
 // Botões
-.bg-btn-curso {
-  height: 21dvh;
-  margin: 3% 0;
-  border-radius: 16px;
-
-  img {
-    width: 100%;
-    height: 100%;
-    filter: brightness(50%);
-    object-fit: cover;
-    border-radius: 16px;
-  }
-}
-
 .dao-button {
   padding: 10px 15px;
   background-color: #fff;
@@ -259,10 +255,79 @@ h1, h2, h3, h4, h5, h6, p, span, ul, li {
   }
 }
 
+@media (min-width: 300px) {
+  .col-cal {
+    border: solid 1px rgba(0, 0, 0, 0.365);
+    border-radius: 6px;
+    padding: 2%;
+  }
+
+  .row-body {
+  @include rows-col(column-reverse, 100%, 0.80rem, 1vw, 3rem);
+  }
+  .row-body-cal {
+    @include rows-col(column, 100%, 0.80rem, 1vw, 3rem);
+  }
+}
+
+.col-wp-img {
+  display: none;
+  img {
+    display: none;
+  }
+  }
+
+
+@media (min-width: 400px) {
+.col-wp-img {
+  @include full-flex;
+  img {
+    @include img-flex-adapter(30%, 100%, 30%, 100%);
+  }
+  }
+}
+
+@media (min-width: 910px){
+  .row-body {
+  @include rows-col(column-reverse, 100%, 0.80rem, 1vw, 3rem);
+}
+
+  .row-body-cal {
+    @include rows-col(row, 50%, 0.80rem, 1vw, 3rem);
+  }
+}
+
+.col-wp-img {
+  margin-bottom: 12px !important;
+  margin-top: 12px !important;
+  img {
+    @include img-flex-adapter(30%, 60%, 30%, 60%);
+  }
+  }
+
+.col-wp-img-cal {
+  @include full-flex;
+  img {
+    @include img-flex-adapter(30%, 100%, 30%, 100%);
+  }
+  }
+
 @media (min-width: 1024px) {
+  .col-conteudo {
+    padding: 0 3%;
+  }
+
   .column-rights p {
     font-size: clamp(0.90rem, 1.5vw, 3rem);
   }
+  .row-body {
+  @include rows-col(row, 50%, 0.80rem, 1vw, 3rem);
+}
+.col-wp-img {
+  img {
+    @include img-flex-adapter(30%, 100%, 30%, 100%);
+  }
+}
 }
 
 @media (min-width: 1280px) {

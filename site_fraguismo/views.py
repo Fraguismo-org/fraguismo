@@ -10,12 +10,6 @@ from site_fraguismo.models import Mensagem
 def index(request):    
     return render(request, 'index.html')
 
-def codigo_conduta(request):
-    return render(request, 'regras/codigo_conduta.html')
-
-def termos_condicoes(request):
-    return render(request, 'regras/termos_condicoes.html')
-
 def contato(request):
     if request.method  == 'POST':
         try:

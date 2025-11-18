@@ -57,7 +57,7 @@ html, body {
   color: rgb(24, 23, 23);
   padding: 2% 20px;
   border-radius: 12px;
-  background: linear-gradient(135deg, #e0822f, #5a0000);
+  background: linear-gradient(to bottom, #e0822f, #5a0000);
 }
 .wrapper-hr-section h3 {
   font-size: clamp(2.6rem, 5vw, 7rem) !important;
@@ -534,6 +534,11 @@ html, body {
   #row-midia {
     flex-direction: column !important;
     gap: 10px !important;
+  }
+}
+@media (max-width: 448px) {
+  .timeline div h4 {
+    text-align: center;
   }
 }
 /*Asus Zenbook Fold*/
