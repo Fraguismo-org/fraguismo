@@ -1,5 +1,5 @@
 import hashlib
-from members.models.profile import Profile
+from profile import Profile
 from django.contrib import messages
 from django.shortcuts import get_object_or_404, redirect, render
 
@@ -20,7 +20,6 @@ def create_proposal(request):
         value = request.POST.get('valor')
         file = request.FILES.get('arquivo')
         user = request.user
-        value = str.replace(value, '.', '').replace(',', '.')
 
         # Validação básica
         if not title or not value or not file:

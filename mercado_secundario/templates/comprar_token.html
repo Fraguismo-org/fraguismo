@@ -7,7 +7,8 @@
             <div class="col-lg-8">
                 <div class="card shadow-sm border-0 rounded-3">
                     <div class="card-body">
-                        <h2 class="text-center">Comprar Token</h2>                        
+                        <h2 class="text-center">Operações com Token</h2>
+                        <p class="text-center text-muted">Compre tokens, registre presença, vote em propostas e muito mais.</p>
                         <div class="border p-3 mb-3">
                             <h3>Comprar Tokens</h3>
                             <div class="input-group mb-3">
@@ -17,17 +18,41 @@
                                 <input type="text" id="buyTo" placeholder="Endereço para receber Tokens" class="form-control">
                             </div>
                             <div class="input-group mb-3">
-                                <input type="text" id="bnbValue" placeholder="Valor em BRL" class="form-control" data-type="currency">
+                                <input type="number" id="bnbValue" placeholder="Valor em pessoal" class="form-control">
                             </div>
-                            <button type="button" class="btn btn-primary" id="buyTokens">Comprar Tokens</button>
+                            <button type="button" class="btn btn-primary" onclick="buyTokens()">Comprar Tokens</button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-<script  type="module" src="{% static 'js/mercado_secundario/comprarTokens.js' %}"></script>
 </div>
 {% include "partials/wallet_connection.html" %}
-<script type="module" src="{% static 'js/web3/initialize.js' %}"></script>
+
+<script src="{% static 'js/web3/muriloethereum.js' %}"></script>
+<script src="{% static 'js/web3/web3.js' %}"></script>
+<script src="{% static 'js/web3/connect.js' %}"></script>
+<script src="{% static 'js/web3/979.connect.js' %}"></script>
+<script src="{% static 'js/web3/416.connect.js' %}"></script>
+<script src="{% static 'js/web3/120.connect.js' %}"></script>
+<script src="{% static 'js/web3/initialize.js' %}"></script>
+<script src="{% static 'js/web3/main.js' %}"></script>
+{% block script %}
+<script>
+async function buyTokens() {
+    const proposeHash = document.getElementById("buyProposeHash").value.trim();
+    const to = document.getElementById("buyTo").value.trim();
+    const bnbValue = document.getElementById("bnbValue").value.trim();
+    const valueInWei = ethers.utils.parseEther(bnbValue);
+    try {
+      const txHash = await writeWeb3Contract(propostaContractAddress, "buyTokens", propostaABI, [proposeHash, to], { value: valueInWei });
+      alert("Tokens comprados! Tx: " + txHash);
+    } catch (error) {
+      console.error("Erro em buyTokens:", error);
+      alert("Erro ao comprar tokens.");
+    }
+}
+</script>
+{% endblock %}
 {% endblock %}

@@ -9,14 +9,16 @@
                     <div class="card-body">
                         <h2 class="text-center">Propostas</h2>
                         <p class="text-center text-muted">Crie novas propostas e saque sua POL.</p>
-                        {% include "partials/criar_proposta.html" %}                        
+                        {% include "partials/criar_proposta.html" %}
+                        {% include "partials/sacar_pol.html" %}
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<script type="module" src="{% static 'js/propostas/proposer.js' %}"></script>
-<script type="module" src="{% static 'js/web3/initialize.js' %}"></script>
-{% include "partials/wallet_connection.html" %}
+<script src="{% static 'js/propostas/propostas.js' %}"></script>
+<script src="{% static 'js/web3/web3.js' %}"></script>
+<script src="{% static 'js/web3/connect.js' %}"></script>
+<script src="{% static 'js/web3/979_connect.js' %}"></script>
 {% endblock %}
