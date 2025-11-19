@@ -3,8 +3,6 @@ from django.shortcuts import redirect, render
 from django.template import loader
 from log.models.log import Log
 from site_fraguismo.models import Mensagem
-# import requests
-# from django.shortcuts import render
 
 
 def index(request):    

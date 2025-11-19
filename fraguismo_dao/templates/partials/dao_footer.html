@@ -1,0 +1,33 @@
+
+<!-- <footer id="votingCounters" display: none;"> -->
+<footer id="votingCounters" class="voting-counters">
+    <div class="container" style="display: flex; justify-content: space-around; flex-wrap: wrap; gap: 20px; text-align: center;">
+        <div id="nextVotingCounter" style="flex: 1; min-width: 200px;">
+            <h4 style="color: #667eea; margin-bottom: 5px; font-size: 0.9em;">⏰ Próxima Votação</h4>
+            <div id="nextVotingTime" style="font-size: 1.1em; font-weight: bold; color: #333;">--</div>
+        </div>
+        <div id="presenceCounter" style="flex: 1; min-width: 200px; display: none;">
+            <h4 style="color: #28a745; margin-bottom: 5px; font-size: 0.9em;">📝 Lista de Presença</h4>
+            <div id="presenceTime" style="font-size: 1.1em; font-weight: bold; color: #333;">--</div>
+        </div>
+        <div id="votingCounter" style="flex: 1; min-width: 200px; display: none;">
+            <h4 style="color: #dc3545; margin-bottom: 5px; font-size: 0.9em;">🗳️ Período de Votação</h4>
+            <div id="votingTime" style="font-size: 1.1em; font-weight: bold; color: #333;">--</div>
+        </div>
+        <div id="quorumCounter" style="flex: 1; min-width: 200px; display: none;">
+            <h4 style="color: #6c757d; margin-bottom: 5px; font-size: 0.9em;">📊 Quorum</h4>
+            <div id="quorumText" style="font-size: 1em; font-weight: bold; color: #333; margin-bottom: 5px;">--/--
+            </div>
+            <div style="width: 100%; background-color: #e9ecef; border-radius: 10px; height: 20px; overflow: hidden; position: relative;">
+                <div id="quorumBar" style="height: 100%; width: 0%; transition: width 0.3s ease, background-color 0.3s ease; border-radius: 10px;">
+                </div>
+            </div>
+            <div id="quorumStatus" style="font-size: 0.85em; margin-top: 3px; color: #6c757d;">--</div>
+        </div>
+        <div id="resetCounter" style="flex: 1; min-width: 200px;">
+            <h4 style="color: #ff9800; margin-bottom: 5px; font-size: 0.9em;">⚠️ Reset Disponível</h4>
+            <div id="resetTime" style="font-size: 1.1em; font-weight: bold; color: #333;">--</div>
+            <div id="resetStatus" style="font-size: 0.85em; margin-top: 3px; color: #6c757d;">--</div>
+        </div>
+    </div>
+</footer>

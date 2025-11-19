@@ -1,3 +1,4 @@
+{% load static %}
 <li class="dropend">
     <a class="dropdown-item dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false"
         href="#">Propostas</a>
@@ -8,11 +9,6 @@
         <li>
             <a class="dropdown-item" href="{% url 'show_proposal' %}">Ver propostas</a>
         </li>
-        <li>
-            <a class="dropdown-item" href="{% url 'operacoes_token' %}">Operações com Token</a>
-        </li>
-        <li>
-            <a class="dropdown-item" href="{% url 'proposer' %}">Nova Proposta na Blockchain</a>
-        </li>
-    </ul>    
+    </ul>
+    <script type="text/javascript" src="{% static 'js/navbar/navbar.js' %}"></script>
 </li>
