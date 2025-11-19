@@ -17,8 +17,7 @@ urlpatterns = [
     path('marketplace/', include('marketplace.urls')),
     path('config/', include('configuracoes.urls')),
     path('propostas/', include('propostas.urls')),
-    path('mercado-secundario/', include('mercado_secundario.urls')),
-    path('gracas/', include('graca.urls')),
+    path('dao/', include('fraguismo_dao.urls')),
 ]
 
 handler404 = errors_views.custom_page_not_found_view
