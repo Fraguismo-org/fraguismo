@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<section class="py-4">
+    <div class="shadow p-4 mb-5 bg-body rounded">
+        <div class="text-center mb-4">
+            <p class="text-uppercase text-muted fw-semibold small mb-1">Ranking</p>
+            <h2 class="h2 fw-semibold mb-2">Ranking da Liberdade</h2>
+            <p class="text-muted mb-0">Veja quem est&aacute; liderando na pontua&ccedil;&atilde;o geral, no m&ecirc;s e na semana.</p>
+        </div>
+
+        <form class="mb-4" method="GET" action="{% url 'ranking_liberdade' %}">
+            <input type="hidden" name="aba" value="{{ aba }}">
+            <div class="row g-2 justify-content-center">
+                <div class="col-12 col-md-8 col-lg-6">
+                    <div class="input-group">
+                        <input
+                            class="form-control"
+                            type="text"
+                            name="busca"
+                            value="{{ busca }}"
+                            placeholder="Pesquisar usu&aacute;rio por nome ou e-mail">
+                        <button class="btn btn-primary" type="submit" aria-label="Buscar">
+                            <i class="bi bi-search"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            {% if busca %}
+            <p class="text-center text-muted small mt-2">Resultados para <strong>{{ busca }}</strong></p>
+            {% endif %}
+        </form>
+
+        <ul class="nav nav-pills justify-content-center mb-4" id="ranking-tabs">
+            <li class="nav-item">
+                <a class="nav-link {% if aba == 'geral' %}active{% endif %}"
+                    href="{% url 'ranking_liberdade' %}?aba=geral{% if busca %}&busca={{ busca }}{% endif %}">Geral</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {% if aba == 'mensal' %}active{% endif %}"
+                    href="{% url 'ranking_liberdade' %}?aba=mensal{% if busca %}&busca={{ busca }}{% endif %}">Mensal</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {% if aba == 'semanal' %}active{% endif %}"
+                    href="{% url 'ranking_liberdade' %}?aba=semanal{% if busca %}&busca={{ busca }}{% endif %}">Semanal</a>
+            </li>
+        </ul>
+
+        <div class="tab-content">
+            <div class="tab-pane fade {% if aba == 'geral' %}show active{% endif %}" id="tab-geral">
+                {% include 'partials/ranking_table.html' with ranking=ranking_geral score_label='Pontua&ccedil;&atilde;o total' empty_message='Nenhum fraguista encontrado.' %}
+            </div>
+            <div class="tab-pane fade {% if aba == 'mensal' %}show active{% endif %}" id="tab-mensal">
+                {% include 'partials/ranking_table.html' with ranking=ranking_mensal score_label='Pontua&ccedil;&atilde;o no m&ecirc;s' empty_message='Nenhum ponto registrado neste m&ecirc;s.' %}
+            </div>
+            <div class="tab-pane fade {% if aba == 'semanal' %}show active{% endif %}" id="tab-semanal">
+                {% include 'partials/ranking_table.html' with ranking=ranking_semanal score_label='Pontua&ccedil;&atilde;o na semana' empty_message='Nenhum ponto registrado nesta semana.' %}
+            </div>
+        </div>
+
+        <div class="row text-muted small mt-3">
+            <div class="col-12 col-md">
+                <span class="fw-semibold">Semanal:</span> considera pontos desde {{ inicio_semana|date:"d/m/Y H:i" }}.
+            </div>
+            <div class="col-12 col-md text-md-end">
+                <span class="fw-semibold">Mensal:</span> considera pontos desde {{ inicio_mes|date:"d/m/Y" }}.
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock content %}
