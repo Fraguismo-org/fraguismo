@@ -1,9 +1,13 @@
 import os
+from time import timezone
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from PIL import Image, ImageOps
-from django.shortcuts import render, redirect
+from django.http import HttpResponseForbidden
+from django.shortcuts import render, redirect, get_object_or_404
+# from django.contrib.admin.views.decorators import staff_member_required
 
+from members.models.questionario import Questionario
 from members.models.users import Users
 from log.models.log import Log
 from members.models.profile import Profile
@@ -19,9 +23,9 @@ def comunidade(request):
 
 
 @login_required(login_url='login')
-def user_page(request): 
-    profile = Profile.get_or_create_profile(user_request=request.user)
+def user_page(request):
     member = Users.get_or_create_member(user_request=request.user)
+    profile = Profile.get_or_create_profile(user_request=member)
     niveis = Nivel.objects.all()
     if request.method == 'POST':
         email = request.POST.get('email', None)
@@ -85,14 +89,57 @@ def user_page(request):
 
 @login_required(login_url='login')
 def lista_usuarios(request):
-    perfis = None
+    filtro_fraguista = request.GET.get("fraguista")       # '', 'sim', 'nao'
+    filtro_questionario = request.GET.get("questionario") # '', 'pendente', 'preenchido'
+    ordenar = request.GET.get("ordenar")                  # '', 'novo', 'antigo'
+
     try:
         query = request.GET.get("busca")
-        lista_perfil = ProfilesQuery.get_profiles_by_query(query)
-        perfis = pagina_lista(request=request, lista=lista_perfil, paginas=25)        
+        qs = ProfilesQuery.get_profiles_by_query(query)
     except Exception as e:
         Log.salva_log(e)
-        lista = Profile.objects.all()
-        perfis = pagina_lista(request, lista, 25)        
-    finally:
-        return render(request, 'members/lista_usuarios.html', {'profiles': perfis,})
+        qs = Profile.objects.all()
+
+    # filtro fraguista
+    if filtro_fraguista == "sim":
+        qs = qs.filter(user__is_fraguista=True)
+    elif filtro_fraguista == "nao":
+        qs = qs.filter(user__is_fraguista=False)
+
+    # filtro questionário
+    if filtro_questionario == "pendente":
+        qs = qs.filter(user__is_fraguista=True, questionario__isnull=True)
+    elif filtro_questionario == "preenchido":
+        qs = qs.filter(user__is_fraguista=True, questionario__isnull=False)
+
+    # ordenação
+    if ordenar == "novo":
+        qs = qs.order_by("-user__date_joined")
+    elif ordenar == "antigo":
+        qs = qs.order_by("user__date_joined")
+
+    perfis = pagina_lista(request=request, lista=qs, paginas=25)
+
+    return render(
+        request,
+        "members/lista_usuarios.html",
+        {
+            "profiles": perfis,
+            "filtro_fraguista": filtro_fraguista,
+            "filtro_questionario": filtro_questionario,
+            "ordenar": ordenar,
+        },
+    )
+
+@login_required(login_url="login")
+def marcar_contato(request, questionario_id):
+    if not request.user.is_staff:
+        messages.warning(request, "Você não pode marcar contato, apenas administradores.")
+        return redirect("user_page")
+
+    questionario = get_object_or_404(Questionario, id=questionario_id)
+    questionario.contato_realizado = True
+    questionario.save()
+
+    messages.success(request, "Contato marcado como realizado!")
+    return redirect("lista_usuarios")

@@ -1,8 +1,30 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block content %}
+{% block metadados %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Anarcópolis - O maior evento Ancap do Brasil">
+    <meta name="robots" content="index, follow">
+    <!-- Meta Tags Sociais -->
+    <meta property="og:title" content="Anarcópolis - O maior evento Ancap do Brasil">
+    <meta property="og:url" content="https://fraguismo.org/anarcopolis">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="{% static '/images/favicon.ico' %}">
+    <meta charset="UTF-8">
+    <!--Twitter-->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Anarcópolis - O maior evento Ancap do Brasil">
+    <meta name="twitter:description" content="Anarcópolis - O maior evento Ancap do Brasil">
+    <meta name="twitter:image" content="{% static '/images/favicon.ico' %}">
+    <!---->
+    <meta name="keywords" content="
+    Fraguismo, religião libertária, liberdade, propriedade, resistência pacífica, filosofia libertária, 
+    doutrina, textos libertários, cursos, podcasts, Anarcópolis, evento Ancap, conferência libertária, 
+    encontro libertário">
+{% endblock metadados %}
 
+{% block content %}
 <link rel="stylesheet" href="{% static '/css/anarcopolis.css' %}"/>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 
@@ -128,6 +150,25 @@
         <h6 class="mt-4"><a href="https://hoteisportosol.com.br/hotel-porto-sol-ingleses/" target="_blank" rel="noopener noreferrer">
             <i class="fa-solid fa-up-right-from-square"></i> Hotel Porto Sol Ingleses • Fique no coração do evento</a></h6>
     </div>
+    <div class="container d-flex justify-content-center align-items-center px-0 container-host mt-5">
+        <div class="wrapper-host-soldout d-flex flex-column align-items-center justify-content-center" style="text-align:center; padding:2rem; width:100%;">
+            <img src="{% static '/images/esgotado.png' %}" alt="Esgotado" style="max-width:450px; margin-bottom:1rem;">
+            <h2 style="color:aliceblue;">Todas as hospedagens estão lotadas.</h2>
+            <p style="max-width:720px; margin:0.5rem 0; color:aliceblue; ">
+                Informação para quem já reservou:<br>
+                Check in: 29/11 a partir das 15h<br>
+                Check out: 04/12 até as 11h<br><br>
+
+                Endereço: R. do Marisco, 80 - Ingleses Norte, Florianópolis - SC, 88058-090, Brazil<br><br>
+
+                <br> 
+            </p>
+        </div>
+    </div>
+    <div class="container d-flex justify-content-center align-items-center">
+        <a href="/anarcopolisinfo" target="_blank" rel="noopener noreferrer" class="btn-info"><i class="fa-solid fa-circle-info"></i> MAIS INFORMAÇÕES</a>
+        <a href="https://goo.gl/maps/3y7y8V9Jz3K2" target="_blank" rel="noopener noreferrer" class="btn-info"><i class="fa-solid fa-location-dot"></i> LINK GOOGLE MAPS</a>
+    </div>
     <div class="container d-flex ct-info-host">
         <p>
             <span>O que está incluso:</span><br/>
@@ -136,21 +177,24 @@
             <i class="fa-solid fa-wifi"></i>Wi-Fi e Ar Condicionado<br/>
             <i class="fa-solid fa-person-swimming"></i>Piscinas e quadras esportivas — <br>ㅤㅤfutebol, tênis, vôlei de praia, beach tennis e futevôlei.
         </p>
+        <!--
         <div class="container d-flex ct-rooms">
             <div class="row d-flex gap-4" style="min-width: fit-content;">
-                <div class="col-sm">
-                    <p style="margin-top: 7%;"><span>Quartos Privativos</span></p>
-                    <p style="margin-top: 13%">Individual: R$ 1680</p>
-                    <p>Casal: R$ 1910</p>
+                    <div class="col-sm">
+                        <p style="margin-top: 7%;"><span>Quartos Privativos</span></p>
+                        <p style="margin-top: 13%">Individual: R$ 1680</p>
+                        <p>Casal: R$ 1910</p>
+                    </div>
+                    <div class="col-sm">
+                        <p style="margin-top: 4%"><span>Quartos Compartilhados</span></p>
+                        <p><strong>Triplo:</strong> R$ 790</p>
+                        <p><strong>Quádruplo:</strong> R$ 720</p>
+                    </div>
                 </div>
-                <div class="col-sm">
-                    <p style="margin-top: 4%"><span>Quartos Compartilhados</span></p>
-                    <p><strong>Triplo:</strong> R$ 790</p>
-                    <p><strong>Quádruplo:</strong> R$ 720</p>
-                </div>
-            </div>
-         </div>
-    </div>
+        </div>
+         -->
+        </div>
+    <!--
     <div class="container d-flex flex-column align-items-center justify-content-center" style="margin-bottom: 2%;">
         <div class="wrapper-alert">
             <p><i class="fa-solid fa-clock"></i><span>ATENÇÃO - PRAZO LIMITE</span>  <br/>
@@ -163,6 +207,7 @@
         <a href="/anarcopolisinfo" target="_blank" rel="noopener noreferrer" class="btn-info"><i class="fa-solid fa-circle-info"></i> MAIS INFORMAÇÕES
         </a>
     </div>
+    -->
 </section>
 
 <section class="timeline">
