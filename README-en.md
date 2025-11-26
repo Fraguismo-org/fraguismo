@@ -1,7 +1,3 @@
-# CLAUDE.md
-
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
-
 ## Project Overview
 
 **Fraguismo** is a Brazilian DAO (Decentralized Autonomous Organization) platform for building "Anarcopolis" - a libertarian community. It combines social networking, gamification, e-commerce, blockchain-based governance, and token economics.
