@@ -36,7 +36,7 @@ def register_user(request):
         user.username = request.POST.get('username', None)
         user.email = request.POST.get('email', None)
         if Users.objects.filter(username=user.username).exists():
-            messages.warning(request, f'Usu�rio {user.username} já está em uso!')
+            messages.warning(request, f'Usuário {user.username} já está em uso!')
             return render(request, 'authenticate/register_user.html')
         if Users.objects.filter(email=user.email).exists():
             messages.error(request, f'E-mail {user.email} já está em uso!')
@@ -63,7 +63,6 @@ def register_user(request):
             user.aonde = request.POST.get('aonde', None)
             user.codigo_conduta = request.POST.get('termos_adesao', True)
             
-            # question�rio obrigat�rio p/ novos fraguistas
             required_q_fields = {
                 "help_project": "Como ajudar o projeto",
                 "reason_to_participate": "Motivo para participar",
