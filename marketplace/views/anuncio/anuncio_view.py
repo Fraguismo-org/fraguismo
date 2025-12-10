@@ -17,15 +17,15 @@ from members.models.users import Users
 DEPARTAMENTOS = [
     (0, "Outros"),
     (1, "Agro e industria"),
-    (2, "Alimenta��o"),
-    (3, "Autos e pe�as"),
-    (4, "Eletr�nicos e celulares"),
+    (2, "Alimentação"),
+    (3, "Autos e peças"),
+    (4, "Eletrônicos e celulares"),
     (5, "Esportes e lazer"),
-    (6, "Im�veis"),
+    (6, "Imóveis"),
     (7, "Moda e beleza"),
-    (8, "M�sicas e hobbies"),
+    (8, "Músicas e hobbies"),
     (9, "Para a sua casa"),
-    (10, "Presta��o de Servi�os"),
+    (10, "Prestação de Serviços"),
     (11, "Vagas de emprego"),
 ]
 
