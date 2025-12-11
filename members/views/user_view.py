@@ -1,11 +1,10 @@
 import os
-from time import timezone
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.core.exceptions import FieldError
 from PIL import Image, ImageOps
-from django.http import HttpResponseForbidden
+from django.db import DatabaseError, OperationalError, transaction
 from django.shortcuts import render, redirect, get_object_or_404
-# from django.contrib.admin.views.decorators import staff_member_required
 
 from members.models.questionario import Questionario
 from members.models.users import Users
@@ -89,57 +88,122 @@ def user_page(request):
 
 @login_required(login_url='login')
 def lista_usuarios(request):
-    filtro_fraguista = request.GET.get("fraguista")       # '', 'sim', 'nao'
-    filtro_questionario = request.GET.get("questionario") # '', 'pendente', 'preenchido'
-    ordenar = request.GET.get("ordenar")                  # '', 'novo', 'antigo'
-
     try:
-        query = request.GET.get("busca")
-        qs = ProfilesQuery.get_profiles_by_query(query)
-    except Exception as e:
-        Log.salva_log(e)
+        # Coletar parâmetros
+        params = {k: request.GET.get(k, "").strip() 
+                 for k in ["fraguista", "questionario", "contato", "ordenar", "busca"]}
+        
+        # Query inicial
         qs = Profile.objects.all()
-
-    # filtro fraguista
-    if filtro_fraguista == "sim":
-        qs = qs.filter(user__is_fraguista=True)
-    elif filtro_fraguista == "nao":
-        qs = qs.filter(user__is_fraguista=False)
-
-    # filtro questionário
-    if filtro_questionario == "pendente":
-        qs = qs.filter(user__is_fraguista=True, questionario__isnull=True)
-    elif filtro_questionario == "preenchido":
-        qs = qs.filter(user__is_fraguista=True, questionario__isnull=False)
-
-    # ordenação
-    if ordenar == "novo":
-        qs = qs.order_by("-user__date_joined")
-    elif ordenar == "antigo":
-        qs = qs.order_by("user__date_joined")
-
-    perfis = pagina_lista(request=request, lista=qs, paginas=25)
-
-    return render(
-        request,
-        "members/lista_usuarios.html",
-        {
-            "profiles": perfis,
-            "filtro_fraguista": filtro_fraguista,
-            "filtro_questionario": filtro_questionario,
-            "ordenar": ordenar,
-        },
-    )
+        if params["busca"]:
+            try:
+                qs = ProfilesQuery.get_profiles_by_query(params["busca"])
+            except Exception as e:
+                Log.salva_log(f"Busca falhou: {e}")
+                qs = Profile.objects.all()
+        
+        # Mapeamento de filtros
+        filtros = {
+            'fraguista': {
+                'sim': {'user__is_fraguista': True},
+                'nao': {'user__is_fraguista': False},
+            },
+            'questionario': {
+                'pendente': {'user__is_fraguista': True, 'questionario__isnull': True},
+                'preenchido': {'user__is_fraguista': True, 'questionario__isnull': False},
+            },
+            'contato': {
+                'pendente': {'user__is_fraguista': True, 'questionario__isnull': False, 
+                            'questionario__contato_realizado': False},
+                'feito': {'user__is_fraguista': True, 'questionario__isnull': False, 
+                         'questionario__contato_realizado': True},
+            }
+        }
+        
+        # Aplicar filtros com segurança
+        for filtro_nome, valor in params.items():
+            if filtro_nome in filtros and valor in filtros[filtro_nome]:
+                try:
+                    qs = qs.filter(**filtros[filtro_nome][valor])
+                except (FieldError, ValueError) as e:
+                    Log.salva_log(f"Filtro {filtro_nome}={valor} falhou: {e}")
+                    # Continua sem o filtro problemático
+        
+        # Ordenação
+        if params["ordenar"] == "novo":
+            qs = qs.order_by("-user__date_joined")
+        elif params["ordenar"] == "antigo":
+            qs = qs.order_by("user__date_joined")
+        
+        # Paginação
+        perfis = pagina_lista(request=request, lista=qs, paginas=25)
+        
+        return render(
+            request,
+            "members/lista_usuarios.html",
+            {"profiles": perfis, **params}
+        )
+    
+    except (DatabaseError, OperationalError) as e:
+        Log.salva_log(f"Erro de banco: {e}")
+        return render(
+            request,
+            "members/lista_usuarios.html",
+            {
+                "profiles": pagina_lista(request=request, lista=Profile.objects.none(), paginas=25),
+                "erro": "Erro no banco de dados"
+            }
+        )
+    
+    except Exception as e:
+        Log.salva_log(f"Erro inesperado: {e}")
+        return render(
+            request,
+            "members/lista_usuarios.html",
+            {
+                "profiles": pagina_lista(request=request, lista=Profile.objects.none(), paginas=25),
+                "erro": "Erro interno do servidor"
+            }
+        )
 
 @login_required(login_url="login")
 def marcar_contato(request, questionario_id):
     if not request.user.is_staff:
-        messages.warning(request, "Você não pode marcar contato, apenas administradores.")
+        messages.warning(request, "Apenas administradores podem marcar contatos.")
         return redirect("user_page")
-
-    questionario = get_object_or_404(Questionario, id=questionario_id)
-    questionario.contato_realizado = True
-    questionario.save()
-
-    messages.success(request, "Contato marcado como realizado!")
+    
+    try:
+        # Buscar questionário
+        questionario = Questionario.objects.get(id=questionario_id)
+        
+        # Verificar se já não está marcado
+        if questionario.contato_realizado:
+            messages.info(request, "Este contato já foi marcado como realizado.")
+            return redirect("lista_usuarios")
+        
+        # Atualizar com transação
+        with transaction.atomic():
+            questionario.contato_realizado = True
+            questionario.save()
+            
+            # Log opcional
+            Log.salva_log(
+                f"Contato marcado: questionário {questionario_id}",
+                user=request.user
+            )
+        
+        messages.success(request, "Contato marcado como realizado!")
+        
+    except Questionario.DoesNotExist:
+        messages.error(request, "Questionário não encontrado.")
+        Log.salva_log(f"Questionário {questionario_id} não existe")
+        
+    except (DatabaseError, OperationalError) as e:
+        messages.error(request, "Erro no banco de dados.")
+        Log.salva_log(f"Erro de BD ao marcar contato {questionario_id}: {e}")
+        
+    except Exception as e:
+        messages.error(request, "Erro inesperado ao processar a solicitação.")
+        Log.salva_log(f"Erro inesperado em marcar_contato: {e}")
+    
     return redirect("lista_usuarios")
