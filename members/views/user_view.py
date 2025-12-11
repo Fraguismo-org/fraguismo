@@ -89,9 +89,9 @@ def user_page(request):
 @login_required(login_url='login')
 def lista_usuarios(request):
     try:
-        # Coletar parâmetros
-        params = {k: request.GET.get(k, "").strip() 
-                 for k in ["fraguista", "questionario", "contato", "ordenar", "busca"]}
+        # Parâmetros
+        param_keys = ["fraguista", "questionario", "contato", "ordenar", "busca"]
+        params = {k: request.GET.get(k, "").strip() for k in param_keys}
         
         # Query inicial
         qs = Profile.objects.all()
@@ -102,12 +102,9 @@ def lista_usuarios(request):
                 Log.salva_log(f"Busca falhou: {e}")
                 qs = Profile.objects.all()
         
-        # Mapeamento de filtros
-        filtros = {
-            'fraguista': {
-                'sim': {'user__is_fraguista': True},
-                'nao': {'user__is_fraguista': False},
-            },
+        # Estrutura de filtros
+        filtro_config = {
+            'fraguista': {'sim': {'user__is_fraguista': True}, 'nao': {'user__is_fraguista': False}},
             'questionario': {
                 'pendente': {'user__is_fraguista': True, 'questionario__isnull': True},
                 'preenchido': {'user__is_fraguista': True, 'questionario__isnull': False},
@@ -120,51 +117,30 @@ def lista_usuarios(request):
             }
         }
         
-        # Aplicar filtros com segurança
-        for filtro_nome, valor in params.items():
-            if filtro_nome in filtros and valor in filtros[filtro_nome]:
+        # Aplicar filtros
+        for filtro, valor in params.items():
+            if valor and filtro in filtro_config and valor in filtro_config[filtro]:
                 try:
-                    qs = qs.filter(**filtros[filtro_nome][valor])
-                except (FieldError, ValueError) as e:
-                    Log.salva_log(f"Filtro {filtro_nome}={valor} falhou: {e}")
-                    # Continua sem o filtro problemático
+                    qs = qs.filter(**filtro_config[filtro][valor])
+                except Exception as e:
+                    Log.salva_log(f"Filtro {filtro}={valor} falhou: {e}")
         
         # Ordenação
-        if params["ordenar"] == "novo":
-            qs = qs.order_by("-user__date_joined")
-        elif params["ordenar"] == "antigo":
-            qs = qs.order_by("user__date_joined")
+        ordenacao_map = {'novo': '-user__date_joined', 'antigo': 'user__date_joined'}
+        ordenacao = ordenacao_map.get(params['ordenar'], '-user__date_joined')
+        qs = qs.order_by(ordenacao)
         
-        # Paginação
-        perfis = pagina_lista(request=request, lista=qs, paginas=25)
+        # Contexto
+        context = {"profiles": pagina_lista(request, qs, 25), **params}
         
-        return render(
-            request,
-            "members/lista_usuarios.html",
-            {"profiles": perfis, **params}
-        )
-    
-    except (DatabaseError, OperationalError) as e:
-        Log.salva_log(f"Erro de banco: {e}")
-        return render(
-            request,
-            "members/lista_usuarios.html",
-            {
-                "profiles": pagina_lista(request=request, lista=Profile.objects.none(), paginas=25),
-                "erro": "Erro no banco de dados"
-            }
-        )
-    
     except Exception as e:
-        Log.salva_log(f"Erro inesperado: {e}")
-        return render(
-            request,
-            "members/lista_usuarios.html",
-            {
-                "profiles": pagina_lista(request=request, lista=Profile.objects.none(), paginas=25),
-                "erro": "Erro interno do servidor"
-            }
-        )
+        Log.salva_log(f"Erro em lista_usuarios: {e}")
+        context = {
+            "profiles": pagina_lista(request, Profile.objects.none(), 25),
+            "erro": "Erro ao carregar usuários"
+        }
+    
+    return render(request, "members/lista_usuarios.html", context)
 
 @login_required(login_url="login")
 def marcar_contato(request, questionario_id):
