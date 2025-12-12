@@ -527,6 +527,15 @@ const propostas = {
         }
     },
 
+    async calcularPesos() {
+        try {
+            await escreverPropostas('calcularPesos');
+            showResult('result-propostas-calcularPesos', 'Pesos calculados com sucesso!');
+        } catch (error) {
+            showResult('result-propostas-calcularPesos', error.message, true);
+        }
+    },
+
     // ============================================
     // FUNÇÕES DE guardioes (UNIFICADAS)
     // ============================================
