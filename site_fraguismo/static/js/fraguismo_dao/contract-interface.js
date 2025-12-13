@@ -318,6 +318,17 @@ function switchTab(contract, tab) {
     document.getElementById(`${contract}-${tab}`).classList.add('active');
 }
 
+function switchGuardiaoTab(subtab) {
+    const tabs = document.querySelectorAll('#propostas-guardioes .tabs .tab');
+    const contents = document.querySelectorAll('.guardiao-subtab');
+    
+    tabs.forEach(t => t.classList.remove('active'));
+    contents.forEach(c => c.classList.remove('active'));
+    
+    event.target.classList.add('active');
+    document.getElementById(`guardioes-${subtab}`).classList.add('active');
+}
+
 function showResult(elementId, data, isError = false) {
     const element = document.getElementById(elementId);
     element.classList.add('show');

@@ -67,14 +67,15 @@
     <div id="propostasModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h2>📋 Contrato Propostas & guardiaoia (Unificado)</h2>
+                <h2>📋 Contrato Propostas & Guardiões (Unificado)</h2>
                 <span class="close" onclick="closeModal('propostasModal')">&times;</span>
             </div>
             <div class="modal-body">
                 <div class="tabs">
                     <button class="tab active" onclick="switchTab('propostas', 'read')">🔍 Leitura</button>
-                    <button class="tab" onclick="switchTab('propostas', 'write')">✏️ Escrita</button>
-                    <button class="tab" onclick="switchTab('propostas', 'guardioes')">👥 Guardioes</button>
+                    <button class="tab" onclick="switchTab('propostas', 'write')">✏️ Formulários</button>
+                    <button class="tab" onclick="switchTab('propostas', 'actions')">⚡ Ações Rápidas</button>
+                    <button class="tab" onclick="switchTab('propostas', 'guardioes')">👥 Guardiões</button>
                 </div>
 
                 <!-- Tab de Leitura -->
@@ -136,10 +137,10 @@
                     </div>
                 </div>
 
-                <!-- Tab de Escrita -->
+                <!-- Tab de Formulários -->
                 <div id="propostas-write" class="tab-content">
                     <div class="function-section">
-                        <h3>Funções de Escrita</h3>
+                        <h3>📝 Gestão de Propostas</h3>
 
                         <div class="function-item">
                             <h4>Criar Proposta</h4>
@@ -164,28 +165,6 @@
                         </div>
 
                         <div class="function-item">
-                            <h4>Abrir Votação (Owner)</h4>
-                            <button class="btn btn-small" onclick="propostas.abrirVotacao()">Abrir</button>
-                            <div id="result-propostas-abrir" class="result-box"></div>
-                        </div>
-
-                        <div class="function-item">
-                            <h4>Abrir Votação (guardiao)</h4>
-                            <p style="color: #666; font-size: 0.9em; margin-bottom: 10px;">
-                                Permite que qualquer guardiao abra a votação após o tempo semanal ter sido atingido.
-                            </p>
-                            <button class="btn btn-small" onclick="propostas.abrirVotacaoguardiao()">Abrir
-                                Votação</button>
-                            <div id="result-propostas-abrir-guardiao" class="result-box"></div>
-                        </div>
-
-                        <div class="function-item">
-                            <h4>Registrar Presença</h4>
-                            <button class="btn btn-small" onclick="propostas.registerPresence()">Registrar</button>
-                            <div id="result-propostas-presence" class="result-box"></div>
-                        </div>
-
-                        <div class="function-item">
                             <h4>Votar em Proposta</h4>
                             <div class="input-group">
                                 <label>Hash da Proposta:</label>
@@ -203,7 +182,7 @@
                         </div>
 
                         <div class="function-item">
-                            <h4>Encerrar Votação</h4>
+                            <h4>Encerrar Votação de Proposta</h4>
                             <div class="input-group">
                                 <label>Hash da Proposta:</label>
                                 <input type="text" id="propostas-end-hash" placeholder="Hash SHA256...">
@@ -211,6 +190,10 @@
                             <button class="btn btn-small" onclick="propostas.endVote()">Encerrar</button>
                             <div id="result-propostas-end" class="result-box"></div>
                         </div>
+                    </div>
+
+                    <div class="function-section">
+                        <h3>💰 Transações</h3>
 
                         <div class="function-item">
                             <h4>Comprar Tokens</h4>
@@ -239,31 +222,10 @@
                             <button class="btn btn-small" onclick="propostas.withdraw()">Sacar</button>
                             <div id="result-propostas-withdraw" class="result-box"></div>
                         </div>
-
-                        <div class="function-item">
-                            <h4>Fechar Votação (Owner/guardiao)</h4>
-                            <button class="btn btn-small" onclick="propostas.fecharVotacao()">Fechar</button>
-                            <div id="result-propostas-fechar" class="result-box"></div>
-                        </div>
-
-                        <div class="function-item">
-                            <h4>Limpar Presença (Owner/guardiao)</h4>
-                            <button class="btn btn-small" onclick="propostas.clearPresence()">Limpar</button>
-                            <div id="result-propostas-clearPresence" class="result-box"></div>
-                        </div>
-
-                        <div class="function-item">
-                            <h4>Calcular Pesos</h4>
-                            <p style="color: #666; font-size: 0.9em; margin-bottom: 10px;">
-                                Calcula os pesos efetivos de votação com base nos tokens e NFTs dos votantes.
-                            </p>
-                            <button class="btn btn-small" onclick="propostas.calcularPesos()">Calcular</button>
-                            <div id="result-propostas-calcularPesos" class="result-box"></div>
-                        </div>
                     </div>
 
                     <div class="function-section">
-                        <h3>Funções do Owner</h3>
+                        <h3>👑 Administração</h3>
 
                         <div class="function-item">
                             <h4>Transferir Ownership</h4>
@@ -281,145 +243,218 @@
                     </div>
                 </div>
 
-                <!-- Tab de Guardioes -->
-                <div id="propostas-guardioes" class="tab-content">
+                <!-- Tab de Ações Rápidas -->
+                <div id="propostas-actions" class="tab-content">
                     <div class="function-section">
-                        <h3>Gerenciamento de Guardioes</h3>
+                        <h3>⚡ Ações Rápidas</h3>
+                        <p style="color: #666; margin-bottom: 20px;">
+                            Estas ações são executadas com um único clique, sem necessidade de preencher formulários.
+                        </p>
 
-                        <div class="function-item">
-                            <h4>Ver Guardioes</h4>
-                            <button class="btn btn-small" onclick="propostas.getguardioes()">Consultar</button>
-                            <div id="result-propostas-getguardioes" class="result-box"></div>
-                        </div>
-
-                        <div class="function-item">
-                            <h4>Verificar se é guardiao</h4>
-                            <div class="input-group">
-                                <label>Endereço:</label>
-                                <input type="text" id="propostas-isguardiao-address" placeholder="0x...">
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; margin-bottom: 30px;">
+                            
+                            <div class="quick-action-card">
+                                <h4>🔓 Abrir Votação</h4>
+                                <p>Guardiões podem abrir após tempo semanal</p>
+                                <button class="btn btn-small" onclick="propostas.abrirVotacaoguardiao()">Abrir</button>
+                                <div id="result-propostas-abrir-guardiao" class="result-box"></div>
                             </div>
-                            <button class="btn btn-small" onclick="propostas.isguardiao()">Verificar</button>
-                            <div id="result-propostas-isguardiao" class="result-box"></div>
-                        </div>
 
-                        <div class="function-item">
-                            <h4>Total de Guardioes</h4>
-                            <button class="btn btn-small" onclick="propostas.totalguardioes()">Consultar</button>
-                            <div id="result-propostas-totalguardioes" class="result-box"></div>
-                        </div>
-
-                        <div class="function-item">
-                            <h4>Adicionar guardiao Inicial (Owner)</h4>
-                            <p style="color: #666; font-size: 0.9em; margin-bottom: 10px;">
-                                Permite adicionar até 9 guardioes iniciais (incluindo o próprio owner). Apenas o owner
-                                pode executar.
-                            </p>
-                            <div class="input-group">
-                                <label>Endereço do guardiao:</label>
-                                <input type="text" id="propostas-addguardiao-address" placeholder="0x...">
+                            <div class="quick-action-card">
+                                <h4>✋ Registrar Presença</h4>
+                                <p>Confirme sua participação na votação</p>
+                                <button class="btn btn-small" onclick="propostas.registerPresence()">Registrar</button>
+                                <div id="result-propostas-presence" class="result-box"></div>
                             </div>
-                            <button class="btn btn-small"
-                                onclick="propostas.adicionarguardiaoInicial()">Adicionar</button>
-                            <div id="result-propostas-addguardiao" class="result-box"></div>
-                        </div>
 
-                        <div class="function-item">
-                            <h4>Propor Novo guardiao</h4>
-                            <div class="input-group">
-                                <label>Endereço do Candidato:</label>
-                                <input type="text" id="propostas-propor-candidato" placeholder="0x...">
+                            <div class="quick-action-card">
+                                <h4>🔒 Fechar Votação</h4>
+                                <p>Encerra o período de votação atual</p>
+                                <button class="btn btn-small" onclick="propostas.fecharVotacao()">Fechar</button>
+                                <div id="result-propostas-fechar" class="result-box"></div>
                             </div>
-                            <button class="btn btn-small" onclick="propostas.proporNovoguardiao()">Propor</button>
-                            <div id="result-propostas-propor" class="result-box"></div>
-                        </div>
 
-                        <div class="function-item">
-                            <h4>Votar em Candidato a guardiao</h4>
-                            <div class="input-group">
-                                <label>Endereço do Candidato:</label>
-                                <input type="text" id="propostas-votar-guardiao-candidato" placeholder="0x...">
+                            <div class="quick-action-card">
+                                <h4>🧹 Limpar Presença</h4>
+                                <p>Remove registros de presença</p>
+                                <button class="btn btn-small" onclick="propostas.clearPresence()">Limpar</button>
+                                <div id="result-propostas-clearPresence" class="result-box"></div>
                             </div>
-                            <div class="input-group">
-                                <label>Decisão:</label>
-                                <select id="propostas-votar-guardiao-decisao">
-                                    <option value="true">✅ Sim</option>
-                                    <option value="false">❌ Não</option>
-                                </select>
+
+                            <div class="quick-action-card">
+                                <h4>⚖️ Calcular Pesos</h4>
+                                <p>Calcula pesos de votação dos guardiões</p>
+                                <button class="btn btn-small" onclick="propostas.calcularPesos()">Calcular</button>
+                                <div id="result-propostas-calcularPesos" class="result-box"></div>
                             </div>
-                            <button class="btn btn-small" onclick="propostas.votarNovoguardiao()">Votar</button>
-                            <div id="result-propostas-votar-guardiao" class="result-box"></div>
-                        </div>
 
-                        <div class="function-item">
-                            <h4>Encerrar Proposta de guardiao</h4>
-                            <div class="input-group">
-                                <label>Endereço do Candidato:</label>
-                                <input type="text" id="propostas-encerrar-guardiao-candidato" placeholder="0x...">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab de Guardiões -->
+                <div id="propostas-guardioes" class="tab-content">
+                    <div class="tabs" style="border-bottom: 1px solid #ddd; margin-bottom: 20px;">
+                        <button class="tab active" onclick="switchGuardiaoTab('consultas')" style="font-size: 14px;">🔍 Consultas</button>
+                        <button class="tab" onclick="switchGuardiaoTab('formularios')" style="font-size: 14px;">✏️ Formulários</button>
+                        <button class="tab" onclick="switchGuardiaoTab('acoes')" style="font-size: 14px;">⚡ Ações</button>
+                    </div>
+
+                    <!-- Sub-tab Consultas -->
+                    <div id="guardioes-consultas" class="guardiao-subtab active">
+                        <div class="function-section">
+                            <h3>📊 Listas de Guardiões</h3>
+
+                            <div class="function-item">
+                                <h4>Ver Todos os Guardiões</h4>
+                                <button class="btn btn-small" onclick="propostas.getguardioes()">Consultar</button>
+                                <div id="result-propostas-getguardioes" class="result-box"></div>
                             </div>
-                            <button class="btn btn-small"
-                                onclick="propostas.encerrarPropostaguardiao()">Encerrar</button>
-                            <div id="result-propostas-encerrar-guardiao" class="result-box"></div>
-                        </div>
 
-                        <div class="function-item">
-                            <h4>Detalhes de Proposta de guardiao</h4>
-                            <div class="input-group">
-                                <label>Endereço do Candidato:</label>
-                                <input type="text" id="propostas-guardiao-details-candidato" placeholder="0x...">
+                            <div class="function-item">
+                                <h4>Total de Guardiões</h4>
+                                <button class="btn btn-small" onclick="propostas.totalguardioes()">Consultar</button>
+                                <div id="result-propostas-totalguardioes" class="result-box"></div>
                             </div>
-                            <button class="btn btn-small"
-                                onclick="propostas.getguardiaoProposalDetails()">Consultar</button>
-                            <div id="result-propostas-guardiao-details" class="result-box"></div>
-                        </div>
 
-                        <div class="function-item">
-                            <h4>Informações de um guardiao</h4>
-                            <div class="input-group">
-                                <label>Endereço do guardiao:</label>
-                                <input type="text" id="propostas-guardiao-info-address" placeholder="0x...">
+                            <div class="function-item">
+                                <h4>Guardiões Ativos</h4>
+                                <button class="btn btn-small" onclick="propostas.getguardioesAtivos()">Consultar</button>
+                                <div id="result-propostas-guardioes-ativos" class="result-box"></div>
                             </div>
-                            <button class="btn btn-small" onclick="propostas.getguardiaoInfo()">Consultar</button>
-                            <div id="result-propostas-guardiao-info" class="result-box"></div>
+
+                            <div class="function-item">
+                                <h4>Guardiões Suspensos</h4>
+                                <button class="btn btn-small" onclick="propostas.getguardioesSuspensos()">Consultar</button>
+                                <div id="result-propostas-guardioes-suspensos" class="result-box"></div>
+                            </div>
+
+                            <div class="function-item">
+                                <h4>Informações de Quorum</h4>
+                                <button class="btn btn-small" onclick="propostas.getQuorumInfo()">Consultar</button>
+                                <div id="result-propostas-quorum-info" class="result-box"></div>
+                            </div>
                         </div>
 
-                        <div class="function-item">
-                            <h4>Guardioes Ativos</h4>
-                            <button class="btn btn-small" onclick="propostas.getguardioesAtivos()">Consultar</button>
-                            <div id="result-propostas-guardioes-ativos" class="result-box"></div>
-                        </div>
+                        <div class="function-section">
+                            <h3>🔍 Consultas Específicas</h3>
 
-                        <div class="function-item">
-                            <h4>Guardioes Suspensos</h4>
-                            <button class="btn btn-small" onclick="propostas.getguardioesSuspensos()">Consultar</button>
-                            <div id="result-propostas-guardioes-suspensos" class="result-box"></div>
-                        </div>
+                            <div class="function-item">
+                                <h4>Verificar se é Guardião</h4>
+                                <div class="input-group">
+                                    <label>Endereço:</label>
+                                    <input type="text" id="propostas-isguardiao-address" placeholder="0x...">
+                                </div>
+                                <button class="btn btn-small" onclick="propostas.isguardiao()">Verificar</button>
+                                <div id="result-propostas-isguardiao" class="result-box"></div>
+                            </div>
 
-                        <div class="function-item">
-                            <h4>Informações de Quorum</h4>
-                            <button class="btn btn-small" onclick="propostas.getQuorumInfo()">Consultar</button>
-                            <div id="result-propostas-quorum-info" class="result-box"></div>
+                            <div class="function-item">
+                                <h4>Informações de um Guardião</h4>
+                                <div class="input-group">
+                                    <label>Endereço do Guardião:</label>
+                                    <input type="text" id="propostas-guardiao-info-address" placeholder="0x...">
+                                </div>
+                                <button class="btn btn-small" onclick="propostas.getguardiaoInfo()">Consultar</button>
+                                <div id="result-propostas-guardiao-info" class="result-box"></div>
+                            </div>
+
+                            <div class="function-item">
+                                <h4>Detalhes de Proposta de Guardião</h4>
+                                <div class="input-group">
+                                    <label>Endereço do Candidato:</label>
+                                    <input type="text" id="propostas-guardiao-details-candidato" placeholder="0x...">
+                                </div>
+                                <button class="btn btn-small"
+                                    onclick="propostas.getguardiaoProposalDetails()">Consultar</button>
+                                <div id="result-propostas-guardiao-details" class="result-box"></div>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="function-section">
-                        <h3>Penalidades e Suspensão</h3>
+                    <!-- Sub-tab Formulários -->
+                    <div id="guardioes-formularios" class="guardiao-subtab">
+                        <div class="function-section">
+                            <h3>➕ Gestão de Guardiões</h3>
 
-                        <div class="function-item">
-                            <h4>Suspender Inativos</h4>
-                            <p style="color: #666; font-size: 0.9em; margin-bottom: 10px;">
-                                Suspende guardioes com penalidade >= 2. Pode ser chamada por qualquer guardiao.
-                            </p>
-                            <button class="btn btn-small" onclick="propostas.suspenderInativos()">Suspender</button>
-                            <div id="result-propostas-suspender" class="result-box"></div>
+                            <div class="function-item">
+                                <h4>Adicionar Guardião Inicial (Owner)</h4>
+                                <p style="color: #666; font-size: 0.9em; margin-bottom: 10px;">
+                                    Permite adicionar até 9 guardiões iniciais (incluindo o próprio owner). Apenas o owner
+                                    pode executar.
+                                </p>
+                                <div class="input-group">
+                                    <label>Endereço do Guardião:</label>
+                                    <input type="text" id="propostas-addguardiao-address" placeholder="0x...">
+                                </div>
+                                <button class="btn btn-small"
+                                    onclick="propostas.adicionarguardiaoInicial()">Adicionar</button>
+                                <div id="result-propostas-addguardiao" class="result-box"></div>
+                            </div>
+
+                            <div class="function-item">
+                                <h4>Propor Novo Guardião</h4>
+                                <div class="input-group">
+                                    <label>Endereço do Candidato:</label>
+                                    <input type="text" id="propostas-propor-candidato" placeholder="0x...">
+                                </div>
+                                <button class="btn btn-small" onclick="propostas.proporNovoguardiao()">Propor</button>
+                                <div id="result-propostas-propor" class="result-box"></div>
+                            </div>
+
+                            <div class="function-item">
+                                <h4>Votar em Candidato a Guardião</h4>
+                                <div class="input-group">
+                                    <label>Endereço do Candidato:</label>
+                                    <input type="text" id="propostas-votar-guardiao-candidato" placeholder="0x...">
+                                </div>
+                                <div class="input-group">
+                                    <label>Decisão:</label>
+                                    <select id="propostas-votar-guardiao-decisao">
+                                        <option value="true">✅ Sim</option>
+                                        <option value="false">❌ Não</option>
+                                    </select>
+                                </div>
+                                <button class="btn btn-small" onclick="propostas.votarNovoguardiao()">Votar</button>
+                                <div id="result-propostas-votar-guardiao" class="result-box"></div>
+                            </div>
+
+                            <div class="function-item">
+                                <h4>Encerrar Proposta de Guardião</h4>
+                                <div class="input-group">
+                                    <label>Endereço do Candidato:</label>
+                                    <input type="text" id="propostas-encerrar-guardiao-candidato" placeholder="0x...">
+                                </div>
+                                <button class="btn btn-small"
+                                    onclick="propostas.encerrarPropostaguardiao()">Encerrar</button>
+                                <div id="result-propostas-encerrar-guardiao" class="result-box"></div>
+                            </div>
                         </div>
+                    </div>
 
-                        <div class="function-item">
-                            <h4>Remover Inativos</h4>
-                            <p style="color: #666; font-size: 0.9em; margin-bottom: 10px;">
-                                Remove guardioes com penalidade >= 4. Pode ser chamada por qualquer guardiao.
+                    <!-- Sub-tab Ações Rápidas -->
+                    <div id="guardioes-acoes" class="guardiao-subtab">
+                        <div class="function-section">
+                            <h3>⚡ Ações de Penalidade</h3>
+                            <p style="color: #666; margin-bottom: 20px;">
+                                Estas ações gerenciam guardiões inativos e podem ser executadas por qualquer guardião.
                             </p>
-                            <button class="btn btn-small" onclick="propostas.removerInativos()">Remover</button>
-                            <div id="result-propostas-remover" class="result-box"></div>
+
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 15px;">
+                                <div class="quick-action-card">
+                                    <h4>⚠️ Suspender Inativos</h4>
+                                    <p>Suspende guardiões com penalidade ≥ 2</p>
+                                    <button class="btn btn-small" onclick="propostas.suspenderInativos()">Suspender</button>
+                                    <div id="result-propostas-suspender" class="result-box"></div>
+                                </div>
+
+                                <div class="quick-action-card">
+                                    <h4>❌ Remover Inativos</h4>
+                                    <p>Remove guardiões com penalidade ≥ 4</p>
+                                    <button class="btn btn-small" onclick="propostas.removerInativos()">Remover</button>
+                                    <div id="result-propostas-remover" class="result-box"></div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

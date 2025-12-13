@@ -341,6 +341,61 @@ body {
     display: block;
 }
 
+/* Quick Action Cards */
+.quick-action-card {
+    background: white;
+    border: 2px solid #e0e0e0;
+    border-radius: 12px;
+    padding: 20px;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.quick-action-card:hover {
+    border-color: #667eea;
+    box-shadow: 0 4px 16px rgba(102, 126, 234, 0.15);
+    transform: translateY(-2px);
+}
+
+.quick-action-card h4 {
+    color: #333;
+    margin-bottom: 10px;
+    font-size: 1.1em;
+}
+
+.quick-action-card p {
+    color: #666;
+    font-size: 0.9em;
+    margin-bottom: 15px;
+    min-height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.quick-action-card .btn {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.quick-action-card .result-box {
+    width: 100%;
+    margin-top: 10px;
+}
+
+/* Sub-tabs for Guardiões */
+.guardiao-subtab {
+    display: none;
+}
+
+.guardiao-subtab.active {
+    display: block;
+}
+
 .voting-counters {
     position: fixed; 
     bottom: 0; 
