@@ -3,6 +3,7 @@
 
 <head>
     {% load static %}
+    {% block metadados %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Conheça o Fraguismo, a primeira religião libertária do Brasil, baseada em liberdade, propriedade e resistência pacífica.">
@@ -21,6 +22,7 @@
     <meta name="twitter:image" content="{% static '/images/favicon.ico' %}">
     <!---->
     <meta name="keywords" content="Fraguismo, religião libertária, liberdade, propriedade, resistência pacífica, filosofia libertária, doutrina, textos libertários, cursos, podcasts">
+    {% endblock metadados %}
     <link rel="stylesheet" href="{% static '/css/components.css' %}">
     <link rel="shortcut icon" type="image/png" href="{% static '/images/favicon.ico' %}" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">

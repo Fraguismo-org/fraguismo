@@ -28,8 +28,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const quemIndicou = document.getElementById('quem_indicou');
     const aonde = document.getElementById('aonde');
     const btnRegistrar = document.getElementById('btn-registrar');
-
     const selectedValue = getQueryParam('ref');
+    const questionarioFields = Array.from(document.querySelectorAll('[data-questionario="true"]'));
 
     senha.addEventListener('input', () => {
         validaPassword();
@@ -89,7 +89,19 @@ document.addEventListener('DOMContentLoaded', function () {
         return urlParams.get(param);
     }
 
+    function toggleObrigatoriedadeQuestionario() {
+        const obrigatorio = chkbxFraguista.checked;
+        questionarioFields.forEach((field) => {
+            field.required = obrigatorio;
+            if (!obrigatorio) {
+                field.setCustomValidity('');
+            }
+        });
+    }
+    toggleObrigatoriedadeQuestionario();
+
     chkbxFraguista.addEventListener('change', () => {
+        toggleObrigatoriedadeQuestionario();
         if (chkbxFraguista.checked) {
             fraguistaField.style.display = 'inline';
         } else {
@@ -126,12 +138,12 @@ document.addEventListener('DOMContentLoaded', function () {
                 codigoCondutaError.style.display = 'block';
                 return;
             }
-            if (validaForm()){
+            if (validaForm() && validaQuestionario()){
                 formRegistro.submit();
             } else {
-                return;
+                formRegistro.reportValidity();
             }
-
+            return;
         } 
         if (validaUsername() && validaEmail() && validaPassword()) {
             formRegistro.submit();
@@ -314,5 +326,25 @@ document.addEventListener('DOMContentLoaded', function () {
             return true;
         }
     }
+
+    function validaQuestionario() {
+        let valido = true;
+        questionarioFields.forEach((field) => {
+            field.setCustomValidity('');
+            if (chkbxFraguista.checked && field.value.trim().length < 50) {
+                field.setCustomValidity('Responda com pelo menos 50 caracteres.');
+                valido = false;
+            }
+        });
+        return valido;
+    }
+
+    questionarioFields.forEach((field) => {
+        field.addEventListener('input', () => {
+            if (field.value.trim().length >= 50) {
+                field.setCustomValidity('');
+            }
+        });
+    });
 
 });

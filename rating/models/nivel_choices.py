@@ -6,7 +6,7 @@ NIVEL_CHOICES = [
         ('escudeiro', 'Escudeiro'),
         ('cavaleiro', 'Cavaleiro'),
         ('conselheiro', 'Conselheiro'),
-        ('guradiao', 'Guardião'),
+        ('guardiao', 'Guardião'),
         ('nao_fraguista', 'Não Fraguista')
     ]
 
