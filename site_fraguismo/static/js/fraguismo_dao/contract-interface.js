@@ -1029,8 +1029,8 @@ window.onclick = function(event) {
 // CONTADORES REGRESSIVOS DE VOTAÇÃO
 // ============================================
 
-// Constante: 3 segundos por bloco
-const SECONDS_PER_BLOCK = 3;
+// Constante: 2 segundos por bloco
+const SECONDS_PER_BLOCK = 2;
 
 /**
  * Converte blocos em objeto de tempo (dias, horas, minutos, segundos)
