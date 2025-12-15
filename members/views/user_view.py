@@ -1,9 +1,12 @@
 import os
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.core.exceptions import FieldError
 from PIL import Image, ImageOps
-from django.shortcuts import render, redirect
+from django.db import DatabaseError, OperationalError, transaction
+from django.shortcuts import render, redirect, get_object_or_404
 
+from members.models.questionario import Questionario
 from members.models.users import Users
 from log.models.log import Log
 from members.models.profile import Profile
@@ -19,9 +22,9 @@ def comunidade(request):
 
 
 @login_required(login_url='login')
-def user_page(request): 
-    profile = Profile.get_or_create_profile(user_request=request.user)
+def user_page(request):
     member = Users.get_or_create_member(user_request=request.user)
+    profile = Profile.get_or_create_profile(user_request=member)
     niveis = Nivel.objects.all()
     if request.method == 'POST':
         email = request.POST.get('email', None)
@@ -85,14 +88,98 @@ def user_page(request):
 
 @login_required(login_url='login')
 def lista_usuarios(request):
-    perfis = None
     try:
-        query = request.GET.get("busca")
-        lista_perfil = ProfilesQuery.get_profiles_by_query(query)
-        perfis = pagina_lista(request=request, lista=lista_perfil, paginas=25)        
+        # Parâmetros
+        param_keys = ["fraguista", "questionario", "contato", "ordenar", "busca"]
+        params = {k: request.GET.get(k, "").strip() for k in param_keys}
+        
+        # Query inicial
+        qs = Profile.objects.all()
+        if params["busca"]:
+            try:
+                qs = ProfilesQuery.get_profiles_by_query(params["busca"])
+            except Exception as e:
+                Log.salva_log(f"Busca falhou: {e}")
+                qs = Profile.objects.all()
+        
+        # Estrutura de filtros
+        filtro_config = {
+            'fraguista': {'sim': {'user__is_fraguista': True}, 'nao': {'user__is_fraguista': False}},
+            'questionario': {
+                'pendente': {'user__is_fraguista': True, 'questionario__isnull': True},
+                'preenchido': {'user__is_fraguista': True, 'questionario__isnull': False},
+            },
+            'contato': {
+                'pendente': {'user__is_fraguista': True, 'questionario__isnull': False, 
+                            'questionario__contato_realizado': False},
+                'feito': {'user__is_fraguista': True, 'questionario__isnull': False, 
+                         'questionario__contato_realizado': True},
+            }
+        }
+        
+        # Aplicar filtros
+        for filtro, valor in params.items():
+            if valor and filtro in filtro_config and valor in filtro_config[filtro]:
+                try:
+                    qs = qs.filter(**filtro_config[filtro][valor])
+                except Exception as e:
+                    Log.salva_log(f"Filtro {filtro}={valor} falhou: {e}")
+        
+        # Ordenação
+        ordenacao_map = {'novo': '-user__date_joined', 'antigo': 'user__date_joined'}
+        ordenacao = ordenacao_map.get(params['ordenar'], '-user__date_joined')
+        qs = qs.order_by(ordenacao)
+        
+        # Contexto
+        context = {"profiles": pagina_lista(request, qs, 25), **params}
+        
     except Exception as e:
-        Log.salva_log(e)
-        lista = Profile.objects.all()
-        perfis = pagina_lista(request, lista, 25)        
-    finally:
-        return render(request, 'members/lista_usuarios.html', {'profiles': perfis,})
+        Log.salva_log(f"Erro em lista_usuarios: {e}")
+        context = {
+            "profiles": pagina_lista(request, Profile.objects.none(), 25),
+            "erro": "Erro ao carregar usuários"
+        }
+    
+    return render(request, "members/lista_usuarios.html", context)
+
+@login_required(login_url="login")
+def marcar_contato(request, questionario_id):
+    if not request.user.is_staff:
+        messages.warning(request, "Apenas administradores podem marcar contatos.")
+        return redirect("user_page")
+    
+    try:
+        # Buscar questionário
+        questionario = Questionario.objects.get(id=questionario_id)
+        
+        # Verificar se já não está marcado
+        if questionario.contato_realizado:
+            messages.info(request, "Este contato já foi marcado como realizado.")
+            return redirect("lista_usuarios")
+        
+        # Atualizar com transação
+        with transaction.atomic():
+            questionario.contato_realizado = True
+            questionario.save()
+            
+            # Log opcional
+            Log.salva_log(
+                f"Contato marcado: questionário {questionario_id}",
+                user=request.user
+            )
+        
+        messages.success(request, "Contato marcado como realizado!")
+        
+    except Questionario.DoesNotExist:
+        messages.error(request, "Questionário não encontrado.")
+        Log.salva_log(f"Questionário {questionario_id} não existe")
+        
+    except (DatabaseError, OperationalError) as e:
+        messages.error(request, "Erro no banco de dados.")
+        Log.salva_log(f"Erro de BD ao marcar contato {questionario_id}: {e}")
+        
+    except Exception as e:
+        messages.error(request, "Erro inesperado ao processar a solicitação.")
+        Log.salva_log(f"Erro inesperado em marcar_contato: {e}")
+    
+    return redirect("lista_usuarios")

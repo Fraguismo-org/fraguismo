@@ -4,6 +4,7 @@ from django.shortcuts import render, redirect
 
 from members.models.profile import Profile
 from members.models.profile_pendencia import ProfilePendencia
+from members.models.questionario import Questionario
 from members.models.users import Users
 from rating.models.log_rating import LogRating
 
@@ -61,10 +62,56 @@ def register_user(request):
             user.quem_indicou = request.POST.get('quem_indicou', None)
             user.aonde = request.POST.get('aonde', None)
             user.codigo_conduta = request.POST.get('termos_adesao', True)
-
+            
+            required_q_fields = {
+                "help_project": "Como ajudar o projeto",
+                "reason_to_participate": "Motivo para participar",
+                "reason_to_accept": "Motivo para aceitar",
+                "political_belief": "Crenca politica",
+                "state_opinion": "Opinião sobre o Estado",
+                "jusnaturalismo_vs_juspositivismo": "Jusnaturalismo vs Juspositivismo",
+                "economic_values": "Valor econômico",
+                "bitcoin_positive_characteristics": "Características positivas do Bitcoin",
+                "game_theory_byzantine_generals": "Teoria dos jogos e generais bizantinos",
+                "pna_and_argumentative_ethics": "PNA e ética argumentativa",
+                "libertarian_knowledge_sources": "Conhecimento sobre libertarianismo",
+                "bitcoin_knowledge_sources": "Conhecimento sobre Bitcoin",
+            }
+            questionario_respostas = {
+                key: request.POST.get(key, "").strip()
+                for key in required_q_fields.keys()
+            }
+            respostas_invalidas = [
+                label for key, label in required_q_fields.items()
+                if len(questionario_respostas.get(key, "")) < 50
+            ]
+            if respostas_invalidas:
+                messages.error(request, "Preencha todas as respostas do questionário com no mínimo 50 caracteres.")
+                return render(request, "authenticate/register_user.html")
+            
         user.save()
         profile = Profile.get_or_create_profile(user_request=user)
         profile.save()
+
+        if user.is_fraguista:
+            Questionario.objects.update_or_create(
+                profile=profile,
+                defaults={
+                    "help_project": request.POST.get("help_project", "").strip(),
+                    "reason_to_participate": request.POST.get("reason_to_participate", "").strip(),
+                    "reason_to_accept": request.POST.get("reason_to_accept", "").strip(),
+                    "political_belief": request.POST.get("political_belief", "").strip(),
+                    "state_opinion": request.POST.get("state_opinion", "").strip(),
+                    "jusnaturalismo_vs_juspositivismo": request.POST.get("jusnaturalismo_vs_juspositivismo", "").strip(),
+                    "economic_values": request.POST.get("economic_values", "").strip(),
+                    "bitcoin_positive_characteristics": request.POST.get("bitcoin_positive_characteristics", "").strip(),
+                    "game_theory_byzantine_generals": request.POST.get("game_theory_byzantine_generals", "").strip(),
+                    "pna_and_argumentative_ethics": request.POST.get("pna_and_argumentative_ethics", "").strip(),
+                    "libertarian_knowledge_sources": request.POST.get("libertarian_knowledge_sources", "").strip(),
+                    "bitcoin_knowledge_sources": request.POST.get("bitcoin_knowledge_sources", "").strip(),
+                },
+            )
+
         if user.quem_indicou:
             indicacao(request, user)
         auth_user = authenticate(request, username=user.username, password=password)

@@ -12,3 +12,10 @@ def administrador(request):
         return render(request, 'adm.html', {'links': links})
     except Exception as e:
         Log.salva_log(e)
+
+@user_passes_test(lambda u: u.is_superuser)
+def navigation(request):
+    try:
+        return render(request, 'navigation.html', {})
+    except Exception as e:
+        Log.salva_log(e)
