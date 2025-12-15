@@ -139,7 +139,7 @@ async function escreverGraca(functionName, args = []) {
 
 // Endereços dos contratos
 const CONTRACT_ADDRESSES = {
-    propostas: '0x8Da66CA6615Cc698e19BA680cDE2b03433Dda4A6', // Contrato unificado (Propostas + guardiaoia)
+    propostas: '0x9fE83a034aF088D2dBBD73F74082Cb5A959790c9', // Contrato unificado (Propostas + guardiaoia)
     mercado: '0x3633531C8b8D8ec551D3ee29125D05C3edb48FE3',
     graca: '0x7E598c2EB44c58A7F69fcC3957c4f27B6cb459D5',
     blockNumber: '0x59c28c1DEb67a31369E3C0f3511e976E133f7431' // ATUALIZE COM O ENDEREÇO DO CONTRATO DEPLOYADO
