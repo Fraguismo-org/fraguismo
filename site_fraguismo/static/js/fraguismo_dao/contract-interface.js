@@ -625,6 +625,24 @@ const propostas = {
         }
     },
 
+    async abrirVotacaoguardiao() {
+        try {
+            await escreverPropostas('abrirVotacaoguardiao');
+            showResult('result-propostas-abrir-guardiao', 'Votação aberta com sucesso pelo guardião!');
+        } catch (error) {
+            showResult('result-propostas-abrir-guardiao', error.message, true);
+        }
+    },
+
+    async calcularPesos() {
+        try {
+            await escreverPropostas('calcularPesos');
+            showResult('result-propostas-calcularPesos', 'Pesos calculados com sucesso!');
+        } catch (error) {
+            showResult('result-propostas-calcularPesos', error.message, true);
+        }
+    },
+
     // ============================================
     // FUNÇÕES DE DIRETORES (UNIFICADAS)
     // ============================================
@@ -791,6 +809,54 @@ const propostas = {
         } catch (error) {
             showResult('result-propostas-transfer-owner', error.message, true);
         }
+    },
+
+    // ============================================
+    // ALIASES PARA COMPATIBILIDADE (guardiões -> diretores)
+    // ============================================
+
+    async getguardioes() {
+        return await this.getDiretores();
+    },
+
+    async isguardiao() {
+        return await this.isDiretor();
+    },
+
+    async totalguardioes() {
+        return await this.totalDiretores();
+    },
+
+    async adicionarguardiaoInicial() {
+        return await this.adicionarDiretorInicial();
+    },
+
+    async proporNovoguardiao() {
+        return await this.proporNovoDiretor();
+    },
+
+    async votarNovoguardiao() {
+        return await this.votarNovoDiretor();
+    },
+
+    async encerrarPropostaguardiao() {
+        return await this.encerrarPropostaDiretor();
+    },
+
+    async getguardiaoProposalDetails() {
+        return await this.getDiretorProposalDetails();
+    },
+
+    async getguardiaoInfo() {
+        return await this.getDiretorInfo();
+    },
+
+    async getguardioesAtivos() {
+        return await this.getDiretoresAtivos();
+    },
+
+    async getguardioesSuspensos() {
+        return await this.getDiretoresSuspensos();
     }
 };
 
