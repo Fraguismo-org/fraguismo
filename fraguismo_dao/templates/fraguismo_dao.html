@@ -17,7 +17,7 @@
             </a>
         </div>
         <div class="header">
-            <h1>🏛️ FraguismoDAO</h1>
+            <h1>🏛️ FraguismoDAO v1.2.2</h1>
             <div class="wallet-info" style="display:none;">
                 <button id="connectWallet" class="btn">Conectar MetaMask</button>
                 <div id="walletAddress" class="wallet-address" style="display: none;"></div>
@@ -67,7 +67,7 @@
     <div id="propostasModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h2>📋 Contrato Propostas & Guardiões (Unificado) v1.2.2</h2>
+                <h2>📋 Contrato Propostas & Guardiões (Unificado)</h2>
                 <span class="close" onclick="closeModal('propostasModal')">&times;</span>
             </div>
             <div class="modal-body">
@@ -157,7 +157,7 @@
                                 <input type="text" id="propostas-make-hash" placeholder="Hash SHA256...">
                             </div>
                             <div class="input-group">
-                                <label>Preço (tokens por 1 BNB):</label>
+                                <label>Preço (tokens por 1 POL):</label>
                                 <input type="number" id="propostas-make-price" placeholder="Preço">
                             </div>
                             <button class="btn btn-small" onclick="propostas.makePropose()">Criar</button>
@@ -206,7 +206,7 @@
                                 <input type="text" id="propostas-buy-to" placeholder="0x...">
                             </div>
                             <div class="input-group">
-                                <label>Valor em BNB:</label>
+                                <label>Valor em POL:</label>
                                 <input type="text" id="propostas-buy-value" placeholder="0.01">
                             </div>
                             <button class="btn btn-small" onclick="propostas.buyTokens()">Comprar</button>
@@ -214,7 +214,7 @@
                         </div>
 
                         <div class="function-item">
-                            <h4>Sacar BNB (Propositor)</h4>
+                            <h4>Sacar POL (Propositor)</h4>
                             <div class="input-group">
                                 <label>Hash da Proposta:</label>
                                 <input type="text" id="propostas-withdraw-hash" placeholder="Hash SHA256...">
@@ -546,7 +546,7 @@
                                 <input type="number" id="mercado-negociar-id" placeholder="0">
                             </div>
                             <div class="input-group">
-                                <label>Garantia em BNB:</label>
+                                <label>Garantia em POL:</label>
                                 <input type="text" id="mercado-negociar-garantia" placeholder="0.01">
                             </div>
                             <button class="btn btn-small" onclick="mercado.iniciarNegociacao()">Iniciar</button>
