@@ -1031,6 +1031,7 @@ window.onclick = function(event) {
 
 // Constante: 2 segundos por bloco
 const SECONDS_PER_BLOCK = 2;
+const version = '1.2.2';
 
 /**
  * Converte blocos em objeto de tempo (dias, horas, minutos, segundos)
