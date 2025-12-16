@@ -139,7 +139,7 @@ async function escreverGraca(functionName, args = []) {
 
 // Endereços dos contratos
 const CONTRACT_ADDRESSES = {
-    propostas: '0x9fE83a034aF088D2dBBD73F74082Cb5A959790c9', // Contrato unificado (Propostas + guardiaoia)
+    propostas: '0x3bbcEA18778471ECBf614be44FA1e4Dea89f5C69', // Contrato unificado (Propostas + Diretoria)
     mercado: '0x3633531C8b8D8ec551D3ee29125D05C3edb48FE3',
     graca: '0x7E598c2EB44c58A7F69fcC3957c4f27B6cb459D5',
     blockNumber: '0x59c28c1DEb67a31369E3C0f3511e976E133f7431' // ATUALIZE COM O ENDEREÇO DO CONTRATO DEPLOYADO
@@ -148,7 +148,94 @@ const CONTRACT_ADDRESSES = {
 // ABIs dos contratos
 // Nota: O ABI completo do contrato unificado deve ser gerado após o deploy
 // Este é um ABI básico - você precisará atualizar com o ABI completo do contrato deployado
-const PROPOSTAS_ABI = [{"inputs":[{"internalType":"address","name":"_tokenAddress","type":"address"},{"internalType":"bool","name":"_isTestMode","type":"bool"},{"internalType":"uint256","name":"_blocks3Months","type":"uint256"},{"internalType":"address","name":"_nftAddress","type":"address"},{"internalType":"uint256","name":"_blocksPerHour","type":"uint256"},{"internalType":"uint256","name":"_blocksPerWeek","type":"uint256"}],"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"recipient","type":"address"},{"indexed":false,"internalType":"uint256","name":"tokensTransferred","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"bnbTransferred","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"lastVotedBlock","type":"uint256"}],"name":"ContractReset","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"previousOwner","type":"address"},{"indexed":true,"internalType":"address","name":"newOwner","type":"address"}],"name":"OwnershipTransferred","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"guardiao","type":"address"},{"indexed":false,"internalType":"uint256","name":"novaPenalidade","type":"uint256"}],"name":"PenalidadeAplicada","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"guardiao","type":"address"}],"name":"PenalidadeResetada","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"proposer","type":"address"},{"indexed":false,"internalType":"string","name":"proposeHash","type":"string"},{"indexed":false,"internalType":"uint256","name":"amount","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"price","type":"uint256"}],"name":"ProposalCreated","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"string","name":"proposeHash","type":"string"},{"indexed":false,"internalType":"bool","name":"approved","type":"bool"},{"indexed":false,"internalType":"uint256","name":"totalYesWeight","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"totalNoWeight","type":"uint256"}],"name":"ProposalEnded","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"string","name":"proposeHash","type":"string"},{"indexed":true,"internalType":"address","name":"buyer","type":"address"},{"indexed":false,"internalType":"uint256","name":"amount","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"bnbPaid","type":"uint256"}],"name":"TokensBought","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"voter","type":"address"},{"indexed":false,"internalType":"string","name":"proposeHash","type":"string"},{"indexed":false,"internalType":"bool","name":"decision","type":"bool"},{"indexed":false,"internalType":"uint256","name":"weight","type":"uint256"}],"name":"Voted","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"string","name":"proposeHash","type":"string"},{"indexed":true,"internalType":"address","name":"proposer","type":"address"},{"indexed":false,"internalType":"uint256","name":"amountBNB","type":"uint256"}],"name":"Withdrawn","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"guardiao","type":"address"}],"name":"guardiaoAdicionado","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"proposer","type":"address"},{"indexed":true,"internalType":"address","name":"candidato","type":"address"}],"name":"guardiaoPropostaCriada","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"candidato","type":"address"},{"indexed":false,"internalType":"bool","name":"aprovada","type":"bool"}],"name":"guardiaoPropostaEncerrada","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"guardiao","type":"address"},{"indexed":false,"internalType":"uint256","name":"penalidade","type":"uint256"}],"name":"guardiaoRemovido","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"guardiao","type":"address"},{"indexed":false,"internalType":"uint256","name":"penalidade","type":"uint256"}],"name":"guardiaoSuspenso","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"voter","type":"address"},{"indexed":true,"internalType":"address","name":"candidato","type":"address"},{"indexed":false,"internalType":"bool","name":"decisao","type":"bool"},{"indexed":false,"internalType":"uint256","name":"peso","type":"uint256"}],"name":"guardiaoVotado","type":"event"},{"inputs":[],"name":"DECIMALS","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"abrirVotacaoguardiao","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"_guardiao","type":"address"}],"name":"adicionarguardiaoInicial","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"blockedUntil","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"blocks30Days","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"blocks3Months","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"blocksPerHour","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"blocksPerWeek","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"string","name":"proposeHash","type":"string"},{"internalType":"address","name":"to","type":"address"}],"name":"buyTokens","outputs":[],"stateMutability":"payable","type":"function"},{"inputs":[],"name":"calcularPesos","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"clearPresence","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"string","name":"proposeHash","type":"string"},{"internalType":"bool","name":"decision","type":"bool"}],"name":"doVote","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"effectiveWeights","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"candidato","type":"address"}],"name":"encerrarPropostaguardiao","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"string","name":"proposeHash","type":"string"}],"name":"endVote","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"fecharVotacao","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"getAllEffectiveWeights","outputs":[{"internalType":"address[]","name":"votersArray","type":"address[]"},{"internalType":"uint256[]","name":"weightsArray","type":"uint256[]"},{"internalType":"bool","name":"calculado","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getBlocksUntilNextVoting","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getBlocksUntilResetAvailable","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getBlocksUntilVotingEnds","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"voter","type":"address"}],"name":"getEffectiveWeight","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getOpenProposals","outputs":[{"internalType":"string[]","name":"","type":"string[]"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"string","name":"proposeHash","type":"string"}],"name":"getProposalDetails","outputs":[{"internalType":"address","name":"proposer","type":"address"},{"internalType":"address","name":"wallet","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"},{"internalType":"uint256","name":"price","type":"uint256"},{"internalType":"uint256","name":"totalYesWeight","type":"uint256"},{"internalType":"uint256","name":"totalNoWeight","type":"uint256"},{"internalType":"bool","name":"ended","type":"bool"},{"internalType":"bool","name":"approved","type":"bool"},{"internalType":"uint256","name":"tokensRemaining","type":"uint256"},{"internalType":"uint256","name":"bnbBalance","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"string","name":"proposeHash","type":"string"}],"name":"getProposalYesVoters","outputs":[{"internalType":"address[]","name":"","type":"address[]"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"string","name":"proposeHash","type":"string"}],"name":"getProposalYesWeight","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getQuorumInfo","outputs":[{"internalType":"uint256","name":"quorumMinimo","type":"uint256"},{"internalType":"uint256","name":"totalguardioesAtivos","type":"uint256"},{"internalType":"uint256","name":"totalVotantesAtual","type":"uint256"},{"internalType":"bool","name":"quorumAtingido","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getQuorumMinimo","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getTotalBNBInProposals","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"account","type":"address"}],"name":"getTotalTokens","outputs":[{"internalType":"uint256","name":"totalTokens","type":"uint256"},{"internalType":"uint256","name":"walletTokens","type":"uint256"},{"internalType":"uint256","name":"nftTokens","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getTotalguardioesAtivos","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"guardiao","type":"address"}],"name":"getguardiaoInfo","outputs":[{"internalType":"uint256","name":"penalidade","type":"uint256"},{"internalType":"bool","name":"ativo","type":"bool"},{"internalType":"bool","name":"ehguardiao","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"candidato","type":"address"}],"name":"getguardiaoProposalDetails","outputs":[{"internalType":"address","name":"proposer","type":"address"},{"internalType":"address","name":"candidate","type":"address"},{"internalType":"uint256","name":"totalYesWeight","type":"uint256"},{"internalType":"uint256","name":"totalNoWeight","type":"uint256"},{"internalType":"bool","name":"ended","type":"bool"},{"internalType":"bool","name":"approved","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getguardioes","outputs":[{"internalType":"address[]","name":"","type":"address[]"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getguardioesAtivos","outputs":[{"internalType":"address[]","name":"","type":"address[]"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getguardioesCompleto","outputs":[{"internalType":"address[]","name":"guardioesArray","type":"address[]"},{"internalType":"uint256[]","name":"penalidadesArray","type":"uint256[]"},{"internalType":"bool[]","name":"ativosArray","type":"bool[]"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getguardioesSuspensos","outputs":[{"internalType":"address[]","name":"","type":"address[]"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"guardiaoAtivo","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"guardiaoProposalList","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"guardiaoProposals","outputs":[{"internalType":"address","name":"proposer","type":"address"},{"internalType":"address","name":"candidate","type":"address"},{"internalType":"bool","name":"ended","type":"bool"},{"internalType":"bool","name":"approved","type":"bool"},{"internalType":"uint256","name":"totalYesWeight","type":"uint256"},{"internalType":"uint256","name":"totalNoWeight","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"indexNoArray","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"user","type":"address"}],"name":"isDirector","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"isTestMode","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"isVotingOpen","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"guardiao","type":"address"}],"name":"isguardiaoAtivo","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"limparPesos","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"amount","type":"uint256"},{"internalType":"address","name":"wallet","type":"address"},{"internalType":"string","name":"proposeHash","type":"string"},{"internalType":"uint256","name":"price","type":"uint256"}],"name":"makePropose","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"nextVotingStartBlock","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"nftAddress","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"nftAddressChanged","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"owner","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"penalidades","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"presenceDuration","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"presenceRegistrationEndBlock","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"candidato","type":"address"}],"name":"proporNovoguardiao","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"proposalList","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"registerPresence","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"registeredTokens","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"removerInativos","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"recipient","type":"address"}],"name":"resetContract","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"_nftAddress","type":"address"}],"name":"setNFTAddress","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"suspenderInativos","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"tokenAddress","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"totalRegisteredTokens","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"totalVoters","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"totalguardioes","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"newOwner","type":"address"}],"name":"transferOwnership","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"ultimoBlocoVotado","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"candidato","type":"address"},{"internalType":"bool","name":"decisao","type":"bool"}],"name":"votarNovoguardiao","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"votersList","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"votingEndBlock","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"votingStartBlock","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"weightsCalculated","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"string","name":"proposeHash","type":"string"}],"name":"withdraw","outputs":[],"stateMutability":"nonpayable","type":"function"}];
+const PROPOSTAS_ABI = [
+    {"inputs":[{"internalType":"address","name":"_tokenAddress","type":"address"},{"internalType":"bool","name":"_isTestMode","type":"bool"},{"internalType":"uint256","name":"_seconds3Months","type":"uint256"},{"internalType":"address","name":"_nftAddress","type":"address"}],"stateMutability":"nonpayable","type":"constructor"},
+    {"anonymous":false,"inputs":[{"indexed":false,"internalType":"string","name":"proposeHash","type":"string"},{"indexed":false,"internalType":"bool","name":"approved","type":"bool"},{"indexed":false,"internalType":"uint256","name":"totalYesWeight","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"totalNoWeight","type":"uint256"}],"name":"ProposalEnded","type":"event"},
+    {"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"proposer","type":"address"},{"indexed":false,"internalType":"string","name":"proposeHash","type":"string"},{"indexed":false,"internalType":"uint256","name":"amount","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"price","type":"uint256"}],"name":"ProposalCreated","type":"event"},
+    {"anonymous":false,"inputs":[{"indexed":false,"internalType":"string","name":"proposeHash","type":"string"},{"indexed":true,"internalType":"address","name":"buyer","type":"address"},{"indexed":false,"internalType":"uint256","name":"amount","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"bnbPaid","type":"uint256"}],"name":"TokensBought","type":"event"},
+    {"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"voter","type":"address"},{"indexed":false,"internalType":"string","name":"proposeHash","type":"string"},{"indexed":false,"internalType":"bool","name":"decision","type":"bool"},{"indexed":false,"internalType":"uint256","name":"weight","type":"uint256"}],"name":"Voted","type":"event"},
+    {"anonymous":false,"inputs":[{"indexed":false,"internalType":"string","name":"proposeHash","type":"string"},{"indexed":true,"internalType":"address","name":"proposer","type":"address"},{"indexed":false,"internalType":"uint256","name":"amountBNB","type":"uint256"}],"name":"Withdrawn","type":"event"},
+    {"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"recipient","type":"address"},{"indexed":false,"internalType":"uint256","name":"tokensTransferred","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"bnbTransferred","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"lastVotedTimestamp","type":"uint256"}],"name":"ContractReset","type":"event"},
+    {"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"guardiao","type":"address"}],"name":"guardiaoAdicionado","type":"event"},
+    {"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"proposer","type":"address"},{"indexed":true,"internalType":"address","name":"candidato","type":"address"}],"name":"guardiaoPropostaCriada","type":"event"},
+    {"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"voter","type":"address"},{"indexed":true,"internalType":"address","name":"candidato","type":"address"},{"indexed":false,"internalType":"bool","name":"decisao","type":"bool"},{"indexed":false,"internalType":"uint256","name":"peso","type":"uint256"}],"name":"guardiaoVotado","type":"event"},
+    {"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"candidato","type":"address"},{"indexed":false,"internalType":"bool","name":"aprovada","type":"bool"}],"name":"guardiaoPropostaEncerrada","type":"event"},
+    {"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"guardiao","type":"address"},{"indexed":false,"internalType":"uint256","name":"novaPenalidade","type":"uint256"}],"name":"PenalidadeAplicada","type":"event"},
+    {"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"guardiao","type":"address"}],"name":"PenalidadeResetada","type":"event"},
+    {"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"guardiao","type":"address"},{"indexed":false,"internalType":"uint256","name":"penalidade","type":"uint256"}],"name":"guardiaoSuspenso","type":"event"},
+    {"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"guardiao","type":"address"},{"indexed":false,"internalType":"uint256","name":"penalidade","type":"uint256"}],"name":"guardiaoRemovido","type":"event"},
+    {"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"previousOwner","type":"address"},{"indexed":true,"internalType":"address","name":"newOwner","type":"address"}],"name":"OwnershipTransferred","type":"event"},
+    {"inputs":[],"name":"abrirVotacaoguardiao","outputs":[],"stateMutability":"nonpayable","type":"function"},
+    {"inputs":[],"name":"calcularPesos","outputs":[],"stateMutability":"nonpayable","type":"function"},
+    {"inputs":[],"name":"limparPesos","outputs":[],"stateMutability":"nonpayable","type":"function"},
+    {"inputs":[],"name":"weightsCalculated","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},
+    {"inputs":[{"internalType":"address","name":"voter","type":"address"}],"name":"getEffectiveWeight","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
+    {"inputs":[],"name":"getAllEffectiveWeights","outputs":[{"internalType":"address[]","name":"votersArray","type":"address[]"},{"internalType":"uint256[]","name":"weightsArray","type":"uint256[]"},{"internalType":"bool","name":"calculado","type":"bool"}],"stateMutability":"view","type":"function"},
+    {"inputs":[],"name":"getguardioesCompleto","outputs":[{"internalType":"address[]","name":"guardioesArray","type":"address[]"},{"internalType":"uint256[]","name":"penalidadesArray","type":"uint256[]"},{"internalType":"bool[]","name":"ativosArray","type":"bool[]"}],"stateMutability":"view","type":"function"},
+    {"inputs":[],"name":"SECONDS_30_DAYS","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
+    {"inputs":[],"name":"SECONDS_PER_HOUR","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
+    {"inputs":[],"name":"SECONDS_PER_WEEK","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
+    {"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"blockedUntil","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
+    {"inputs":[{"internalType":"string","name":"proposeHash","type":"string"},{"internalType":"address","name":"to","type":"address"}],"name":"buyTokens","outputs":[],"stateMutability":"payable","type":"function"},
+    {"inputs":[],"name":"clearPresence","outputs":[],"stateMutability":"nonpayable","type":"function"},
+    {"inputs":[{"internalType":"address","name":"_guardiao","type":"address"}],"name":"adicionarguardiaoInicial","outputs":[],"stateMutability":"nonpayable","type":"function"},
+    {"inputs":[],"name":"getguardioes","outputs":[{"internalType":"address[]","name":"","type":"address[]"}],"stateMutability":"view","type":"function"},
+    {"inputs":[{"internalType":"address","name":"user","type":"address"}],"name":"isDirector","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},
+    {"inputs":[],"name":"totalguardioes","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
+    {"inputs":[{"internalType":"address","name":"candidato","type":"address"}],"name":"proporNovoguardiao","outputs":[],"stateMutability":"nonpayable","type":"function"},
+    {"inputs":[{"internalType":"address","name":"candidato","type":"address"},{"internalType":"bool","name":"decisao","type":"bool"}],"name":"votarNovoguardiao","outputs":[],"stateMutability":"nonpayable","type":"function"},
+    {"inputs":[{"internalType":"address","name":"candidato","type":"address"}],"name":"encerrarPropostaguardiao","outputs":[],"stateMutability":"nonpayable","type":"function"},
+    {"inputs":[{"internalType":"address","name":"candidato","type":"address"}],"name":"getguardiaoProposalDetails","outputs":[{"internalType":"address","name":"proposer","type":"address"},{"internalType":"address","name":"candidate","type":"address"},{"internalType":"uint256","name":"totalYesWeight","type":"uint256"},{"internalType":"uint256","name":"totalNoWeight","type":"uint256"},{"internalType":"bool","name":"ended","type":"bool"},{"internalType":"bool","name":"approved","type":"bool"}],"stateMutability":"view","type":"function"},
+    {"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"guardiaoProposals","outputs":[{"internalType":"address","name":"proposer","type":"address"},{"internalType":"address","name":"candidate","type":"address"},{"internalType":"bool","name":"ended","type":"bool"},{"internalType":"bool","name":"approved","type":"bool"},{"internalType":"uint256","name":"totalYesWeight","type":"uint256"},{"internalType":"uint256","name":"totalNoWeight","type":"uint256"}],"stateMutability":"view","type":"function"},
+    {"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"guardiaoProposalList","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},
+    {"inputs":[],"name":"suspenderInativos","outputs":[],"stateMutability":"nonpayable","type":"function"},
+    {"inputs":[],"name":"removerInativos","outputs":[],"stateMutability":"nonpayable","type":"function"},
+    {"inputs":[{"internalType":"address","name":"guardiao","type":"address"}],"name":"getguardiaoInfo","outputs":[{"internalType":"uint256","name":"penalidade","type":"uint256"},{"internalType":"bool","name":"ativo","type":"bool"},{"internalType":"bool","name":"ehguardiao","type":"bool"}],"stateMutability":"view","type":"function"},
+    {"inputs":[],"name":"getguardioesAtivos","outputs":[{"internalType":"address[]","name":"","type":"address[]"}],"stateMutability":"view","type":"function"},
+    {"inputs":[],"name":"getguardioesSuspensos","outputs":[{"internalType":"address[]","name":"","type":"address[]"}],"stateMutability":"view","type":"function"},
+    {"inputs":[],"name":"getQuorumInfo","outputs":[{"internalType":"uint256","name":"quorumMinimo","type":"uint256"},{"internalType":"uint256","name":"totalDiretoresAtivos","type":"uint256"},{"internalType":"uint256","name":"totalVotantesAtual","type":"uint256"},{"internalType":"bool","name":"quorumAtingido","type":"bool"}],"stateMutability":"view","type":"function"},
+    {"inputs":[],"name":"getQuorumMinimo","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
+    {"inputs":[],"name":"getTotalguardioesAtivos","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
+    {"inputs":[{"internalType":"address","name":"guardiao","type":"address"}],"name":"isguardiaoAtivo","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},
+    {"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"penalidades","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
+    {"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"guardiaoAtivo","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},
+    {"inputs":[{"internalType":"address","name":"newOwner","type":"address"}],"name":"transferOwnership","outputs":[],"stateMutability":"nonpayable","type":"function"},
+    {"inputs":[{"internalType":"address","name":"account","type":"address"}],"name":"getTotalTokens","outputs":[{"internalType":"uint256","name":"totalTokens","type":"uint256"},{"internalType":"uint256","name":"walletTokens","type":"uint256"},{"internalType":"uint256","name":"nftTokens","type":"uint256"}],"stateMutability":"view","type":"function"},
+    {"inputs":[{"internalType":"address","name":"_nftAddress","type":"address"}],"name":"setNFTAddress","outputs":[],"stateMutability":"nonpayable","type":"function"},
+    {"inputs":[],"name":"nftAddress","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},
+    {"inputs":[],"name":"nftAddressChanged","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},
+    {"inputs":[{"internalType":"address","name":"recipient","type":"address"}],"name":"resetContract","outputs":[],"stateMutability":"nonpayable","type":"function"},
+    {"inputs":[],"name":"getSecondsUntilResetAvailable","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
+    {"inputs":[],"name":"getTotalBNBInProposals","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
+    {"inputs":[],"name":"ultimoTimestampVotado","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
+    {"inputs":[],"name":"seconds3Months","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
+    {"inputs":[{"internalType":"string","name":"proposeHash","type":"string"},{"internalType":"bool","name":"decision","type":"bool"}],"name":"doVote","outputs":[],"stateMutability":"nonpayable","type":"function"},
+    {"inputs":[{"internalType":"string","name":"proposeHash","type":"string"}],"name":"endVote","outputs":[],"stateMutability":"nonpayable","type":"function"},
+    {"inputs":[],"name":"fecharVotacao","outputs":[],"stateMutability":"nonpayable","type":"function"},
+    {"inputs":[],"name":"getSecondsUntilNextVoting","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
+    {"inputs":[],"name":"getSecondsUntilVotingEnds","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
+    {"inputs":[],"name":"getOpenProposals","outputs":[{"internalType":"string[]","name":"","type":"string[]"}],"stateMutability":"view","type":"function"},
+    {"inputs":[{"internalType":"string","name":"proposeHash","type":"string"}],"name":"getProposalDetails","outputs":[{"internalType":"address","name":"proposer","type":"address"},{"internalType":"address","name":"wallet","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"},{"internalType":"uint256","name":"price","type":"uint256"},{"internalType":"uint256","name":"totalYesWeight","type":"uint256"},{"internalType":"uint256","name":"totalNoWeight","type":"uint256"},{"internalType":"bool","name":"ended","type":"bool"},{"internalType":"bool","name":"approved","type":"bool"},{"internalType":"uint256","name":"tokensRemaining","type":"uint256"},{"internalType":"uint256","name":"bnbBalance","type":"uint256"}],"stateMutability":"view","type":"function"},
+    {"inputs":[{"internalType":"string","name":"proposeHash","type":"string"}],"name":"getProposalYesVoters","outputs":[{"internalType":"address[]","name":"","type":"address[]"}],"stateMutability":"view","type":"function"},
+    {"inputs":[{"internalType":"string","name":"proposeHash","type":"string"}],"name":"getProposalYesWeight","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
+    {"inputs":[],"name":"isVotingOpen","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},
+    {"inputs":[],"name":"killContract","outputs":[],"stateMutability":"nonpayable","type":"function"},
+    {"inputs":[{"internalType":"uint256","name":"amount","type":"uint256"},{"internalType":"address","name":"wallet","type":"address"},{"internalType":"string","name":"proposeHash","type":"string"},{"internalType":"uint256","name":"price","type":"uint256"}],"name":"makePropose","outputs":[],"stateMutability":"nonpayable","type":"function"},
+    {"inputs":[],"name":"nextVotingStartTime","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
+    {"inputs":[],"name":"owner","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},
+    {"inputs":[],"name":"presenceDuration","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
+    {"inputs":[],"name":"presenceRegistrationEndTime","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
+    {"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"proposalList","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},
+    {"inputs":[],"name":"registerPresence","outputs":[],"stateMutability":"nonpayable","type":"function"},
+    {"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"registeredTokens","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
+    {"inputs":[],"name":"tokenAddress","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},
+    {"inputs":[],"name":"totalRegisteredTokens","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
+    {"inputs":[],"name":"totalVoters","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
+    {"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"votersList","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},
+    {"inputs":[],"name":"votingEndTime","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
+    {"inputs":[],"name":"votingStartTime","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
+    {"inputs":[{"internalType":"string","name":"proposeHash","type":"string"}],"name":"withdraw","outputs":[],"stateMutability":"nonpayable","type":"function"}
+];
 
 const MERCADO_ABI = [
     {"inputs":[{"internalType":"contract IERC20","name":"_token","type":"address"}],"stateMutability":"nonpayable","type":"constructor"},
@@ -192,7 +279,7 @@ const BLOCK_NUMBER_ABI = [
 ];
 
 const GRACA_ABI = [
-    {"inputs":[{"internalType":"address","name":"_carteira_de_gastos","type":"address"},{"internalType":"address","name":"_tokenFragaAddress","type":"address"},{"internalType":"address","name":"_tokenUSDTAddress","type":"address"},{"internalType":"address","name":"_guardiaoiaAddress","type":"address"},{"internalType":"uint256","name":"_periodoTranca","type":"uint256"}],"stateMutability":"nonpayable","type":"constructor"},
+    {"inputs":[{"internalType":"address","name":"_carteira_de_gastos","type":"address"},{"internalType":"address","name":"_tokenFragaAddress","type":"address"},{"internalType":"address","name":"_tokenUSDTAddress","type":"address"},{"internalType":"address","name":"_diretoriaAddress","type":"address"},{"internalType":"uint256","name":"_periodoTranca","type":"uint256"}],"stateMutability":"nonpayable","type":"constructor"},
     {"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"votante","type":"address"},{"indexed":false,"internalType":"uint256","name":"pesoTokens","type":"uint256"}],"name":"RegistroPresenca","type":"event"},
     {"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"staker","type":"address"},{"indexed":false,"internalType":"uint256","name":"quantidade","type":"uint256"}],"name":"TokensDestrancados","type":"event"},
     {"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"staker","type":"address"},{"indexed":false,"internalType":"uint256","name":"quantidade","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"blocoFinal","type":"uint256"}],"name":"TokensTrancados","type":"event"},
@@ -202,7 +289,7 @@ const GRACA_ABI = [
     {"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"votante","type":"address"},{"indexed":false,"internalType":"bool","name":"decisao","type":"bool"},{"indexed":false,"internalType":"uint256","name":"peso","type":"uint256"}],"name":"Voto","type":"event"},
     {"inputs":[],"name":"carteira_de_gastos","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},
     {"inputs":[],"name":"destrancarTokens","outputs":[],"stateMutability":"nonpayable","type":"function"},
-    {"inputs":[],"name":"guardiaoiaAddress","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},
+    {"inputs":[],"name":"diretoriaAddress","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},
     {"inputs":[],"name":"distribuir","outputs":[],"stateMutability":"nonpayable","type":"function"},
     {"inputs":[],"name":"finalizarVotacao","outputs":[],"stateMutability":"nonpayable","type":"function"},
     {"inputs":[],"name":"getPorcentagens","outputs":[{"internalType":"uint256","name":"graca","type":"uint256"},{"internalType":"uint256","name":"gastos","type":"uint256"}],"stateMutability":"view","type":"function"},
@@ -211,7 +298,7 @@ const GRACA_ABI = [
     {"inputs":[],"name":"getStakersAtivos","outputs":[{"internalType":"address[]","name":"","type":"address[]"}],"stateMutability":"view","type":"function"},
     {"inputs":[],"name":"getVotacaoInfo","outputs":[{"internalType":"bool","name":"aberta","type":"bool"},{"internalType":"uint256","name":"novaPorcentagem","type":"uint256"},{"internalType":"uint256","name":"pesoVotosSim","type":"uint256"},{"internalType":"uint256","name":"pesoVotosNao","type":"uint256"},{"internalType":"bool","name":"finalizada","type":"bool"},{"internalType":"bool","name":"aprovada","type":"bool"},{"internalType":"uint256","name":"blocosRestantes","type":"uint256"}],"stateMutability":"view","type":"function"},
     {"inputs":[{"internalType":"uint256","name":"_novaPorcentagem","type":"uint256"}],"name":"iniciarVotacao","outputs":[],"stateMutability":"nonpayable","type":"function"},
-    {"inputs":[{"internalType":"address","name":"_endereco","type":"address"}],"name":"isguardiao","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},
+    {"inputs":[{"internalType":"address","name":"_endereco","type":"address"}],"name":"isDiretor","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},
     {"inputs":[],"name":"owner","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},
     {"inputs":[],"name":"periodoTranca","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
     {"inputs":[],"name":"porcentagemGraca","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
@@ -318,17 +405,6 @@ function switchTab(contract, tab) {
     document.getElementById(`${contract}-${tab}`).classList.add('active');
 }
 
-function switchGuardiaoTab(subtab) {
-    const tabs = document.querySelectorAll('#propostas-guardioes .tabs .tab');
-    const contents = document.querySelectorAll('.guardiao-subtab');
-    
-    tabs.forEach(t => t.classList.remove('active'));
-    contents.forEach(c => c.classList.remove('active'));
-    
-    event.target.classList.add('active');
-    document.getElementById(`guardioes-${subtab}`).classList.add('active');
-}
-
 function showResult(elementId, data, isError = false) {
     const element = document.getElementById(elementId);
     element.classList.add('show');
@@ -371,34 +447,45 @@ const propostas = {
     async getVotingStatus() {
         try {
             const isOpen = await lerPropostas('isVotingOpen');
-            const startBlock = await lerPropostas('votingStartBlock');
-            const endBlock = await lerPropostas('votingEndBlock');
-            const nextBlock = await lerPropostas('nextVotingStartBlock');
+            const startTime = await lerPropostas('votingStartTime');
+            const endTime = await lerPropostas('votingEndTime');
+            const nextTime = await lerPropostas('nextVotingStartTime');
             
             showResult('result-propostas-status', {
                 votacaoAberta: isOpen,
-                blocoInicio: startBlock,
-                blocoFim: endBlock,
-                proximaVotacao: nextBlock
+                timestampInicio: startTime,
+                timestampFim: endTime,
+                proximaVotacao: nextTime,
+                dataInicio: new Date(parseInt(startTime) * 1000).toLocaleString(),
+                dataFim: new Date(parseInt(endTime) * 1000).toLocaleString(),
+                dataProxima: new Date(parseInt(nextTime) * 1000).toLocaleString()
             });
         } catch (error) {
             showResult('result-propostas-status', error.message, true);
         }
     },
 
-    async getBlocksUntilVotingEnds() {
+    async getSecondsUntilVotingEnds() {
         try {
-            const result = await lerPropostas('getBlocksUntilVotingEnds');
-            showResult('result-propostas-blocksEnd', { blocosRestantes: result });
+            const result = await lerPropostas('getSecondsUntilVotingEnds');
+            const seconds = parseInt(result);
+            showResult('result-propostas-blocksEnd', { 
+                segundosRestantes: seconds,
+                tempoRestante: formatSeconds(seconds)
+            });
         } catch (error) {
             showResult('result-propostas-blocksEnd', error.message, true);
         }
     },
 
-    async getBlocksUntilNextVoting() {
+    async getSecondsUntilNextVoting() {
         try {
-            const result = await lerPropostas('getBlocksUntilNextVoting');
-            showResult('result-propostas-blocksNext', { blocosRestantes: result });
+            const result = await lerPropostas('getSecondsUntilNextVoting');
+            const seconds = parseInt(result);
+            showResult('result-propostas-blocksNext', { 
+                segundosRestantes: seconds,
+                tempoRestante: formatSeconds(seconds)
+            });
         } catch (error) {
             showResult('result-propostas-blocksNext', error.message, true);
         }
@@ -458,12 +545,12 @@ const propostas = {
         }
     },
 
-    async abrirVotacaoguardiao() {
+    async abrirVotacaoDiretor() {
         try {
-            await escreverPropostas('abrirVotacaoguardiao');
-            showResult('result-propostas-abrir-guardiao', 'Votação aberta com sucesso pelo guardiao!');
+            await escreverPropostas('abrirVotacaoDiretor');
+            showResult('result-propostas-abrir-diretor', 'Votação aberta com sucesso pelo diretor!');
         } catch (error) {
-            showResult('result-propostas-abrir-guardiao', error.message, true);
+            showResult('result-propostas-abrir-diretor', error.message, true);
         }
     },
 
@@ -538,93 +625,84 @@ const propostas = {
         }
     },
 
-    async calcularPesos() {
+    // ============================================
+    // FUNÇÕES DE DIRETORES (UNIFICADAS)
+    // ============================================
+
+    async getDiretores() {
         try {
-            await escreverPropostas('calcularPesos');
-            showResult('result-propostas-calcularPesos', 'Pesos calculados com sucesso!');
+            const result = await lerPropostas('getDiretores');
+            showResult('result-propostas-getDiretores', { diretores: result });
         } catch (error) {
-            showResult('result-propostas-calcularPesos', error.message, true);
+            showResult('result-propostas-getDiretores', error.message, true);
         }
     },
 
-    // ============================================
-    // FUNÇÕES DE guardioes (UNIFICADAS)
-    // ============================================
-
-    async getguardioes() {
+    async isDiretor() {
         try {
-            const result = await lerPropostas('getguardioes');
-            showResult('result-propostas-getguardioes', { guardioes: result });
-        } catch (error) {
-            showResult('result-propostas-getguardioes', error.message, true);
-        }
-    },
-
-    async isguardiao() {
-        try {
-            const address = document.getElementById('propostas-isguardiao-address').value;
+            const address = document.getElementById('propostas-isDiretor-address').value;
             const result = await lerPropostas('isDirector', [address]);
-            showResult('result-propostas-isguardiao', { isguardiao: result });
+            showResult('result-propostas-isDiretor', { isDiretor: result });
         } catch (error) {
-            showResult('result-propostas-isguardiao', error.message, true);
+            showResult('result-propostas-isDiretor', error.message, true);
         }
     },
 
-    async totalguardioes() {
+    async totalDiretores() {
         try {
-            const result = await lerPropostas('totalguardioes');
-            showResult('result-propostas-totalguardioes', { total: result });
+            const result = await lerPropostas('totalDiretores');
+            showResult('result-propostas-totalDiretores', { total: result });
         } catch (error) {
-            showResult('result-propostas-totalguardioes', error.message, true);
+            showResult('result-propostas-totalDiretores', error.message, true);
         }
     },
 
-    async adicionarguardiaoInicial() {
+    async adicionarDiretorInicial() {
         try {
-            const address = document.getElementById('propostas-addguardiao-address').value;
-            await escreverPropostas('adicionarguardiaoInicial', [address]);
-            showResult('result-propostas-addguardiao', 'guardiao adicionado com sucesso!');
+            const address = document.getElementById('propostas-addDiretor-address').value;
+            await escreverPropostas('adicionarDiretorInicial', [address]);
+            showResult('result-propostas-addDiretor', 'Diretor adicionado com sucesso!');
         } catch (error) {
-            showResult('result-propostas-addguardiao', error.message, true);
+            showResult('result-propostas-addDiretor', error.message, true);
         }
     },
 
-    async proporNovoguardiao() {
+    async proporNovoDiretor() {
         try {
             const candidato = document.getElementById('propostas-propor-candidato').value;
-            await escreverPropostas('proporNovoguardiao', [candidato]);
+            await escreverPropostas('proporNovoDiretor', [candidato]);
             showResult('result-propostas-propor', 'Proposta criada com sucesso!');
         } catch (error) {
             showResult('result-propostas-propor', error.message, true);
         }
     },
 
-    async votarNovoguardiao() {
+    async votarNovoDiretor() {
         try {
-            const candidato = document.getElementById('propostas-votar-guardiao-candidato').value;
-            const decisao = document.getElementById('propostas-votar-guardiao-decisao').value === 'true';
-            await escreverPropostas('votarNovoguardiao', [candidato, decisao]);
-            showResult('result-propostas-votar-guardiao', 'Voto registrado com sucesso!');
+            const candidato = document.getElementById('propostas-votar-diretor-candidato').value;
+            const decisao = document.getElementById('propostas-votar-diretor-decisao').value === 'true';
+            await escreverPropostas('votarNovoDiretor', [candidato, decisao]);
+            showResult('result-propostas-votar-diretor', 'Voto registrado com sucesso!');
         } catch (error) {
-            showResult('result-propostas-votar-guardiao', error.message, true);
+            showResult('result-propostas-votar-diretor', error.message, true);
         }
     },
 
-    async encerrarPropostaguardiao() {
+    async encerrarPropostaDiretor() {
         try {
-            const candidato = document.getElementById('propostas-encerrar-guardiao-candidato').value;
-            await escreverPropostas('encerrarPropostaguardiao', [candidato]);
-            showResult('result-propostas-encerrar-guardiao', 'Proposta encerrada com sucesso!');
+            const candidato = document.getElementById('propostas-encerrar-diretor-candidato').value;
+            await escreverPropostas('encerrarPropostaDiretor', [candidato]);
+            showResult('result-propostas-encerrar-diretor', 'Proposta encerrada com sucesso!');
         } catch (error) {
-            showResult('result-propostas-encerrar-guardiao', error.message, true);
+            showResult('result-propostas-encerrar-diretor', error.message, true);
         }
     },
 
-    async getguardiaoProposalDetails() {
+    async getDiretorProposalDetails() {
         try {
-            const candidato = document.getElementById('propostas-guardiao-details-candidato').value;
-            const result = await lerPropostas('getguardiaoProposalDetails', [candidato]);
-            showResult('result-propostas-guardiao-details', {
+            const candidato = document.getElementById('propostas-diretor-details-candidato').value;
+            const result = await lerPropostas('getDiretorProposalDetails', [candidato]);
+            showResult('result-propostas-diretor-details', {
                 propositor: result[0],
                 candidato: result[1],
                 votosSimPeso: result[2],
@@ -633,39 +711,39 @@ const propostas = {
                 aprovada: result[5]
             });
         } catch (error) {
-            showResult('result-propostas-guardiao-details', error.message, true);
+            showResult('result-propostas-diretor-details', error.message, true);
         }
     },
 
-    async getguardiaoInfo() {
+    async getDiretorInfo() {
         try {
-            const address = document.getElementById('propostas-guardiao-info-address').value;
-            const result = await lerPropostas('getguardiaoInfo', [address]);
-            showResult('result-propostas-guardiao-info', {
+            const address = document.getElementById('propostas-diretor-info-address').value;
+            const result = await lerPropostas('getDiretorInfo', [address]);
+            showResult('result-propostas-diretor-info', {
                 penalidade: result[0],
                 ativo: result[1],
-                ehguardiao: result[2]
+                ehDiretor: result[2]
             });
         } catch (error) {
-            showResult('result-propostas-guardiao-info', error.message, true);
+            showResult('result-propostas-diretor-info', error.message, true);
         }
     },
 
-    async getguardioesAtivos() {
+    async getDiretoresAtivos() {
         try {
-            const result = await lerPropostas('getguardioesAtivos');
-            showResult('result-propostas-guardioes-ativos', { guardioesAtivos: result });
+            const result = await lerPropostas('getDiretoresAtivos');
+            showResult('result-propostas-diretores-ativos', { diretoresAtivos: result });
         } catch (error) {
-            showResult('result-propostas-guardioes-ativos', error.message, true);
+            showResult('result-propostas-diretores-ativos', error.message, true);
         }
     },
 
-    async getguardioesSuspensos() {
+    async getDiretoresSuspensos() {
         try {
-            const result = await lerPropostas('getguardioesSuspensos');
-            showResult('result-propostas-guardioes-suspensos', { guardioesSuspensos: result });
+            const result = await lerPropostas('getDiretoresSuspensos');
+            showResult('result-propostas-diretores-suspensos', { diretoresSuspensos: result });
         } catch (error) {
-            showResult('result-propostas-guardioes-suspensos', error.message, true);
+            showResult('result-propostas-diretores-suspensos', error.message, true);
         }
     },
 
@@ -674,7 +752,7 @@ const propostas = {
             const result = await lerPropostas('getQuorumInfo');
             showResult('result-propostas-quorum-info', {
                 quorumMinimo: result[0],
-                totalguardioesAtivos: result[1],
+                totalDiretoresAtivos: result[1],
                 totalVotantesAtual: result[2],
                 quorumAtingido: result[3]
             });
@@ -686,7 +764,7 @@ const propostas = {
     async suspenderInativos() {
         try {
             await escreverPropostas('suspenderInativos');
-            showResult('result-propostas-suspender', 'guardioes inativos suspensos com sucesso!');
+            showResult('result-propostas-suspender', 'Diretores inativos suspensos com sucesso!');
         } catch (error) {
             showResult('result-propostas-suspender', error.message, true);
         }
@@ -695,7 +773,7 @@ const propostas = {
     async removerInativos() {
         try {
             await escreverPropostas('removerInativos');
-            showResult('result-propostas-remover', 'guardioes inativos removidos com sucesso!');
+            showResult('result-propostas-remover', 'Diretores inativos removidos com sucesso!');
         } catch (error) {
             showResult('result-propostas-remover', error.message, true);
         }
@@ -931,13 +1009,13 @@ const graca = {
         }
     },
 
-    async isguardiao() {
+    async isDiretor() {
         try {
-            const address = document.getElementById('graca-guardiao-address').value;
-            const result = await lerGraca('isguardiao', [address]);
-            showResult('result-graca-guardiao', { isguardiao: result });
+            const address = document.getElementById('graca-diretor-address').value;
+            const result = await lerGraca('isDiretor', [address]);
+            showResult('result-graca-diretor', { isDiretor: result });
         } catch (error) {
-            showResult('result-graca-guardiao', error.message, true);
+            showResult('result-graca-diretor', error.message, true);
         }
     },
 
@@ -1029,15 +1107,10 @@ window.onclick = function(event) {
 // CONTADORES REGRESSIVOS DE VOTAÇÃO
 // ============================================
 
-// Constante: 2 segundos por bloco
-const SECONDS_PER_BLOCK = 2;
-const version = '1.2.2 ok';
-
 /**
- * Converte blocos em objeto de tempo (dias, horas, minutos, segundos)
+ * Converte segundos em objeto de tempo (dias, horas, minutos, segundos)
  */
-function blocksToTime(blocks) {
-    const totalSeconds = blocks * SECONDS_PER_BLOCK;
+function secondsToTime(totalSeconds) {
     const days = Math.floor(totalSeconds / 86400);
     const hours = Math.floor((totalSeconds % 86400) / 3600);
     const minutes = Math.floor((totalSeconds % 3600) / 60);
@@ -1047,7 +1120,25 @@ function blocksToTime(blocks) {
 }
 
 /**
- * Formata o tempo em string legível
+ * Formata segundos em string legível
+ */
+function formatSeconds(seconds) {
+    if (seconds <= 0) {
+        return 'Encerrado';
+    }
+    
+    const timeObj = secondsToTime(seconds);
+    const parts = [];
+    if (timeObj.days > 0) parts.push(`${timeObj.days}d`);
+    if (timeObj.hours > 0) parts.push(`${timeObj.hours}h`);
+    if (timeObj.minutes > 0) parts.push(`${timeObj.minutes}m`);
+    parts.push(`${timeObj.seconds}s`);
+    
+    return parts.join(' ');
+}
+
+/**
+ * Formata o tempo em string legível (mantido para compatibilidade)
  */
 function formatTime(timeObj) {
     if (timeObj.totalSeconds <= 0) {
@@ -1063,36 +1154,36 @@ function formatTime(timeObj) {
     return parts.join(' ');
 }
 
-// Armazena os blocos restantes para cada contador
-let nextVotingBlocks = 0;
-let presenceBlocks = 0;
-let votingBlocks = 0;
-let resetBlocks = 0;
+// Armazena os segundos restantes para cada contador
+let nextVotingSeconds = 0;
+let presenceSeconds = 0;
+let votingSeconds = 0;
+let resetSeconds = 0;
 
 /**
  * Atualiza um contador regressivo
  */
-function updateCounter(elementId, blocks) {
-    const timeObj = blocksToTime(blocks);
+function updateCounter(elementId, seconds) {
+    const timeObj = secondsToTime(seconds);
     const formatted = formatTime(timeObj);
     document.getElementById(elementId).textContent = formatted;
     
-    // Armazena os blocos para atualização em tempo real
+    // Armazena os segundos para atualização em tempo real
     if (elementId === 'nextVotingTime') {
-        nextVotingBlocks = blocks;
+        nextVotingSeconds = seconds;
     } else if (elementId === 'presenceTime') {
-        presenceBlocks = blocks;
+        presenceSeconds = seconds;
     } else if (elementId === 'votingTime') {
-        votingBlocks = blocks;
+        votingSeconds = seconds;
     } else if (elementId === 'resetTime') {
-        resetBlocks = blocks;
+        resetSeconds = seconds;
     }
 }
 
 /**
  * Atualiza o contador de reset do contrato
  */
-function updateResetCounter(blocks) {
+function updateResetCounter(seconds) {
     const resetCounter = document.getElementById('resetCounter');
     const resetTime = document.getElementById('resetTime');
     const resetStatus = document.getElementById('resetStatus');
@@ -1100,10 +1191,10 @@ function updateResetCounter(blocks) {
     resetCounter.style.display = 'block';
     
     // Atualiza o contador
-    updateCounter('resetTime', blocks);
+    updateCounter('resetTime', seconds);
     
     // Atualiza o status
-    if (blocks <= 0) {
+    if (seconds <= 0) {
         resetStatus.textContent = '✅ Reset disponível (3 meses sem votação)';
         resetStatus.style.color = '#28a745';
     } else {
@@ -1124,37 +1215,37 @@ function startRealtimeCounters() {
     
     realtimeUpdateInterval = setInterval(() => {
         // Atualiza contador de próxima votação
-        if (nextVotingBlocks > 0) {
-            nextVotingBlocks = Math.max(0, nextVotingBlocks - (1 / SECONDS_PER_BLOCK));
-            updateCounter('nextVotingTime', Math.floor(nextVotingBlocks));
+        if (nextVotingSeconds > 0) {
+            nextVotingSeconds = Math.max(0, nextVotingSeconds - 1);
+            updateCounter('nextVotingTime', Math.floor(nextVotingSeconds));
         }
         
         // Atualiza contador de presença (se visível)
         const presenceCounter = document.getElementById('presenceCounter');
-        if (presenceCounter.style.display !== 'none' && presenceBlocks > 0) {
-            presenceBlocks = Math.max(0, presenceBlocks - (1 / SECONDS_PER_BLOCK));
-            updateCounter('presenceTime', Math.floor(presenceBlocks));
-            if (presenceBlocks <= 0) {
+        if (presenceCounter.style.display !== 'none' && presenceSeconds > 0) {
+            presenceSeconds = Math.max(0, presenceSeconds - 1);
+            updateCounter('presenceTime', Math.floor(presenceSeconds));
+            if (presenceSeconds <= 0) {
                 presenceCounter.style.display = 'none';
             }
         }
         
         // Atualiza contador de votação (se visível)
         const votingCounter = document.getElementById('votingCounter');
-        if (votingCounter.style.display !== 'none' && votingBlocks > 0) {
-            votingBlocks = Math.max(0, votingBlocks - (1 / SECONDS_PER_BLOCK));
-            updateCounter('votingTime', Math.floor(votingBlocks));
-            if (votingBlocks <= 0) {
+        if (votingCounter.style.display !== 'none' && votingSeconds > 0) {
+            votingSeconds = Math.max(0, votingSeconds - 1);
+            updateCounter('votingTime', Math.floor(votingSeconds));
+            if (votingSeconds <= 0) {
                 votingCounter.style.display = 'none';
             }
         }
         
         // Atualiza contador de reset
-        if (resetBlocks >= 0) {
-            resetBlocks = Math.max(0, resetBlocks - (1 / SECONDS_PER_BLOCK));
-            updateCounter('resetTime', Math.floor(resetBlocks));
+        if (resetSeconds >= 0) {
+            resetSeconds = Math.max(0, resetSeconds - 1);
+            updateCounter('resetTime', Math.floor(resetSeconds));
             const resetStatus = document.getElementById('resetStatus');
-            if (resetBlocks <= 0) {
+            if (resetSeconds <= 0) {
                 resetStatus.textContent = '✅ Reset disponível (3 meses sem votação)';
                 resetStatus.style.color = '#28a745';
             } else {
@@ -1175,26 +1266,26 @@ function stopRealtimeCounters() {
 /**
  * Atualiza a barra de progresso do quorum
  */
-function updateQuorumCounter(votantesAtual, totalguardioesAtivos, quorumMinimo, quorumAtingido) {
+function updateQuorumCounter(votantesAtual, totalDiretoresAtivos, quorumMinimo, quorumAtingido) {
     const quorumCounter = document.getElementById('quorumCounter');
     const quorumText = document.getElementById('quorumText');
     const quorumBar = document.getElementById('quorumBar');
     const quorumStatus = document.getElementById('quorumStatus');
     
-    // Mostra o contador apenas se houver guardioes ativos
-    if (totalguardioesAtivos > 0) {
+    // Mostra o contador apenas se houver diretores ativos
+    if (totalDiretoresAtivos > 0) {
         quorumCounter.style.display = 'block';
         
         // Atualiza o texto (ex: 6/10)
-        quorumText.textContent = `${votantesAtual}/${totalguardioesAtivos}`;
+        quorumText.textContent = `${votantesAtual}/${totalDiretoresAtivos}`;
         
         // Calcula a porcentagem baseada no quorum mínimo (100% = quorum atingido)
-        // Se o quorum mínimo for 0, usa o total de guardioes como base
+        // Se o quorum mínimo for 0, usa o total de diretores como base
         let percentage = 0;
         if (quorumMinimo > 0) {
             percentage = Math.min(100, (votantesAtual / quorumMinimo) * 100);
-        } else if (totalguardioesAtivos > 0) {
-            percentage = Math.min(100, (votantesAtual / totalguardioesAtivos) * 100);
+        } else if (totalDiretoresAtivos > 0) {
+            percentage = Math.min(100, (votantesAtual / totalDiretoresAtivos) * 100);
         }
         
         // Atualiza a barra de progresso
@@ -1230,9 +1321,9 @@ async function updateVotingCounters() {
     const footer = document.getElementById('votingCounters');
     
     try {
-        // 1. Consulta blocos até próxima votação
-        const blocksUntilNext = await lerPropostas('getBlocksUntilNextVoting');
-        updateCounter('nextVotingTime', parseInt(blocksUntilNext));
+        // 1. Consulta segundos até próxima votação
+        const secondsUntilNext = await lerPropostas('getSecondsUntilNextVoting');
+        updateCounter('nextVotingTime', parseInt(secondsUntilNext));
         footer.style.display = 'flex';
         
         // Aguarda um pouco antes da próxima consulta
@@ -1240,14 +1331,14 @@ async function updateVotingCounters() {
         
         // 2. Verifica se votação está aberta e consulta informações de presença
         const isVotingOpen = await lerPropostas('isVotingOpen');
-        const presenceEndBlock = await lerPropostas('presenceRegistrationEndBlock');
-        const currentBlock = await lerBlockNumber();
+        const presenceEndTime = await lerPropostas('presenceRegistrationEndTime');
+        const currentTimestamp = Math.floor(Date.now() / 1000);
         
         const presenceCounter = document.getElementById('presenceCounter');
-        if (isVotingOpen && parseInt(currentBlock) <= parseInt(presenceEndBlock)) {
+        if (isVotingOpen && currentTimestamp <= parseInt(presenceEndTime)) {
             // Lista de presença está aberta
-            const blocksUntilPresenceEnd = parseInt(presenceEndBlock) - parseInt(currentBlock);
-            updateCounter('presenceTime', blocksUntilPresenceEnd);
+            const secondsUntilPresenceEnd = parseInt(presenceEndTime) - currentTimestamp;
+            updateCounter('presenceTime', secondsUntilPresenceEnd);
             presenceCounter.style.display = 'block';
         } else {
             presenceCounter.style.display = 'none';
@@ -1259,9 +1350,9 @@ async function updateVotingCounters() {
         // 3. Verifica se período de votação está aberto
         const votingCounter = document.getElementById('votingCounter');
         if (isVotingOpen) {
-            const blocksUntilVotingEnd = await lerPropostas('getBlocksUntilVotingEnds');
-            if (parseInt(blocksUntilVotingEnd) > 0) {
-                updateCounter('votingTime', parseInt(blocksUntilVotingEnd));
+            const secondsUntilVotingEnd = await lerPropostas('getSecondsUntilVotingEnds');
+            if (parseInt(secondsUntilVotingEnd) > 0) {
+                updateCounter('votingTime', parseInt(secondsUntilVotingEnd));
                 votingCounter.style.display = 'block';
             } else {
                 votingCounter.style.display = 'none';
@@ -1277,7 +1368,7 @@ async function updateVotingCounters() {
         const quorumInfo = await lerPropostas('getQuorumInfo');
         updateQuorumCounter(
             parseInt(quorumInfo.totalVotantesAtual),
-            parseInt(quorumInfo.totalguardioesAtivos),
+            parseInt(quorumInfo.totalDiretoresAtivos),
             parseInt(quorumInfo.quorumMinimo),
             quorumInfo.quorumAtingido
         );
@@ -1286,8 +1377,8 @@ async function updateVotingCounters() {
         await new Promise(resolve => setTimeout(resolve, 100));
         
         // 5. Consulta informações de reset do contrato
-        const blocksUntilReset = await lerPropostas('getBlocksUntilResetAvailable');
-        updateResetCounter(parseInt(blocksUntilReset));
+        const secondsUntilReset = await lerPropostas('getSecondsUntilResetAvailable');
+        updateResetCounter(parseInt(secondsUntilReset));
         
     } catch (error) {
         console.error('Erro ao atualizar contadores:', error);
