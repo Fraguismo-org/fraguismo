@@ -1,10 +1,15 @@
 <table class="table table-hover align-middle">
     <thead class="table-light">
         <tr>
-            <th class="text-center">Posição</th>
-            <th>Usuário</th>
-            <th class="d-none d-md-table-cell">E-mail</th>
-            <th class="text-end">{{ score_label }}</th>
+            <th scope="col" class="text-center">Posição</th>
+            <th scope="col">Usuário</th>
+            <th scope="col" class="d-none d-md-table-cell">E-mail</th>
+            <th scope="col" class="text-end">
+                <span class="d-inline-flex align-items-center gap-1">
+                    {{ score_label|default:"Pontuação" }}
+                    <i class="bi bi-info-circle text-muted small" title="Pontuação total no período selecionado"></i>
+                </span>
+            </th>
         </tr>
     </thead>
     <tbody>
