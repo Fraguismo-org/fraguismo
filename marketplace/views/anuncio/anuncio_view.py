@@ -173,11 +173,13 @@ def editar_anuncio(request, id: int):
                     img = Images(image=imagem, anuncio=anuncio)
                     img.save()
                     img_obj = Image.open(img.image.path)
-                    rate = img_obj.height/1000 if img_obj.height > img_obj.width else img_obj.width/1000
+                    if img_obj.mode in ("RGBA", "P"):
+                        img_obj = img_obj.convert("RGB")
+                    rate = img_obj.height / 1000 if img_obj.height > img_obj.width else img_obj.width / 1000
                     if img_obj.height > 1000 or img_obj.width > 1000:
-                        output_size = (img_obj.width/rate, img_obj.height/rate)
+                        output_size = (img_obj.width / rate, img_obj.height / rate)
                         img_obj.thumbnail(output_size)
-                    img_obj.save(img.image.path)
+                    img_obj.save(img.image.path, format="JPEG", quality=90)
 
             messages.success(request, "Anuncio editado com sucesso!")
             return redirect('listar_anuncios')
@@ -211,12 +213,14 @@ def deletar_anuncio(request, id: int):
 
     return redirect('listar_anuncios')
 
-
 def page_anuncio(request, cod_anuncio):
     anuncio = Anuncio.objects.get(cod_anuncio=cod_anuncio)
-    profile = Profile.get_or_create_profile(anuncio.user)
-    member = Users.objects.get(user_ptr_id=anuncio.user)
+
+    member = Users.objects.get(user_ptr=anuncio.user)
+    profile = Profile.get_or_create_profile(member)
+
     imagens = Images.objects.filter(anuncio=anuncio)
+
     return render(request, 'anuncio/page.html', {
         'anuncio': anuncio,
         'imagens': imagens,
