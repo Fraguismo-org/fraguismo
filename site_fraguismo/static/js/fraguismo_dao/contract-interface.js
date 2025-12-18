@@ -139,7 +139,7 @@ async function escreverGraca(functionName, args = []) {
 
 // Endereços dos contratos
 const CONTRACT_ADDRESSES = {
-    propostas: '0x3bbcEA18778471ECBf614be44FA1e4Dea89f5C69', // Contrato unificado (Propostas + Diretoria)
+    propostas: '0x3bbcEA18778471ECBf614be44FA1e4Dea89f5C69', // Contrato unificado (Propostas + Guardiões)
     mercado: '0x3633531C8b8D8ec551D3ee29125D05C3edb48FE3',
     graca: '0x7E598c2EB44c58A7F69fcC3957c4f27B6cb459D5',
     blockNumber: '0x59c28c1DEb67a31369E3C0f3511e976E133f7431' // ATUALIZE COM O ENDEREÇO DO CONTRATO DEPLOYADO
@@ -405,6 +405,22 @@ function switchTab(contract, tab) {
     document.getElementById(`${contract}-${tab}`).classList.add('active');
 }
 
+function switchGuardiaoTab(subtab) {
+    // Remove a classe active de todas as subtabs (botões)
+    const subtabs = document.querySelectorAll('#propostas-guardioes .tabs .tab');
+    subtabs.forEach(t => t.classList.remove('active'));
+    
+    // Remove a classe active de todos os conteúdos das subtabs
+    const contents = document.querySelectorAll('#propostas-guardioes .guardiao-subtab');
+    contents.forEach(c => c.classList.remove('active'));
+    
+    // Adiciona a classe active ao botão clicado
+    event.target.classList.add('active');
+    
+    // Adiciona a classe active ao conteúdo correspondente
+    document.getElementById(`guardioes-${subtab}`).classList.add('active');
+}
+
 function showResult(elementId, data, isError = false) {
     const element = document.getElementById(elementId);
     element.classList.add('show');
@@ -545,12 +561,12 @@ const propostas = {
         }
     },
 
-    async abrirVotacaoDiretor() {
+    async abrirVotacaoguardiao() {
         try {
-            await escreverPropostas('abrirVotacaoDiretor');
-            showResult('result-propostas-abrir-diretor', 'Votação aberta com sucesso pelo diretor!');
+            await escreverPropostas('abrirVotacaoguardiao');
+            showResult('result-propostas-abrir-guardiao', 'Votação aberta com sucesso pelo guardião!');
         } catch (error) {
-            showResult('result-propostas-abrir-diretor', error.message, true);
+            showResult('result-propostas-abrir-guardiao', error.message, true);
         }
     },
 
@@ -625,102 +641,84 @@ const propostas = {
         }
     },
 
-    async abrirVotacaoguardiao() {
-        try {
-            await escreverPropostas('abrirVotacaoguardiao');
-            showResult('result-propostas-abrir-guardiao', 'Votação aberta com sucesso pelo guardião!');
-        } catch (error) {
-            showResult('result-propostas-abrir-guardiao', error.message, true);
-        }
-    },
-
-    async calcularPesos() {
-        try {
-            await escreverPropostas('calcularPesos');
-            showResult('result-propostas-calcularPesos', 'Pesos calculados com sucesso!');
-        } catch (error) {
-            showResult('result-propostas-calcularPesos', error.message, true);
-        }
-    },
-
     // ============================================
-    // FUNÇÕES DE DIRETORES (UNIFICADAS)
+    // FUNÇÕES DE GUARDIÕES (UNIFICADAS)
     // ============================================
 
-    async getDiretores() {
+    async getguardioes() {
         try {
-            const result = await lerPropostas('getDiretores');
-            showResult('result-propostas-getDiretores', { diretores: result });
+            const result = await lerPropostas('getguardioes');
+            showResult('result-propostas-getguardioes', { guardioes: result });
         } catch (error) {
-            showResult('result-propostas-getDiretores', error.message, true);
+            showResult('result-propostas-getguardioes', error.message, true);
         }
     },
 
-    async isDiretor() {
+    async isguardiao() {
         try {
-            const address = document.getElementById('propostas-isDiretor-address').value;
+            const address = document.getElementById('propostas-isguardiao-address').value;
             const result = await lerPropostas('isDirector', [address]);
-            showResult('result-propostas-isDiretor', { isDiretor: result });
+            showResult('result-propostas-isguardiao', { isguardiao: result });
         } catch (error) {
-            showResult('result-propostas-isDiretor', error.message, true);
+            showResult('result-propostas-isguardiao', error.message, true);
         }
     },
 
-    async totalDiretores() {
+    async totalguardioes() {
         try {
-            const result = await lerPropostas('totalDiretores');
-            showResult('result-propostas-totalDiretores', { total: result });
+            const result = await lerPropostas('totalguardioes');
+            showResult('result-propostas-totalguardioes', { total: result });
         } catch (error) {
-            showResult('result-propostas-totalDiretores', error.message, true);
+            showResult('result-propostas-totalguardioes', error.message, true);
         }
     },
 
-    async adicionarDiretorInicial() {
+    async adicionarguardiaoInicial() {
         try {
-            const address = document.getElementById('propostas-addDiretor-address').value;
-            await escreverPropostas('adicionarDiretorInicial', [address]);
-            showResult('result-propostas-addDiretor', 'Diretor adicionado com sucesso!');
+            const address = document.getElementById('propostas-addguardiao-address').value;
+            await escreverPropostas('adicionarguardiaoInicial', [address]);
+            showResult('result-propostas-addguardiao', 'Guardião adicionado com sucesso!');
         } catch (error) {
-            showResult('result-propostas-addDiretor', error.message, true);
+            showResult('result-propostas-addguardiao', error.message, true);
         }
     },
 
-    async proporNovoDiretor() {
+    async proporNovoguardiao() {
         try {
             const candidato = document.getElementById('propostas-propor-candidato').value;
-            await escreverPropostas('proporNovoDiretor', [candidato]);
+            await escreverPropostas('proporNovoguardiao', [candidato]);
             showResult('result-propostas-propor', 'Proposta criada com sucesso!');
         } catch (error) {
             showResult('result-propostas-propor', error.message, true);
         }
     },
 
-    async votarNovoDiretor() {
+    async votarNovoguardiao() {
         try {
-            const candidato = document.getElementById('propostas-votar-diretor-candidato').value;
-            const decisao = document.getElementById('propostas-votar-diretor-decisao').value === 'true';
-            await escreverPropostas('votarNovoDiretor', [candidato, decisao]);
-            showResult('result-propostas-votar-diretor', 'Voto registrado com sucesso!');
+            const candidato = document.getElementById('propostas-votar-guardiao-candidato').value;
+            const decisao = document.getElementById('propostas-votar-guardiao-decisao').value === 'true';
+            await escreverPropostas('votarNovoguardiao', [candidato, decisao]);
+            showResult('result-propostas-votar-guardiao', 'Voto registrado com sucesso!');
         } catch (error) {
-            showResult('result-propostas-votar-diretor', error.message, true);
+            showResult('result-propostas-votar-guardiao', error.message, true);
         }
     },
 
-    async encerrarPropostaDiretor() {
+    async encerrarPropostaguardiao() {
         try {
-            const candidato = document.getElementById('propostas-encerrar-diretor-candidato').value;
-            await escreverPropostas('encerrarPropostaDiretor', [candidato]);
-            showResult('result-propostas-encerrar-diretor', 'Proposta encerrada com sucesso!');
+            const candidato = document.getElementById('propostas-encerrar-guardiao-candidato').value;
+            await escreverPropostas('encerrarPropostaguardiao', [candidato]);
+            showResult('result-propostas-encerrar-guardiao', 'Proposta encerrada com sucesso!');
         } catch (error) {
-            showResult('result-propostas-encerrar-diretor', error.message, true);
+            showResult('result-propostas-encerrar-guardiao', error.message, true);
         }
     },
 
-    async getDiretorProposalDetails() {
+    async getguardiaoProposalDetails() {
         try {
-            const candidato = document.getElementById('propostas-diretor-details-candidato').value;
-            const result = await lerPropostas('getDiretorProposalDetails', [candidato]);
-            showResult('result-propostas-diretor-details', {
+            const candidato = document.getElementById('propostas-guardiao-details-candidato').value;
+            const result = await lerPropostas('getguardiaoProposalDetails', [candidato]);
+            showResult('result-propostas-guardiao-details', {
                 propositor: result[0],
                 candidato: result[1],
                 votosSimPeso: result[2],
@@ -729,39 +727,39 @@ const propostas = {
                 aprovada: result[5]
             });
         } catch (error) {
-            showResult('result-propostas-diretor-details', error.message, true);
+            showResult('result-propostas-guardiao-details', error.message, true);
         }
     },
 
-    async getDiretorInfo() {
+    async getguardiaoInfo() {
         try {
-            const address = document.getElementById('propostas-diretor-info-address').value;
-            const result = await lerPropostas('getDiretorInfo', [address]);
-            showResult('result-propostas-diretor-info', {
+            const address = document.getElementById('propostas-guardiao-info-address').value;
+            const result = await lerPropostas('getguardiaoInfo', [address]);
+            showResult('result-propostas-guardiao-info', {
                 penalidade: result[0],
                 ativo: result[1],
-                ehDiretor: result[2]
+                ehguardiao: result[2]
             });
         } catch (error) {
-            showResult('result-propostas-diretor-info', error.message, true);
+            showResult('result-propostas-guardiao-info', error.message, true);
         }
     },
 
-    async getDiretoresAtivos() {
+    async getguardioesAtivos() {
         try {
-            const result = await lerPropostas('getDiretoresAtivos');
-            showResult('result-propostas-diretores-ativos', { diretoresAtivos: result });
+            const result = await lerPropostas('getguardioesAtivos');
+            showResult('result-propostas-guardioes-ativos', { guardioesAtivos: result });
         } catch (error) {
-            showResult('result-propostas-diretores-ativos', error.message, true);
+            showResult('result-propostas-guardioes-ativos', error.message, true);
         }
     },
 
-    async getDiretoresSuspensos() {
+    async getguardioesSuspensos() {
         try {
-            const result = await lerPropostas('getDiretoresSuspensos');
-            showResult('result-propostas-diretores-suspensos', { diretoresSuspensos: result });
+            const result = await lerPropostas('getguardioesSuspensos');
+            showResult('result-propostas-guardioes-suspensos', { guardioesSuspensos: result });
         } catch (error) {
-            showResult('result-propostas-diretores-suspensos', error.message, true);
+            showResult('result-propostas-guardioes-suspensos', error.message, true);
         }
     },
 
@@ -770,7 +768,7 @@ const propostas = {
             const result = await lerPropostas('getQuorumInfo');
             showResult('result-propostas-quorum-info', {
                 quorumMinimo: result[0],
-                totalDiretoresAtivos: result[1],
+                totalguardioesAtivos: result[1],
                 totalVotantesAtual: result[2],
                 quorumAtingido: result[3]
             });
@@ -782,7 +780,7 @@ const propostas = {
     async suspenderInativos() {
         try {
             await escreverPropostas('suspenderInativos');
-            showResult('result-propostas-suspender', 'Diretores inativos suspensos com sucesso!');
+            showResult('result-propostas-suspender', 'Guardiões inativos suspensos com sucesso!');
         } catch (error) {
             showResult('result-propostas-suspender', error.message, true);
         }
@@ -791,7 +789,7 @@ const propostas = {
     async removerInativos() {
         try {
             await escreverPropostas('removerInativos');
-            showResult('result-propostas-remover', 'Diretores inativos removidos com sucesso!');
+            showResult('result-propostas-remover', 'Guardiões inativos removidos com sucesso!');
         } catch (error) {
             showResult('result-propostas-remover', error.message, true);
         }
@@ -811,52 +809,13 @@ const propostas = {
         }
     },
 
-    // ============================================
-    // ALIASES PARA COMPATIBILIDADE (guardiões -> diretores)
-    // ============================================
-
-    async getguardioes() {
-        return await this.getDiretores();
-    },
-
-    async isguardiao() {
-        return await this.isDiretor();
-    },
-
-    async totalguardioes() {
-        return await this.totalDiretores();
-    },
-
-    async adicionarguardiaoInicial() {
-        return await this.adicionarDiretorInicial();
-    },
-
-    async proporNovoguardiao() {
-        return await this.proporNovoDiretor();
-    },
-
-    async votarNovoguardiao() {
-        return await this.votarNovoDiretor();
-    },
-
-    async encerrarPropostaguardiao() {
-        return await this.encerrarPropostaDiretor();
-    },
-
-    async getguardiaoProposalDetails() {
-        return await this.getDiretorProposalDetails();
-    },
-
-    async getguardiaoInfo() {
-        return await this.getDiretorInfo();
-    },
-
-    async getguardioesAtivos() {
-        return await this.getDiretoresAtivos();
-    },
-
-    async getguardioesSuspensos() {
-        return await this.getDiretoresSuspensos();
+    async calcularPesos() {
+        try {
+            await escreverPropostas('calcularPesos');
+            showResult('result-propostas-calcularPesos', 'Pesos calculados com sucesso!');
+        } catch (error) {
+            showResult('result-propostas-calcularPesos', error.message, true);
+        }
     }
 };
 
@@ -1075,13 +1034,13 @@ const graca = {
         }
     },
 
-    async isDiretor() {
+    async isguardiao() {
         try {
-            const address = document.getElementById('graca-diretor-address').value;
+            const address = document.getElementById('graca-guardiao-address').value;
             const result = await lerGraca('isDiretor', [address]);
-            showResult('result-graca-diretor', { isDiretor: result });
+            showResult('result-graca-guardiao', { isguardiao: result });
         } catch (error) {
-            showResult('result-graca-diretor', error.message, true);
+            showResult('result-graca-guardiao', error.message, true);
         }
     },
 
@@ -1332,26 +1291,26 @@ function stopRealtimeCounters() {
 /**
  * Atualiza a barra de progresso do quorum
  */
-function updateQuorumCounter(votantesAtual, totalDiretoresAtivos, quorumMinimo, quorumAtingido) {
+function updateQuorumCounter(votantesAtual, totalguardioesAtivos, quorumMinimo, quorumAtingido) {
     const quorumCounter = document.getElementById('quorumCounter');
     const quorumText = document.getElementById('quorumText');
     const quorumBar = document.getElementById('quorumBar');
     const quorumStatus = document.getElementById('quorumStatus');
     
-    // Mostra o contador apenas se houver diretores ativos
-    if (totalDiretoresAtivos > 0) {
+    // Mostra o contador apenas se houver guardiões ativos
+    if (totalguardioesAtivos > 0) {
         quorumCounter.style.display = 'block';
         
         // Atualiza o texto (ex: 6/10)
-        quorumText.textContent = `${votantesAtual}/${totalDiretoresAtivos}`;
+        quorumText.textContent = `${votantesAtual}/${totalguardioesAtivos}`;
         
         // Calcula a porcentagem baseada no quorum mínimo (100% = quorum atingido)
-        // Se o quorum mínimo for 0, usa o total de diretores como base
+        // Se o quorum mínimo for 0, usa o total de guardiões como base
         let percentage = 0;
         if (quorumMinimo > 0) {
             percentage = Math.min(100, (votantesAtual / quorumMinimo) * 100);
-        } else if (totalDiretoresAtivos > 0) {
-            percentage = Math.min(100, (votantesAtual / totalDiretoresAtivos) * 100);
+        } else if (totalguardioesAtivos > 0) {
+            percentage = Math.min(100, (votantesAtual / totalguardioesAtivos) * 100);
         }
         
         // Atualiza a barra de progresso
@@ -1434,7 +1393,7 @@ async function updateVotingCounters() {
         const quorumInfo = await lerPropostas('getQuorumInfo');
         updateQuorumCounter(
             parseInt(quorumInfo.totalVotantesAtual),
-            parseInt(quorumInfo.totalDiretoresAtivos),
+            parseInt(quorumInfo.totalDiretoresAtivos), // O ABI retorna "totalDiretoresAtivos"
             parseInt(quorumInfo.quorumMinimo),
             quorumInfo.quorumAtingido
         );
