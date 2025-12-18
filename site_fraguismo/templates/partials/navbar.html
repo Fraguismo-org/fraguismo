@@ -36,9 +36,7 @@
                 {% include "partials/navbar_components/minha_area_dropdown.html" %}
                 {% endif %}                
                 {% if user.is_superuser %}
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'adm' %}">Administrativo</a>
-                </li>
+                {% include 'partials/navbar_components/administrativo_dropdown.html' %}
                 {% endif %}
             </ul>
             <ul class="navbar-nav mb-3 mb-lg-0">

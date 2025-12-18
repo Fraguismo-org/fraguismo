@@ -1,70 +1,226 @@
 <table class="table table-hover table-responsive">
     <colgroup>
-        <col style="width: 8%;">
-        <col style="width: 12%;">
-        <col style="width: 30%;">
-        <col style="width: 30%;">
-        <col style="width: 20%;">
+        <col style="width: 4%" />
+        <col style="width: 12%" />
+        <col style="width: 18%" />
+        <col style="width: 18%" />
+        <col style="width: 10%" />
+        <col style="width: 8%" />
+        <col style="width: 8%" />
+        <col style="width: 10%" />
+        <col style="width: 12%" />
     </colgroup>
     <thead>
-        <th><input type="checkbox" name="select_all" id="select_all"> </th>
-        <th>Username</th>
-        {% if user.is_superuser %}
-        <th>Nome</th>
-        <th>Email</th>
-        <th>Telefone</th>
-        {% endif %}
-        <th>Nível</th>
+        <tr>
+            <th><input type="checkbox" name="select_all" id="select_all" /></th>
+            <th>Username</th>
+            <th>Nome</th>
+            <th>Email</th>
+            <th>Telefone</th>
+            <th>Nível</th>
+            <th>Pontuação</th>
+            <th>Contato</th>
+            <th>Mais</th>
+        </tr>
     </thead>
     <tbody>
-        {% for profile in profiles %}
-        {% if profile.user and profile.user.username %}
+        {% for profile in profiles %} {% if profile.user and
+        profile.user.username %}
+        <!-- linha principal -->
         <tr>
             <td>
-                <input type="checkbox" id="usuarios[]" name="usuarios[]" value="{{ profile.user.id }}">
+                <input
+                    type="checkbox"
+                    id="usuarios[]"
+                    name="usuarios[]"
+                    value="{{ profile.user.id }}"
+                />
             </td>
+
             <td>
-                <a href="{% url 'profile' username=profile.user.username %}">{{ profile.user.username }}
+                <a href="{% url 'profile' username=profile.user.username %}">
+                    {{ profile.user.username }}
+                </a>
             </td>
-            {% if user.is_superuser %}
+
+            <td>{{ profile.user.first_name }} {{ profile.user.last_name }}</td>
+
+            <td>{{ profile.user.email }}</td>
+
+            <td>{{ profile.user.fone }}</td>
+
             <td>
-                {{ profile.user.first_name|add:' '|add:profile.user.last_name }}
+                {% if profile.user.is_fraguista %} {{ profile.nivel }} {% else
+                %} Não Fraguista {% endif %}
             </td>
+
             <td>
-                {{ profile.user.email }}
-                <script>
-                    console.log('{{ profile.user.fone }}');
-                </script>
+                {% if profile.user.is_fraguista %} {{ profile.pontuacao }} {%
+                else %} 0 {% endif %}
             </td>
+
+            <!-- checklist de contato -->
             <td>
-                {{ profile.user.fone }}
-            </td>
-            {% endif %}
-            <td>
-                {% if profile.user.is_fraguista %}
-                {{ profile.nivel }}
+                {% if profile.user.is_fraguista and profile.questionario %} {%
+                if profile.questionario.contato_realizado %}
+                <span class="text-success fw-bold">Feito</span>
                 {% else %}
-                <p>Não Fraguista</p>
-                {% endif %}
+                <form
+                    method="POST"
+                    action="{% url 'marcar_contato' profile.questionario.id %}"
+                >
+                    {% csrf_token %}
+                    <button class="btn btn-sm btn-outline-success">
+                        Marcar contato
+                    </button>
+                </form>
+                {% endif %} {% else %} - {% endif %}
+            </td>
+
+            <!-- link "Mais" -->
+            <td>
+                {% if profile.user.is_fraguista and profile.questionario %}
+                <a
+                    class="text-primary"
+                    data-bs-toggle="collapse"
+                    href="#detalhes-{{ profile.id }}"
+                    role="button"
+                    aria-expanded="false"
+                    aria-controls="detalhes-{{ profile.id }}"
+                >
+                    Mais
+                </a>
+                {% elif profile.user.is_fraguista %}
+                <span class="text-muted">sem questionário</span>
+                {% else %} - {% endif %}
             </td>
         </tr>
-        {% endif %}
-        {% endfor %}
+
+        {% if profile.user.is_fraguista and profile.questionario %}
+        <!-- linha colapsável com respostas longas -->
+        <tr class="collapse bg-light" id="detalhes-{{ profile.id }}">
+            <td colspan="9">
+                <div class="p-3">
+                    <p>
+                        <strong>Como pode ajudar o projeto:</strong><br />
+                        {{ profile.questionario.help_project|default:"—" }}
+                    </p>
+
+                    <p>
+                        <strong>Por que quer participar do Fraguismo?</strong
+                        ><br />
+                        {{
+                        profile.questionario.reason_to_participate|default:"—"
+                        }}
+                    </p>
+
+                    <p>
+                        <strong>Por que devemos te aceitar?</strong><br />
+                        {{ profile.questionario.reason_to_accept|default:"—" }}
+                    </p>
+
+                    <p>
+                        <strong
+                            >Crença política / pontos positivos da
+                            doutrina:</strong
+                        ><br />
+                        {{ profile.questionario.political_belief|default:"—" }}
+                    </p>
+
+                    <p>
+                        <strong>Como o Estado deveria ser?</strong><br />
+                        {{ profile.questionario.state_opinion|default:"—" }}
+                    </p>
+
+                    <p>
+                        <strong>Jusnaturalismo x Juspositivismo:</strong><br />
+                        {{
+                        profile.questionario.jusnaturalismo_vs_juspositivismo|default:"—"
+                        }}
+                    </p>
+
+                    <p>
+                        <strong
+                            >Valor na esfera econômica (subjetivo x
+                            objetivo):</strong
+                        ><br />
+                        {{ profile.questionario.economic_values|default:"—" }}
+                    </p>
+
+                    <p>
+                        <strong>Características positivas do Bitcoin:</strong
+                        ><br />
+                        {{
+                        profile.questionario.bitcoin_positive_characteristics|default:"—"
+                        }}
+                    </p>
+
+                    <p>
+                        <strong>Teoria dos jogos / generais bizantinos:</strong
+                        ><br />
+                        {{
+                        profile.questionario.game_theory_byzantine_generals|default:"—"
+                        }}
+                    </p>
+
+                    <p>
+                        <strong>PNA e Ética Argumentativa:</strong><br />
+                        {{
+                        profile.questionario.pna_and_argumentative_ethics|default:"—"
+                        }}
+                    </p>
+
+                    <p>
+                        <strong
+                            >Conhecimento em libertarianismo / anarcocapitalismo
+                            / agorismo / voluntarismo:</strong
+                        ><br />
+                        {{
+                        profile.questionario.libertarian_knowledge_sources|default:"—"
+                        }}
+                    </p>
+
+                    <p>
+                        <strong
+                            >Conhecimento em Bitcoin / Blockchain / NFT / DAOs /
+                            contratos inteligentes:</strong
+                        ><br />
+                        {{
+                        profile.questionario.bitcoin_knowledge_sources|default:"—"
+                        }}
+                    </p>
+
+                    {% if profile.questionario.contato_observacao %}
+                    <p>
+                        <strong>Obs. do contato:</strong><br />
+                        {{ profile.questionario.contato_observacao }}
+                    </p>
+                    {% endif %}
+                </div>
+            </td>
+        </tr>
+        {% endif %} {% endif %} {% endfor %}
     </tbody>
 </table>
+
 <div class="pagination">
     <span class="step-links">
         {% if profiles.has_previous %}
         <a href="?page=1"><i class="bi bi-caret-left-square-fill"></i></a>
-        <a href="?page={{ profiles.previous_page_number }}"><i class="bi bi-caret-left-fill"></i></a>
+        <a href="?page={{ profiles.previous_page_number }}"
+            ><i class="bi bi-caret-left-fill"></i
+        ></a>
         {% endif %}
         <span class="current">
             Página {{ profiles.number }} de {{ profiles.paginator.num_pages }}
         </span>
-
         {% if profiles.has_next %}
-        <a href="?page={{ profiles.next_page_number }}"><i class="bi bi-caret-right-fill"></i></a>
-        <a href="?page={{ profiles.paginator.num_pages }}"><i class="bi bi-caret-right-square-fill"></i></a>
+        <a href="?page={{ profiles.next_page_number }}"
+            ><i class="bi bi-caret-right-fill"></i
+        ></a>
+        <a href="?page={{ profiles.paginator.num_pages }}"
+            ><i class="bi bi-caret-right-square-fill"></i
+        ></a>
         {% endif %}
     </span>
 </div>

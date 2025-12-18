@@ -1,103 +1,180 @@
 {% load static %}
 
-<div id="bloco-fraguista" style="display: none;">
-
+<div id="bloco-fraguista">
     <div class="row">
         <div class="col">
             <label class="lable-control" for="first_name">Nome *</label>
-            <input type="text" class="form-control" id="first_name" name="first_name">
+            <input
+                type="text"
+                class="form-control"
+                id="first_name"
+                name="first_name"
+            />
         </div>
     </div>
-    <span id="validation-nome" class="text-error">Campo nome não pode ficar vazio.</span>
+    <span id="validation-nome" class="text-error">
+        Campo nome não pode ficar vazio.
+    </span>
     <div class="row">
         <div class="col">
             <label class="lable-control" for="last_name">Sobrenome *</label>
-            <input type="text" class="form-control" id="last_name" name="last_name">
+            <input
+                type="text"
+                class="form-control"
+                id="last_name"
+                name="last_name"
+            />
         </div>
     </div>
-    <span id="validation-sobrenome" class="text-error">Campo Sobrenome não pode ficar vazio.</span>
+    <span id="validation-sobrenome" class="text-error">
+        Campo Sobrenome não pode ficar vazio.
+    </span>
     <div class="row">
         <div class="col">
             <label class="lable-control" for="city">Cidade/Estado *</label>
-            <input type="text" class="form-control" id="city" name="city">
+            <input type="text" class="form-control" id="city" name="city" />
         </div>
     </div>
     <span id="validation-city" class="text-error">Localidade inválido.</span>
     <div class="row">
         <div class="col">
             <label class="lable-control" for="fone">Telefone *</label>
-            <input type="text" class="form-control" id="fone" name="fone">
+            <input type="text" class="form-control" id="fone" name="fone" />
         </div>
     </div>
     <span id="validation-phone" class="text-error">Telefone inválido.</span>
     <div class="row">
         <div class="col">
             <label class="lable-control" for="instagram">Instagram</label>
-            <input type="text" class="form-control" id="instagram" name="instagram">
+            <input
+                type="text"
+                class="form-control"
+                id="instagram"
+                name="instagram"
+            />
         </div>
     </div>
-    <span id="validation-instagram" class="text-error">Instagram inválido.</span>
+    <span id="validation-instagram" class="text-error">
+        Instagram inválido.
+    </span>
     <div class="row">
         <div class="col">
-            <label class="lable-control" for="birth">Data de Nascimento *</label>
-            <input type="date" class="form-control" id="birth" name="birth">
+            <label class="lable-control" for="birth"
+                >Data de Nascimento *</label
+            >
+            <input type="date" class="form-control" id="birth" name="birth" />
         </div>
     </div>
-    <span id="validation-birth" class="text-error">Data de nascimento inválido.</span>
+    <span id="validation-birth" class="text-error">
+        Data de nascimento inválido.
+    </span>
     <div class="row">
         <div class="col">
             <label class="lable-control" for="job_title">Profissão *</label>
-            <input type="text" class="form-control" id="job_title" name="job_title">
+            <input
+                type="text"
+                class="form-control"
+                id="job_title"
+                name="job_title"
+            />
         </div>
     </div>
-    <p>Especifique seu trabalho para que possamos recomendar para outros Fraguistas. Quanto mais detalhado, melhor!</p>
-    <span id="validation-jobtitle" class="text-error">Campo profissão não pode ficar vazio.</span>
+    <p>
+        Especifique seu trabalho para que possamos recomendar para outros
+        Fraguistas. Quanto mais detalhado, melhor!
+    </p>
+    <span id="validation-jobtitle" class="text-error">
+        Campo profissão não pode ficar vazio.
+    </span>
     <div class="row">
         <div class="col">
-            <label class="lable-control" for="lightning_wallet">Carteira Bitcoin Lightning</label>
-            <input type="text" class="form-control" id="lightning_wallet" name="lightning_wallet">
+            <label class="lable-control" for="lightning_wallet"
+                >Carteira Bitcoin Lightning</label
+            >
+            <input
+                type="text"
+                class="form-control"
+                id="lightning_wallet"
+                name="lightning_wallet"
+            />
         </div>
     </div>
-    <span id="validation-btcwallet" class="text-error">Formato carteira Lightning inválido.</span>
+    <span id="validation-btcwallet" class="text-error">
+        Formato carteira Lightning inválido.
+    </span>
     <div class="row">
         <div class="col">
-            <label class="lable-control" for="bsc_wallet">Carteira Polygon</label>
-            <input type="text" class="form-control" id="bsc_wallet" name="bsc_wallet">
+            <label class="lable-control" for="bsc_wallet">
+                Carteira Polygon
+            </label>
+            <input
+                type="text"
+                class="form-control"
+                id="bsc_wallet"
+                name="bsc_wallet"
+            />
         </div>
     </div>
-    <span id="validation-bscwallet" class="text-error">Formato carteira Polygon inválido.</span>
+    <span id="validation-bscwallet" class="text-error">
+        Formato carteira Polygon inválido.</span
+    >
     <div class="row">
         <div class="col">
-            <label class="lable-control" for="como_conheceu">Como conheceu o Fraguismo?</label>
-            <select class="form-select" name="como_conheceu" id="como_conheceu" aria-label="como_conheceu">
-                <option id="como_conheceu" value='instagram'>Instagram</option>
-                <option id="como_conheceu" value='facebook'>Facebook</option>
-                <option id="como_conheceu" value='twitter'>X (Twitter)</option>
-                <option id="como_conheceu" value='telegram'>Telegram</option>
-                <option id="como_conheceu" value='amigos'>Amigos</option>
-                <option id="como_conheceu" value='youtube'>YouTube</option>
-                <option id="como_conheceu" value='indicacao'>Indicação</option>
-                <option id="como_conheceu" value='outros'>Outros</option>
+            <label class="lable-control" for="como_conheceu"
+                >Como conheceu o Fraguismo?</label
+            >
+            <select
+                class="form-select"
+                name="como_conheceu"
+                id="como_conheceu"
+                aria-label="como_conheceu"
+            >
+                <option id="como_conheceu" value="instagram">Instagram</option>
+                <option id="como_conheceu" value="facebook">Facebook</option>
+                <option id="como_conheceu" value="twitter">X (Twitter)</option>
+                <option id="como_conheceu" value="telegram">Telegram</option>
+                <option id="como_conheceu" value="amigos">Amigos</option>
+                <option id="como_conheceu" value="youtube">YouTube</option>
+                <option id="como_conheceu" value="indicacao">Indicação</option>
+                <option id="como_conheceu" value="outros">Outros</option>
             </select>
         </div>
     </div>
-    <div class="row" id="div_indicou" style="display: none;">
+    <div class="row" id="div_indicou" style="display: none">
         <label class="label-control" for="quem_indicou">Quem indicou? *</label>
-        <input class="form-control" id="quem_indicou" name="quem_indicou">
+        <input class="form-control" id="quem_indicou" name="quem_indicou" />
     </div>
-    <span id="validation-indicacao" class="text-error">Informe quem te indicou o Fraguismo.</span>
-    <div class="row" id="div_aonde" style="display: none;">
+    <span id="validation-indicacao" class="text-error"
+        >Informe quem te indicou o Fraguismo.</span
+    >
+    <div class="row" id="div_aonde" style="display: none">
         <label class="label-control" for="aonde">Outros? *</label>
-        <input class="form-control" id="aonde" name="aonde">
+        <input class="form-control" id="aonde" name="aonde" />
     </div>
-    <span id="validation-outros" class="text-error">Campo 'Outros?' deve ser preenchido. </span>
+    <span id="validation-outros" class="text-error"
+        >Campo 'Outros?' deve ser preenchido.
+    </span>
     <div class="row">
-        <p><input type="checkbox" class="form-check-input" id="codigo_conduta"> Li e concordo com o
-            <a href="{% static 'pdf/Normas_de_Conduta.pdf' %}" target="_blank" rel="noopener noreferrer">Código de
-                conduta</a> do Fraguismo!                
+        <p>
+            <input
+                type="checkbox"
+                class="form-check-input"
+                id="codigo_conduta"
+            />
+            Li e concordo com o
+            <a
+                href="{% static 'pdf/Normas_de_Conduta.pdf' %}"
+                target="_blank"
+                rel="noopener noreferrer"
+                >Código de conduta</a
+            >
+            do Fraguismo!
         </p>
     </div>
+    {% include 'partials/questionario.html' %}
     <div class="row">
-        <p id="codigoCondutaError" class="text-error">Você deve aceitar o Código de Conduta!</p>
+        <p id="codigoCondutaError" class="text-error">
+            Você deve aceitar o Código de Conduta!
+        </p>
     </div>
 </div>
