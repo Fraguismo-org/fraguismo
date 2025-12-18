@@ -2,7 +2,7 @@
 let web3;
 let userAccount;
 let contracts = {};
-let version = "1.2.6";
+let version = "1.2.7";
 /**
  * Função para ler informações do contrato via API
  */
@@ -139,7 +139,7 @@ async function escreverGraca(functionName, args = []) {
 
 // Endereços dos contratos
 const CONTRACT_ADDRESSES = {
-    propostas: '0x3bbcEA18778471ECBf614be44FA1e4Dea89f5C69', // Contrato unificado (Propostas + Guardiões)
+    propostas: '0x0909C2083b82eF27050c081eE85743d58cBB84E0', // Contrato unificado (Propostas + Guardiões)
     mercado: '0x3633531C8b8D8ec551D3ee29125D05C3edb48FE3',
     graca: '0x7E598c2EB44c58A7F69fcC3957c4f27B6cb459D5',
     blockNumber: '0x59c28c1DEb67a31369E3C0f3511e976E133f7431' // ATUALIZE COM O ENDEREÇO DO CONTRATO DEPLOYADO
