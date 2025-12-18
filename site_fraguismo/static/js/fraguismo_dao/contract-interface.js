@@ -405,22 +405,6 @@ function switchTab(contract, tab) {
     document.getElementById(`${contract}-${tab}`).classList.add('active');
 }
 
-function switchGuardiaoTab(subtab) {
-    // Remove a classe active de todas as subtabs (botões)
-    const subtabs = document.querySelectorAll('#propostas-guardioes .tabs .tab');
-    subtabs.forEach(t => t.classList.remove('active'));
-    
-    // Remove a classe active de todos os conteúdos das subtabs
-    const contents = document.querySelectorAll('#propostas-guardioes .guardiao-subtab');
-    contents.forEach(c => c.classList.remove('active'));
-    
-    // Adiciona a classe active ao botão clicado
-    event.target.classList.add('active');
-    
-    // Adiciona a classe active ao conteúdo correspondente
-    document.getElementById(`guardioes-${subtab}`).classList.add('active');
-}
-
 function showResult(elementId, data, isError = false) {
     const element = document.getElementById(elementId);
     element.classList.add('show');
@@ -701,10 +685,10 @@ const propostas = {
         }
     },
 
-    async proporNovoguardiao() {
+    async proporNovoDiretor() {
         try {
             const candidato = document.getElementById('propostas-propor-candidato').value;
-            await escreverPropostas('proporNovoguardiao', [candidato]);
+            await escreverPropostas('proporNovoDiretor', [candidato]);
             showResult('result-propostas-propor', 'Proposta criada com sucesso!');
         } catch (error) {
             showResult('result-propostas-propor', error.message, true);
@@ -848,7 +832,7 @@ const propostas = {
     },
 
     async proporNovoguardiao() {
-        return await this.proporNovoguardiao();
+        return await this.proporNovoDiretor();
     },
 
     async votarNovoguardiao() {
