@@ -701,10 +701,10 @@ const propostas = {
         }
     },
 
-    async proporNovoDiretor() {
+    async proporNovoguardiao() {
         try {
             const candidato = document.getElementById('propostas-propor-candidato').value;
-            await escreverPropostas('proporNovoDiretor', [candidato]);
+            await escreverPropostas('proporNovoguardiao', [candidato]);
             showResult('result-propostas-propor', 'Proposta criada com sucesso!');
         } catch (error) {
             showResult('result-propostas-propor', error.message, true);
@@ -848,7 +848,7 @@ const propostas = {
     },
 
     async proporNovoguardiao() {
-        return await this.proporNovoDiretor();
+        return await this.proporNovoguardiao();
     },
 
     async votarNovoguardiao() {
