@@ -1,6 +1,8 @@
 {% load static %}
 
 <div id="bloco-fraguista">
+
+<div id="bloco-fraguista">
     <div class="row">
         <div class="col">
             <label class="lable-control" for="first_name">Nome *</label>
@@ -142,12 +144,10 @@
     </div>
     <div class="row" id="div_indicou" style="display: none">
         <label class="label-control" for="quem_indicou">Quem indicou? *</label>
-        <input class="form-control" id="quem_indicou" name="quem_indicou" />
-    </div>
-    <span id="validation-indicacao" class="text-error"
-        >Informe quem te indicou o Fraguismo.</span
-    >
-    <div class="row" id="div_aonde" style="display: none">
+        <input class="form-control" id="quem_indicou" name="quem_indicou">
+    </div>  
+    <span id="validation-indicacao" class="text-error">Informe quem te indicou o Fraguismo.</span>
+    <div class="row" id="div_aonde" style="display: none;">
         <label class="label-control" for="aonde">Outros? *</label>
         <input class="form-control" id="aonde" name="aonde" />
     </div>
@@ -155,26 +155,12 @@
         >Campo 'Outros?' deve ser preenchido.
     </span>
     <div class="row">
-        <p>
-            <input
-                type="checkbox"
-                class="form-check-input"
-                id="codigo_conduta"
-            />
-            Li e concordo com o
-            <a
-                href="{% static 'pdf/Normas_de_Conduta.pdf' %}"
-                target="_blank"
-                rel="noopener noreferrer"
-                >Código de conduta</a
-            >
-            do Fraguismo!
+        <p><input type="checkbox" class="form-check-input" id="codigo_conduta"> Li e concordo com o
+            <a href="{% static 'pdf/Normas_de_Conduta.pdf' %}" target="_blank" rel="noopener noreferrer">Código de
+                conduta</a> do Fraguismo!                
         </p>
     </div>
     {% include 'partials/questionario.html' %}
     <div class="row">
-        <p id="codigoCondutaError" class="text-error">
-            Você deve aceitar o Código de Conduta!
-        </p>
+        <p id="codigoCondutaError" class="text-error">Você deve aceitar o Código de Conduta!</p>
     </div>
-</div>
