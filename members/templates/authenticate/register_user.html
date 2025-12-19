@@ -18,6 +18,17 @@
 
         {% include "partials/user_form.html" %}
         {% include "partials/password_form.html" %}
+
+    <div class="row" style="padding-top: 20px;">
+            <div class="col">
+                <p><input class="form-check-input" type="checkbox" id="termos_adesao"> Li e concordo os <a
+                        href="{% static 'pdf/termos_condicoes.pdf' %}"> Termos</a> do site Fraguismo!</p>
+            </div>
+            <div class="col text-end" id="btn-registrar-top">
+                <input type="submit" value="Registrar" class="btn btn-warning  text-end" style="border-radius: 20px;"
+                    id="btn-registrar" disabled>
+            </div>
+        </div>
         <div class="row">
             <div class="col">
                 <p><input class="form-check-input" type="checkbox" checked id="fraguista" name="fraguista">
@@ -25,15 +36,8 @@
             </div>
         </div>
         {% include "partials/member_form.html" %}
-        <div class="row" style="padding-top: 20px;">
-            <div class="col">
-                <p><input class="form-check-input" type="checkbox" id="termos_adesao"> Li e concordo os <a
-                        href="{% static 'pdf/termos_condicoes.pdf' %}"> Termos</a> do site Fraguismo!</p>
-            </div>
-            <div class="col text-end">
-                <input type="submit" value="Registrar" class="btn btn-warning  text-end" style="border-radius: 20px;"
-                    id="btn-registrar" disabled>
-            </div>
+        <div class="row mt-4" id="btn-registrar-bottom-row" style="display: none;">
+            <div class="col text-end" id="btn-registrar-bottom"></div>
         </div>
     </form>
 </div>
