@@ -123,6 +123,7 @@ def cadastrar_anuncio(request):
         if anuncio_form.is_valid():
             anuncio = anuncio_form.save(commit=False)
             anuncio.user = request.user
+            anuncio.updated_at = datetime.now()
             anuncio.save()
             if request.FILES:
                 idx = 1
@@ -132,16 +133,31 @@ def cadastrar_anuncio(request):
                     img = Images(image=imagem, anuncio=anuncio)
                     img.save()
                     img_obj = Image.open(img.image.path)
-                    rate = img_obj.height/1000 if img_obj.height > img_obj.width else img_obj.width/1000
+                    if img_obj.mode in ("RGBA", "P"):
+                        img_obj = img_obj.convert("RGB")
+                    rate = (
+                        img_obj.height / 1000
+                        if img_obj.height > img_obj.width
+                        else img_obj.width / 1000
+                    )
                     if img_obj.height > 1000 or img_obj.width > 1000:
-                        output_size = (img_obj.width/rate, img_obj.height/rate)
+                        output_size = (
+                            img_obj.width / rate,
+                            img_obj.height / rate
+                        )
                         img_obj.thumbnail(output_size)
-                    img_obj.save(img.image.path)
+                    img_obj.save(
+                        img.image.path,
+                        format="JPEG",
+                        quality=90
+                    )
             messages.success(request, "Anuncio cadastrado com sucesso!")
             return redirect('listar_anuncios')
+
     else:
         anuncio_form = AnuncioForm()
         imagem_form = ImagesForm()
+
     return render(request, "anuncio/cadastrar.html", {
         'anuncio_form': anuncio_form,
         'images_form': imagem_form
