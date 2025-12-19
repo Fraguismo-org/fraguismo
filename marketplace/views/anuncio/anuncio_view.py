@@ -38,6 +38,13 @@ def home(request):
     page = request.GET.get('page', 1)
 
     anuncios = Anuncio.objects.all()
+    user_anuncios_total = 0
+    user_anuncios_ativos = 0
+
+    if request.user.is_authenticated:
+        user_anuncios_qs = Anuncio.objects.filter(user=request.user)
+        user_anuncios_total = user_anuncios_qs.count()
+        user_anuncios_ativos = user_anuncios_qs.filter(status_anuncio=1).count()
 
     if departamento and departamento.isdigit():
         anuncios = anuncios.filter(departamento=int(departamento))
@@ -74,6 +81,8 @@ def home(request):
         'selected_localidade': localidade,
         'selected_order': ordernar,
         'search_query': busca,
+        'user_anuncios_total': user_anuncios_total,
+        'user_anuncios_ativos': user_anuncios_ativos,
     })
 
 
