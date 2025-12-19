@@ -151,15 +151,7 @@
         <label class="label-control" for="aonde">Outros? *</label>
         <input class="form-control" id="aonde" name="aonde" />
     </div>
-    <span id="validation-outros" class="text-error"
-        >Campo 'Outros?' deve ser preenchido.
-    </span>
-    <div class="row">
-        <p><input type="checkbox" class="form-check-input" id="codigo_conduta"> Li e concordo com o
-            <a href="{% static 'pdf/Normas_de_Conduta.pdf' %}" target="_blank" rel="noopener noreferrer">Código de
-                conduta</a> do Fraguismo!                
-        </p>
-    </div>
+    <span id="validation-outros" class="text-error">Campo 'Outros?' deve ser preenchido. </span>
     {% include 'partials/questionario.html' %}
     <div class="row">
         <p id="codigoCondutaError" class="text-error">Você deve aceitar o Código de Conduta!</p>

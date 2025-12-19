@@ -1,11 +1,11 @@
 {% extends 'base.html' %} {% block content %}
 <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
-    <h4>Fotos do an�ncio</h4>
+    <h4>Fotos do anúncio</h4>
     <div class="existing-images mb-3">
         {% for image in images %}
             <div class="image-item mb-2">
-                <img src="{{ image.image.url }}" alt="Imagem do an�ncio" width="150" class="img-thumbnail me-2">
+                <img src="{{ image.image.url }}" alt="Imagem do anúncio" width="150" class="img-thumbnail me-2">
                 <label class="form-check-label">
                     <input type="checkbox" class="form-check-input" name="delete_image_{{ image.id }}"> Excluir
                 </label>
@@ -18,11 +18,11 @@
     <div class="mb-3">
         <label class="form-label" for="images">Adicionar novas imagens</label>
         <input type="file" class="form-control" name="images" id="images" multiple accept="image/*">
-        <small class="text-muted">Voc� pode enviar novas imagens; elas ser�o adicionadas ou podem substituir as removidas acima.</small>
+        <small class="text-muted">Você pode enviar novas imagens; elas serão adicionadas ou podem substituir as removidas acima.</small>
     </div>
 
     {{ form.as_p }}
     
-    <button type="submit" class="btn btn-primary">Salvar altera��es</button>
+    <button type="submit" class="btn btn-primary">Salvar alterações</button>
 </form>
 {% endblock content %}

@@ -86,14 +86,12 @@
 
             <!-- checklist de contato -->
             <td>
-            {% if profile.user.is_fraguista and profile.questionario %}
+            {% if profile.user.is_fraguista and profile.questionario and profile.questionario.id %}
 
                 {% if profile.questionario.contato_realizado %}
                     <span class="text-success fw-bold">Feito</span>
                 {% else %}
-                    <form 
-                        method="POST" 
-                        action="{% url 'marcar_contato' profile.questionario.id %}">
+                    <form method="POST" action="{% url 'marcar_contato' profile.questionario.id %}">
                         {% csrf_token %}
                         <button class="btn btn-sm btn-outline-success">
                             Marcar contato

@@ -1,3 +1,5 @@
+    {% load static %}
+    
     <div class="row">
         <div class="col">
             <label class="lable-control" for="help_project">Como você pode ajudar o projeto? *</label>
@@ -83,4 +85,12 @@
             <label class="lable-control" for="bitcoin_knowledge_sources">Qual seu nível de conhecimento sobre Bitcoin, Blockchain, NFT, DAOs e contratos inteligentes? *</label>
             <textarea class="form-control" id="bitcoin_knowledge_sources" name="bitcoin_knowledge_sources" rows="3" minlength="50" data-questionario="true"></textarea>
         </div>
+    </div>
+
+    <div class="row">
+        <p><input type="checkbox" class="form-check-input" id="codigo_conduta"> Li e concordo com o
+            <a href="{% static 'pdf/Normas_de_Conduta.pdf' %}" target="_blank" rel="noopener noreferrer">
+                Código de
+                conduta</a> do Fraguismo!                
+        </p>
     </div>
