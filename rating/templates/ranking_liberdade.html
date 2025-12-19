@@ -9,7 +9,7 @@
             <p class="text-uppercase text-muted fw-semibold small mb-1">Ranking</p>
             <h2 class="h2 fw-semibold mb-2">Ranking da Liberdade</h2>
             <p class="text-muted mb-0">
-                Ranking baseado em pontuação total e filtros por período.
+                Ranking baseado na pontuação total da semana ou mês correntes.
             </p>
         </div>
 
@@ -30,12 +30,12 @@
                 <!-- PERÍODO -->
                 <div class="col-12 col-md-3 col-lg-2">
                     <select name="periodo" class="form-select">
-                        <option value="">todos</option>
+                        <option value="">Todos</option>
                         <option value="7d" {% if periodo == "7d" %}selected{% endif %}>
-                            últimos 7 dias
+                            Semanal
                         </option>
                         <option value="30d" {% if periodo == "30d" %}selected{% endif %}>
-                            últimos 30 dias
+                            Mensal
                         </option>
                     </select>
                 </div>
@@ -59,7 +59,7 @@
             {% if periodo %}
                 <span class="mx-1">•</span>
                 <strong>
-                    {% if periodo == "7d" %}últimos 7 dias{% elif periodo == "30d" %}últimos 30 dias{% endif %}
+                    {% if periodo == "7d" %}semana atual{% elif periodo == "30d" %}mês atual{% endif %}
                 </strong>
             {% endif %}
         </p>
@@ -67,18 +67,18 @@
 
         <!-- TABELA -->
         <div class="mt-4">
-            {% include 'partials/ranking_table.html' with ranking=ranking empty_message='Nenhum fraguista encontrado.' %}
+            {% include 'partials/ranking_table.html' with ranking=ranking empty_message='Nenhum fraguista encontrado.' score_label='Pontuação' %}
         </div>
 
         <!-- OBS -->
         <div class="row text-muted small mt-3">
             {% if periodo == "7d" %}
             <div class="col text-center">
-                considerando pontuação dos últimos 7 dias.
+                considerando pontuação da semana (segunda a segunda).
             </div>
             {% elif periodo == "30d" %}
             <div class="col text-center">
-                considerando pontuação dos últimos 30 dias.
+                considerando pontuação do mês atual.
             </div>
             {% else %}
             <div class="col text-center">

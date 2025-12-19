@@ -28,6 +28,9 @@ document.addEventListener('DOMContentLoaded', function () {
     const quemIndicou = document.getElementById('quem_indicou');
     const aonde = document.getElementById('aonde');
     const btnRegistrar = document.getElementById('btn-registrar');
+    const btnRegistrarTop = document.getElementById('btn-registrar-top');
+    const btnRegistrarBottom = document.getElementById('btn-registrar-bottom');
+    const btnRegistrarBottomRow = document.getElementById('btn-registrar-bottom-row');
     const selectedValue = getQueryParam('ref');
     const questionarioFields = Array.from(document.querySelectorAll('[data-questionario="true"]'));
 
@@ -100,13 +103,28 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     toggleObrigatoriedadeQuestionario();
 
+    function togglePosicaoBotao() {
+        if (chkbxFraguista.checked) {
+            btnRegistrarBottomRow.style.display = 'flex';
+            btnRegistrarBottom.appendChild(btnRegistrar);
+            btnRegistrarTop.style.display = 'none';
+        } else {
+            btnRegistrarTop.style.display = 'block';
+            btnRegistrarTop.appendChild(btnRegistrar);
+            btnRegistrarBottomRow.style.display = 'none';
+        }
+    }
+    togglePosicaoBotao();
+
     chkbxFraguista.addEventListener('change', () => {
         toggleObrigatoriedadeQuestionario();
         if (chkbxFraguista.checked) {
             fraguistaField.style.display = 'inline';
         } else {
             fraguistaField.style.display = 'none';
+            codigoCondutaError.style.display = 'none';
         }
+        togglePosicaoBotao();
     });
 
     comoConheceu.addEventListener('change', () => {
@@ -128,27 +146,36 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    btnRegistrar.addEventListener('click', (event) => {
-        event.preventDefault();
-
+    formRegistro.addEventListener('submit', (event) => {
+        const isFraguista = chkbxFraguista.checked;
         codigoCondutaError.style.display = 'none';
+        chkTermosAdesao.setCustomValidity('');
 
-        if (chkbxFraguista.checked) {
+        if (!chkTermosAdesao.checked) {
+            event.preventDefault();
+            chkTermosAdesao.setCustomValidity('Aceite os Termos e Condicoes para continuar.');
+            formRegistro.reportValidity();
+            return;
+        }
+
+        if (isFraguista) {
             if (!chkCodigoConduta.checked) {
+                event.preventDefault();
                 codigoCondutaError.style.display = 'block';
+                chkCodigoConduta.focus();
                 return;
             }
-            if (validaForm() && validaQuestionario()){
-                formRegistro.submit();
-            } else {
+            if (!(validaForm() && validaQuestionario())) {
+                event.preventDefault();
                 formRegistro.reportValidity();
             }
             return;
-        } 
-        if (validaUsername() && validaEmail() && validaPassword()) {
-            formRegistro.submit();
         }
 
+        if (!(validaUsername() && validaEmail() && validaPassword())) {
+            event.preventDefault();
+            formRegistro.reportValidity();
+        }
     });
 
     chkTermosAdesao.addEventListener('change', () => {
@@ -157,6 +184,12 @@ document.addEventListener('DOMContentLoaded', function () {
         }
         else {
             btnRegistrar.setAttribute('disabled','disabled');
+        }
+    });
+
+    chkCodigoConduta.addEventListener('change', () => {
+        if (chkCodigoConduta.checked) {
+            codigoCondutaError.style.display = 'none';
         }
     });
 
