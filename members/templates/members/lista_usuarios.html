@@ -1,77 +1,28 @@
+
+
 {% extends 'base.html' %}
-{% load static %}
 
 {% block content %}
+{% load static %}
 <div class="shadow p-4 mb-5 bg-body rounded">
     <div class="text-center">
         <h1>Lista de usuários</h1>
     </div>
-
-    <br><br>
-
+    <br>
+    <br>
     <div class="consulta">
         <form method="GET" action="{% url 'lista_usuarios' %}">
-            <div class="row g-2">
-
-                <!-- busca -->
-                <div class="col-md-4">
-                    <input
-                        class="form-control"
-                        type="text"
-                        name="busca"
-                        placeholder="Pesquisar usuário"
-                        value="{{ request.GET.busca }}">
+            <div class="row">
+                <div class="col">
+                    <input class="form-control" type="text" name="busca" placeholder="Pesquisar usuário">
                 </div>
-
-                <!-- filtro fraguista -->
-                <div class="col-md-3">
-                    <select name="fraguista" class="form-select">
-                        <option value="" {% if not filtro_fraguista %}selected{% endif %}>Todos</option>
-                        <option value="sim" {% if filtro_fraguista == "sim" %}selected{% endif %}>Só Fraguistas</option>
-                        <option value="nao" {% if filtro_fraguista == "nao" %}selected{% endif %}>Só Não-Fraguistas</option>
-                    </select>
+                <div class="col">
+                    <button class="btn btn-primary" type="submit"><i class="bi bi-search"></i></button>
                 </div>
-
-                <!-- filtro questionário -->
-                <div class="col-md-3">
-                    <select name="questionario" class="form-select">
-                        <option value="" {% if not filtro_questionario %}selected{% endif %}>Todos</option>
-                        <option value="pendente" {% if filtro_questionario == "pendente" %}selected{% endif %}>Sem questionário</option>
-                        <option value="preenchido" {% if filtro_questionario == "preenchido" %}selected{% endif %}>Com questionário</option>
-                    </select>
-                </div>
-
-                <!-- filtro contato -->
-                <div class="col-md-2">
-                    <select name="contato" class="form-select">
-                        <option value="" {% if not filtro_contato %}selected{% endif %}>Contato (todos)</option>
-                        <option value="pendente" {% if filtro_contato == "pendente" %}selected{% endif %}>Contato pendente</option>
-                        <option value="feito" {% if filtro_contato == "feito" %}selected{% endif %}>Contato feito</option>
-                    </select>
-                </div>
-
-                <!-- ordenação -->
-                <div class="col-md-2">
-                    <select name="ordenar" class="form-select">
-                        <option value="" {% if not ordenar %}selected{% endif %}>Ordem padrão</option>
-                        <option value="novo" {% if ordenar == "novo" %}selected{% endif %}>Mais novos primeiro</option>
-                        <option value="antigo" {% if ordenar == "antigo" %}selected{% endif %}>Mais antigos primeiro</option>
-                    </select>
-                </div>
-
-                <!-- botão -->
-                <div class="col-auto">
-                    <button class="btn btn-primary" type="submit">
-                        <i class="bi bi-search"></i>
-                    </button>
-                </div>
-
             </div>
         </form>
     </div>
-
-    <br>
-
-    {% include 'partials/member_table.html' with profiles=profiles %}
+    <br>    
+    {% include 'partials/member_table.html' with profiles=profiles%}
 </div>
 {% endblock %}
