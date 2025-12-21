@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    {% load tz %}
+    {% load static %}
+    
+
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FraguismoDAO - Interface de Contratos - Polygon</title>    
+    <link rel="stylesheet" href="{% static 'css/fraguismo_dao.css' %}">
+</head>
+
+<body>
+    <div class="container">
+        <div class="nav-top">
+            <a href="{% url 'index' %}" class="btn-return">
+                <span>←</span> Retornar ao Fraguismo
+            </a>
+        </div>
+        <div class="header">
+            <h1>🏛️ FraguismoDAO v1.2.7</h1>
+            <div class="wallet-info" style="display:none;">
+                <button id="connectWallet" class="btn">Conectar MetaMask</button>
+                <div id="walletAddress" class="wallet-address" style="display: none;"></div>
+            </div>
+
+            <div id="content"></div>
+            <div id="connect-div">
+                <nav class="navbar" style="margin-bottom: 20px;">
+                    <div class="container">
+                        <div id="connect-pane" style="margin-bottom: 10px;">
+                            <button class="btn" id="connect">🔗 Conectar Carteira</button>
+                        </div>
+                        <div id="disconnect-pane" style="margin-bottom: 10px;">
+                            <button class="btn" id="disconnect"></button>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+
+        </div>
+
+        <div class="contracts-grid">
+            <div class="contract-card" onclick="openModal('propostasModal')">
+                <div class="icon">📋</div>
+                <h2>Propostas & Guardiões</h2>
+                <p>Contrato Unificado</p>
+                <button class="btn btn-small">Abrir Interface</button>
+            </div>
+
+            <div class="contract-card" onclick="openModal('mercadoModal')">
+                <div class="icon">🛒</div>
+                <h2>Mercado</h2>
+                <p>0x3633531C8b8D8ec551D3ee29125D05C3edb48FE3</p>
+                <button class="btn btn-small">Abrir Interface</button>
+            </div>
+
+            <div class="contract-card" onclick="openModal('gracaModal')">
+                <div class="icon">💰</div>
+                <h2>Graça</h2>
+                <p>0x7E598c2EB44c58A7F69fcC3957c4f27B6cb459D5</p>
+                <button class="btn btn-small">Abrir Interface</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Propostas -->
+    <div id="propostasModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>📋 Contrato Propostas & Guardiões (Unificado)</h2>
+                <span class="close" onclick="closeModal('propostasModal')">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="tabs">
+                    <button class="tab active" onclick="switchTab('propostas', 'read')">🔍 Leitura</button>
+                    <button class="tab" onclick="switchTab('propostas', 'write')">✏️ Formulários</button>
+                    <button class="tab" onclick="switchTab('propostas', 'actions')">⚡ Ações Rápidas</button>
+                    <button class="tab" onclick="switchTab('propostas', 'guardioes')">👥 Guardiões</button>
+                </div>
+
+                <!-- Tab de Leitura -->
+                <div id="propostas-read" class="tab-content active">
+                    <div class="function-section">
+                        <h3>Funções de Consulta</h3>
+
+                        <div class="function-item">
+                            <h4>Owner do Contrato</h4>
+                            <button class="btn btn-small" onclick="propostas.getOwner()">Consultar</button>
+                            <div id="result-propostas-owner" class="result-box"></div>
+                        </div>
+
+                        <div class="function-item">
+                            <h4>Status da Votação</h4>
+                            <button class="btn btn-small" onclick="propostas.getVotingStatus()">Consultar</button>
+                            <div id="result-propostas-status" class="result-box"></div>
+                        </div>
+
+                        <div class="function-item">
+                            <h4>Blocos até Fim da Votação</h4>
+                            <button class="btn btn-small"
+                                onclick="propostas.getBlocksUntilVotingEnds()">Consultar</button>
+                            <div id="result-propostas-blocksEnd" class="result-box"></div>
+                        </div>
+
+                        <div class="function-item">
+                            <h4>Blocos até Próxima Votação</h4>
+                            <button class="btn btn-small"
+                                onclick="propostas.getBlocksUntilNextVoting()">Consultar</button>
+                            <div id="result-propostas-blocksNext" class="result-box"></div>
+                        </div>
+
+                        <div class="function-item">
+                            <h4>Propostas em Aberto</h4>
+                            <button class="btn btn-small" onclick="propostas.getOpenProposals()">Consultar</button>
+                            <div id="result-propostas-open" class="result-box"></div>
+                        </div>
+
+                        <div class="function-item">
+                            <h4>Detalhes de Proposta</h4>
+                            <div class="input-group">
+                                <label>Hash da Proposta:</label>
+                                <input type="text" id="propostas-details-hash" placeholder="Hash SHA256...">
+                            </div>
+                            <button class="btn btn-small" onclick="propostas.getProposalDetails()">Consultar</button>
+                            <div id="result-propostas-details" class="result-box"></div>
+                        </div>
+
+                        <div class="function-item">
+                            <h4>Votantes "Sim" de Proposta</h4>
+                            <div class="input-group">
+                                <label>Hash da Proposta:</label>
+                                <input type="text" id="propostas-yesVoters-hash" placeholder="Hash SHA256...">
+                            </div>
+                            <button class="btn btn-small" onclick="propostas.getProposalYesVoters()">Consultar</button>
+                            <div id="result-propostas-yesVoters" class="result-box"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab de Formulários -->
+                <div id="propostas-write" class="tab-content">
+                    <div class="function-section">
+                        <h3>📝 Gestão de Propostas</h3>
+
+                        <div class="function-item">
+                            <h4>Criar Proposta</h4>
+                            <div class="input-group">
+                                <label>Quantidade de Tokens:</label>
+                                <input type="number" id="propostas-make-amount" placeholder="Quantidade (sem decimais)">
+                            </div>
+                            <div class="input-group">
+                                <label>Carteira de Recebimento:</label>
+                                <input type="text" id="propostas-make-wallet" placeholder="0x...">
+                            </div>
+                            <div class="input-group">
+                                <label>Hash da Proposta (SHA256):</label>
+                                <input type="text" id="propostas-make-hash" placeholder="Hash SHA256...">
+                            </div>
+                            <div class="input-group">
+                                <label>Preço (tokens por 1 POL):</label>
+                                <input type="number" id="propostas-make-price" placeholder="Preço">
+                            </div>
+                            <button class="btn btn-small" onclick="propostas.makePropose()">Criar</button>
+                            <div id="result-propostas-make" class="result-box"></div>
+                        </div>
+
+                        <div class="function-item">
+                            <h4>Votar em Proposta</h4>
+                            <div class="input-group">
+                                <label>Hash da Proposta:</label>
+                                <input type="text" id="propostas-vote-hash" placeholder="Hash SHA256...">
+                            </div>
+                            <div class="input-group">
+                                <label>Decisão:</label>
+                                <select id="propostas-vote-decision">
+                                    <option value="true">✅ Sim</option>
+                                    <option value="false">❌ Não</option>
+                                </select>
+                            </div>
+                            <button class="btn btn-small" onclick="propostas.doVote()">Votar</button>
+                            <div id="result-propostas-vote" class="result-box"></div>
+                        </div>
+
+                        <div class="function-item">
+                            <h4>Encerrar Votação de Proposta</h4>
+                            <div class="input-group">
+                                <label>Hash da Proposta:</label>
+                                <input type="text" id="propostas-end-hash" placeholder="Hash SHA256...">
+                            </div>
+                            <button class="btn btn-small" onclick="propostas.endVote()">Encerrar</button>
+                            <div id="result-propostas-end" class="result-box"></div>
+                        </div>
+                    </div>
+
+                    <div class="function-section">
+                        <h3>💰 Transações</h3>
+
+                        <div class="function-item">
+                            <h4>Comprar Tokens</h4>
+                            <div class="input-group">
+                                <label>Hash da Proposta:</label>
+                                <input type="text" id="propostas-buy-hash" placeholder="Hash SHA256...">
+                            </div>
+                            <div class="input-group">
+                                <label>Endereço para Receber:</label>
+                                <input type="text" id="propostas-buy-to" placeholder="0x...">
+                            </div>
+                            <div class="input-group">
+                                <label>Valor em POL:</label>
+                                <input type="text" id="propostas-buy-value" placeholder="0.01">
+                            </div>
+                            <button class="btn btn-small" onclick="propostas.buyTokens()">Comprar</button>
+                            <div id="result-propostas-buy" class="result-box"></div>
+                        </div>
+
+                        <div class="function-item">
+                            <h4>Sacar POL (Propositor)</h4>
+                            <div class="input-group">
+                                <label>Hash da Proposta:</label>
+                                <input type="text" id="propostas-withdraw-hash" placeholder="Hash SHA256...">
+                            </div>
+                            <button class="btn btn-small" onclick="propostas.withdraw()">Sacar</button>
+                            <div id="result-propostas-withdraw" class="result-box"></div>
+                        </div>
+                    </div>
+
+                    <div class="function-section">
+                        <h3>👑 Administração</h3>
+
+                        <div class="function-item">
+                            <h4>Transferir Ownership</h4>
+                            <p style="color: #666; font-size: 0.9em; margin-bottom: 10px;">
+                                Transfere o ownership do contrato para um novo endereço. Apenas o owner atual pode
+                                executar.
+                            </p>
+                            <div class="input-group">
+                                <label>Novo Owner:</label>
+                                <input type="text" id="propostas-transfer-owner" placeholder="0x...">
+                            </div>
+                            <button class="btn btn-small" onclick="propostas.transferOwnership()">Transferir</button>
+                            <div id="result-propostas-transfer-owner" class="result-box"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab de Ações Rápidas -->
+                <div id="propostas-actions" class="tab-content">
+                    <div class="function-section">
+                        <h3>⚡ Ações Rápidas</h3>
+                        <p style="color: #666; margin-bottom: 20px;">
+                            Estas ações são executadas com um único clique, sem necessidade de preencher formulários.
+                        </p>
+
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; margin-bottom: 30px;">
+                            
+                            <div class="quick-action-card">
+                                <h4>🔓 Abrir Votação</h4>
+                                <p>Guardiões podem abrir após tempo semanal</p>
+                                <button class="btn btn-small" onclick="propostas.abrirVotacaoguardiao()">Abrir</button>
+                                <div id="result-propostas-abrir-guardiao" class="result-box"></div>
+                            </div>
+
+                            <div class="quick-action-card">
+                                <h4>✋ Registrar Presença</h4>
+                                <p>Confirme sua participação na votação</p>
+                                <button class="btn btn-small" onclick="propostas.registerPresence()">Registrar</button>
+                                <div id="result-propostas-presence" class="result-box"></div>
+                            </div>
+
+                            <div class="quick-action-card">
+                                <h4>🔒 Fechar Votação</h4>
+                                <p>Encerra o período de votação atual</p>
+                                <button class="btn btn-small" onclick="propostas.fecharVotacao()">Fechar</button>
+                                <div id="result-propostas-fechar" class="result-box"></div>
+                            </div>
+
+                            <div class="quick-action-card">
+                                <h4>🧹 Limpar Presença</h4>
+                                <p>Remove registros de presença</p>
+                                <button class="btn btn-small" onclick="propostas.clearPresence()">Limpar</button>
+                                <div id="result-propostas-clearPresence" class="result-box"></div>
+                            </div>
+
+                            <div class="quick-action-card">
+                                <h4>⚖️ Calcular Pesos</h4>
+                                <p>Calcula pesos de votação dos guardiões</p>
+                                <button class="btn btn-small" onclick="propostas.calcularPesos()">Calcular</button>
+                                <div id="result-propostas-calcularPesos" class="result-box"></div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab de Guardiões -->
+                <div id="propostas-guardioes" class="tab-content">
+                    <div class="tabs" style="border-bottom: 1px solid #ddd; margin-bottom: 20px;">
+                        <button class="tab active" onclick="switchGuardiaoTab('consultas')" style="font-size: 14px;">🔍 Consultas</button>
+                        <button class="tab" onclick="switchGuardiaoTab('formularios')" style="font-size: 14px;">✏️ Formulários</button>
+                        <button class="tab" onclick="switchGuardiaoTab('acoes')" style="font-size: 14px;">⚡ Ações</button>
+                    </div>
+
+                    <!-- Sub-tab Consultas -->
+                    <div id="guardioes-consultas" class="guardiao-subtab active">
+                        <div class="function-section">
+                            <h3>📊 Listas de Guardiões</h3>
+
+                            <div class="function-item">
+                                <h4>Ver Todos os Guardiões</h4>
+                                <button class="btn btn-small" onclick="propostas.getguardioes()">Consultar</button>
+                                <div id="result-propostas-getguardioes" class="result-box"></div>
+                            </div>
+
+                            <div class="function-item">
+                                <h4>Total de Guardiões</h4>
+                                <button class="btn btn-small" onclick="propostas.totalguardioes()">Consultar</button>
+                                <div id="result-propostas-totalguardioes" class="result-box"></div>
+                            </div>
+
+                            <div class="function-item">
+                                <h4>Guardiões Ativos</h4>
+                                <button class="btn btn-small" onclick="propostas.getguardioesAtivos()">Consultar</button>
+                                <div id="result-propostas-guardioes-ativos" class="result-box"></div>
+                            </div>
+
+                            <div class="function-item">
+                                <h4>Guardiões Suspensos</h4>
+                                <button class="btn btn-small" onclick="propostas.getguardioesSuspensos()">Consultar</button>
+                                <div id="result-propostas-guardioes-suspensos" class="result-box"></div>
+                            </div>
+
+                            <div class="function-item">
+                                <h4>Informações de Quorum</h4>
+                                <button class="btn btn-small" onclick="propostas.getQuorumInfo()">Consultar</button>
+                                <div id="result-propostas-quorum-info" class="result-box"></div>
+                            </div>
+                        </div>
+
+                        <div class="function-section">
+                            <h3>🔍 Consultas Específicas</h3>
+
+                            <div class="function-item">
+                                <h4>Verificar se é Guardião</h4>
+                                <div class="input-group">
+                                    <label>Endereço:</label>
+                                    <input type="text" id="propostas-isguardiao-address" placeholder="0x...">
+                                </div>
+                                <button class="btn btn-small" onclick="propostas.isguardiao()">Verificar</button>
+                                <div id="result-propostas-isguardiao" class="result-box"></div>
+                            </div>
+
+                            <div class="function-item">
+                                <h4>Informações de um Guardião</h4>
+                                <div class="input-group">
+                                    <label>Endereço do Guardião:</label>
+                                    <input type="text" id="propostas-guardiao-info-address" placeholder="0x...">
+                                </div>
+                                <button class="btn btn-small" onclick="propostas.getguardiaoInfo()">Consultar</button>
+                                <div id="result-propostas-guardiao-info" class="result-box"></div>
+                            </div>
+
+                            <div class="function-item">
+                                <h4>Detalhes de Proposta de Guardião</h4>
+                                <div class="input-group">
+                                    <label>Endereço do Candidato:</label>
+                                    <input type="text" id="propostas-guardiao-details-candidato" placeholder="0x...">
+                                </div>
+                                <button class="btn btn-small"
+                                    onclick="propostas.getguardiaoProposalDetails()">Consultar</button>
+                                <div id="result-propostas-guardiao-details" class="result-box"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sub-tab Formulários -->
+                    <div id="guardioes-formularios" class="guardiao-subtab">
+                        <div class="function-section">
+                            <h3>➕ Gestão de Guardiões</h3>
+
+                            <div class="function-item">
+                                <h4>Adicionar Guardião Inicial (Owner)</h4>
+                                <p style="color: #666; font-size: 0.9em; margin-bottom: 10px;">
+                                    Permite adicionar até 9 guardiões iniciais (incluindo o próprio owner). Apenas o owner
+                                    pode executar.
+                                </p>
+                                <div class="input-group">
+                                    <label>Endereço do Guardião:</label>
+                                    <input type="text" id="propostas-addguardiao-address" placeholder="0x...">
+                                </div>
+                                <button class="btn btn-small"
+                                    onclick="propostas.adicionarguardiaoInicial()">Adicionar</button>
+                                <div id="result-propostas-addguardiao" class="result-box"></div>
+                            </div>
+
+                            <div class="function-item">
+                                <h4>Propor Novo Guardião</h4>
+                                <div class="input-group">
+                                    <label>Endereço do Candidato:</label>
+                                    <input type="text" id="propostas-propor-candidato" placeholder="0x...">
+                                </div>
+                                <button class="btn btn-small" onclick="propostas.proporNovoguardiao()">Propor</button>
+                                <div id="result-propostas-propor" class="result-box"></div>
+                            </div>
+
+                            <div class="function-item">
+                                <h4>Votar em Candidato a Guardião</h4>
+                                <div class="input-group">
+                                    <label>Endereço do Candidato:</label>
+                                    <input type="text" id="propostas-votar-guardiao-candidato" placeholder="0x...">
+                                </div>
+                                <div class="input-group">
+                                    <label>Decisão:</label>
+                                    <select id="propostas-votar-guardiao-decisao">
+                                        <option value="true">✅ Sim</option>
+                                        <option value="false">❌ Não</option>
+                                    </select>
+                                </div>
+                                <button class="btn btn-small" onclick="propostas.votarNovoguardiao()">Votar</button>
+                                <div id="result-propostas-votar-guardiao" class="result-box"></div>
+                            </div>
+
+                            <div class="function-item">
+                                <h4>Encerrar Proposta de Guardião</h4>
+                                <div class="input-group">
+                                    <label>Endereço do Candidato:</label>
+                                    <input type="text" id="propostas-encerrar-guardiao-candidato" placeholder="0x...">
+                                </div>
+                                <button class="btn btn-small"
+                                    onclick="propostas.encerrarPropostaguardiao()">Encerrar</button>
+                                <div id="result-propostas-encerrar-guardiao" class="result-box"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sub-tab Ações Rápidas -->
+                    <div id="guardioes-acoes" class="guardiao-subtab">
+                        <div class="function-section">
+                            <h3>⚡ Ações de Penalidade</h3>
+                            <p style="color: #666; margin-bottom: 20px;">
+                                Estas ações gerenciam guardiões inativos e podem ser executadas por qualquer guardião.
+                            </p>
+
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 15px;">
+                                <div class="quick-action-card">
+                                    <h4>⚠️ Suspender Inativos</h4>
+                                    <p>Suspende guardiões com penalidade ≥ 2</p>
+                                    <button class="btn btn-small" onclick="propostas.suspenderInativos()">Suspender</button>
+                                    <div id="result-propostas-suspender" class="result-box"></div>
+                                </div>
+
+                                <div class="quick-action-card">
+                                    <h4>❌ Remover Inativos</h4>
+                                    <p>Remove guardiões com penalidade ≥ 4</p>
+                                    <button class="btn btn-small" onclick="propostas.removerInativos()">Remover</button>
+                                    <div id="result-propostas-remover" class="result-box"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Mercado -->
+    <div id="mercadoModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>🛒 Contrato Mercado</h2>
+                <span class="close" onclick="closeModal('mercadoModal')">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="tabs">
+                    <button class="tab active" onclick="switchTab('mercado', 'read')">🔍 Leitura</button>
+                    <button class="tab" onclick="switchTab('mercado', 'write')">✏️ Escrita</button>
+                </div>
+
+                <!-- Tab de Leitura -->
+                <div id="mercado-read" class="tab-content active">
+                    <div class="function-section">
+                        <h3>Funções de Consulta</h3>
+
+                        <div class="function-item">
+                            <h4>Total de Ordens</h4>
+                            <button class="btn btn-small" onclick="mercado.getOrdemCount()">Consultar</button>
+                            <div id="result-mercado-count" class="result-box"></div>
+                        </div>
+
+                        <div class="function-item">
+                            <h4>Detalhes de Ordem</h4>
+                            <div class="input-group">
+                                <label>ID da Ordem:</label>
+                                <input type="number" id="mercado-ordem-id" placeholder="0">
+                            </div>
+                            <button class="btn btn-small" onclick="mercado.getOrdem()">Consultar</button>
+                            <div id="result-mercado-ordem" class="result-box"></div>
+                        </div>
+
+                        <div class="function-item">
+                            <h4>Todas as Ordens</h4>
+                            <button class="btn btn-small" onclick="mercado.getTodasOrdens()">Consultar</button>
+                            <div id="result-mercado-todas" class="result-box"></div>
+                        </div>
+
+                        <div class="function-item">
+                            <h4>Ordens de um Vendedor</h4>
+                            <div class="input-group">
+                                <label>Endereço do Vendedor:</label>
+                                <input type="text" id="mercado-vendedor-address" placeholder="0x...">
+                            </div>
+                            <button class="btn btn-small" onclick="mercado.getOrdensDoVendedor()">Consultar</button>
+                            <div id="result-mercado-vendedor" class="result-box"></div>
+                        </div>
+
+                        <div class="function-item">
+                            <h4>Árbitro Atual</h4>
+                            <button class="btn btn-small" onclick="mercado.getArbitro()">Consultar</button>
+                            <div id="result-mercado-arbitro" class="result-box"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab de Escrita -->
+                <div id="mercado-write" class="tab-content">
+                    <div class="function-section">
+                        <h3>Funções de Escrita</h3>
+
+                        <div class="function-item">
+                            <h4>Criar Ordem de Venda</h4>
+                            <div class="input-group">
+                                <label>Quantidade de Tokens (com decimais):</label>
+                                <input type="text" id="mercado-criar-quantidade" placeholder="1000000000000000000">
+                            </div>
+                            <div class="input-group">
+                                <label>Valor em BRL:</label>
+                                <input type="number" id="mercado-criar-valor" placeholder="100">
+                            </div>
+                            <button class="btn btn-small" onclick="mercado.criarOrdem()">Criar Ordem</button>
+                            <div id="result-mercado-criar" class="result-box"></div>
+                        </div>
+
+                        <div class="function-item">
+                            <h4>Iniciar Negociação</h4>
+                            <div class="input-group">
+                                <label>ID da Ordem:</label>
+                                <input type="number" id="mercado-negociar-id" placeholder="0">
+                            </div>
+                            <div class="input-group">
+                                <label>Garantia em POL:</label>
+                                <input type="text" id="mercado-negociar-garantia" placeholder="0.01">
+                            </div>
+                            <button class="btn btn-small" onclick="mercado.iniciarNegociacao()">Iniciar</button>
+                            <div id="result-mercado-negociar" class="result-box"></div>
+                        </div>
+
+                        <div class="function-item">
+                            <h4>Marcar como Completa (Vendedor)</h4>
+                            <div class="input-group">
+                                <label>ID da Ordem:</label>
+                                <input type="number" id="mercado-completa-id" placeholder="0">
+                            </div>
+                            <button class="btn btn-small" onclick="mercado.marcarComoCompleta()">Completar</button>
+                            <div id="result-mercado-completa" class="result-box"></div>
+                        </div>
+
+                        <div class="function-item">
+                            <h4>Abrir Disputa (Vendedor)</h4>
+                            <div class="input-group">
+                                <label>ID da Ordem:</label>
+                                <input type="number" id="mercado-disputa-id" placeholder="0">
+                            </div>
+                            <button class="btn btn-small" onclick="mercado.abrirDisputa()">Disputar</button>
+                            <div id="result-mercado-disputa" class="result-box"></div>
+                        </div>
+
+                        <div class="function-item">
+                            <h4>Árbitro Confirma Pagamento</h4>
+                            <div class="input-group">
+                                <label>ID da Ordem:</label>
+                                <input type="number" id="mercado-arbitro-confirma-id" placeholder="0">
+                            </div>
+                            <button class="btn btn-small"
+                                onclick="mercado.arbitroConfirmaPagamento()">Confirmar</button>
+                            <div id="result-mercado-arbitro-confirma" class="result-box"></div>
+                        </div>
+
+                        <div class="function-item">
+                            <h4>Árbitro Reverte Transação</h4>
+                            <div class="input-group">
+                                <label>ID da Ordem:</label>
+                                <input type="number" id="mercado-arbitro-reverte-id" placeholder="0">
+                            </div>
+                            <button class="btn btn-small" onclick="mercado.arbitroReverteTransacao()">Reverter</button>
+                            <div id="result-mercado-arbitro-reverte" class="result-box"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Graça -->
+    <div id="gracaModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>💰 Contrato Graça</h2>
+                <span class="close" onclick="closeModal('gracaModal')">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="tabs">
+                    <button class="tab active" onclick="switchTab('graca', 'read')">🔍 Leitura</button>
+                    <button class="tab" onclick="switchTab('graca', 'write')">✏️ Escrita</button>
+                </div>
+
+                <!-- Tab de Leitura -->
+                <div id="graca-read" class="tab-content active">
+                    <div class="function-section">
+                        <h3>Funções de Consulta</h3>
+
+                        <div class="function-item">
+                            <h4>Porcentagem da Graça</h4>
+                            <button class="btn btn-small" onclick="graca.getPorcentagens()">Consultar</button>
+                            <div id="result-graca-porcentagens" class="result-box"></div>
+                        </div>
+
+                        <div class="function-item">
+                            <h4>Saldo USDT no Contrato</h4>
+                            <button class="btn btn-small" onclick="graca.getSaldoUSDT()">Consultar</button>
+                            <div id="result-graca-saldo" class="result-box"></div>
+                        </div>
+
+                        <div class="function-item">
+                            <h4>Total Tokens Trancados</h4>
+                            <button class="btn btn-small" onclick="graca.getTotalTokensTrancados()">Consultar</button>
+                            <div id="result-graca-total" class="result-box"></div>
+                        </div>
+
+                        <div class="function-item">
+                            <h4>Info do Stake</h4>
+                            <div class="input-group">
+                                <label>Endereço:</label>
+                                <input type="text" id="graca-stake-address" placeholder="0x...">
+                            </div>
+                            <button class="btn btn-small" onclick="graca.getStakeInfo()">Consultar</button>
+                            <div id="result-graca-stake" class="result-box"></div>
+                        </div>
+
+                        <div class="function-item">
+                            <h4>Stakers Ativos</h4>
+                            <button class="btn btn-small" onclick="graca.getStakersAtivos()">Consultar</button>
+                            <div id="result-graca-stakers" class="result-box"></div>
+                        </div>
+
+                        <div class="function-item">
+                            <h4>Status da Votação</h4>
+                            <button class="btn btn-small" onclick="graca.getVotacaoInfo()">Consultar</button>
+                            <div id="result-graca-votacao" class="result-box"></div>
+                        </div>
+
+                        <div class="function-item">
+                            <h4>Verificar se é guardiao</h4>
+                            <div class="input-group">
+                                <label>Endereço:</label>
+                                <input type="text" id="graca-guardiao-address" placeholder="0x...">
+                            </div>
+                            <button class="btn btn-small" onclick="graca.isguardiao()">Verificar</button>
+                            <div id="result-graca-guardiao" class="result-box"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab de Escrita -->
+                <div id="graca-write" class="tab-content">
+                    <div class="function-section">
+                        <h3>Funções de Escrita</h3>
+
+                        <div class="function-item">
+                            <h4>Trancar Tokens</h4>
+                            <div class="input-group">
+                                <label>Quantidade (com decimais):</label>
+                                <input type="text" id="graca-trancar-quantidade" placeholder="1000000000000000000">
+                            </div>
+                            <button class="btn btn-small" onclick="graca.trancarTokens()">Trancar</button>
+                            <div id="result-graca-trancar" class="result-box"></div>
+                        </div>
+
+                        <div class="function-item">
+                            <h4>Destrancar Tokens</h4>
+                            <button class="btn btn-small" onclick="graca.destrancarTokens()">Destrancar</button>
+                            <div id="result-graca-destrancar" class="result-box"></div>
+                        </div>
+
+                        <div class="function-item">
+                            <h4>Distribuir USDT</h4>
+                            <button class="btn btn-small" onclick="graca.distribuir()">Distribuir</button>
+                            <div id="result-graca-distribuir" class="result-box"></div>
+                        </div>
+
+                        <div class="function-item">
+                            <h4>Iniciar Votação (Owner)</h4>
+                            <div class="input-group">
+                                <label>Nova Porcentagem (1-99):</label>
+                                <input type="number" id="graca-iniciar-porcentagem" placeholder="35">
+                            </div>
+                            <button class="btn btn-small" onclick="graca.iniciarVotacao()">Iniciar</button>
+                            <div id="result-graca-iniciar" class="result-box"></div>
+                        </div>
+
+                        <div class="function-item">
+                            <h4>Registrar Presença</h4>
+                            <button class="btn btn-small" onclick="graca.registrarPresenca()">Registrar</button>
+                            <div id="result-graca-presenca" class="result-box"></div>
+                        </div>
+
+                        <div class="function-item">
+                            <h4>Votar</h4>
+                            <div class="input-group">
+                                <label>Decisão:</label>
+                                <select id="graca-votar-decisao">
+                                    <option value="true">✅ Sim</option>
+                                    <option value="false">❌ Não</option>
+                                </select>
+                            </div>
+                            <button class="btn btn-small" onclick="graca.votar()">Votar</button>
+                            <div id="result-graca-votar" class="result-box"></div>
+                        </div>
+
+                        <div class="function-item">
+                            <h4>Finalizar Votação</h4>
+                            <button class="btn btn-small" onclick="graca.finalizarVotacao()">Finalizar</button>
+                            <div id="result-graca-finalizar" class="result-box"></div>
+                        </div>
+
+                        <div class="function-item">
+                            <h4>Alterar Carteira de Gastos (Owner)</h4>
+                            <div class="input-group">
+                                <label>Nova Carteira:</label>
+                                <input type="text" id="graca-carteira-address" placeholder="0x...">
+                            </div>
+                            <button class="btn btn-small" onclick="graca.setCarteiraGastos()">Alterar</button>
+                            <div id="result-graca-carteira" class="result-box"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+   {% include 'partials/dao_footer.html'%}
+   <script>
+        const footer = document.getElementById('votingCounters');
+
+        if (footer) {
+            footer.style.display = 'flex';
+        }
+   </script>
+    <script src="{% static 'js/fraguismo_dao/connect.js' %}"></script>
+    <script src="{% static 'js/fraguismo_dao/979.connect.v1.js' %}"></script>
+    <script src="{% static 'js/fraguismo_dao/120.connect.js'%}"></script>
+    <script src="{% static 'js/fraguismo_dao/416.connect.js'%}"></script>
+    <script src="{% static 'js/fraguismo_dao/979.connect.js'%}"></script>
+    <script src="{% static 'js/fraguismo_dao/muriloethereum.js'%}" type="application/javascript"></script>
+    <script src="{% static 'js/fraguismo_dao/web3.js'%}"></script>
+    <script src="{% static 'js/fraguismo_dao/initialize.js' %}"></script>
+    <script src="{% static 'js/fraguismo_dao/main.js' %}"></script>
+    <script src="{% static 'js/fraguismo_dao/contract-interface.js' %}?v={{ 7 }}"></script>
+
+</body>
+
+</html>

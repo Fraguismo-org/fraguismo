@@ -33,8 +33,7 @@ INSTALLED_APPS = [
     'log',
     'utils',
     'propostas',
-    'mercado_secundario',
-    'graca',
+    'fraguismo_dao',
 ]
 
 MIDDLEWARE = [
@@ -112,6 +111,10 @@ STATIC_ROOT = "/var/www/fraguismo/static/"
 MEDIA_URL = 'fraguismo/media/'
 if config('ENV') == 'dev':
     MEDIA_ROOT = os.path.join(BASE_DIR, 'fraguismo/media/')
+elif config('ENV') == 'test':
+    MEDIA_ROOT = "/var/www/teste/media/"
+    MEDIA_URL = 'media/'
+    STATIC_ROOT = "/var/www/teste/static/"
 else:
     MEDIA_ROOT = "/var/www/fraguismo/media/"
     MEDIA_URL = 'media/'

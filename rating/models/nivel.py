@@ -2,7 +2,7 @@ from django.db import models
 from django.db.models import Subquery
 
 class Nivel(models.Model):
-    id = models.IntegerField(primary_key=True)
+    id = models.AutoField(primary_key=True)
     nivel = models.CharField(max_length=20)
     pontuacao_base = models.IntegerField()
 

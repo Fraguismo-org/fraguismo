@@ -22,12 +22,14 @@ class Profile(models.Model):
     
     def get_or_create_profile(user_request):
         try:
-            profile = Profile.objects.get(user=user_request)
+            profile, created = Profile.objects.get_or_create(user=user_request)
+            if created:
+                profile.user = user_request
+                profile.nivel_id = Nivel.objects.get(id=1)                
             if profile.nivel_id is None:
-                profile.nivel_id = Nivel.objects.get(nivel=profile.nivel)
+                profile.nivel_id = Nivel.objects.get(nivel=profile.nivel)            
             return profile
-        except Exception as e:
-            Log.salva_log(e)
+        except Exception as e:            
             profile = Profile()
             profile.user = user_request
             profile.nivel_id = Nivel.objects.get(id=1)

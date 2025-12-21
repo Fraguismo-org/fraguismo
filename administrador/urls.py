@@ -1,7 +1,9 @@
 from django.urls import path
+
 from administrador.views import (
     administrador_views,
     pendencias_administrador_views,
+    valor_token_views,
 )
 from members.views import user_view
 
