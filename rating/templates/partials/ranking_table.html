@@ -3,7 +3,6 @@
         <tr>
             <th scope="col" class="text-center">Posição</th>
             <th scope="col">Usuário</th>
-            <th scope="col" class="d-none d-md-table-cell">E-mail</th>
             <th scope="col" class="text-end">
                 <span class="d-inline-flex align-items-center gap-1">
                     {{ score_label|default:"Pontuação" }}
@@ -17,10 +16,8 @@
         <tr>
             <td class="text-center fw-semibold">{{ entry.position }}</td>
             <td>
-                <div class="fw-semibold">{{ entry.profile.user.get_full_name|default:entry.profile.user.username }}</div>
-                <div class="text-muted small">@{{ entry.profile.user.username }}</div>
+                <div class="small">@{{ entry.profile.user.username }}</div>
             </td>
-            <td class="d-none d-md-table-cell text-break">{{ entry.profile.user.email }}</td>
             <td class="text-end fw-semibold">{{ entry.score|default:0 }}</td>
         </tr>
         {% empty %}

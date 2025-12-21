@@ -2,11 +2,10 @@ document.addEventListener('DOMContentLoaded', function () {
     const fraguistaField = document.getElementById('bloco-fraguista');
     const chkbxFraguista = document.getElementById('fraguista');
     const divIndicou = document.getElementById('div_indicou');
-    const divAonde = document.getElementById('div_aonde');    
+    const divAonde = document.getElementById('div_aonde');
     const chkCodigoConduta = document.getElementById('codigo_conduta');
     const chkTermosAdesao = document.getElementById('termos_adesao');
     const codigoCondutaError = document.getElementById('codigoCondutaError');
-
     const formRegistro = document.getElementById('form-registro');
 
     const username = document.getElementById('username');
@@ -28,168 +27,75 @@ document.addEventListener('DOMContentLoaded', function () {
     const quemIndicou = document.getElementById('quem_indicou');
     const aonde = document.getElementById('aonde');
     const btnRegistrar = document.getElementById('btn-registrar');
-    const btnRegistrarTop = document.getElementById('btn-registrar-top');
-    const btnRegistrarBottom = document.getElementById('btn-registrar-bottom');
-    const btnRegistrarBottomRow = document.getElementById('btn-registrar-bottom-row');
-    const selectedValue = getQueryParam('ref');
+    const condutaWrapper = document.getElementById('conduta-wrapper');
     const questionarioFields = Array.from(document.querySelectorAll('[data-questionario="true"]'));
 
-    senha.addEventListener('input', () => {
-        validaPassword();
-    });
+    function updateBotaoRegistrar() {
+        const termos = chkTermosAdesao.checked;
+        const fraguista = chkbxFraguista.checked;
+        const conduta = chkCodigoConduta.checked;
 
-    senha2.addEventListener('input', () => {
-        validaPassword();
-    });
+        const podeRegistrar = fraguista ? (termos && conduta) : termos;
 
-    username.addEventListener('change', () => {
-        validaUsername();
-    });
-
-    email.addEventListener('change', () => {
-        validaEmail();
-    });
-
-    firstName.addEventListener('change', () => {
-        validaNome();
-    });
-
-    lastName.addEventListener('change', () => {
-        validaSobrenome();
-    });
-
-    city.addEventListener('change', () => {
-        validaLocalidade();
-    });
-
-    phone.addEventListener('change', () => {
-        validaPhone();
-    });
-
-    instagram.addEventListener('change', () => {
-        validaInstagram();
-    });
-
-    birth.addEventListener('change', () => {
-        validaBirth();
-    });
-
-    jobTitle.addEventListener('change', () => {
-        validaJobTitle();
-    });
-
-    function getQueryParam(param) {
-        const urlParams = new URLSearchParams(window.location.search);
-        indicacao = urlParams.get(param);
-        if (indicacao === '' || indicacao === null) {
-            return '';
+        if (podeRegistrar) {
+            btnRegistrar.removeAttribute('disabled');
+        } else {
+            btnRegistrar.setAttribute('disabled', 'disabled');
         }
-        comoConheceu.value = 'indicacao';
-        divIndicou.style.display = 'inline';
-        quemIndicou.value = indicacao;
-        chkbxFraguista.checked = true;
-        fraguistaField.style.display = 'inline';
-        return urlParams.get(param);
     }
 
     function toggleObrigatoriedadeQuestionario() {
         const obrigatorio = chkbxFraguista.checked;
-        questionarioFields.forEach((field) => {
-            field.required = obrigatorio;
-            if (!obrigatorio) {
-                field.setCustomValidity('');
-            }
+        questionarioFields.forEach(f => {
+            f.required = obrigatorio;
+            if (!obrigatorio) f.setCustomValidity('');
         });
     }
-    toggleObrigatoriedadeQuestionario();
 
-    function togglePosicaoBotao() {
+    function toggleConsentView() {
         if (chkbxFraguista.checked) {
-            btnRegistrarBottomRow.style.display = 'flex';
-            btnRegistrarBottom.appendChild(btnRegistrar);
-            btnRegistrarTop.style.display = 'none';
+            condutaWrapper.style.display = 'block';
         } else {
-            btnRegistrarTop.style.display = 'block';
-            btnRegistrarTop.appendChild(btnRegistrar);
-            btnRegistrarBottomRow.style.display = 'none';
+            condutaWrapper.style.display = 'none';
+            chkCodigoConduta.checked = false;
+            codigoCondutaError.style.display = 'none';
         }
     }
-    togglePosicaoBotao();
 
     chkbxFraguista.addEventListener('change', () => {
         toggleObrigatoriedadeQuestionario();
-        if (chkbxFraguista.checked) {
-            fraguistaField.style.display = 'inline';
-        } else {
-            fraguistaField.style.display = 'none';
-            codigoCondutaError.style.display = 'none';
-        }
-        togglePosicaoBotao();
+        toggleConsentView();
+        fraguistaField.style.display = chkbxFraguista.checked ? 'block' : 'none';
+        updateBotaoRegistrar();
     });
 
-    comoConheceu.addEventListener('change', () => {
-        if (comoConheceu.value === 'indicacao') {
-            divIndicou.style.display = 'inline';
-            divAonde.style.display = 'none';
-        } else if (comoConheceu.value === 'outros') {
-            divAonde.style.display = 'inline';
-            divIndicou.style.display = 'none';
-        } else if (selectedValue) {
-            divIndicou.style.display = 'inline';
-            divAonde.style.display = 'none';
-            comoConheceu.value = 'indicacao';
-            quemIndicou.value = selectedValue;
-        }
-        else {
-            divAonde.style.display = 'none';
-            divIndicou.style.display = 'none';
-        }
+    chkTermosAdesao.addEventListener('change', updateBotaoRegistrar);
+    chkCodigoConduta.addEventListener('change', () => {
+        codigoCondutaError.style.display = 'none';
+        updateBotaoRegistrar();
     });
 
     formRegistro.addEventListener('submit', (event) => {
-        const isFraguista = chkbxFraguista.checked;
         codigoCondutaError.style.display = 'none';
         chkTermosAdesao.setCustomValidity('');
 
         if (!chkTermosAdesao.checked) {
             event.preventDefault();
-            chkTermosAdesao.setCustomValidity('Aceite os Termos e Condicoes para continuar.');
+            chkTermosAdesao.setCustomValidity('Aceite os Termos e Condições.');
             formRegistro.reportValidity();
             return;
         }
 
-        if (isFraguista) {
-            if (!chkCodigoConduta.checked) {
-                event.preventDefault();
-                codigoCondutaError.style.display = 'block';
-                chkCodigoConduta.focus();
-                return;
-            }
-            if (!(validaForm() && validaQuestionario())) {
-                event.preventDefault();
-                formRegistro.reportValidity();
-            }
+        if (chkbxFraguista.checked && !chkCodigoConduta.checked) {
+            event.preventDefault();
+            codigoCondutaError.style.display = 'block';
+            chkCodigoConduta.focus();
             return;
         }
 
-        if (!(validaUsername() && validaEmail() && validaPassword())) {
+        if (!(validaForm() && (!chkbxFraguista.checked || validaQuestionario()))) {
             event.preventDefault();
             formRegistro.reportValidity();
-        }
-    });
-
-    chkTermosAdesao.addEventListener('change', () => {
-        if (chkTermosAdesao.checked) {
-            btnRegistrar.removeAttribute('disabled');
-        }
-        else {
-            btnRegistrar.setAttribute('disabled','disabled');
-        }
-    });
-
-    chkCodigoConduta.addEventListener('change', () => {
-        if (chkCodigoConduta.checked) {
-            codigoCondutaError.style.display = 'none';
         }
     });
 
@@ -208,176 +114,107 @@ document.addEventListener('DOMContentLoaded', function () {
         );
     }
 
-    function validaUsername(){
+    function validaUsername() {
         document.getElementById('validation-username').style.display = 'none';
-        const regex = /^[a-zA-z0-9]{5,}$/;
-        if (regex.test(username.value)) {
-            return true;
-        }
-
+        if (/^[a-zA-Z0-9]{5,}$/.test(username.value)) return true;
         document.getElementById('validation-username').style.display = 'inline';
         return false;
     }
-    
-    function validaEmail(){
-        document.getElementById('validation-email').style.display = 'none';
-        const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-        if (regex.test(email.value)) {
-            return true;
-        }
 
+    function validaEmail() {
+        document.getElementById('validation-email').style.display = 'none';
+        if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)) return true;
         document.getElementById('validation-email').style.display = 'inline';
         return false;
     }
 
-    function validaPassword(){
-        let result = true;
-        if (senha.value.length < 8) {
-            passLength.style.color = 'red';
-            result =  result && false;
-        } else {
-            passLength.style.color = 'green';
-            result =  result && true;
-        }
-    
-        if (/^\d+$/.test(senha.value)) {
-            passNumeric.style.color = 'red';
-            result =  result && false;
-        } else {
-            passNumeric.style.color = 'green';
-            result =  result && true;
-        }
-    
-        if (!/[A-Za-z]/.test(senha.value) || !/\d/.test(senha.value)) {
-            passAlphnumeric.style.color = 'red';
-            result = result && false;
-        } else {
-            passAlphnumeric.style.color = 'green';
-            result =  result && true
-        }
-    
-        if (senha.value !== senha2.value) {
-            passEqual.style.color = 'red';
-            result =  result && false;
-        } else {
-            passEqual.style.color = 'green';
-            result =  result && true;
-        }
+    function validaPassword() {
+        let ok = true;
+        passLength.style.color = senha.value.length >= 8 ? 'green' : 'red';
+        passNumeric.style.color = /^\d+$/.test(senha.value) ? 'red' : 'green';
+        passAlphnumeric.style.color = (/[A-Za-z]/.test(senha.value) && /\d/.test(senha.value)) ? 'green' : 'red';
+        passEqual.style.color = senha.value === senha2.value ? 'green' : 'red';
 
-        return result;
-    }
-    
-    function validaNome(){
-        document.getElementById("validation-nome").style.display = 'none';
-        if (firstName.value !== '') {
-            return true;
-        };
+        if (senha.value.length < 8) ok = false;
+        if (/^\d+$/.test(senha.value)) ok = false;
+        if (!(/[A-Za-z]/.test(senha.value) && /\d/.test(senha.value))) ok = false;
+        if (senha.value !== senha2.value) ok = false;
 
-        document.getElementById("validation-nome").style.display = 'inline';
-        return false;
+        return ok;
     }
 
-    function validaSobrenome(){
-        document.getElementById("validation-sobrenome").style.display = 'none';
-        if (lastName.value !== '') {
-            return true;
-        };
-
-        document.getElementById("validation-sobrenome").style.display = 'inline';
-        return false;
+    function validaNome() {
+        document.getElementById("validation-nome").style.display = firstName.value ? 'none' : 'inline';
+        return !!firstName.value;
     }
-    
+
     function validaLocalidade() {
-        document.getElementById("validation-city").style.display = 'none';
-        if (city.value !== '') {
-            return true;
-        };
-
-        document.getElementById("validation-city").style.display = 'inline';
-        return false;
+        document.getElementById("validation-city").style.display = city.value ? 'none' : 'inline';
+        return !!city.value;
     }
 
-    function validaPhone(){
+    function validaPhone() {
         document.getElementById("validation-phone").style.display = 'none';
-        const regex = /^(\+?\d{1,3})? ?(\(?\d{2,3}\)?)? ?\d{4,5}-?\d{4}$/;
-        if (regex.test(phone.value)) {
-            return true;
-        }
-
+        if (/^(\+?\d{1,3})? ?(\(?\d{2,3}\)?)? ?\d{4,5}-?\d{4}$/.test(phone.value)) return true;
         document.getElementById("validation-phone").style.display = 'inline';
         return false;
     }
-    
-    function validaInstagram(){
-        document.getElementById("validation-instagram").style.display = 'none';
-        const regex = /^[a-zA-Z0-9._]{1,30}$/;
-        if (regex.test(instagram.value) || instagram.value === '') {
-            return true;
-        }
 
+    function validaInstagram() {
+        document.getElementById("validation-instagram").style.display = 'none';
+        if (/^[a-zA-Z0-9._]{1,30}$/.test(instagram.value) || instagram.value === '') return true;
         document.getElementById("validation-instagram").style.display = 'inline';
         return false;
     }
 
-    function validaBirth(){
+    function validaBirth() {
         document.getElementById("validation-birth").style.display = 'none';
-        const nascimento = new Date(birth.value);
-        const dataAtual = new Date();
-        const dataMinima = new Date();
-        dataMinima.setFullYear(dataAtual.getFullYear() - 13);
-        
-        if (nascimento <= dataMinima) {
-            return true;
-        }
-
+        const min = new Date();
+        min.setFullYear(min.getFullYear() - 13);
+        if (new Date(birth.value) <= min) return true;
         document.getElementById("validation-birth").style.display = 'inline';
         return false;
-
     }
 
-    function validaJobTitle(){
-        document.getElementById("validation-jobtitle").style.display = 'none';
-        if (jobTitle.value !== '') {
-            return true;
-        }
-
-        document.getElementById("validation-jobtitle").style.display = 'inline';
-        return false;
+    function validaJobTitle() {
+        document.getElementById("validation-jobtitle").style.display = jobTitle.value ? 'none' : 'inline';
+        return !!jobTitle.value;
     }
 
-    function validaComoConheceu(){
+    function validaComoConheceu() {
         document.getElementById("validation-outros").style.display = 'none';
         document.getElementById("validation-indicacao").style.display = 'none';
 
         if (comoConheceu.value === 'indicacao' && quemIndicou.value === '') {
             document.getElementById("validation-indicacao").style.display = 'inline';
             return false;
-        } else if (comoConheceu.value === 'outros' && aonde.value === '') {
+        }
+        if (comoConheceu.value === 'outros' && aonde.value === '') {
             document.getElementById("validation-outros").style.display = 'inline';
             return false;
-        } else {
-            return true;
         }
+        return true;
     }
 
     function validaQuestionario() {
-        let valido = true;
-        questionarioFields.forEach((field) => {
-            field.setCustomValidity('');
-            if (chkbxFraguista.checked && field.value.trim().length < 50) {
-                field.setCustomValidity('Responda com pelo menos 50 caracteres.');
-                valido = false;
+        let ok = true;
+        questionarioFields.forEach(f => {
+            f.setCustomValidity('');
+            if (chkbxFraguista.checked && f.value.trim().length < 50) {
+                f.setCustomValidity('mínimo 50 caracteres.');
+                ok = false;
             }
         });
-        return valido;
+        return ok;
     }
 
-    questionarioFields.forEach((field) => {
-        field.addEventListener('input', () => {
-            if (field.value.trim().length >= 50) {
-                field.setCustomValidity('');
-            }
+    questionarioFields.forEach(f => {
+        f.addEventListener('input', () => {
+            if (f.value.trim().length >= 50) f.setCustomValidity('');
         });
     });
 
+    toggleObrigatoriedadeQuestionario();
+    toggleConsentView();
+    updateBotaoRegistrar();
 });
