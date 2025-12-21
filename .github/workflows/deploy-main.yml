@@ -1,9 +1,9 @@
-name: Deploy to VPS (Develop)
+name: Deploy to VPS (main)
 
 on:
   push:
     branches:
-      - develop
+      - main
 
 jobs:
   deploy:
