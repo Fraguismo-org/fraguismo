@@ -9,7 +9,7 @@ from log.models.log import Log
 def administrador(request):
     try:
         links = Acesso.objects.all()
-        return render(request, 'adm.html', {'links': links})
+        return render(request, 'adm.html', {'link': links})
     except Exception as e:
         Log.salva_log(e)
 
