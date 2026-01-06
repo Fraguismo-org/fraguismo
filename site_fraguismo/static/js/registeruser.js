@@ -200,8 +200,8 @@ document.addEventListener('DOMContentLoaded', function () {
         let ok = true;
         questionarioFields.forEach(f => {
             f.setCustomValidity('');
-            if (chkbxFraguista.checked && f.value.trim().length < 50) {
-                f.setCustomValidity('mínimo 50 caracteres.');
+            if (chkbxFraguista.checked && f.value.trim().length < 20) {
+                f.setCustomValidity('mínimo 20 caracteres.');
                 ok = false;
             }
         });
@@ -210,7 +210,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     questionarioFields.forEach(f => {
         f.addEventListener('input', () => {
-            if (f.value.trim().length >= 50) f.setCustomValidity('');
+            if (f.value.trim().length >= 20) f.setCustomValidity('');
         });
     });
 
