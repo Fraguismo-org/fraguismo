@@ -7,7 +7,7 @@ on:
 
 jobs:
   deploy:
-    name: Deploy to Test Environment
+    name: Deploy to Prod Environment
     runs-on: ubuntu-latest
 
     steps:
@@ -23,4 +23,4 @@ jobs:
           port: ${{ secrets.VPS_PORT }}
           script: |
             cd ${{ secrets.VPS_DEPLOY_PATH }}
-            sudo bash deploy_main.sh
+            bash deploy_main.sh
