@@ -162,31 +162,47 @@ def marcar_contato(request, questionario_id):
         # Verificar se já não está marcado
         if questionario.contato_realizado:
             messages.info(request, "Este contato já foi marcado como realizado.")
-            return redirect("lista_usuarios")
+            return redirect("lista_usuarios_adm")
         
         # Atualizar com transação
         with transaction.atomic():
             questionario.contato_realizado = True
             questionario.save()
             
-            # Log opcional
-            Log.salva_log(
-                f"Contato marcado: questionário {questionario_id}",
-                user=request.user
-            )
         
         messages.success(request, "Contato marcado como realizado!")
         
     except Questionario.DoesNotExist:
         messages.error(request, "Questionário não encontrado.")
-        Log.salva_log(f"Questionário {questionario_id} não existe")
         
-    except (DatabaseError, OperationalError) as e:
+    except (DatabaseError, OperationalError):
         messages.error(request, "Erro no banco de dados.")
-        Log.salva_log(f"Erro de BD ao marcar contato {questionario_id}: {e}")
         
-    except Exception as e:
+    except Exception:
         messages.error(request, "Erro inesperado ao processar a solicitação.")
-        Log.salva_log(f"Erro inesperado em marcar_contato: {e}")
+        raise
     
-    return redirect("lista_usuarios")
+    return redirect("lista_usuarios_adm")
+
+@login_required(login_url="login")
+def desmarcar_contato(request, questionario_id):
+    if not request.user.is_staff:
+        messages.warning(request, "apenas administradores podem desmarcar contatos.")
+        return redirect("user_page")
+
+    try:
+        questionario = Questionario.objects.get(id=questionario_id)
+
+        if not questionario.contato_realizado:
+            messages.info(request, "Este contato já está desmarcado.")
+            return redirect("lista_usuarios_adm")
+
+        questionario.contato_realizado = False
+        questionario.save()
+
+        messages.success(request, "Contato Desmarcado com sucesso.")
+
+    except Questionario.DoesNotExist:
+        messages.error(request, "Questionário não encontrado.")
+
+    return redirect("lista_usuarios_adm")
