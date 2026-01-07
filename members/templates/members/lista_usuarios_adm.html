@@ -145,12 +145,18 @@
             {% if profile.user.is_fraguista and profile.questionario and profile.questionario.id %}
 
                 {% if profile.questionario.contato_realizado %}
-                    <span class="text-success fw-bold">Feito</span>
+                    <form method="POST" action="{% url 'desmarcar_contato' profile.questionario.id %}">
+                        {% csrf_token %}
+                        <button class="btn btn-sm btn-outline-danger">
+                            Desfazer
+                        </button>
+                        <small class="text-success">Contato Feito</small>
+                    </form>
                 {% else %}
                     <form method="POST" action="{% url 'marcar_contato' profile.questionario.id %}">
                         {% csrf_token %}
                         <button class="btn btn-sm btn-outline-success">
-                            Marcar contato
+                            Marcar Contato
                         </button>
                     </form>
                 {% endif %}
@@ -158,7 +164,7 @@
             {% else %}
                 -
             {% endif %}
-        </td>
+            </td>
 
             <!-- link "Mais" -->
             <td>
