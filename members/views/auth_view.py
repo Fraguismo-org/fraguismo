@@ -33,21 +33,26 @@ def register_user(request):
         user  = Users()
         user.is_fraguista = request.POST.get('fraguista', None) == 'on'
         user.codigo_conduta = request.POST.get('codigo_conduta', None) == 'on'
+
         user.username = request.POST.get('username', None)
         user.email = request.POST.get('email', None)
+
         if Users.objects.filter(username=user.username).exists():
             messages.warning(request, f'Usuário {user.username} já está em uso!')
             return render(request, 'authenticate/register_user.html')
+
         if Users.objects.filter(email=user.email).exists():
             messages.error(request, f'E-mail {user.email} já está em uso!')
             return render(request, 'authenticate/register_user.html')
+        
         password = request.POST.get('password', None)
         password2 = request.POST.get('password2', None)
-        if password == password2:
-            user.set_password(password)
-        else:
-            messages.error(request, 'Os campos de senha devem coincidir.')
+
+        if password != password2:
+            messages.error(request, 'As senhas não coincidem.')
             return render(request, 'authenticate/register_user.html')
+        user.set_password(password)
+
         if user.is_fraguista:
             user.first_name = request.POST.get('first_name', None)
             user.last_name = request.POST.get('last_name', None)
@@ -83,10 +88,10 @@ def register_user(request):
             }
             respostas_invalidas = [
                 label for key, label in required_q_fields.items()
-                if len(questionario_respostas.get(key, "")) < 50
+                if len(questionario_respostas.get(key, "")) < 20
             ]
             if respostas_invalidas:
-                messages.error(request, "Preencha todas as respostas do questionário com no mínimo 50 caracteres.")
+                messages.error(request, "Preencha todas as respostas do questionário com no mínimo 20 caracteres.")
                 return render(request, "authenticate/register_user.html")
             
         user.save()
