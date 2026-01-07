@@ -15,4 +15,5 @@ urlpatterns = [
     path('user_page/', user_view.user_page, name='user_page'),
     path('users/', user_view.lista_usuarios, name='lista_usuarios'),
     path('navigation/', view=administrador_views.navigation, name='navigation'),
+    path('valor_token/', view=valor_token_views.valor_token, name='valor_token'),
 ]
