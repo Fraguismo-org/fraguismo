@@ -1,15 +1,17 @@
-from django.db import models
-from members.models.users import Users
+from datetime import datetime
+import os
 
 
-class Log(models.Model):    
-    id = models.AutoField(primary_key=True)    
-    mensagem = models.TextField()
-    timestamp = models.DateTimeField(auto_now_add=True)
-    
+class Log:
+    def _nome_arquivo():
+        data = datetime.now().strftime("%Y%m%d%H")
+        diretorio = f'logs/{datetime.now().strftime("%Y/%m")}'
+        if not os.path.exists(diretorio):
+            os.makedirs(diretorio)
+        return f"{diretorio}/{data}.log"
+
     def salva_log(mensagem):
-        log = Log(mensagem=mensagem)
-        log.save()
-
-    def __str__(self):
-        return f"[{self.level}] {self.timestamp}: {self.message}]"
+        arquivo = Log._nome_arquivo()
+        with open(arquivo, "a", encoding="utf-8") as f:
+            f.write(
+                f"[{datetime.now().strftime('%Y-%m-%d %H: %M: %S')}] [ERROR] {mensagem}")

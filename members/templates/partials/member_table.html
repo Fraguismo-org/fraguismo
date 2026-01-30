@@ -1,5 +1,6 @@
 <table class="table table-hover table-responsive">
       <thead>
+        <th><input type="checkbox" name="select_all" id="select_all"></th>
         <th>Username</th>
         {% if user.is_superuser %}
         {% endif %}
@@ -10,11 +11,14 @@
         {% if profile.user and profile.user.username %}
         <tr>
             <td>
+                <input type="checkbox" id="usuarios[]" name="usuarios[]" value="{{ profile.user.id }}">
+            </td>
+            <td>
                 <a href="{% url 'profile' username=profile.user.username %}">{{ profile.user.username }}
             </td>
             <td>
                 {% if profile.user.is_fraguista %}
-                {{ profile.nivel }}
+                    {{ profile.nivel }}
                 {% else %}
                 <p>Não Fraguista</p>
                 {% endif %}
