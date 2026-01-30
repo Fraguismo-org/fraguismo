@@ -309,5 +309,4 @@ document.addEventListener('DOMContentLoaded', function () {
     toggleObrigatoriedadeQuestionario();
     toggleConsentView();
     updateBotaoRegistrar();
-
 });
