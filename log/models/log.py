@@ -13,4 +13,5 @@ class Log:
     def salva_log(mensagem):
         arquivo = Log._nome_arquivo()
         with open(arquivo, "a", encoding="utf-8") as f:
-            f.write(f"[{datetime.now().strftime(" % Y-%m-%d % H: % M: % S")}] [ERROR] {mensagem}")
+            f.write(
+                f"[{datetime.now().strftime('%Y-%m-%d %H: %M: %S')}] [ERROR] {mensagem}")
