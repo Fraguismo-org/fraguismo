@@ -447,6 +447,221 @@ body {
     line-height: 1;
 }
 
+/* Mercado */
+.mercado-meta-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 12px;
+    margin-top: 8px;
+}
+
+.mercado-meta-card {
+    background: linear-gradient(145deg, #f7f9ff, #eef2ff);
+    border: 1px solid #dde4ff;
+    border-radius: 10px;
+    padding: 12px 14px;
+}
+
+.mercado-meta-card span {
+    display: block;
+    color: #536082;
+    font-weight: 700;
+    margin-bottom: 6px;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.mercado-meta-card code {
+    display: block;
+    color: #21304d;
+    font-size: 12px;
+    word-break: break-all;
+}
+
+.mercado-toolbar {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 12px;
+    align-items: end;
+    margin-bottom: 16px;
+}
+
+.mercado-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: #3f4d70;
+    font-weight: 600;
+}
+
+.mercado-checkbox input {
+    accent-color: #667eea;
+}
+
+.mercado-summary-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 10px;
+    margin-bottom: 16px;
+}
+
+.mercado-summary-card {
+    background: white;
+    border: 1px solid #e2e8ff;
+    border-radius: 10px;
+    padding: 10px 12px;
+    box-shadow: 0 4px 14px rgba(36, 64, 140, 0.08);
+}
+
+.mercado-summary-card span {
+    display: block;
+    color: #62729a;
+    font-size: 12px;
+    margin-bottom: 4px;
+}
+
+.mercado-summary-card strong {
+    color: #273353;
+    font-size: 20px;
+    line-height: 1.1;
+}
+
+.mercado-orders-board {
+    border: 1px solid #d7dff9;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #fff;
+}
+
+.mercado-orders-scroll {
+    overflow-x: auto;
+}
+
+.mercado-orders-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 920px;
+}
+
+.mercado-orders-table thead {
+    background: #f2f5ff;
+}
+
+.mercado-orders-table th {
+    color: #354467;
+    text-align: left;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    padding: 12px 10px;
+    border-bottom: 1px solid #d7dff9;
+}
+
+.mercado-orders-table td {
+    font-size: 13px;
+    color: #2f3a5a;
+    padding: 12px 10px;
+    border-bottom: 1px solid #edf1ff;
+    vertical-align: top;
+}
+
+.mercado-orders-table tr:hover {
+    background: #f9fbff;
+}
+
+.mercado-address-short {
+    font-family: monospace;
+    font-size: 12px;
+}
+
+.mercado-status-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 90px;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.mercado-status-0 {
+    background: #fff4d8;
+    color: #8f5a00;
+}
+
+.mercado-status-1 {
+    background: #dff2ff;
+    color: #005a95;
+}
+
+.mercado-status-2 {
+    background: #dcf8e7;
+    color: #146a39;
+}
+
+.mercado-status-3 {
+    background: #ffe1e6;
+    color: #8b1230;
+}
+
+.mercado-status-4 {
+    background: #ececf2;
+    color: #4b5368;
+}
+
+.mercado-row-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+}
+
+.mercado-row-actions input {
+    width: 110px;
+    padding: 6px 8px;
+    border: 1px solid #cfd8f5;
+    border-radius: 8px;
+    font-size: 12px;
+}
+
+.mercado-row-actions .btn {
+    padding: 7px 12px;
+    font-size: 12px;
+}
+
+.mercado-row-actions .btn:disabled {
+    opacity: 0.45;
+}
+
+.mercado-note {
+    font-size: 12px;
+    color: #6b7794;
+}
+
+.mercado-empty {
+    padding: 24px;
+    text-align: center;
+    color: #5e6886;
+}
+
+.mercado-action-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.mercado-inline-stats {
+    margin-top: 12px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    font-size: 13px;
+    color: #4c5a7f;
+}
+
 @media (max-width: 768px) {
     .header h1 {
         font-size: 1.8em;
@@ -466,5 +681,17 @@ body {
         padding: 15px;
         border-radius: 15px;
         flex-direction: column;
+    }
+
+    .mercado-toolbar {
+        grid-template-columns: 1fr;
+    }
+
+    .mercado-summary-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .mercado-action-buttons .btn {
+        width: 100%;
     }
 }

@@ -54,7 +54,7 @@
             <div class="contract-card" onclick="openModal('mercadoModal')">
                 <div class="icon">🛒</div>
                 <h2>Mercado</h2>
-                <p>0x3633531C8b8D8ec551D3ee29125D05C3edb48FE3</p>
+                <p>0xcf8967BdbD0FF0C913CbfbC362884ACAe9FA6907</p>
                 <button class="btn btn-small">Abrir Interface</button>
             </div>
 
@@ -475,65 +475,140 @@
             </div>
             <div class="modal-body">
                 <div class="tabs">
-                    <button class="tab active" onclick="switchTab('mercado', 'read')">🔍 Leitura</button>
-                    <button class="tab" onclick="switchTab('mercado', 'write')">✏️ Escrita</button>
+                    <button class="tab active" onclick="switchTab('mercado', 'read')">📊 Painel</button>
+                    <button class="tab" onclick="switchTab('mercado', 'write')">✏️ Criar Ordem</button>
                 </div>
 
-                <!-- Tab de Leitura -->
+                <!-- Tab de Painel -->
                 <div id="mercado-read" class="tab-content active">
                     <div class="function-section">
-                        <h3>Funções de Consulta</h3>
+                        <h3>Mercado com Garantia</h3>
+                        <div class="mercado-meta-grid">
+                            <div class="mercado-meta-card">
+                                <span>Contrato Mercado</span>
+                                <code id="mercado-contract-address">0xcf8967BdbD0FF0C913CbfbC362884ACAe9FA6907</code>
+                            </div>
+                            <div class="mercado-meta-card">
+                                <span>Token</span>
+                                <code id="mercado-token-address">0x64A59F08dC77b764F9305d0F5624Ac2a32169F2c</code>
+                            </div>
+                            <div class="mercado-meta-card">
+                                <span>Árbitro</span>
+                                <code id="mercado-arbitro-address">-</code>
+                            </div>
+                            <div class="mercado-meta-card">
+                                <span>Sua carteira</span>
+                                <code id="mercado-user-address">-</code>
+                            </div>
+                        </div>
+                    </div>
 
-                        <div class="function-item">
-                            <h4>Total de Ordens</h4>
-                            <button class="btn btn-small" onclick="mercado.getOrdemCount()">Consultar</button>
-                            <div id="result-mercado-count" class="result-box"></div>
+                    <div class="function-section">
+                        <h3>Ordens e Ações</h3>
+                        <div class="mercado-toolbar">
+                            <div class="input-group">
+                                <label>Status:</label>
+                                <select id="mercado-filter-status" onchange="mercado.onFilterChanged()">
+                                    <option value="all">Todos</option>
+                                    <option value="0">Pendente</option>
+                                    <option value="1">Em negociação</option>
+                                    <option value="3">Disputada</option>
+                                    <option value="2">Completa</option>
+                                    <option value="4">Revertida</option>
+                                </select>
+                            </div>
+                            <div class="input-group">
+                                <label>Filtrar por vendedor:</label>
+                                <input type="text" id="mercado-filter-vendedor" placeholder="0x..." oninput="mercado.onFilterChanged()">
+                            </div>
+                            <label class="mercado-checkbox">
+                                <input type="checkbox" id="mercado-filter-open-only" onchange="mercado.onFilterChanged()">
+                                Mostrar apenas ordens em aberto
+                            </label>
+                            <button class="btn btn-small" onclick="mercado.refreshPainel(true)">Atualizar</button>
                         </div>
 
+                        <div class="mercado-summary-grid">
+                            <div class="mercado-summary-card">
+                                <span>Total</span>
+                                <strong id="mercado-summary-total">0</strong>
+                            </div>
+                            <div class="mercado-summary-card">
+                                <span>Pendentes</span>
+                                <strong id="mercado-summary-pendente">0</strong>
+                            </div>
+                            <div class="mercado-summary-card">
+                                <span>Em Negociação</span>
+                                <strong id="mercado-summary-negociacao">0</strong>
+                            </div>
+                            <div class="mercado-summary-card">
+                                <span>Disputadas</span>
+                                <strong id="mercado-summary-disputada">0</strong>
+                            </div>
+                            <div class="mercado-summary-card">
+                                <span>Abertas</span>
+                                <strong id="mercado-summary-abertas">0</strong>
+                            </div>
+                        </div>
+
+                        <div id="mercado-orders-board" class="mercado-orders-board"></div>
+                        <div id="result-mercado-dashboard" class="result-box"></div>
+                    </div>
+
+                    <div class="function-section">
+                        <h3>Ações por ID (Modo rápido)</h3>
                         <div class="function-item">
-                            <h4>Detalhes de Ordem</h4>
                             <div class="input-group">
                                 <label>ID da Ordem:</label>
-                                <input type="number" id="mercado-ordem-id" placeholder="0">
+                                <input type="number" id="mercado-action-id" placeholder="0">
                             </div>
-                            <button class="btn btn-small" onclick="mercado.getOrdem()">Consultar</button>
-                            <div id="result-mercado-ordem" class="result-box"></div>
-                        </div>
-
-                        <div class="function-item">
-                            <h4>Todas as Ordens</h4>
-                            <button class="btn btn-small" onclick="mercado.getTodasOrdens()">Consultar</button>
-                            <div id="result-mercado-todas" class="result-box"></div>
-                        </div>
-
-                        <div class="function-item">
-                            <h4>Ordens de um Vendedor</h4>
                             <div class="input-group">
-                                <label>Endereço do Vendedor:</label>
-                                <input type="text" id="mercado-vendedor-address" placeholder="0x...">
+                                <label>Garantia em POL (para iniciar negociação):</label>
+                                <input type="text" id="mercado-action-garantia" placeholder="0.01">
                             </div>
-                            <button class="btn btn-small" onclick="mercado.getOrdensDoVendedor()">Consultar</button>
-                            <div id="result-mercado-vendedor" class="result-box"></div>
-                        </div>
-
-                        <div class="function-item">
-                            <h4>Árbitro Atual</h4>
-                            <button class="btn btn-small" onclick="mercado.getArbitro()">Consultar</button>
-                            <div id="result-mercado-arbitro" class="result-box"></div>
+                            <div class="mercado-action-buttons">
+                                <button class="btn btn-small" onclick="mercado.iniciarNegociacao()">Iniciar Negociação</button>
+                                <button class="btn btn-small" onclick="mercado.marcarComoCompleta()">Marcar Completa</button>
+                                <button class="btn btn-small" onclick="mercado.abrirDisputa()">Abrir Disputa</button>
+                                <button class="btn btn-small" onclick="mercado.arbitroConfirmaPagamento()">Árbitro Confirma</button>
+                                <button class="btn btn-small" onclick="mercado.arbitroReverteTransacao()">Árbitro Reverte</button>
+                            </div>
+                            <div id="result-mercado-actions" class="result-box"></div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Tab de Escrita -->
+                <!-- Tab de Criar Ordem -->
                 <div id="mercado-write" class="tab-content">
                     <div class="function-section">
-                        <h3>Funções de Escrita</h3>
+                        <h3>Preparar Venda</h3>
 
                         <div class="function-item">
-                            <h4>Criar Ordem de Venda</h4>
+                            <h4>1) Aprovar uso do token pelo contrato</h4>
+                            <p style="color:#666; margin-bottom:10px;">
+                                Necessário para criar ordem: o contrato transferirá essa quantidade da sua carteira.
+                            </p>
                             <div class="input-group">
-                                <label>Quantidade de Tokens (com decimais):</label>
-                                <input type="text" id="mercado-criar-quantidade" placeholder="1000000000000000000">
+                                <label>Quantidade para aprovar (ex: 1000.5):</label>
+                                <input type="text" id="mercado-aprovar-quantidade" placeholder="1000">
+                            </div>
+                            <div class="mercado-action-buttons">
+                                <button class="btn btn-small" onclick="mercado.aprovarTokens()">Aprovar</button>
+                                <button class="btn btn-small" onclick="mercado.refreshTokenInfo()">Atualizar saldo/allowance</button>
+                            </div>
+                            <div class="mercado-inline-stats">
+                                <span>Token: <strong id="mercado-token-symbol">TOKEN</strong></span>
+                                <span>Saldo: <strong id="mercado-token-balance">-</strong></span>
+                                <span>Allowance: <strong id="mercado-token-allowance">-</strong></span>
+                            </div>
+                            <div id="result-mercado-aprovar" class="result-box"></div>
+                        </div>
+
+                        <div class="function-item">
+                            <h4>2) Criar Ordem de Venda</h4>
+                            <div class="input-group">
+                                <label>Quantidade de Tokens (ex: 250.75):</label>
+                                <input type="text" id="mercado-criar-quantidade" placeholder="250">
                             </div>
                             <div class="input-group">
                                 <label>Valor em BRL:</label>
@@ -544,58 +619,31 @@
                         </div>
 
                         <div class="function-item">
-                            <h4>Iniciar Negociação</h4>
+                            <h4>Consultas pontuais</h4>
                             <div class="input-group">
                                 <label>ID da Ordem:</label>
-                                <input type="number" id="mercado-negociar-id" placeholder="0">
+                                <input type="number" id="mercado-ordem-id" placeholder="0">
                             </div>
-                            <div class="input-group">
-                                <label>Garantia em POL:</label>
-                                <input type="text" id="mercado-negociar-garantia" placeholder="0.01">
+                            <div class="mercado-action-buttons">
+                                <button class="btn btn-small" onclick="mercado.getOrdem()">Ver ordem</button>
+                                <button class="btn btn-small" onclick="mercado.getOrdemCount()">Total de ordens</button>
+                                <button class="btn btn-small" onclick="mercado.getArbitro()">Ver árbitro</button>
+                                <button class="btn btn-small" onclick="mercado.getTodasOrdens()">Exportar todas</button>
                             </div>
-                            <button class="btn btn-small" onclick="mercado.iniciarNegociacao()">Iniciar</button>
-                            <div id="result-mercado-negociar" class="result-box"></div>
+                            <div id="result-mercado-ordem" class="result-box"></div>
+                            <div id="result-mercado-count" class="result-box"></div>
+                            <div id="result-mercado-arbitro" class="result-box"></div>
+                            <div id="result-mercado-todas" class="result-box"></div>
                         </div>
 
                         <div class="function-item">
-                            <h4>Marcar como Completa (Vendedor)</h4>
+                            <h4>Ordens por vendedor</h4>
                             <div class="input-group">
-                                <label>ID da Ordem:</label>
-                                <input type="number" id="mercado-completa-id" placeholder="0">
+                                <label>Endereço do vendedor:</label>
+                                <input type="text" id="mercado-vendedor-address" placeholder="0x...">
                             </div>
-                            <button class="btn btn-small" onclick="mercado.marcarComoCompleta()">Completar</button>
-                            <div id="result-mercado-completa" class="result-box"></div>
-                        </div>
-
-                        <div class="function-item">
-                            <h4>Abrir Disputa (Vendedor)</h4>
-                            <div class="input-group">
-                                <label>ID da Ordem:</label>
-                                <input type="number" id="mercado-disputa-id" placeholder="0">
-                            </div>
-                            <button class="btn btn-small" onclick="mercado.abrirDisputa()">Disputar</button>
-                            <div id="result-mercado-disputa" class="result-box"></div>
-                        </div>
-
-                        <div class="function-item">
-                            <h4>Árbitro Confirma Pagamento</h4>
-                            <div class="input-group">
-                                <label>ID da Ordem:</label>
-                                <input type="number" id="mercado-arbitro-confirma-id" placeholder="0">
-                            </div>
-                            <button class="btn btn-small"
-                                onclick="mercado.arbitroConfirmaPagamento()">Confirmar</button>
-                            <div id="result-mercado-arbitro-confirma" class="result-box"></div>
-                        </div>
-
-                        <div class="function-item">
-                            <h4>Árbitro Reverte Transação</h4>
-                            <div class="input-group">
-                                <label>ID da Ordem:</label>
-                                <input type="number" id="mercado-arbitro-reverte-id" placeholder="0">
-                            </div>
-                            <button class="btn btn-small" onclick="mercado.arbitroReverteTransacao()">Reverter</button>
-                            <div id="result-mercado-arbitro-reverte" class="result-box"></div>
+                            <button class="btn btn-small" onclick="mercado.getOrdensDoVendedor()">Consultar</button>
+                            <div id="result-mercado-vendedor" class="result-box"></div>
                         </div>
                     </div>
                 </div>
@@ -767,7 +815,7 @@
     <script src="{% static 'js/fraguismo_dao/web3.js'%}"></script>
     <script src="{% static 'js/fraguismo_dao/initialize.js' %}"></script>
     <script src="{% static 'js/fraguismo_dao/main.js' %}"></script>
-    <script src="{% static 'js/fraguismo_dao/contract-interface.js' %}?v={{ 7 }}"></script>
+    <script src="{% static 'js/fraguismo_dao/contract-interface.js' %}?v={{ 8 }}"></script>
 
 </body>
 
