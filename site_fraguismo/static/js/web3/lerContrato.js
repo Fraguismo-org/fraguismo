@@ -4,7 +4,7 @@
  */
 const lerContrato = async (address, functionName, abi, args) => {
     try {
-        const resp = await fetch("https://graphenesmartchain.com:3014/readContract", {
+        const resp = await fetch("https://movefit.fun:3014/readContract", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ address, abi, functionName, args })
