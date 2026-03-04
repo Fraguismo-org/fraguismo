@@ -943,6 +943,14 @@ function marketParseDecimalToUnits(input, decimals = 18) {
     return units || '0';
 }
 
+function marketParseIntegerToBigInt(input, fieldLabel = 'valor') {
+    const normalized = String(input || '').trim();
+    if (!/^\d+$/.test(normalized)) {
+        throw new Error(`Informe ${fieldLabel} como número inteiro positivo.`);
+    }
+    return BigInt(normalized);
+}
+
 function marketFormatBRL(value) {
     const numberValue = Number(String(value));
     if (Number.isFinite(numberValue)) {
@@ -1247,11 +1255,19 @@ const mercado = {
 
     async aprovarTokens() {
         try {
+            await this.syncMercadoMeta();
             const quantidadeHumana = document.getElementById('mercado-aprovar-quantidade').value;
-            const quantidadeBase = marketParseDecimalToUnits(quantidadeHumana, mercadoState.tokenDecimals);
+            const quantidadeBase = BigInt(
+                marketParseDecimalToUnits(quantidadeHumana, mercadoState.tokenDecimals)
+            );
 
             await escreverTokenMercado('approve', [CONTRACT_ADDRESSES.mercado, quantidadeBase]);
-            showResult('result-mercado-aprovar', `Aprovação enviada com sucesso para ${quantidadeHumana} ${mercadoState.tokenSymbol}.`);
+            showResult('result-mercado-aprovar', {
+                mensagem: 'Aprovação enviada com sucesso.',
+                quantidadeDigitada: `${quantidadeHumana} ${mercadoState.tokenSymbol}`,
+                unidadesEnviadas: quantidadeBase.toString(),
+                casasDecimaisToken: mercadoState.tokenDecimals
+            });
 
             await this.refreshTokenInfo();
         } catch (error) {
@@ -1323,20 +1339,26 @@ const mercado = {
 
     async criarOrdem() {
         try {
+            await this.syncMercadoMeta();
             const quantidadeHumana = document.getElementById('mercado-criar-quantidade').value;
             const valor = document.getElementById('mercado-criar-valor').value;
 
-            if (!valor || Number(valor) <= 0) {
+            const valorBrl = marketParseIntegerToBigInt(valor, 'o valor em BRL');
+            if (valorBrl <= 0n) {
                 throw new Error('Informe um valor em BRL maior que zero.');
             }
 
-            const quantidadeBase = marketParseDecimalToUnits(quantidadeHumana, mercadoState.tokenDecimals);
-            await escreverMercado('criarOrdem', [quantidadeBase, valor]);
+            const quantidadeBase = BigInt(
+                marketParseDecimalToUnits(quantidadeHumana, mercadoState.tokenDecimals)
+            );
+            await escreverMercado('criarOrdem', [quantidadeBase, valorBrl]);
 
             showResult('result-mercado-criar', {
                 mensagem: 'Ordem criada com sucesso.',
                 quantidade: `${quantidadeHumana} ${mercadoState.tokenSymbol}`,
-                valorBRL: valor
+                quantidadeUnidadesBase: quantidadeBase.toString(),
+                casasDecimaisToken: mercadoState.tokenDecimals,
+                valorBRL: valorBrl.toString()
             });
             await this.refreshPainel(false);
             await this.refreshTokenInfo();
