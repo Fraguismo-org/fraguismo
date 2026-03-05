@@ -1,4 +1,41 @@
 document.addEventListener('DOMContentLoaded', function () {
+
+    /* =========================
+       LOCAL STORAGE (PERSISTÊNCIA)
+    ========================== */
+
+    const STORAGE_KEY = 'registro_form';
+
+    function salvarCampo(id, valor) {
+        const dados = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
+        dados[id] = valor;
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(dados));
+    }
+
+    function restaurarFormulario() {
+        const dados = JSON.parse(localStorage.getItem(STORAGE_KEY));
+        if (!dados) return;
+
+        Object.keys(dados).forEach(id => {
+            const el = document.getElementById(id);
+            if (!el) return;
+
+            if (el.type === 'checkbox') {
+                el.checked = dados[id];
+            } else {
+                el.value = dados[id];
+            }
+        });
+    }
+
+    function limparFormularioSalvo() {
+        localStorage.removeItem(STORAGE_KEY);
+    }
+
+    /* =========================
+       ELEMENTOS
+    ========================== */
+
     const fraguistaField = document.getElementById('bloco-fraguista');
     const chkbxFraguista = document.getElementById('fraguista');
     const divIndicou = document.getElementById('div_indicou');
@@ -30,18 +67,51 @@ document.addEventListener('DOMContentLoaded', function () {
     const condutaWrapper = document.getElementById('conduta-wrapper');
     const questionarioFields = Array.from(document.querySelectorAll('[data-questionario="true"]'));
 
+    /* =========================
+       CAMPOS PERSISTENTES
+    ========================== */
+
+    const camposPersistentes = [
+        username,
+        email,
+        firstName,
+        lastName,
+        city,
+        phone,
+        instagram,
+        birth,
+        jobTitle,
+        comoConheceu,
+        quemIndicou,
+        aonde,
+        chkbxFraguista,
+        chkTermosAdesao,
+        chkCodigoConduta,
+        ...questionarioFields
+    ];
+
+    camposPersistentes.forEach(campo => {
+        const evento = campo.type === 'checkbox' || campo.tagName === 'SELECT'
+            ? 'change'
+            : 'input';
+
+        campo.addEventListener(evento, () => {
+            const valor = campo.type === 'checkbox' ? campo.checked : campo.value;
+            salvarCampo(campo.id, valor);
+        });
+    });
+
+    /* =========================
+       UI / REGRAS
+    ========================== */
+
     function updateBotaoRegistrar() {
         const termos = chkTermosAdesao.checked;
         const fraguista = chkbxFraguista.checked;
         const conduta = chkCodigoConduta.checked;
-
         const podeRegistrar = fraguista ? (termos && conduta) : termos;
 
-        if (podeRegistrar) {
-            btnRegistrar.removeAttribute('disabled');
-        } else {
-            btnRegistrar.setAttribute('disabled', 'disabled');
-        }
+        btnRegistrar.toggleAttribute('disabled', !podeRegistrar);
     }
 
     function toggleObrigatoriedadeQuestionario() {
@@ -75,7 +145,12 @@ document.addEventListener('DOMContentLoaded', function () {
         updateBotaoRegistrar();
     });
 
+    /* =========================
+       SUBMIT
+    ========================== */
+
     formRegistro.addEventListener('submit', (event) => {
+
         codigoCondutaError.style.display = 'none';
         chkTermosAdesao.setCustomValidity('');
 
@@ -96,8 +171,15 @@ document.addEventListener('DOMContentLoaded', function () {
         if (!(validaForm() && (!chkbxFraguista.checked || validaQuestionario()))) {
             event.preventDefault();
             formRegistro.reportValidity();
+            return;
         }
+
+        limparFormularioSalvo();
     });
+
+    /* =========================
+       VALIDAÇÕES
+    ========================== */
 
     function validaForm() {
         return (
@@ -130,9 +212,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function validaPassword() {
         let ok = true;
+
         passLength.style.color = senha.value.length >= 8 ? 'green' : 'red';
         passNumeric.style.color = /^\d+$/.test(senha.value) ? 'red' : 'green';
-        passAlphnumeric.style.color = (/[A-Za-z]/.test(senha.value) && /\d/.test(senha.value)) ? 'green' : 'red';
+        passAlphnumeric.style.color =
+            (/[A-Za-z]/.test(senha.value) && /\d/.test(senha.value)) ? 'green' : 'red';
         passEqual.style.color = senha.value === senha2.value ? 'green' : 'red';
 
         if (senha.value.length < 8) ok = false;
@@ -144,12 +228,14 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function validaNome() {
-        document.getElementById("validation-nome").style.display = firstName.value ? 'none' : 'inline';
+        document.getElementById("validation-nome").style.display =
+            firstName.value ? 'none' : 'inline';
         return !!firstName.value;
     }
 
     function validaLocalidade() {
-        document.getElementById("validation-city").style.display = city.value ? 'none' : 'inline';
+        document.getElementById("validation-city").style.display =
+            city.value ? 'none' : 'inline';
         return !!city.value;
     }
 
@@ -177,7 +263,8 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function validaJobTitle() {
-        document.getElementById("validation-jobtitle").style.display = jobTitle.value ? 'none' : 'inline';
+        document.getElementById("validation-jobtitle").style.display =
+            jobTitle.value ? 'none' : 'inline';
         return !!jobTitle.value;
     }
 
@@ -214,6 +301,11 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
+    /* =========================
+       INICIALIZAÇÃO
+    ========================== */
+
+    restaurarFormulario();
     toggleObrigatoriedadeQuestionario();
     toggleConsentView();
     updateBotaoRegistrar();
