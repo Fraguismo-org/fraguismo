@@ -2,7 +2,7 @@
 let web3;
 let userAccount;
 let contracts = {};
-let version = "1.2.7";
+let version = "1.2.8";
 /**
  * Função para ler informações do contrato via API
  */
