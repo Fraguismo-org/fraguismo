@@ -2,7 +2,7 @@
 let web3;
 let userAccount;
 let contracts = {};
-let version = "1.2.8";
+let version = "1.2.9";
 /**
  * Função para ler informações do contrato via API
  */
@@ -189,9 +189,9 @@ async function escreverPropriedadesNFT(functionName, args = []) {
 
 // Endereços dos contratos
 const CONTRACT_ADDRESSES = {
-    propostas: '0xb76B51d329A3371D462C91C2369533472Dfb7C30', // Contrato Guardiões (Propostas + Guardiões)
-    guardioes: '0xb76B51d329A3371D462C91C2369533472Dfb7C30', // Mesmo contrato que propostas (guardioes.sol)
-    propriedadesNFT: '0x5191b5923511B54F293a0F05B60072f7987BD4c4', // PropriedadesNFT.sol — ATUALIZE após deploy
+    propostas: '0x6577D33D22AA441376626A71381012ea2c9532Aa', // Contrato Guardiões (Propostas + Guardiões)
+    guardioes: '0x6577D33D22AA441376626A71381012ea2c9532Aa', // Mesmo contrato que propostas (guardioes.sol)
+    propriedadesNFT: '0x3c103e63d49eD6f8d7142Cac68da12C7AC492ED3', // PropriedadesNFT.sol — ATUALIZE após deploy
     mercado: '0xcf8967BdbD0FF0C913CbfbC362884ACAe9FA6907',
     mercadoToken: '0x64A59F08dC77b764F9305d0F5624Ac2a32169F2c',
     graca: '0x7E598c2EB44c58A7F69fcC3957c4f27B6cb459D5',
