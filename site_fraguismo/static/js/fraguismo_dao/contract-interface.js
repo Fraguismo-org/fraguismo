@@ -159,13 +159,43 @@ async function escreverTokenMercado(functionName, args = []) {
     return await writeWeb3Contract(CONTRACT_ADDRESSES.mercadoToken, functionName, [abi], args);
 }
 
+/**
+ * Função auxiliar para ler do contrato PropriedadesNFT
+ */
+async function lerPropriedadesNFT(functionName, args = []) {
+    if (!CONTRACT_ADDRESSES.propriedadesNFT || CONTRACT_ADDRESSES.propriedadesNFT === '0x0000000000000000000000000000000000000000') {
+        throw new Error('Endereço do contrato PropriedadesNFT não configurado. Atualize CONTRACT_ADDRESSES.propriedadesNFT.');
+    }
+    const abi = findABIForFunction(PROPIEDADES_NFT_ABI, functionName);
+    if (!abi) {
+        throw new Error(`Função ${functionName} não encontrada no ABI do PropriedadesNFT`);
+    }
+    return await lerContrato(CONTRACT_ADDRESSES.propriedadesNFT, functionName, [abi], args);
+}
+
+/**
+ * Função auxiliar para escrever no contrato PropriedadesNFT
+ */
+async function escreverPropriedadesNFT(functionName, args = []) {
+    if (!CONTRACT_ADDRESSES.propriedadesNFT || CONTRACT_ADDRESSES.propriedadesNFT === '0x0000000000000000000000000000000000000000') {
+        throw new Error('Endereço do contrato PropriedadesNFT não configurado. Atualize CONTRACT_ADDRESSES.propriedadesNFT.');
+    }
+    const abi = findABIForFunction(PROPIEDADES_NFT_ABI, functionName);
+    if (!abi) {
+        throw new Error(`Função ${functionName} não encontrada no ABI do PropriedadesNFT`);
+    }
+    return await writeWeb3Contract(CONTRACT_ADDRESSES.propriedadesNFT, functionName, [abi], args);
+}
+
 // Endereços dos contratos
 const CONTRACT_ADDRESSES = {
-    propostas: '0x0909C2083b82eF27050c081eE85743d58cBB84E0', // Contrato unificado (Propostas + Guardiões)
+    propostas: '0xb76B51d329A3371D462C91C2369533472Dfb7C30', // Contrato Guardiões (Propostas + Guardiões)
+    guardioes: '0xb76B51d329A3371D462C91C2369533472Dfb7C30', // Mesmo contrato que propostas (guardioes.sol)
+    propriedadesNFT: '0x5191b5923511B54F293a0F05B60072f7987BD4c4', // PropriedadesNFT.sol — ATUALIZE após deploy
     mercado: '0xcf8967BdbD0FF0C913CbfbC362884ACAe9FA6907',
     mercadoToken: '0x64A59F08dC77b764F9305d0F5624Ac2a32169F2c',
     graca: '0x7E598c2EB44c58A7F69fcC3957c4f27B6cb459D5',
-    blockNumber: '0x59c28c1DEb67a31369E3C0f3511e976E133f7431' // ATUALIZE COM O ENDEREÇO DO CONTRATO DEPLOYADO
+    blockNumber: '0x59c28c1DEb67a31369E3C0f3511e976E133f7431'
 };
 
 // ABIs dos contratos
@@ -216,7 +246,7 @@ const PROPOSTAS_ABI = [
     {"inputs":[{"internalType":"address","name":"guardiao","type":"address"}],"name":"getguardiaoInfo","outputs":[{"internalType":"uint256","name":"penalidade","type":"uint256"},{"internalType":"bool","name":"ativo","type":"bool"},{"internalType":"bool","name":"ehguardiao","type":"bool"}],"stateMutability":"view","type":"function"},
     {"inputs":[],"name":"getguardioesAtivos","outputs":[{"internalType":"address[]","name":"","type":"address[]"}],"stateMutability":"view","type":"function"},
     {"inputs":[],"name":"getguardioesSuspensos","outputs":[{"internalType":"address[]","name":"","type":"address[]"}],"stateMutability":"view","type":"function"},
-    {"inputs":[],"name":"getQuorumInfo","outputs":[{"internalType":"uint256","name":"quorumMinimo","type":"uint256"},{"internalType":"uint256","name":"totalDiretoresAtivos","type":"uint256"},{"internalType":"uint256","name":"totalVotantesAtual","type":"uint256"},{"internalType":"bool","name":"quorumAtingido","type":"bool"}],"stateMutability":"view","type":"function"},
+    {"inputs":[],"name":"getQuorumInfo","outputs":[{"internalType":"uint256","name":"quorumMinimo","type":"uint256"},{"internalType":"uint256","name":"totalguardioesAtivos","type":"uint256"},{"internalType":"uint256","name":"totalVotantesAtual","type":"uint256"},{"internalType":"bool","name":"quorumAtingido","type":"bool"}],"stateMutability":"view","type":"function"},
     {"inputs":[],"name":"getQuorumMinimo","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
     {"inputs":[],"name":"getTotalguardioesAtivos","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
     {"inputs":[{"internalType":"address","name":"guardiao","type":"address"}],"name":"isguardiaoAtivo","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},
@@ -307,6 +337,48 @@ const BLOCK_NUMBER_ABI = [
         "stateMutability": "view",
         "type": "function"
     }
+];
+
+// ABI do contrato PropriedadesNFT (propriedadesNFT.sol) — compatível com votação e guardiões
+const PROPIEDADES_NFT_ABI = [
+    {"inputs":[{"internalType":"address","name":"account","type":"address"}],"name":"getTotalTokensByOwner","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
+    {"inputs":[{"internalType":"uint256","name":"tokenId","type":"uint256"},{"internalType":"address","name":"to","type":"address"}],"name":"transferNFT","outputs":[],"stateMutability":"nonpayable","type":"function"},
+    {"inputs":[],"name":"simularPesos","outputs":[{"internalType":"address[]","name":"guardioesArray","type":"address[]"},{"internalType":"uint256[]","name":"tokensReaisArray","type":"uint256[]"},{"internalType":"uint256[]","name":"tokensVirtuaisArray","type":"uint256[]"},{"internalType":"uint256[]","name":"tokensTotaisArray","type":"uint256[]"},{"internalType":"uint256[]","name":"pesosSimuladosArray","type":"uint256[]"}],"stateMutability":"view","type":"function"},
+    {"inputs":[],"name":"calcularPesos","outputs":[],"stateMutability":"nonpayable","type":"function"},
+    {"inputs":[],"name":"limparPesos","outputs":[],"stateMutability":"nonpayable","type":"function"},
+    {"inputs":[{"internalType":"string","name":"proposalHash","type":"string"},{"internalType":"string","name":"metadata","type":"string"},{"internalType":"uint256","name":"tokenAmount","type":"uint256"},{"internalType":"address","name":"destinatario","type":"address"}],"name":"criarPropostaCriacaoNFT","outputs":[],"stateMutability":"nonpayable","type":"function"},
+    {"inputs":[{"internalType":"string","name":"proposalHash","type":"string"},{"internalType":"bool","name":"decisao","type":"bool"}],"name":"votarCriacaoNFT","outputs":[],"stateMutability":"nonpayable","type":"function"},
+    {"inputs":[{"internalType":"string","name":"proposalHash","type":"string"}],"name":"encerrarPropostaCriacaoNFT","outputs":[],"stateMutability":"nonpayable","type":"function"},
+    {"inputs":[{"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"criarPropostaDestruicaoNFT","outputs":[],"stateMutability":"nonpayable","type":"function"},
+    {"inputs":[{"internalType":"uint256","name":"tokenId","type":"uint256"},{"internalType":"bool","name":"decisao","type":"bool"}],"name":"votarDestruicaoNFT","outputs":[],"stateMutability":"nonpayable","type":"function"},
+    {"inputs":[{"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"encerrarPropostaDestruicaoNFT","outputs":[],"stateMutability":"nonpayable","type":"function"},
+    {"inputs":[{"internalType":"string","name":"proposalHash","type":"string"}],"name":"mintNFT","outputs":[],"stateMutability":"nonpayable","type":"function"},
+    {"inputs":[{"internalType":"string","name":"metadata","type":"string"},{"internalType":"uint256","name":"tokenAmount","type":"uint256"},{"internalType":"address","name":"to","type":"address"}],"name":"mintNFTTeste","outputs":[],"stateMutability":"nonpayable","type":"function"},
+    {"inputs":[{"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"getNFT","outputs":[{"internalType":"address","name":"minter","type":"address"},{"internalType":"address","name":"currentOwnerAddr","type":"address"},{"internalType":"string","name":"metadata","type":"string"},{"internalType":"uint256","name":"tokenAmount","type":"uint256"},{"internalType":"bool","name":"exists","type":"bool"}],"stateMutability":"view","type":"function"},
+    {"inputs":[],"name":"getAllTokenIds","outputs":[{"internalType":"uint256[]","name":"","type":"uint256[]"}],"stateMutability":"view","type":"function"},
+    {"inputs":[{"internalType":"address","name":"ownerAddr","type":"address"}],"name":"getNFTsByOwner","outputs":[{"internalType":"uint256[]","name":"","type":"uint256[]"}],"stateMutability":"view","type":"function"},
+    {"inputs":[{"internalType":"string","name":"proposalHash","type":"string"}],"name":"getCriacaoProposalDetails","outputs":[{"internalType":"address","name":"proposer","type":"address"},{"internalType":"string","name":"metadata","type":"string"},{"internalType":"uint256","name":"tokenAmount","type":"uint256"},{"internalType":"address","name":"destinatario","type":"address"},{"internalType":"bool","name":"ended","type":"bool"},{"internalType":"bool","name":"approved","type":"bool"},{"internalType":"bool","name":"minted","type":"bool"},{"internalType":"uint256","name":"totalYesWeight","type":"uint256"},{"internalType":"uint256","name":"totalNoWeight","type":"uint256"}],"stateMutability":"view","type":"function"},
+    {"inputs":[{"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"getDestruicaoProposalDetails","outputs":[{"internalType":"address","name":"proposer","type":"address"},{"internalType":"bool","name":"ended","type":"bool"},{"internalType":"bool","name":"approved","type":"bool"},{"internalType":"uint256","name":"totalYesWeight","type":"uint256"},{"internalType":"uint256","name":"totalNoWeight","type":"uint256"}],"stateMutability":"view","type":"function"},
+    {"inputs":[],"name":"getPropostasCriacaoAbertas","outputs":[{"internalType":"string[]","name":"","type":"string[]"}],"stateMutability":"view","type":"function"},
+    {"inputs":[],"name":"getPropostasDestruicaoAbertas","outputs":[{"internalType":"uint256[]","name":"","type":"uint256[]"}],"stateMutability":"view","type":"function"},
+    {"inputs":[],"name":"getAllNFTsInfo","outputs":[{"internalType":"uint256[]","name":"ids","type":"uint256[]"},{"internalType":"address[]","name":"minters","type":"address[]"},{"internalType":"address[]","name":"owners","type":"address[]"},{"internalType":"uint256[]","name":"amounts","type":"uint256[]"},{"internalType":"uint256[]","name":"ultimasAtividades","type":"uint256[]"}],"stateMutability":"view","type":"function"},
+    {"inputs":[],"name":"owner","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},
+    {"inputs":[],"name":"tokenAddress","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},
+    {"inputs":[],"name":"guardioesAddress","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},
+    {"inputs":[],"name":"modoTeste","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},
+    {"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"virtualTokenBalance","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
+    {"inputs":[],"name":"totalSupply","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
+    {"inputs":[],"name":"nextTokenId","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
+    {"inputs":[],"name":"weightsCalculated","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},
+    {"inputs":[],"name":"CARTEIRA_MAE","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},
+    {"inputs":[],"name":"TEMPO_INATIVIDADE","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
+    {"inputs":[],"name":"TEMPO_INATIVIDADE_TESTE","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
+    {"inputs":[],"name":"getTempoInatividade","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
+    {"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"lastActivity","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
+    {"inputs":[],"name":"registrarAtividade","outputs":[],"stateMutability":"nonpayable","type":"function"},
+    {"inputs":[{"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"recuperarNFT","outputs":[],"stateMutability":"nonpayable","type":"function"},
+    {"inputs":[{"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"getAtividadeNFT","outputs":[{"internalType":"address","name":"proprietario","type":"address"},{"internalType":"uint256","name":"ultimaAtividade","type":"uint256"},{"internalType":"uint256","name":"tempoInativo","type":"uint256"},{"internalType":"bool","name":"recuperavel","type":"bool"}],"stateMutability":"view","type":"function"},
+    {"inputs":[],"name":"getNFTsRecuperaveis","outputs":[{"internalType":"uint256[]","name":"idsRecuperaveis","type":"uint256[]"},{"internalType":"address[]","name":"proprietarios","type":"address[]"},{"internalType":"uint256[]","name":"temposInativos","type":"uint256[]"}],"stateMutability":"view","type":"function"}
 ];
 
 const GRACA_ABI = [
@@ -403,7 +475,10 @@ function initContracts() {
     contracts.propostas = new web3.eth.Contract(PROPOSTAS_ABI, CONTRACT_ADDRESSES.propostas);
     contracts.mercado = new web3.eth.Contract(MERCADO_ABI, CONTRACT_ADDRESSES.mercado);
     contracts.graca = new web3.eth.Contract(GRACA_ABI, CONTRACT_ADDRESSES.graca);
-    
+    const nftAddr = CONTRACT_ADDRESSES.propriedadesNFT;
+    if (nftAddr && nftAddr !== '0x0000000000000000000000000000000000000000') {
+        contracts.propriedadesNFT = new web3.eth.Contract(PROPIEDADES_NFT_ABI, nftAddr);
+    }
     // Inicia os contadores após inicializar os contratos
     setTimeout(() => {
         if (contracts.propostas && web3) {
@@ -462,6 +537,20 @@ function switchGuardiaoTab(subtab) {
     
     // Adiciona a classe active ao conteúdo correspondente
     document.getElementById(`guardioes-${subtab}`).classList.add('active');
+}
+
+function switchNftTab(subtab) {
+    const container = document.getElementById('propostas-nft');
+    if (!container) return;
+    const tabs = container.querySelectorAll('.tabs .tab');
+    const contents = container.querySelectorAll('.nft-subtab');
+    tabs.forEach(t => t.classList.remove('active'));
+    contents.forEach(c => { c.style.display = 'none'; });
+    const tabMap = { consultas: 0, criacao: 1, destruicao: 2, prova: 3, acoes: 4 };
+    const idx = tabMap[subtab];
+    if (idx !== undefined && tabs[idx]) tabs[idx].classList.add('active');
+    const content = document.getElementById(`nft-${subtab}`);
+    if (content) content.style.display = 'block';
 }
 
 function showResult(elementId, data, isError = false) {
@@ -862,6 +951,280 @@ const propostas = {
             showResult('result-propostas-calcularPesos', 'Pesos calculados com sucesso!');
         } catch (error) {
             showResult('result-propostas-calcularPesos', error.message, true);
+        }
+    }
+};
+
+// ============================================
+// FUNÇÕES DO CONTRATO PROPRIEDADES NFT
+// ============================================
+const propriedadesNFT = {
+    async getNFT() {
+        try {
+            const tokenId = document.getElementById('nft-get-tokenId').value;
+            const result = await lerPropriedadesNFT('getNFT', [tokenId]);
+            showResult('result-nft-get', {
+                minter: result[0],
+                currentOwner: result[1],
+                metadata: result[2],
+                tokenAmount: result[3],
+                exists: result[4]
+            });
+        } catch (error) {
+            showResult('result-nft-get', error.message, true);
+        }
+    },
+    async getAllTokenIds() {
+        try {
+            const result = await lerPropriedadesNFT('getAllTokenIds');
+            showResult('result-nft-all-ids', { tokenIds: result });
+        } catch (error) {
+            showResult('result-nft-all-ids', error.message, true);
+        }
+    },
+    async getNFTsByOwner() {
+        try {
+            const owner = document.getElementById('nft-owner-address').value;
+            const result = await lerPropriedadesNFT('getNFTsByOwner', [owner]);
+            showResult('result-nft-by-owner', { tokenIds: result });
+        } catch (error) {
+            showResult('result-nft-by-owner', error.message, true);
+        }
+    },
+    async getCriacaoProposalDetails() {
+        try {
+            const hash = document.getElementById('nft-criacao-hash').value;
+            const result = await lerPropriedadesNFT('getCriacaoProposalDetails', [hash]);
+            showResult('result-nft-criacao-details', {
+                proposer: result[0],
+                metadata: result[1],
+                tokenAmount: result[2],
+                destinatario: result[3],
+                ended: result[4],
+                approved: result[5],
+                minted: result[6],
+                totalYesWeight: result[7],
+                totalNoWeight: result[8]
+            });
+        } catch (error) {
+            showResult('result-nft-criacao-details', error.message, true);
+        }
+    },
+    async getDestruicaoProposalDetails() {
+        try {
+            const tokenId = document.getElementById('nft-destruicao-tokenId').value;
+            const result = await lerPropriedadesNFT('getDestruicaoProposalDetails', [tokenId]);
+            showResult('result-nft-destruicao-details', {
+                proposer: result[0],
+                ended: result[1],
+                approved: result[2],
+                totalYesWeight: result[3],
+                totalNoWeight: result[4]
+            });
+        } catch (error) {
+            showResult('result-nft-destruicao-details', error.message, true);
+        }
+    },
+    async getPropostasCriacaoAbertas() {
+        try {
+            const result = await lerPropriedadesNFT('getPropostasCriacaoAbertas');
+            showResult('result-nft-criacao-abertas', { propostasAbertas: result });
+        } catch (error) {
+            showResult('result-nft-criacao-abertas', error.message, true);
+        }
+    },
+    async getPropostasDestruicaoAbertas() {
+        try {
+            const result = await lerPropriedadesNFT('getPropostasDestruicaoAbertas');
+            showResult('result-nft-destruicao-abertas', { propostasAbertas: result });
+        } catch (error) {
+            showResult('result-nft-destruicao-abertas', error.message, true);
+        }
+    },
+    async getAllNFTsInfo() {
+        try {
+            const result = await lerPropriedadesNFT('getAllNFTsInfo');
+            showResult('result-nft-all-info', {
+                ids: result[0],
+                minters: result[1],
+                owners: result[2],
+                amounts: result[3],
+                ultimasAtividades: result[4]
+            });
+        } catch (error) {
+            showResult('result-nft-all-info', error.message, true);
+        }
+    },
+    async getTempoInatividade() {
+        try {
+            const result = await lerPropriedadesNFT('getTempoInatividade');
+            const segundos = parseInt(result);
+            const dias = Math.floor(segundos / 86400);
+            showResult('result-nft-tempo-inatividade', {
+                segundos,
+                dias,
+                descricao: dias >= 1 ? `${dias} dias` : `${Math.floor(segundos / 60)} minutos (modo teste)`
+            });
+        } catch (error) {
+            showResult('result-nft-tempo-inatividade', error.message, true);
+        }
+    },
+    async getAtividadeNFT() {
+        try {
+            const tokenId = document.getElementById('nft-atividade-tokenId').value;
+            const result = await lerPropriedadesNFT('getAtividadeNFT', [tokenId]);
+            showResult('result-nft-atividade', {
+                proprietario: result[0],
+                ultimaAtividade: result[1],
+                ultimaAtividadeData: result[1] ? new Date(parseInt(result[1]) * 1000).toLocaleString() : '-',
+                tempoInativoSegundos: result[2],
+                tempoInativoDias: Math.floor(parseInt(result[2]) / 86400),
+                recuperavel: result[3]
+            });
+        } catch (error) {
+            showResult('result-nft-atividade', error.message, true);
+        }
+    },
+    async getNFTsRecuperaveis() {
+        try {
+            const result = await lerPropriedadesNFT('getNFTsRecuperaveis');
+            const ids = result[0];
+            const proprietarios = result[1];
+            const tempos = result[2];
+            const list = ids.map((id, i) => ({
+                tokenId: id,
+                proprietario: proprietarios[i],
+                tempoInativoSegundos: tempos[i],
+                tempoInativoDias: Math.floor(parseInt(tempos[i]) / 86400)
+            }));
+            showResult('result-nft-recuperaveis', { total: ids.length, nftsRecuperaveis: list });
+        } catch (error) {
+            showResult('result-nft-recuperaveis', error.message, true);
+        }
+    },
+    async registrarAtividade() {
+        try {
+            await escreverPropriedadesNFT('registrarAtividade', []);
+            showResult('result-nft-registrar-atividade', 'Prova de vida registrada para todos os seus NFTs!');
+        } catch (error) {
+            showResult('result-nft-registrar-atividade', error.message, true);
+        }
+    },
+    async recuperarNFT() {
+        try {
+            const tokenId = document.getElementById('nft-recuperar-tokenId').value;
+            await escreverPropriedadesNFT('recuperarNFT', [tokenId]);
+            showResult('result-nft-recuperar', 'NFT recuperado: transferido para a carteira mãe.');
+        } catch (error) {
+            showResult('result-nft-recuperar', error.message, true);
+        }
+    },
+    async simularPesos() {
+        try {
+            const result = await lerPropriedadesNFT('simularPesos');
+            showResult('result-nft-simular-pesos', {
+                guardioes: result[0],
+                tokensReais: result[1],
+                tokensVirtuais: result[2],
+                tokensTotais: result[3],
+                pesosSimulados: result[4]
+            });
+        } catch (error) {
+            showResult('result-nft-simular-pesos', error.message, true);
+        }
+    },
+    async criarPropostaCriacaoNFT() {
+        try {
+            const proposalHash = document.getElementById('nft-criar-proposal-hash').value;
+            const metadata = document.getElementById('nft-criar-metadata').value;
+            const tokenAmount = document.getElementById('nft-criar-tokenAmount').value;
+            const destinatario = document.getElementById('nft-criar-destinatario').value || '0x0000000000000000000000000000000000000000';
+            await escreverPropriedadesNFT('criarPropostaCriacaoNFT', [proposalHash, metadata, tokenAmount, destinatario]);
+            showResult('result-nft-criar-proposta', 'Proposta de criação criada com sucesso!');
+        } catch (error) {
+            showResult('result-nft-criar-proposta', error.message, true);
+        }
+    },
+    async votarCriacaoNFT() {
+        try {
+            const hash = document.getElementById('nft-votar-criacao-hash').value;
+            const decisao = document.getElementById('nft-votar-criacao-decisao').value === 'true';
+            await escreverPropriedadesNFT('votarCriacaoNFT', [hash, decisao]);
+            showResult('result-nft-votar-criacao', 'Voto registrado com sucesso!');
+        } catch (error) {
+            showResult('result-nft-votar-criacao', error.message, true);
+        }
+    },
+    async encerrarPropostaCriacaoNFT() {
+        try {
+            const hash = document.getElementById('nft-encerrar-criacao-hash').value;
+            await escreverPropriedadesNFT('encerrarPropostaCriacaoNFT', [hash]);
+            showResult('result-nft-encerrar-criacao', 'Proposta de criação encerrada!');
+        } catch (error) {
+            showResult('result-nft-encerrar-criacao', error.message, true);
+        }
+    },
+    async mintNFT() {
+        try {
+            const hash = document.getElementById('nft-mint-hash').value;
+            await escreverPropriedadesNFT('mintNFT', [hash]);
+            showResult('result-nft-mint', 'NFT mintado com sucesso!');
+        } catch (error) {
+            showResult('result-nft-mint', error.message, true);
+        }
+    },
+    async criarPropostaDestruicaoNFT() {
+        try {
+            const tokenId = document.getElementById('nft-criar-destruicao-tokenId').value;
+            await escreverPropriedadesNFT('criarPropostaDestruicaoNFT', [tokenId]);
+            showResult('result-nft-criar-destruicao', 'Proposta de destruição criada com sucesso!');
+        } catch (error) {
+            showResult('result-nft-criar-destruicao', error.message, true);
+        }
+    },
+    async votarDestruicaoNFT() {
+        try {
+            const tokenId = document.getElementById('nft-votar-destruicao-tokenId').value;
+            const decisao = document.getElementById('nft-votar-destruicao-decisao').value === 'true';
+            await escreverPropriedadesNFT('votarDestruicaoNFT', [tokenId, decisao]);
+            showResult('result-nft-votar-destruicao', 'Voto registrado com sucesso!');
+        } catch (error) {
+            showResult('result-nft-votar-destruicao', error.message, true);
+        }
+    },
+    async encerrarPropostaDestruicaoNFT() {
+        try {
+            const tokenId = document.getElementById('nft-encerrar-destruicao-tokenId').value;
+            await escreverPropriedadesNFT('encerrarPropostaDestruicaoNFT', [tokenId]);
+            showResult('result-nft-encerrar-destruicao', 'Proposta de destruição encerrada!');
+        } catch (error) {
+            showResult('result-nft-encerrar-destruicao', error.message, true);
+        }
+    },
+    async transferNFT() {
+        try {
+            const tokenId = document.getElementById('nft-transfer-tokenId').value;
+            const to = document.getElementById('nft-transfer-to').value;
+            await escreverPropriedadesNFT('transferNFT', [tokenId, to]);
+            showResult('result-nft-transfer', 'NFT transferido com sucesso!');
+        } catch (error) {
+            showResult('result-nft-transfer', error.message, true);
+        }
+    },
+    async calcularPesos() {
+        try {
+            await escreverPropriedadesNFT('calcularPesos');
+            showResult('result-nft-calcular-pesos', 'Pesos calculados no contrato NFT com sucesso!');
+        } catch (error) {
+            showResult('result-nft-calcular-pesos', error.message, true);
+        }
+    },
+    async limparPesos() {
+        try {
+            await escreverPropriedadesNFT('limparPesos');
+            showResult('result-nft-limpar-pesos', 'Pesos limpos no contrato NFT com sucesso!');
+        } catch (error) {
+            showResult('result-nft-limpar-pesos', error.message, true);
         }
     }
 };
@@ -1906,13 +2269,17 @@ async function updateVotingCounters() {
         // Aguarda um pouco antes da próxima consulta
         await new Promise(resolve => setTimeout(resolve, 100));
         
-        // 4. Consulta informações de quorum
+        // 4. Consulta informações de quorum (suporta resposta em array ou objeto)
         const quorumInfo = await lerPropostas('getQuorumInfo');
+        const qMin = Array.isArray(quorumInfo) ? quorumInfo[0] : quorumInfo.quorumMinimo;
+        const totalAtivos = Array.isArray(quorumInfo) ? quorumInfo[1] : (quorumInfo.totalguardioesAtivos ?? quorumInfo.totalDiretoresAtivos);
+        const totalVotantes = Array.isArray(quorumInfo) ? quorumInfo[2] : quorumInfo.totalVotantesAtual;
+        const quorumAtingido = Array.isArray(quorumInfo) ? quorumInfo[3] : quorumInfo.quorumAtingido;
         updateQuorumCounter(
-            parseInt(quorumInfo.totalVotantesAtual),
-            parseInt(quorumInfo.totalDiretoresAtivos), // O ABI retorna "totalDiretoresAtivos"
-            parseInt(quorumInfo.quorumMinimo),
-            quorumInfo.quorumAtingido
+            parseInt(totalVotantes),
+            parseInt(totalAtivos),
+            parseInt(qMin),
+            !!quorumAtingido
         );
         
         // Aguarda um pouco antes da próxima consulta
