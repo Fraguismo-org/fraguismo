@@ -21,7 +21,7 @@
             </a>
         </div>
         <div class="header">
-            <h1>🏛️ FraguismoDAO v1.2.7</h1>
+            <h1>🏛️ FraguismoDAO v1.3.0</h1>
             <div class="wallet-info" style="display:none;">
                 <button id="connectWallet" class="btn">Conectar MetaMask</button>
                 <div id="walletAddress" class="wallet-address" style="display: none;"></div>
@@ -47,14 +47,21 @@
             <div class="contract-card" onclick="openModal('propostasModal')">
                 <div class="icon">📋</div>
                 <h2>Propostas & Guardiões</h2>
-                <p>Contrato Unificado</p>
+                <p>Contrato Guardiões (guardioes.sol)</p>
+                <button class="btn btn-small">Abrir Interface</button>
+            </div>
+
+            <div class="contract-card" onclick="openModal('propostasModal'); setTimeout(function(){ var t = document.getElementById('tab-propostas-nft'); if(t) t.click(); }, 100);">
+                <div class="icon">🏠</div>
+                <h2>Propriedades NFT</h2>
+                <p>NFT de propriedades (propriedadesNFT.sol)</p>
                 <button class="btn btn-small">Abrir Interface</button>
             </div>
 
             <div class="contract-card" onclick="openModal('mercadoModal')">
                 <div class="icon">🛒</div>
                 <h2>Mercado</h2>
-                <p>0x3633531C8b8D8ec551D3ee29125D05C3edb48FE3</p>
+                <p>0xcf8967BdbD0FF0C913CbfbC362884ACAe9FA6907</p>
                 <button class="btn btn-small">Abrir Interface</button>
             </div>
 
@@ -80,6 +87,7 @@
                     <button class="tab" onclick="switchTab('propostas', 'write')">✏️ Formulários</button>
                     <button class="tab" onclick="switchTab('propostas', 'actions')">⚡ Ações Rápidas</button>
                     <button class="tab" onclick="switchTab('propostas', 'guardioes')">👥 Guardiões</button>
+                    <button class="tab" id="tab-propostas-nft" onclick="switchTab('propostas', 'nft')">🏠 Propriedades NFT</button>
                 </div>
 
                 <!-- Tab de Leitura -->
@@ -100,16 +108,16 @@
                         </div>
 
                         <div class="function-item">
-                            <h4>Blocos até Fim da Votação</h4>
+                            <h4>Segundos até Fim da Votação</h4>
                             <button class="btn btn-small"
-                                onclick="propostas.getBlocksUntilVotingEnds()">Consultar</button>
+                                onclick="propostas.getSecondsUntilVotingEnds()">Consultar</button>
                             <div id="result-propostas-blocksEnd" class="result-box"></div>
                         </div>
 
                         <div class="function-item">
-                            <h4>Blocos até Próxima Votação</h4>
+                            <h4>Segundos até Próxima Votação</h4>
                             <button class="btn btn-small"
-                                onclick="propostas.getBlocksUntilNextVoting()">Consultar</button>
+                                onclick="propostas.getSecondsUntilNextVoting()">Consultar</button>
                             <div id="result-propostas-blocksNext" class="result-box"></div>
                         </div>
 
@@ -462,6 +470,275 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- Tab Propriedades NFT (contrato PropriedadesNFT.sol) -->
+                <div id="propostas-nft" class="tab-content">
+                    <p style="color: #666; margin-bottom: 16px;">
+                        Interface do contrato <strong>Propriedades NFT</strong>. Funciona em conjunto com o contrato Guardiões (votação, pesos, presença). Configure <code>CONTRACT_ADDRESSES.propriedadesNFT</code> após o deploy.
+                    </p>
+                    <div class="tabs" style="border-bottom: 1px solid #ddd; margin-bottom: 20px;">
+                        <button class="tab active" onclick="switchNftTab('consultas')" style="font-size: 14px;">🔍 Consultas</button>
+                        <button class="tab" onclick="switchNftTab('criacao')" style="font-size: 14px;">➕ Criação NFT</button>
+                        <button class="tab" onclick="switchNftTab('destruicao')" style="font-size: 14px;">🗑️ Destruição NFT</button>
+                        <button class="tab" onclick="switchNftTab('prova')" style="font-size: 14px;">❤️ Prova de Vida</button>
+                        <button class="tab" onclick="switchNftTab('acoes')" style="font-size: 14px;">⚡ Ações</button>
+                    </div>
+
+                    <div id="nft-consultas" class="nft-subtab">
+                        <div class="function-section">
+                            <h3>📊 NFTs e Propostas</h3>
+                            <div class="function-item">
+                                <h4>NFT por ID</h4>
+                                <div class="input-group">
+                                    <label>Token ID:</label>
+                                    <input type="number" id="nft-get-tokenId" placeholder="1">
+                                </div>
+                                <button class="btn btn-small" onclick="propriedadesNFT.getNFT()">Consultar</button>
+                                <div id="result-nft-get" class="result-box"></div>
+                            </div>
+                            <div class="function-item">
+                                <h4>Todos os Token IDs</h4>
+                                <button class="btn btn-small" onclick="propriedadesNFT.getAllTokenIds()">Consultar</button>
+                                <div id="result-nft-all-ids" class="result-box"></div>
+                            </div>
+                            <div class="function-item">
+                                <h4>NFTs por dono</h4>
+                                <div class="input-group">
+                                    <label>Endereço do dono:</label>
+                                    <input type="text" id="nft-owner-address" placeholder="0x...">
+                                </div>
+                                <button class="btn btn-small" onclick="propriedadesNFT.getNFTsByOwner()">Consultar</button>
+                                <div id="result-nft-by-owner" class="result-box"></div>
+                            </div>
+                            <div class="function-item">
+                                <h4>Info de todos os NFTs</h4>
+                                <button class="btn btn-small" onclick="propriedadesNFT.getAllNFTsInfo()">Consultar</button>
+                                <div id="result-nft-all-info" class="result-box"></div>
+                            </div>
+                        </div>
+                        <div class="function-section">
+                            <h3>📋 Propostas de Criação</h3>
+                            <div class="function-item">
+                                <h4>Propostas de criação abertas</h4>
+                                <button class="btn btn-small" onclick="propriedadesNFT.getPropostasCriacaoAbertas()">Consultar</button>
+                                <div id="result-nft-criacao-abertas" class="result-box"></div>
+                            </div>
+                            <div class="function-item">
+                                <h4>Detalhes de proposta de criação</h4>
+                                <div class="input-group">
+                                    <label>Hash da proposta:</label>
+                                    <input type="text" id="nft-criacao-hash" placeholder="Hash...">
+                                </div>
+                                <button class="btn btn-small" onclick="propriedadesNFT.getCriacaoProposalDetails()">Consultar</button>
+                                <div id="result-nft-criacao-details" class="result-box"></div>
+                            </div>
+                        </div>
+                        <div class="function-section">
+                            <h3>📋 Propostas de Destruição</h3>
+                            <div class="function-item">
+                                <h4>Propostas de destruição abertas</h4>
+                                <button class="btn btn-small" onclick="propriedadesNFT.getPropostasDestruicaoAbertas()">Consultar</button>
+                                <div id="result-nft-destruicao-abertas" class="result-box"></div>
+                            </div>
+                            <div class="function-item">
+                                <h4>Detalhes de proposta de destruição</h4>
+                                <div class="input-group">
+                                    <label>Token ID:</label>
+                                    <input type="number" id="nft-destruicao-tokenId" placeholder="1">
+                                </div>
+                                <button class="btn btn-small" onclick="propriedadesNFT.getDestruicaoProposalDetails()">Consultar</button>
+                                <div id="result-nft-destruicao-details" class="result-box"></div>
+                            </div>
+                        </div>
+                        <div class="function-section">
+                            <h3>⚖️ Simular pesos (view)</h3>
+                            <div class="function-item">
+                                <button class="btn btn-small" onclick="propriedadesNFT.simularPesos()">Simular pesos</button>
+                                <div id="result-nft-simular-pesos" class="result-box"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="nft-criacao" class="nft-subtab" style="display:none;">
+                        <div class="function-section">
+                            <h3>➕ Criar proposta de criação</h3>
+                            <p style="color: #666; font-size: 0.9em; margin-bottom: 10px;">Guardião ativo cria proposta; depois vota e encerra na janela do Guardiões.</p>
+                            <div class="input-group">
+                                <label>Hash da proposta:</label>
+                                <input type="text" id="nft-criar-proposal-hash" placeholder="Hash único...">
+                            </div>
+                            <div class="input-group">
+                                <label>Metadata (string):</label>
+                                <input type="text" id="nft-criar-metadata" placeholder="Coordenadas, placa, etc.">
+                            </div>
+                            <div class="input-group">
+                                <label>Quantidade de tokens (com decimais, ex: 1000000000000000000):</label>
+                                <input type="text" id="nft-criar-tokenAmount" placeholder="1000000000000000000">
+                            </div>
+                            <div class="input-group">
+                                <label>Destinatário (0x0 = venda livre):</label>
+                                <input type="text" id="nft-criar-destinatario" placeholder="0x... ou vazio para 0x0">
+                            </div>
+                            <button class="btn btn-small" onclick="propriedadesNFT.criarPropostaCriacaoNFT()">Criar proposta</button>
+                            <div id="result-nft-criar-proposta" class="result-box"></div>
+                        </div>
+                        <div class="function-section">
+                            <h3>🗳️ Votar em criação</h3>
+                            <div class="input-group">
+                                <label>Hash da proposta:</label>
+                                <input type="text" id="nft-votar-criacao-hash" placeholder="Hash...">
+                            </div>
+                            <div class="input-group">
+                                <label>Decisão:</label>
+                                <select id="nft-votar-criacao-decisao">
+                                    <option value="true">✅ Sim</option>
+                                    <option value="false">❌ Não</option>
+                                </select>
+                            </div>
+                            <button class="btn btn-small" onclick="propriedadesNFT.votarCriacaoNFT()">Votar</button>
+                            <div id="result-nft-votar-criacao" class="result-box"></div>
+                        </div>
+                        <div class="function-section">
+                            <h3>🔒 Encerrar proposta de criação</h3>
+                            <div class="input-group">
+                                <label>Hash da proposta:</label>
+                                <input type="text" id="nft-encerrar-criacao-hash" placeholder="Hash...">
+                            </div>
+                            <button class="btn btn-small" onclick="propriedadesNFT.encerrarPropostaCriacaoNFT()">Encerrar</button>
+                            <div id="result-nft-encerrar-criacao" class="result-box"></div>
+                        </div>
+                        <div class="function-section">
+                            <h3>🪙 Mintar NFT (após aprovação)</h3>
+                            <div class="input-group">
+                                <label>Hash da proposta aprovada:</label>
+                                <input type="text" id="nft-mint-hash" placeholder="Hash...">
+                            </div>
+                            <button class="btn btn-small" onclick="propriedadesNFT.mintNFT()">Mintar NFT</button>
+                            <div id="result-nft-mint" class="result-box"></div>
+                        </div>
+                        <div class="function-section">
+                            <h3>📤 Transferir NFT</h3>
+                            <div class="input-group">
+                                <label>Token ID:</label>
+                                <input type="number" id="nft-transfer-tokenId" placeholder="1">
+                            </div>
+                            <div class="input-group">
+                                <label>Para endereço:</label>
+                                <input type="text" id="nft-transfer-to" placeholder="0x...">
+                            </div>
+                            <button class="btn btn-small" onclick="propriedadesNFT.transferNFT()">Transferir</button>
+                            <div id="result-nft-transfer" class="result-box"></div>
+                        </div>
+                    </div>
+
+                    <div id="nft-destruicao" class="nft-subtab" style="display:none;">
+                        <div class="function-section">
+                            <h3>🗑️ Criar proposta de destruição</h3>
+                            <div class="input-group">
+                                <label>Token ID do NFT a destruir:</label>
+                                <input type="number" id="nft-criar-destruicao-tokenId" placeholder="1">
+                            </div>
+                            <button class="btn btn-small" onclick="propriedadesNFT.criarPropostaDestruicaoNFT()">Criar proposta</button>
+                            <div id="result-nft-criar-destruicao" class="result-box"></div>
+                        </div>
+                        <div class="function-section">
+                            <h3>🗳️ Votar em destruição</h3>
+                            <div class="input-group">
+                                <label>Token ID:</label>
+                                <input type="number" id="nft-votar-destruicao-tokenId" placeholder="1">
+                            </div>
+                            <div class="input-group">
+                                <label>Decisão:</label>
+                                <select id="nft-votar-destruicao-decisao">
+                                    <option value="true">✅ Sim</option>
+                                    <option value="false">❌ Não</option>
+                                </select>
+                            </div>
+                            <button class="btn btn-small" onclick="propriedadesNFT.votarDestruicaoNFT()">Votar</button>
+                            <div id="result-nft-votar-destruicao" class="result-box"></div>
+                        </div>
+                        <div class="function-section">
+                            <h3>🔒 Encerrar proposta de destruição</h3>
+                            <p style="color: #666; font-size: 0.9em;">Se aprovada, o NFT é destruído e os tokens voltam ao dono.</p>
+                            <div class="input-group">
+                                <label>Token ID:</label>
+                                <input type="number" id="nft-encerrar-destruicao-tokenId" placeholder="1">
+                            </div>
+                            <button class="btn btn-small" onclick="propriedadesNFT.encerrarPropostaDestruicaoNFT()">Encerrar</button>
+                            <div id="result-nft-encerrar-destruicao" class="result-box"></div>
+                        </div>
+                    </div>
+
+                    <div id="nft-prova" class="nft-subtab" style="display:none;">
+                        <p style="color: #666; margin-bottom: 16px;">
+                            <strong>Prova de vida:</strong> o proprietário registra atividade para não perder o NFT. Após o tempo de inatividade (365 dias ou 20 min em teste), qualquer um pode recuperar o NFT para a carteira mãe do Fraguismo.
+                        </p>
+                        <div class="function-section">
+                            <h3>🔍 Consultas</h3>
+                            <div class="function-item">
+                                <h4>Tempo de inatividade necessário</h4>
+                                <p style="color: #666; font-size: 0.9em;">Segundos (e equivalente em dias/minutos) para um NFT ser considerado recuperável.</p>
+                                <button class="btn btn-small" onclick="propriedadesNFT.getTempoInatividade()">Consultar</button>
+                                <div id="result-nft-tempo-inatividade" class="result-box"></div>
+                            </div>
+                            <div class="function-item">
+                                <h4>Atividade de um NFT</h4>
+                                <div class="input-group">
+                                    <label>Token ID:</label>
+                                    <input type="number" id="nft-atividade-tokenId" placeholder="1">
+                                </div>
+                                <button class="btn btn-small" onclick="propriedadesNFT.getAtividadeNFT()">Consultar</button>
+                                <div id="result-nft-atividade" class="result-box"></div>
+                            </div>
+                            <div class="function-item">
+                                <h4>NFTs recuperáveis</h4>
+                                <p style="color: #666; font-size: 0.9em;">Lista de NFTs que já podem ser recuperados para a carteira mãe.</p>
+                                <button class="btn btn-small" onclick="propriedadesNFT.getNFTsRecuperaveis()">Consultar</button>
+                                <div id="result-nft-recuperaveis" class="result-box"></div>
+                            </div>
+                        </div>
+                        <div class="function-section">
+                            <h3>✏️ Ações</h3>
+                            <div class="function-item">
+                                <h4>Registrar atividade (prova de vida)</h4>
+                                <p style="color: #666; font-size: 0.9em;">Atualiza a última atividade de <strong>todos</strong> os NFTs que você possui. Só o proprietário pode chamar.</p>
+                                <button class="btn btn-small" onclick="propriedadesNFT.registrarAtividade()">Registrar atividade</button>
+                                <div id="result-nft-registrar-atividade" class="result-box"></div>
+                            </div>
+                            <div class="function-item">
+                                <h4>Recuperar NFT inativo</h4>
+                                <p style="color: #666; font-size: 0.9em;">Transfere o NFT para a carteira mãe. Qualquer pessoa pode chamar se o NFT estiver inativo pelo tempo necessário.</p>
+                                <div class="input-group">
+                                    <label>Token ID a recuperar:</label>
+                                    <input type="number" id="nft-recuperar-tokenId" placeholder="1">
+                                </div>
+                                <button class="btn btn-small" onclick="propriedadesNFT.recuperarNFT()">Recuperar NFT</button>
+                                <div id="result-nft-recuperar" class="result-box"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="nft-acoes" class="nft-subtab" style="display:none;">
+                        <div class="function-section">
+                            <h3>⚖️ Pesos no contrato NFT</h3>
+                            <p style="color: #666; margin-bottom: 16px;">Calcular/limpar pesos no <strong>PropriedadesNFT</strong> (depende dos pesos já calculados no contrato Guardiões).</p>
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 15px;">
+                                <div class="quick-action-card">
+                                    <h4>Calcular pesos</h4>
+                                    <p>Replica pesos do Guardiões no NFT</p>
+                                    <button class="btn btn-small" onclick="propriedadesNFT.calcularPesos()">Calcular</button>
+                                    <div id="result-nft-calcular-pesos" class="result-box"></div>
+                                </div>
+                                <div class="quick-action-card">
+                                    <h4>Limpar pesos</h4>
+                                    <p>Quando votação estiver fechada</p>
+                                    <button class="btn btn-small" onclick="propriedadesNFT.limparPesos()">Limpar</button>
+                                    <div id="result-nft-limpar-pesos" class="result-box"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -475,65 +752,140 @@
             </div>
             <div class="modal-body">
                 <div class="tabs">
-                    <button class="tab active" onclick="switchTab('mercado', 'read')">🔍 Leitura</button>
-                    <button class="tab" onclick="switchTab('mercado', 'write')">✏️ Escrita</button>
+                    <button class="tab active" onclick="switchTab('mercado', 'read')">📊 Painel</button>
+                    <button class="tab" onclick="switchTab('mercado', 'write')">✏️ Criar Ordem</button>
                 </div>
 
-                <!-- Tab de Leitura -->
+                <!-- Tab de Painel -->
                 <div id="mercado-read" class="tab-content active">
                     <div class="function-section">
-                        <h3>Funções de Consulta</h3>
+                        <h3>Mercado com Garantia</h3>
+                        <div class="mercado-meta-grid">
+                            <div class="mercado-meta-card">
+                                <span>Contrato Mercado</span>
+                                <code id="mercado-contract-address">0xcf8967BdbD0FF0C913CbfbC362884ACAe9FA6907</code>
+                            </div>
+                            <div class="mercado-meta-card">
+                                <span>Token</span>
+                                <code id="mercado-token-address">0x64A59F08dC77b764F9305d0F5624Ac2a32169F2c</code>
+                            </div>
+                            <div class="mercado-meta-card">
+                                <span>Árbitro</span>
+                                <code id="mercado-arbitro-address">-</code>
+                            </div>
+                            <div class="mercado-meta-card">
+                                <span>Sua carteira</span>
+                                <code id="mercado-user-address">-</code>
+                            </div>
+                        </div>
+                    </div>
 
-                        <div class="function-item">
-                            <h4>Total de Ordens</h4>
-                            <button class="btn btn-small" onclick="mercado.getOrdemCount()">Consultar</button>
-                            <div id="result-mercado-count" class="result-box"></div>
+                    <div class="function-section">
+                        <h3>Ordens e Ações</h3>
+                        <div class="mercado-toolbar">
+                            <div class="input-group">
+                                <label>Status:</label>
+                                <select id="mercado-filter-status" onchange="mercado.onFilterChanged()">
+                                    <option value="all">Todos</option>
+                                    <option value="0">Pendente</option>
+                                    <option value="1">Em negociação</option>
+                                    <option value="3">Disputada</option>
+                                    <option value="2">Completa</option>
+                                    <option value="4">Revertida</option>
+                                </select>
+                            </div>
+                            <div class="input-group">
+                                <label>Filtrar por vendedor:</label>
+                                <input type="text" id="mercado-filter-vendedor" placeholder="0x..." oninput="mercado.onFilterChanged()">
+                            </div>
+                            <label class="mercado-checkbox">
+                                <input type="checkbox" id="mercado-filter-open-only" onchange="mercado.onFilterChanged()">
+                                Mostrar apenas ordens em aberto
+                            </label>
+                            <button class="btn btn-small" onclick="mercado.refreshPainel(true)">Atualizar</button>
                         </div>
 
+                        <div class="mercado-summary-grid">
+                            <div class="mercado-summary-card">
+                                <span>Total</span>
+                                <strong id="mercado-summary-total">0</strong>
+                            </div>
+                            <div class="mercado-summary-card">
+                                <span>Pendentes</span>
+                                <strong id="mercado-summary-pendente">0</strong>
+                            </div>
+                            <div class="mercado-summary-card">
+                                <span>Em Negociação</span>
+                                <strong id="mercado-summary-negociacao">0</strong>
+                            </div>
+                            <div class="mercado-summary-card">
+                                <span>Disputadas</span>
+                                <strong id="mercado-summary-disputada">0</strong>
+                            </div>
+                            <div class="mercado-summary-card">
+                                <span>Abertas</span>
+                                <strong id="mercado-summary-abertas">0</strong>
+                            </div>
+                        </div>
+
+                        <div id="mercado-orders-board" class="mercado-orders-board"></div>
+                        <div id="result-mercado-dashboard" class="result-box"></div>
+                    </div>
+
+                    <div class="function-section">
+                        <h3>Ações por ID (Modo rápido)</h3>
                         <div class="function-item">
-                            <h4>Detalhes de Ordem</h4>
                             <div class="input-group">
                                 <label>ID da Ordem:</label>
-                                <input type="number" id="mercado-ordem-id" placeholder="0">
+                                <input type="number" id="mercado-action-id" placeholder="0">
                             </div>
-                            <button class="btn btn-small" onclick="mercado.getOrdem()">Consultar</button>
-                            <div id="result-mercado-ordem" class="result-box"></div>
-                        </div>
-
-                        <div class="function-item">
-                            <h4>Todas as Ordens</h4>
-                            <button class="btn btn-small" onclick="mercado.getTodasOrdens()">Consultar</button>
-                            <div id="result-mercado-todas" class="result-box"></div>
-                        </div>
-
-                        <div class="function-item">
-                            <h4>Ordens de um Vendedor</h4>
                             <div class="input-group">
-                                <label>Endereço do Vendedor:</label>
-                                <input type="text" id="mercado-vendedor-address" placeholder="0x...">
+                                <label>Garantia em POL (para iniciar negociação):</label>
+                                <input type="text" id="mercado-action-garantia" placeholder="0.01">
                             </div>
-                            <button class="btn btn-small" onclick="mercado.getOrdensDoVendedor()">Consultar</button>
-                            <div id="result-mercado-vendedor" class="result-box"></div>
-                        </div>
-
-                        <div class="function-item">
-                            <h4>Árbitro Atual</h4>
-                            <button class="btn btn-small" onclick="mercado.getArbitro()">Consultar</button>
-                            <div id="result-mercado-arbitro" class="result-box"></div>
+                            <div class="mercado-action-buttons">
+                                <button class="btn btn-small" onclick="mercado.iniciarNegociacao()">Iniciar Negociação</button>
+                                <button class="btn btn-small" onclick="mercado.marcarComoCompleta()">Marcar Completa</button>
+                                <button class="btn btn-small" onclick="mercado.abrirDisputa()">Abrir Disputa</button>
+                                <button class="btn btn-small" onclick="mercado.arbitroConfirmaPagamento()">Árbitro Confirma</button>
+                                <button class="btn btn-small" onclick="mercado.arbitroReverteTransacao()">Árbitro Reverte</button>
+                            </div>
+                            <div id="result-mercado-actions" class="result-box"></div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Tab de Escrita -->
+                <!-- Tab de Criar Ordem -->
                 <div id="mercado-write" class="tab-content">
                     <div class="function-section">
-                        <h3>Funções de Escrita</h3>
+                        <h3>Preparar Venda</h3>
 
                         <div class="function-item">
-                            <h4>Criar Ordem de Venda</h4>
+                            <h4>1) Aprovar uso do token pelo contrato</h4>
+                            <p style="color:#666; margin-bottom:10px;">
+                                Necessário para criar ordem: o contrato transferirá essa quantidade da sua carteira.
+                            </p>
                             <div class="input-group">
-                                <label>Quantidade de Tokens (com decimais):</label>
-                                <input type="text" id="mercado-criar-quantidade" placeholder="1000000000000000000">
+                                <label>Quantidade para aprovar (ex: 1000.5):</label>
+                                <input type="text" id="mercado-aprovar-quantidade" placeholder="1000">
+                            </div>
+                            <div class="mercado-action-buttons">
+                                <button class="btn btn-small" onclick="mercado.aprovarTokens()">Aprovar</button>
+                                <button class="btn btn-small" onclick="mercado.refreshTokenInfo()">Atualizar saldo/allowance</button>
+                            </div>
+                            <div class="mercado-inline-stats">
+                                <span>Token: <strong id="mercado-token-symbol">TOKEN</strong></span>
+                                <span>Saldo: <strong id="mercado-token-balance">-</strong></span>
+                                <span>Allowance: <strong id="mercado-token-allowance">-</strong></span>
+                            </div>
+                            <div id="result-mercado-aprovar" class="result-box"></div>
+                        </div>
+
+                        <div class="function-item">
+                            <h4>2) Criar Ordem de Venda</h4>
+                            <div class="input-group">
+                                <label>Quantidade de Tokens (ex: 250.75):</label>
+                                <input type="text" id="mercado-criar-quantidade" placeholder="250">
                             </div>
                             <div class="input-group">
                                 <label>Valor em BRL:</label>
@@ -544,58 +896,31 @@
                         </div>
 
                         <div class="function-item">
-                            <h4>Iniciar Negociação</h4>
+                            <h4>Consultas pontuais</h4>
                             <div class="input-group">
                                 <label>ID da Ordem:</label>
-                                <input type="number" id="mercado-negociar-id" placeholder="0">
+                                <input type="number" id="mercado-ordem-id" placeholder="0">
                             </div>
-                            <div class="input-group">
-                                <label>Garantia em POL:</label>
-                                <input type="text" id="mercado-negociar-garantia" placeholder="0.01">
+                            <div class="mercado-action-buttons">
+                                <button class="btn btn-small" onclick="mercado.getOrdem()">Ver ordem</button>
+                                <button class="btn btn-small" onclick="mercado.getOrdemCount()">Total de ordens</button>
+                                <button class="btn btn-small" onclick="mercado.getArbitro()">Ver árbitro</button>
+                                <button class="btn btn-small" onclick="mercado.getTodasOrdens()">Exportar todas</button>
                             </div>
-                            <button class="btn btn-small" onclick="mercado.iniciarNegociacao()">Iniciar</button>
-                            <div id="result-mercado-negociar" class="result-box"></div>
+                            <div id="result-mercado-ordem" class="result-box"></div>
+                            <div id="result-mercado-count" class="result-box"></div>
+                            <div id="result-mercado-arbitro" class="result-box"></div>
+                            <div id="result-mercado-todas" class="result-box"></div>
                         </div>
 
                         <div class="function-item">
-                            <h4>Marcar como Completa (Vendedor)</h4>
+                            <h4>Ordens por vendedor</h4>
                             <div class="input-group">
-                                <label>ID da Ordem:</label>
-                                <input type="number" id="mercado-completa-id" placeholder="0">
+                                <label>Endereço do vendedor:</label>
+                                <input type="text" id="mercado-vendedor-address" placeholder="0x...">
                             </div>
-                            <button class="btn btn-small" onclick="mercado.marcarComoCompleta()">Completar</button>
-                            <div id="result-mercado-completa" class="result-box"></div>
-                        </div>
-
-                        <div class="function-item">
-                            <h4>Abrir Disputa (Vendedor)</h4>
-                            <div class="input-group">
-                                <label>ID da Ordem:</label>
-                                <input type="number" id="mercado-disputa-id" placeholder="0">
-                            </div>
-                            <button class="btn btn-small" onclick="mercado.abrirDisputa()">Disputar</button>
-                            <div id="result-mercado-disputa" class="result-box"></div>
-                        </div>
-
-                        <div class="function-item">
-                            <h4>Árbitro Confirma Pagamento</h4>
-                            <div class="input-group">
-                                <label>ID da Ordem:</label>
-                                <input type="number" id="mercado-arbitro-confirma-id" placeholder="0">
-                            </div>
-                            <button class="btn btn-small"
-                                onclick="mercado.arbitroConfirmaPagamento()">Confirmar</button>
-                            <div id="result-mercado-arbitro-confirma" class="result-box"></div>
-                        </div>
-
-                        <div class="function-item">
-                            <h4>Árbitro Reverte Transação</h4>
-                            <div class="input-group">
-                                <label>ID da Ordem:</label>
-                                <input type="number" id="mercado-arbitro-reverte-id" placeholder="0">
-                            </div>
-                            <button class="btn btn-small" onclick="mercado.arbitroReverteTransacao()">Reverter</button>
-                            <div id="result-mercado-arbitro-reverte" class="result-box"></div>
+                            <button class="btn btn-small" onclick="mercado.getOrdensDoVendedor()">Consultar</button>
+                            <div id="result-mercado-vendedor" class="result-box"></div>
                         </div>
                     </div>
                 </div>
@@ -767,7 +1092,7 @@
     <script src="{% static 'js/fraguismo_dao/web3.js'%}"></script>
     <script src="{% static 'js/fraguismo_dao/initialize.js' %}"></script>
     <script src="{% static 'js/fraguismo_dao/main.js' %}"></script>
-    <script src="{% static 'js/fraguismo_dao/contract-interface.js' %}?v={{ 7 }}"></script>
+    <script src="{% static 'js/fraguismo_dao/contract-interface.js' %}?v={{ 14 }}"></script>
 
 </body>
 

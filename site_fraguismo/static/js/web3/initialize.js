@@ -41,7 +41,7 @@ export const writeEthersContract = async (contractAddress, methodName, contractA
 
 export const readEthersContract = async (address, functionName, abi, args = []) => {
     try {        
-        const resp = await fetch("https://graphenesmartchain.com:3014/readContract", { //3112 são os contratos da Graphene
+        const resp = await fetch("https://movefit.fun:3014/readContract", { //3112 são os contratos da Graphene
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
