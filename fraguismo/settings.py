@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'utils',
     'propostas',
     'fraguismo_dao',
+    'ranking',
 ]
 
 MIDDLEWARE = [
