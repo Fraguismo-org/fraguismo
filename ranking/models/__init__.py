@@ -1,0 +1,1 @@
+from ranking.models.ranking_periodico import RankingPeriodico

@@ -77,4 +77,11 @@ def _get_period_bounds(periodo, now):
             )
         return month_start, next_month_start
 
+    if periodo == "anual":
+        year_start = now.replace(
+            month=1, day=1, hour=0, minute=0, second=0, microsecond=0
+        )
+        year_end = year_start.replace(year=year_start.year + 1)
+        return year_start, year_end
+
     return None, None
