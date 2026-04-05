@@ -15,6 +15,6 @@ class NivelChoices:
     SQUIRE = 'escudeiro'
     KNIGHT = 'cavaleiro'
     COUNSELOR = 'conselheiro'
-    GUARDIAN = 'guardiao'
-    NOFRAGUISTA = 'nao_fraguista'
+    GUARDIAN = 'guardião'
+    NOFRAGUISTA = 'não fraguista'
     
