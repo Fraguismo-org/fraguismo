@@ -37,9 +37,8 @@ document.addEventListener('DOMContentLoaded', function () {
     ========================== */
 
     const fraguistaField = document.getElementById('bloco-fraguista');
+    const questionarioField = document.getElementById('bloco-questionario');
     const chkbxFraguista = document.getElementById('fraguista');
-    const divIndicou = document.getElementById('div_indicou');
-    const divAonde = document.getElementById('div_aonde');
     const chkCodigoConduta = document.getElementById('codigo_conduta');
     const chkTermosAdesao = document.getElementById('termos_adesao');
     const codigoCondutaError = document.getElementById('codigoCondutaError');
@@ -118,7 +117,12 @@ document.addEventListener('DOMContentLoaded', function () {
         const obrigatorio = chkbxFraguista.checked;
         questionarioFields.forEach(f => {
             f.required = obrigatorio;
-            if (!obrigatorio) f.setCustomValidity('');
+            if (obrigatorio) {
+                f.setAttribute('minlength', '20');
+            } else {
+                f.removeAttribute('minlength');
+                f.setCustomValidity('');
+            }
         });
     }
 
@@ -135,9 +139,14 @@ document.addEventListener('DOMContentLoaded', function () {
     chkbxFraguista.addEventListener('change', () => {
         toggleObrigatoriedadeQuestionario();
         toggleConsentView();
-        fraguistaField.style.display = chkbxFraguista.checked ? 'block' : 'none';
+        const visivel = chkbxFraguista.checked ? 'block' : 'none';
+        fraguistaField.style.display = visivel;
+        questionarioField.style.display = visivel;
         updateBotaoRegistrar();
     });
+
+    senha.addEventListener('input', validaPassword);
+    senha2.addEventListener('input', validaPassword2);
 
     chkTermosAdesao.addEventListener('change', updateBotaoRegistrar);
     chkCodigoConduta.addEventListener('change', () => {
@@ -172,7 +181,7 @@ document.addEventListener('DOMContentLoaded', function () {
             event.preventDefault();
             formRegistro.reportValidity();
             return;
-        }
+        }        
 
         limparFormularioSalvo();
     });
@@ -182,18 +191,18 @@ document.addEventListener('DOMContentLoaded', function () {
     ========================== */
 
     function validaForm() {
-        return (
-            validaUsername() &&
-            validaEmail() &&
-            validaPassword() &&
-            validaNome() &&
-            validaLocalidade() &&
-            validaPhone() &&
-            validaInstagram() &&
-            validaBirth() &&
-            validaJobTitle() &&
-            validaComoConheceu()
-        );
+        let ok = validaUsername() && validaEmail() && validaPassword();
+        if (chkbxFraguista.checked) {
+            ok = ok &&
+                validaNome() &&
+                validaLocalidade() &&
+                validaPhone() &&
+                validaInstagram() &&
+                validaBirth() &&
+                validaJobTitle() &&
+                validaComoConheceu();
+        }
+        return ok;
     }
 
     function validaUsername() {
@@ -222,9 +231,17 @@ document.addEventListener('DOMContentLoaded', function () {
         if (senha.value.length < 8) ok = false;
         if (/^\d+$/.test(senha.value)) ok = false;
         if (!(/[A-Za-z]/.test(senha.value) && /\d/.test(senha.value))) ok = false;
-        if (senha.value !== senha2.value) ok = false;
+        if (!validaPasswords()) ok = false;
 
         return ok;
+    }
+
+    function validaPassword2() {
+        passEqual.style.color = validaPasswords() ? 'green' : 'red';
+    }
+
+    function validaPasswords() {
+        return senha.value === senha2.value;
     }
 
     function validaNome() {
@@ -308,5 +325,8 @@ document.addEventListener('DOMContentLoaded', function () {
     restaurarFormulario();
     toggleObrigatoriedadeQuestionario();
     toggleConsentView();
+    const visivelInicial = chkbxFraguista.checked ? 'block' : 'none';
+    fraguistaField.style.display = visivelInicial;
+    questionarioField.style.display = visivelInicial;
     updateBotaoRegistrar();
 });

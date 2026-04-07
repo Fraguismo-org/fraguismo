@@ -28,7 +28,9 @@
 
     {% include "partials/member_form.html" %}
 
-    {% include 'partials/questionario.html' %}
+    <div id="bloco-questionario">
+        {% include 'partials/questionario.html' %}
+    </div>
 
     <div class="form-check mb-2" id="conduta-wrapper" style="display: none;">
             <input type="checkbox" class="form-check-input" id="codigo_conduta">
