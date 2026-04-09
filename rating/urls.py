@@ -7,4 +7,5 @@ urlpatterns = [
     path('', include('rating.routes.pending_urls')),
     path('', include('rating.routes.pontuacao_urls')),
     path('', include('rating.routes.nivel_urls')),
+    path('', include('rating.routes.pro_liberdade_urls')),
 ]

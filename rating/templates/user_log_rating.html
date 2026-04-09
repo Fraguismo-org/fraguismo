@@ -5,26 +5,35 @@
 <link rel="stylesheet" href="{% static '/css/styles.css' %}">
 <div class="shadow p-4 mb-5 bg-body rounded">
     <div class="row text-center" style="padding-bottom: 30px;">
-        <h2 class="h2">Log de pontuação</h2>
+        <h2 class="h2">Pontos Pró Liberdade</h2>
     </div>
     <div class="row text-end">
         <h6>Pontuação para <strong>{{ proximo_nivel.0.capitalize }}</strong>: {{ proximo_nivel.1 }}</h6>
     </div>
-    <form method="GET">
-        <div class="row text-end">
-            <div class="col">
-                <input type="date" class="form-control" name="data_inicial" id="data_inicial">
+    <div class="row text-center">
+        <div class="col-2">
+            <div class="row">
+                <a name="reinvindicar" href="{% url 'reinvindicar_pro_liberdade' %}"><i class="bi bi-award" style="font-size: 24px;"></i></a>
+                <label for="reinvindicar">Reinvindicar!</label>
             </div>
-            <div class="col">
-                <input type="date" class="form-control" name="data_final" id="data_final">
-            </div>
-            <div class="col">
-                <input type="submit" class="btn btn-primary" id="filtro" value="Filtrar">
-            </div>
+        </div>
+        <div class="col-10">
+            <form method="GET">
+                <div class="row text-end">
+                    <div class="col-4">
+                        <input type="date" class="form-control" name="data_inicial" id="data_inicial">
+                    </div>
+                    <div class="col-4">
+                        <input type="date" class="form-control" name="data_final" id="data_final">
+                    </div>
+                    <div class="col">
+                        <input type="submit" class="btn btn-primary" id="filtro" value="Filtrar">
+                    </div>            
+                </div>
+            </form>            
         </div>
 
         {% include "partials/log_table.html" with logs=logs %}
-    </form>
     <br>
     {% if user.is_superuser %}
     <div class="row text-end">
