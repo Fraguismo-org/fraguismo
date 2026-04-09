@@ -1,0 +1,248 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static '/css/styles.css' %}">
+
+<div class="shadow p-4 mb-5 bg-body rounded">
+    <div class="text-center" style="padding-bottom: 20px;">
+        <h2>Reinvindicações Pró Liberdade Pendentes</h2>
+    </div>
+
+    <table class="table table-hover table-responsive">
+        <thead>
+            <tr>
+                <th>
+                    <a href="?sort={% if current_sort == 'username' %}-username{% else %}username{% endif %}"
+                       class="text-decoration-none text-dark">
+                        Usuário {% if current_sort == 'username' %}&#9650;{% elif current_sort == '-username' %}&#9660;{% endif %}
+                    </a>
+                </th>
+                <th>
+                    <a href="?sort={% if current_sort == 'evento' %}-evento{% else %}evento{% endif %}"
+                       class="text-decoration-none text-dark">
+                        Evento {% if current_sort == 'evento' %}&#9650;{% elif current_sort == '-evento' %}&#9660;{% endif %}
+                    </a>
+                </th>
+                <th>
+                    <a href="?sort={% if current_sort == 'data_evento' %}-data_evento{% else %}data_evento{% endif %}"
+                       class="text-decoration-none text-dark">
+                        Data do Evento {% if current_sort == 'data_evento' %}&#9650;{% elif current_sort == '-data_evento' %}&#9660;{% endif %}
+                    </a>
+                </th>
+                <th>
+                    <a href="?sort={% if current_sort == 'created_at' %}-created_at{% else %}created_at{% endif %}"
+                       class="text-decoration-none text-dark">
+                        Data de Criação {% if current_sort == 'created_at' %}&#9650;{% elif current_sort == '-created_at' %}&#9660;{% endif %}
+                    </a>
+                </th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for r in reinvindicacoes %}
+            <tr style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#modal-detalhe-{{ r.id }}">
+                <td>{{ r.user.username }}</td>
+                <td>{{ r.evento }}</td>
+                <td>{{ r.data_evento|date:'d/m/Y H:i' }}</td>
+                <td>{{ r.created_at|date:'d/m/Y H:i' }}</td>
+                <td>
+                    <button class="btn btn-sm btn-success" onclick="event.stopPropagation();"
+                            data-bs-toggle="modal" data-bs-target="#modal-aprovar-{{ r.id }}">
+                        Aprovar
+                    </button>
+                    <button class="btn btn-sm btn-danger" onclick="event.stopPropagation();"
+                            data-bs-toggle="modal" data-bs-target="#modal-negar-{{ r.id }}">
+                        Negar
+                    </button>
+                </td>
+            </tr>
+
+            <!-- Detail Modal -->
+            <div class="modal fade" id="modal-detalhe-{{ r.id }}" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Detalhes da Reinvindicação</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <form method="POST" action="{% url 'aprovar_reinvindicacao_adm' r.id %}">
+                            {% csrf_token %}
+                            <input type="hidden" name="action" value="editar">
+                            <div class="modal-body">
+                                <div class="row mb-3">
+                                    <div class="col">
+                                        <label class="form-label fw-bold">Usuário</label>
+                                        <input type="text" class="form-control" value="{{ r.user.username }}" disabled>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col">
+                                        <label for="evento-{{ r.id }}" class="form-label fw-bold">Evento</label>
+                                        <input type="text" id="evento-{{ r.id }}" name="evento"
+                                               class="form-control" value="{{ r.evento }}">
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-6">
+                                        <label for="data_evento-{{ r.id }}" class="form-label fw-bold">Data do Evento</label>
+                                        <input type="datetime-local" id="data_evento-{{ r.id }}" name="data_evento"
+                                               class="form-control" value="{{ r.data_evento|date:'Y-m-d\TH:i' }}">
+                                    </div>
+                                    <div class="col-6">
+                                        <label for="local_evento-{{ r.id }}" class="form-label fw-bold">Local do Evento</label>
+                                        <input type="text" id="local_evento-{{ r.id }}" name="local_evento"
+                                               class="form-control" value="{{ r.local_evento }}">
+                                    </div>
+                                </div>
+                                {% if r.deny_reason %}
+                                <div class="row mb-3">
+                                    <div class="col">
+                                        <label for="deny_reason-{{ r.id }}" class="form-label fw-bold">Motivo da Negação</label>
+                                        <input type="text" id="deny_reason-{{ r.id }}" name="deny_reason"
+                                               class="form-control" value="{{ r.deny_reason }}" maxlength="255">
+                                    </div>
+                                </div>
+                                {% endif %}
+
+                                {% if r.fotos.all %}
+                                <hr>
+                                <h6>Fotos</h6>
+                                <div class="row">
+                                    {% for foto in r.fotos.all %}
+                                    <div class="col-4 mb-2 text-center">
+                                        <a href="{{ foto.foto.url }}" target="_blank">
+                                            <img src="{{ foto.foto.url }}" alt="Foto {{ foto.id }}"
+                                                 class="img-fluid rounded" style="max-height: 150px; object-fit: cover;">
+                                        </a>
+                                        <small class="d-block text-muted">{{ foto.is_public|yesno:"Pública,Privada" }}</small>
+                                        <button type="button" class="btn btn-sm btn-outline-danger mt-1"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#modal-remover-foto-{{ foto.id }}">
+                                            Remover
+                                        </button>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                                {% endif %}
+
+                                <hr>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <small class="text-muted">Criado em: {{ r.created_at|date:'d/m/Y H:i' }}</small>
+                                    </div>
+                                    <div class="col-6 text-end">
+                                        <small class="text-muted">Atualizado em: {{ r.updated_at|date:'d/m/Y H:i' }}</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                                <button type="submit" class="btn btn-warning">Salvar Alterações</button>
+                                <button type="button" class="btn btn-success"
+                                        data-bs-dismiss="modal" data-bs-toggle="modal"
+                                        data-bs-target="#modal-aprovar-{{ r.id }}">Aprovar</button>
+                                <button type="button" class="btn btn-danger"
+                                        data-bs-dismiss="modal" data-bs-toggle="modal"
+                                        data-bs-target="#modal-negar-{{ r.id }}">Negar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Approval Modal -->
+            <div class="modal fade" id="modal-aprovar-{{ r.id }}" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Aprovar Reinvindicação</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <form method="POST" action="{% url 'aprovar_reinvindicacao_adm' r.id %}">
+                            {% csrf_token %}
+                            <input type="hidden" name="action" value="aprovar">
+                            <div class="modal-body">
+                                <p>Aprovar reinvindicação de <strong>{{ r.user.username }}</strong>
+                                   para o evento <strong>{{ r.evento }}</strong>?</p>
+                                <div class="mb-3">
+                                    <label for="pontos-{{ r.id }}" class="form-label">Pontos a adicionar</label>
+                                    <input type="number" id="pontos-{{ r.id }}" name="pontos"
+                                           class="form-control" min="1" required>
+                                    <div class="form-text">O valor deve ser maior que zero.</div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                <button type="submit" class="btn btn-success">Confirmar Aprovação</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Denial Modal -->
+            <div class="modal fade" id="modal-negar-{{ r.id }}" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Negar Reinvindicação</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <form method="POST" action="{% url 'aprovar_reinvindicacao_adm' r.id %}">
+                            {% csrf_token %}
+                            <input type="hidden" name="action" value="negar">
+                            <div class="modal-body">
+                                <p>Negar reinvindicação de <strong>{{ r.user.username }}</strong>
+                                   para o evento <strong>{{ r.evento }}</strong>?</p>
+                                <div class="mb-3">
+                                    <label for="motivo-{{ r.id }}" class="form-label">Motivo (opcional)</label>
+                                    <textarea id="motivo-{{ r.id }}" name="deny_reason"
+                                              class="form-control" rows="3" maxlength="255"></textarea>
+                                    <div class="form-text">Se informado, deve conter mais de 4 palavras e menos de 255 caracteres.</div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                <button type="submit" class="btn btn-danger">Confirmar Negação</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Photo Removal Modals -->
+            {% for foto in r.fotos.all %}
+            <div class="modal fade" id="modal-remover-foto-{{ foto.id }}" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Remover Foto</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body text-center">
+                            <p>Tem certeza que deseja remover esta foto?</p>
+                            <img src="{{ foto.foto.url }}" alt="Foto {{ foto.id }}"
+                                 class="img-fluid rounded mb-3" style="max-height: 200px;">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <form method="POST" action="{% url 'remover_foto_pro_liberdade' foto.id %}">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-danger">Confirmar Remoção</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+
+            {% empty %}
+            <tr>
+                <td colspan="5" class="text-center text-muted py-4">Nenhuma reinvindicação pendente.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock content %}
