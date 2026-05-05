@@ -11,6 +11,7 @@ from members.query.users_query import UsersQuery
 from rating.models.atividade import Atividade
 from rating.models.log_rating import LogRating
 from rating.models.nivel_choices import NivelChoices
+from rating.services.pontos_service import PontosService
 from utils.paginator import pagina_lista
 
 
@@ -19,24 +20,12 @@ def add_rating_point(request):
     if request.method == 'POST':
         ids = request.POST.getlist('usuarios')
         atividade_id = request.POST.get('select-atividade')
-        pontuacao = request.POST.get('pontuacao')
-        
-        if pontuacao == None:
-            atividade = Atividade.objects.get(id=atividade_id)
-            pontuacao = str(atividade.pontuacao)
-        
-        if not str.isdigit(pontuacao) and pontuacao == '0':
-            messages.warning(request, 'Adicione uma pontuação válida!')
-            
-        for id in ids:     
-            profile = Profile.objects.get(user_id=id)                               
-            LogRating.add_log_rating(profile, int(pontuacao), request.user.id, atividade)
-            if profile.nivel.lower() != NivelChoices.GUARDIAN and len(ProfilePendencia.get_pendencias(profile)) == 0 and profile.is_next_level():                
-                profile.change_level()
-            profile.pontuacao += int(pontuacao)
-            profile.save()
-            
-        return redirect('logs')
+        pontuacao = request.POST.get('pontuacao')        
+        result = PontosService.add(ids, atividade_id, pontuacao, request.user.id)
+        if result["result"]:
+            return redirect('logs')
+        messages.error(request, result["message"])
+
     query = request.GET.get("busca")    
     usuarios_list = UsersQuery.get_users_by_query(query)
     usuarios = pagina_lista(request, usuarios_list, 25)
@@ -58,17 +47,13 @@ def editar_pontuacao(request, user_id: int):
         user = Users.objects.get(id=user_id)
         profile = Profile.get_or_create_profile(user)
         return render(request, 'editar_pontuacao.html', {'profile': profile, 'usuario': user})
-    if request.method == 'POST':
-        try:
-            pontuacao = request.POST.get('pontos', 0)
-            user = Users.objects.get(id=user_id)
-            profile = Profile.get_or_create_profile(user)
-            LogRating.add_log_rating(profile, int(pontuacao), user.id)
-            if profile.nivel.lower() != NivelChoices.GUARDIAN and len(ProfilePendencia.get_pendencias(profile)) == 0 and profile.is_next_level():                
-                profile.change_level()
-            profile.pontuacao += int(pontuacao)
-            profile.save()
-            return redirect('user_log_rating', username=user.username)
-        except Exception as e:
-            Log.salva_log(e)
-            return redirect('user_log_rating', username=user.username)
+    if request.method == 'POST':        
+        pontuacao = request.POST.get('pontos', 0)
+        user = Users.objects.get(id=user_id)
+        profile = Profile.get_or_create_profile(user)
+        result = PontosService.editar(profile, pontuacao, request.user.id)
+        
+        if not result["result"]:
+            messages.error(request, result["message"])
+        
+        return redirect('user_log_rating', username=user.username)        

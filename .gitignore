@@ -7,3 +7,4 @@
 **/.vscode/*
 fraguismo/media/*
 !.env.example
+*.log

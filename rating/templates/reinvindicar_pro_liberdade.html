@@ -1,0 +1,125 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% load static %}
+<link rel="stylesheet" href="{% static '/css/styles.css' %}">
+
+<div class="shadow p-4 mb-5 bg-body rounded">
+    <div class="row text-center" style="padding-bottom: 40px;">
+        <h2 class="h2">Reivindicar Pró Liberdade</h2>
+    </div>
+    <form class="col-md-8 mx-auto" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="row" style="padding-bottom: 15px;">
+            <div class="col">
+                <label for="evento" class="form-label">Evento</label>
+                <input type="text" id="evento" name="evento" class="form-control"
+                    value="{{ reinvindicacao.evento|default:'' }}" required>
+            </div>
+        </div>
+        <div class="row" style="padding-bottom: 15px;">
+            <div class="col">
+                <label for="data_evento" class="form-label">Data do Evento</label>
+                <input type="datetime-local" id="data_evento" name="data_evento" class="form-control"
+                    value="{{ reinvindicacao.data_evento|date:'Y-m-d\TH:i'|default:'' }}" required>
+            </div>
+            <div class="col">
+                <label for="local_evento" class="form-label">Local do Evento</label>
+                <input type="text" id="local_evento" name="local_evento" class="form-control"
+                    value="{{ reinvindicacao.local_evento|default:'' }}" required>
+            </div>
+        </div>
+
+        <hr>
+        <div class="row" style="padding-bottom: 15px;">
+            <div class="col">
+                <h5>Fotos <small class="text-muted">(fotos do evento ou certificado)</small></h5>
+            </div>
+        </div>
+
+        {% for foto in fotos %}
+        <div class="row foto-row" style="padding-bottom: 10px;">
+            <div class="col-5">
+                <div class="d-flex align-items-center">
+                    <img src="{{ foto.foto.url }}" alt="Foto" style="max-height: 60px; max-width: 80px; object-fit: cover; border-radius: 4px;" class="me-2">
+                    <span class="text-muted small">{{ foto.foto.name|cut:"pro_liberdade/" }}</span>
+                    <input type="hidden" name="foto_existente[]" value="{{ foto.id }}">
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="form-check form-switch" style="padding-top: 8px;">
+                    <input class="form-check-input" type="checkbox" name="foto_publica[]"
+                        value="{{ forloop.counter0 }}" {% if foto.is_public %}checked{% endif %}>
+                    <label class="form-check-label">Pública</label>
+                </div>
+            </div>
+            <div class="col-3 text-end">
+                <button type="button" class="btn btn-sm btn-outline-danger" onclick="removerFoto(this)">
+                    <i class="bi bi-trash"></i> Remover
+                </button>
+            </div>
+        </div>
+        {% endfor %}
+
+        <div id="fotos-container"></div>
+
+        <div class="row" style="padding-top: 10px; padding-bottom: 10px;">
+            <div class="col">
+                <button type="button" class="btn btn-sm btn-outline-primary" onclick="adicionarFoto()">
+                    <i class="bi bi-plus-circle"></i> Adicionar Foto
+                </button>
+            </div>
+        </div>
+
+        <div class="row text-end" style="padding-top: 20px;">
+            <div class="col">
+                <a class="btn btn-secondary" href="{% url 'user_log_rating' %}" style="border-radius: 20px;">Voltar</a>
+                <input type="submit" class="btn btn-warning" style="border-radius: 20px;" value="Salvar">
+            </div>
+        </div>
+    </form>
+</div>
+
+<script>
+    let fotoIndex = document.querySelectorAll('.foto-row').length;
+
+    function adicionarFoto() {
+        const container = document.getElementById('fotos-container');
+        const row = document.createElement('div');
+        row.className = 'row foto-row';
+        row.style.paddingBottom = '10px';
+        row.innerHTML = `
+            <div class="col-5">
+                <input type="file" name="fotos" class="form-control" accept="image/*">
+            </div>
+            <div class="col-4">
+                <div class="form-check form-switch" style="padding-top: 8px;">
+                    <input class="form-check-input" type="checkbox" name="foto_publica[]" value="${fotoIndex}" checked>
+                    <label class="form-check-label">Pública</label>
+                </div>
+            </div>
+            <div class="col-3 text-end">
+                <button type="button" class="btn btn-sm btn-outline-danger" onclick="removerFoto(this)">
+                    <i class="bi bi-trash"></i> Remover
+                </button>
+            </div>
+        `;
+        container.appendChild(row);
+        fotoIndex++;
+    }
+
+    function removerFoto(btn) {
+        btn.closest('.foto-row').remove();
+        atualizarIndices();
+    }
+
+    function atualizarIndices() {
+        const rows = document.querySelectorAll('#fotos-container .foto-row');
+        const offset = document.querySelectorAll('.foto-row').length - rows.length;
+        rows.forEach((row, i) => {
+            row.querySelector('input[name="foto_publica[]"]').value = i + offset;
+        });
+    }
+</script>
+
+{% endblock content %}
