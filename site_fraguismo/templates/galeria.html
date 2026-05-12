@@ -1,0 +1,310 @@
+{% extends 'base.html' %}
+
+{% block metadados %}
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Galeria de fotos pró-liberdade dos fraguistas. Veja os registros dos eventos libertários da comunidade.">
+<meta name="robots" content="index, follow">
+<meta property="og:title" content="Galeria de Fotos Fraguistas">
+<meta property="og:description" content="Galeria de fotos pró-liberdade dos fraguistas.">
+<meta property="og:url" content="https://fraguismo.org/galeria/">
+<meta property="og:type" content="website">
+{% endblock metadados %}
+
+{% block content %}
+{% load static %}
+
+<style>
+    /* ===== Header ===== */
+    .galeria-header {
+        text-align: center;
+        padding: 2.5rem 1rem 1.5rem;
+    }
+    .galeria-header h1 {
+        font-size: 2rem;
+        font-weight: 700;
+        color: #2c2c2c;
+    }
+    .galeria-header p {
+        color: #666;
+        font-size: 1.05rem;
+        max-width: 600px;
+        margin: 0.5rem auto 0;
+    }
+
+    /* ===== Carrossel ===== */
+    .carrossel-section {
+        max-width: 900px;
+        margin: 0 auto 2.5rem;
+    }
+    .carrossel-section .carousel-item img {
+        width: 100%;
+        max-height: 500px;
+        object-fit: cover;
+        border-radius: 12px;
+    }
+    .carrossel-section .carousel-caption {
+        background: rgba(0, 0, 0, 0.55);
+        border-radius: 8px;
+        padding: 0.6rem 1.2rem;
+        bottom: 1.2rem;
+    }
+    .carrossel-section .carousel-caption h5 {
+        font-size: 1rem;
+        margin-bottom: 0.15rem;
+    }
+    .carrossel-section .carousel-caption p {
+        font-size: 0.85rem;
+        margin-bottom: 0;
+    }
+
+    /* ===== Galeria Grid ===== */
+    .galeria-titulo {
+        text-align: center;
+        margin-bottom: 1.5rem;
+    }
+    .galeria-titulo h2 {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: #2c2c2c;
+    }
+    .galeria-titulo hr {
+        width: 80px;
+        margin: 0.5rem auto 0;
+        border: 2px solid #f0ad4e;
+        opacity: 1;
+    }
+
+    .galeria-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.5rem;
+        padding: 0 0.5rem;
+    }
+    @media (max-width: 992px) {
+        .galeria-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 576px) {
+        .galeria-grid { grid-template-columns: 1fr; }
+    }
+
+    .galeria-card {
+        border: none;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .galeria-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 6px 20px rgba(0,0,0,0.14);
+    }
+    .galeria-card img {
+        width: 100%;
+        height: 240px;
+        object-fit: cover;
+    }
+    .galeria-card .card-body {
+        padding: 0.8rem 1rem;
+    }
+    .galeria-card .card-body .evento-nome {
+        font-weight: 600;
+        font-size: 0.95rem;
+        color: #333;
+        margin-bottom: 0.25rem;
+    }
+    .galeria-card .card-body .evento-local {
+        font-size: 0.82rem;
+        color: #888;
+        margin-bottom: 0.3rem;
+    }
+    .galeria-card .card-body .evento-user {
+        font-size: 0.82rem;
+        color: #555;
+    }
+    .galeria-card .card-body .evento-user i {
+        color: #f0ad4e;
+        margin-right: 4px;
+    }
+
+    /* ===== Loader ===== */
+    .galeria-loader {
+        text-align: center;
+        padding: 2rem 0;
+        display: none;
+    }
+    .galeria-loader .spinner-border {
+        width: 2rem;
+        height: 2rem;
+        color: #f0ad4e;
+    }
+
+    .galeria-fim {
+        text-align: center;
+        padding: 2rem 0;
+        color: #999;
+        display: none;
+    }
+
+    /* ===== Vazio ===== */
+    .galeria-vazia {
+        text-align: center;
+        padding: 4rem 1rem;
+        color: #888;
+    }
+    .galeria-vazia i {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+        display: block;
+        color: #ccc;
+    }
+</style>
+
+<!-- Header -->
+<div class="galeria-header">
+    <h1><i class="bi bi-camera-fill"></i> Galeria de Fotos Fraguistas</h1>
+    <p>Registros dos eventos pró-liberdade da nossa comunidade</p>
+</div>
+
+<!-- Carrossel -->
+{% if carrossel %}
+<div class="carrossel-section">
+    <div id="carrosselGaleria" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+            {% for foto in carrossel %}
+            <button type="button"
+                    data-bs-target="#carrosselGaleria"
+                    data-bs-slide-to="{{ forloop.counter0 }}"
+                    {% if forloop.first %}class="active" aria-current="true"{% endif %}
+                    aria-label="Slide {{ forloop.counter }}">
+            </button>
+            {% endfor %}
+        </div>
+        <div class="carousel-inner">
+            {% for foto in carrossel %}
+            <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                <img src="{{ foto.foto.url }}" alt="{{ foto.pro_liberdade.evento }}">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5>{{ foto.pro_liberdade.evento }}</h5>
+                    <p><i class="bi bi-person-fill"></i> {{ foto.pro_liberdade.user.username }}</p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carrosselGaleria" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Anterior</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carrosselGaleria" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Próximo</span>
+        </button>
+    </div>
+</div>
+{% endif %}
+
+<!-- Galeria -->
+<div class="galeria-titulo">
+    <h2>Todas as Fotos</h2>
+    <hr>
+</div>
+
+{% if fotos %}
+<div class="galeria-grid" id="galeriaGrid">
+    {% for foto in fotos %}
+    <div class="galeria-card card">
+        <img src="{{ foto.foto.url }}" alt="{{ foto.pro_liberdade.evento }}" loading="lazy">
+        <div class="card-body">
+            <p class="evento-nome">{{ foto.pro_liberdade.evento }}</p>
+            <p class="evento-local"><i class="bi bi-geo-alt"></i> {{ foto.pro_liberdade.local_evento }}</p>
+            <p class="evento-user"><i class="bi bi-person-fill"></i> {{ foto.pro_liberdade.user.username }}</p>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<div class="galeria-loader" id="galeriaLoader">
+    <div class="spinner-border" role="status">
+        <span class="visually-hidden">Carregando...</span>
+    </div>
+</div>
+
+<div class="galeria-fim" id="galeriaFim">
+    <p>Você chegou ao fim da galeria 🎉</p>
+</div>
+{% else %}
+<div class="galeria-vazia">
+    <i class="bi bi-image"></i>
+    <p>Nenhuma foto pró-liberdade publicada ainda.</p>
+</div>
+{% endif %}
+
+{% endblock content %}
+
+{% block javascript %}
+{{ block.super }}
+<script>
+(function() {
+    const grid = document.getElementById('galeriaGrid');
+    const loader = document.getElementById('galeriaLoader');
+    const fim = document.getElementById('galeriaFim');
+
+    if (!grid) return;
+
+    let currentPage = 1;
+    let hasNext = {{ has_next|yesno:"true,false" }};
+    let loading = false;
+
+    function createCard(foto) {
+        const card = document.createElement('div');
+        card.className = 'galeria-card card';
+        card.innerHTML = `
+            <img src="${foto.foto_url}" alt="${foto.evento}" loading="lazy">
+            <div class="card-body">
+                <p class="evento-nome">${foto.evento}</p>
+                <p class="evento-local"><i class="bi bi-geo-alt"></i> ${foto.local}</p>
+                <p class="evento-user"><i class="bi bi-person-fill"></i> ${foto.username}</p>
+            </div>
+        `;
+        return card;
+    }
+
+    async function loadMore() {
+        if (loading || !hasNext) return;
+        loading = true;
+        loader.style.display = 'block';
+
+        try {
+            const nextPage = currentPage + 1;
+            const response = await fetch(`{% url 'galeria_api' %}?page=${nextPage}`);
+            const data = await response.json();
+
+            data.fotos.forEach(function(foto) {
+                grid.appendChild(createCard(foto));
+            });
+
+            currentPage = data.page;
+            hasNext = data.has_next;
+
+            if (!hasNext) {
+                fim.style.display = 'block';
+            }
+        } catch (err) {
+            console.error('Erro ao carregar fotos:', err);
+        } finally {
+            loader.style.display = 'none';
+            loading = false;
+        }
+    }
+
+    // Infinite scroll: carrega quando o usuário está a 300px do fundo
+    window.addEventListener('scroll', function() {
+        const scrollPosition = window.innerHeight + window.scrollY;
+        const threshold = document.body.offsetHeight - 300;
+        if (scrollPosition >= threshold) {
+            loadMore();
+        }
+    });
+})();
+</script>
+{% endblock javascript %}

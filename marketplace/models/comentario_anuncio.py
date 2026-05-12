@@ -1,5 +1,6 @@
 from django.db import models
-
+from members.models.users import Users
+from marketplace.models.anuncio import Anuncio
 
 class ComentarioAnuncio(models.Model):
     id = models.AutoField(primary_key=True)

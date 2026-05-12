@@ -1,3 +1,4 @@
+from rating.models.atividade import Atividade
 from members.models.profile import Profile
 from members.models.profile_pendencia import ProfilePendencia
 from rating.models.log_rating import LogRating
@@ -12,6 +13,7 @@ class PontosService:
     cada transação em LogRating e verificando progressão de nível automaticamente.
     """
 
+    @staticmethod
     def adicionar_pontos(ids: list, atividade_id: int, pontuacao: int, updater_id: int) -> dict:
         """
         Adiciona pontos a uma lista de membros por uma atividade.
@@ -47,11 +49,12 @@ class PontosService:
             if not result["result"]:
                 nao_salvos.append(profile.user.username)
         
-        if nao_salvos > 0:
+        if len(nao_salvos) > 0:
             return {result: True, "message": f"Falha ao atualizar: {', '.join(nao_salvos)}"}
         
         return {"result": True, "message": "Pontuações adicionadas com sucesso!"}
-        
+    
+    @staticmethod
     def editar(profile: Profile, pontuacao: int, updater_id: int):
         """
         Edita/ajusta a pontuação de um membro individualmente.
@@ -69,6 +72,7 @@ class PontosService:
         LogRating.add_log_rating(profile, int(pontuacao), updater_id)
         return PontosService._aplicar(profile, pontuacao)
 
+    @staticmethod
     def _aplicar(profile: Profile, pontuacao: int) -> dict:
         """
         Aplica a pontuação ao perfil e verifica progressão de nível.
