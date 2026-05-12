@@ -6,14 +6,14 @@
         <li>
             <a class="dropdown-item" href="{% url 'user_page' %}">Perfil</a>
         </li>
-        {% if user.is_fraguista == True %}
+        {% if member.is_fraguista == True %}
         <li>
             <a class="dropdown-item" href="{% url 'listar_anuncios' %}">Meus anúncios</a>
         </li>
         <li>
             <a class="dropdown-item" href="{% url 'ranking_liberdade' %}">Ranking da Liberdade</a>
         </li>
-        {% include "partials/navbar_components/proposta_dropdown.html" %}
+        {% include "partials/navbar_components/proposta_dropdown.html" with member=member %}
 
         <li>
             <a class="dropdown-item" href="{% url 'dao' %}">DAO</a>
