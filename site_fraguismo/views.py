@@ -1,8 +1,24 @@
-from django.http import HttpResponse
+from django.core.paginator import Paginator
+from django.db.models import Max, Subquery
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import redirect, render
 from django.template import loader
 from log.models.log import Log
+from rating.models.fotos_pro_liberdade import FotosProLiberdade
 from site_fraguismo.models import Mensagem
+
+
+GALERIA_FOTOS_POR_PAGINA = 12
+
+
+def _fotos_publicas_aprovadas():
+    """QuerySet base: fotos públicas de reivindicações aprovadas."""
+    return (
+        FotosProLiberdade.objects
+        .filter(is_public=True, pro_liberdade__is_approved=True)
+        .select_related('pro_liberdade__user')
+        .order_by('-created_at')
+    )
 
 
 def index(request):    
@@ -51,3 +67,55 @@ def anarcopolisinfo(request):
 
 def nossoobjetivo(request):
     return render(request, 'nossoobjetivo.html')
+
+
+def galeria(request):
+    # Carrossel: foto mais recente de cada usuário distinto (máx. 10)
+    latest_per_user = (
+        FotosProLiberdade.objects
+        .filter(is_public=True, pro_liberdade__is_approved=True)
+        .values('pro_liberdade__user')
+        .annotate(latest_id=Max('id'))
+        .values('latest_id')
+    )
+    carrossel = (
+        FotosProLiberdade.objects
+        .filter(id__in=Subquery(latest_per_user))
+        .select_related('pro_liberdade__user')
+        .order_by('-created_at')[:10]
+    )
+
+    # Galeria: primeira página
+    fotos_qs = _fotos_publicas_aprovadas()
+    paginator = Paginator(fotos_qs, GALERIA_FOTOS_POR_PAGINA)
+    primeira_pagina = paginator.get_page(1)
+
+    return render(request, 'galeria.html', {
+        'carrossel': carrossel,
+        'fotos': primeira_pagina,
+        'has_next': primeira_pagina.has_next(),
+    })
+
+
+def galeria_api(request):
+    """Endpoint JSON para infinite scroll da galeria."""
+    page_number = request.GET.get('page', 1)
+    fotos_qs = _fotos_publicas_aprovadas()
+    paginator = Paginator(fotos_qs, GALERIA_FOTOS_POR_PAGINA)
+    page = paginator.get_page(page_number)
+
+    fotos_data = [
+        {
+            'foto_url': foto.foto.url,
+            'evento': foto.pro_liberdade.evento,
+            'local': foto.pro_liberdade.local_evento,
+            'username': foto.pro_liberdade.user.username,
+        }
+        for foto in page
+    ]
+
+    return JsonResponse({
+        'fotos': fotos_data,
+        'has_next': page.has_next(),
+        'page': page.number,
+    })
