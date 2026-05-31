@@ -2,6 +2,15 @@
 
 {% block content %}
 {% load static %}
+<style>
+    .award {
+        color: #FFD700;
+    }
+
+    .award:hover {
+        color: goldenrod;
+    }
+</style>
 <link rel="stylesheet" href="{% static '/css/styles.css' %}">
 <div class="shadow p-4 mb-5 bg-body rounded">
     <div class="row text-center" style="padding-bottom: 30px;">
@@ -13,8 +22,10 @@
     <div class="row text-center">
         <div class="col-2">
             <div class="row">
-                <a name="reinvindicar" href="{% url 'reinvindicar_pro_liberdade' %}"><i class="bi bi-award" style="font-size: 24px;"></i></a>
-                <label for="reinvindicar">Reinvindicar!</label>
+                <a class="award" name="reinvindicar" href="{% url 'reinvindicar_pro_liberdade' %}">
+                    <i class="bi bi-award-fill" style="font-size: 24px;"></i>
+                </a>
+                <label for="reinvindicar">Reinvindicar Pontos!</label>
             </div>
         </div>
         <div class="col-10">
