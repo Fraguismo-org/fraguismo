@@ -85,8 +85,31 @@
             </div>
             <span id="validation-email" class="text-error">Endereço inválido.</span>
             <div class="row">
-                <div class="col">                
-                    <p><input class="form-check-input" type="checkbox" id="fraguista" name="fraguista" 
+                <div class="col">
+                    <label for="nova_senha" class="form-label">Nova senha</label>
+                    <input onfocus="" type="password" id="nova_senha" name="nova_senha" class="form-control" 
+                        autocomplete="new-password" placeholder="Deixe em branco para manter a senha atual">
+                </div>
+            </div>
+            <div class="col" id="senha-checklist" style="display: none;">
+                <ul class="list-group list-group-flush ps-4">
+                    <li id="pass-length" class="list-group-item border-0 p-0 small">A senha deve ter mais de 8 caracteres.</li>
+                    <li id="pass-upper" class="list-group-item border-0 p-0 small">Pelo menos uma letra maiúscula.</li>
+                    <li id="pass-lower" class="list-group-item border-0 p-0 small">Pelo menos uma letra minúscula.</li>
+                    <li id="pass-number" class="list-group-item border-0 p-0 small">Pelo menos um número.</li>
+                    <li id="pass-special" class="list-group-item border-0 p-0 small">Pelo menos um caractere especial.</li>
+                    <li id="pass-equal" class="list-group-item border-0 p-0 small">As senhas não correspondem.</li>
+                </ul>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <label for="confirmar_senha" class="form-label">Confirmar nova senha</label>
+                    <input type="password" id="confirmar_senha" name="confirmar_senha" class="form-control" autocomplete="new-password">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <p><input class="form-check-input" type="checkbox" id="fraguista" name="fraguista"
                         {% if member.is_fraguista %}
                          checked="checked"
                          disabled
@@ -184,7 +207,7 @@
 
 <script type="module" src="{% static 'js/userpage.js' %}"></script>
 <script>
-  function generateCustomLink() {
+    function generateCustomLink() {
         var copyText = document.getElementById("affiliateLink");
 
         copyText.select();
@@ -198,6 +221,12 @@
             message.style.display = "none";
         }, 3000);
     }
+
+    function ativaSenhaChecklist() {
+        const check = document.getElementById('senha-checklist');
+        check.dsplay = 'block';
+    }
+
 
 </script>
 
