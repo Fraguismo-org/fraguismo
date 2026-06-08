@@ -35,7 +35,7 @@ def user_page(request):
             return render(
                 request,
                 "members/user_page.html",
-                {"profile": profile, "member": member, "niveis": niveis},
+                {"profile": profile, "niveis": niveis},
             )
         member.email = email
         if not member.is_fraguista:
@@ -76,7 +76,7 @@ def user_page(request):
         return render(
             request,
             "members/user_page.html",
-            {"profile": profile, "member": member, "niveis": niveis},
+            {"profile": profile, "niveis": niveis},
         )
 
 @login_required(login_url='login')
