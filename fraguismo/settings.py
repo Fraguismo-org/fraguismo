@@ -95,6 +95,9 @@ AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
+    {
+        'NAME': 'members.validators.SenhaForteValidator',
+    },
 ]
 
 LANGUAGE_CODE = 'pt-br'

@@ -1,5 +1,7 @@
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.password_validation import validate_password
+from django.core.exceptions import ValidationError
 from django.shortcuts import render, redirect
 
 from members.models.profile import Profile
@@ -51,6 +53,13 @@ def register_user(request):
         if password != password2:
             messages.error(request, 'As senhas não coincidem.')
             return render(request, 'authenticate/register_user.html')
+
+        try:
+            validate_password(password, user)
+        except ValidationError as e:
+            messages.error(request, " ".join(e.messages))
+            return render(request, 'authenticate/register_user.html')
+
         user.set_password(password)
 
         if user.is_fraguista:

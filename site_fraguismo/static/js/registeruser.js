@@ -49,8 +49,10 @@ document.addEventListener('DOMContentLoaded', function () {
     const senha = document.getElementById('password');
     const senha2 = document.getElementById('password2');
     const passLength = document.getElementById('pass-length');
-    const passNumeric = document.getElementById('pass-numeric');
-    const passAlphnumeric = document.getElementById('pass-alphnumeric');
+    const passUpper = document.getElementById('pass-upper');
+    const passLower = document.getElementById('pass-lower');
+    const passNumber = document.getElementById('pass-number');
+    const passSpecial = document.getElementById('pass-special');
     const passEqual = document.getElementById('pass-equal');
     const firstName = document.getElementById('first_name');
     const lastName = document.getElementById('last_name');
@@ -220,20 +222,23 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function validaPassword() {
-        let ok = true;
+        const valor = senha.value;
 
-        passLength.style.color = senha.value.length >= 8 ? 'green' : 'red';
-        passNumeric.style.color = /^\d+$/.test(senha.value) ? 'red' : 'green';
-        passAlphnumeric.style.color =
-            (/[A-Za-z]/.test(senha.value) && /\d/.test(senha.value)) ? 'green' : 'red';
-        passEqual.style.color = senha.value === senha2.value ? 'green' : 'red';
+        const temTamanho = valor.length > 8;
+        const temMaiuscula = /[A-Z]/.test(valor);
+        const temMinuscula = /[a-z]/.test(valor);
+        const temNumero = /\d/.test(valor);
+        const temEspecial = /[^A-Za-z0-9]/.test(valor);
 
-        if (senha.value.length < 8) ok = false;
-        if (/^\d+$/.test(senha.value)) ok = false;
-        if (!(/[A-Za-z]/.test(senha.value) && /\d/.test(senha.value))) ok = false;
-        if (!validaPasswords()) ok = false;
+        passLength.style.color = temTamanho ? 'green' : 'red';
+        passUpper.style.color = temMaiuscula ? 'green' : 'red';
+        passLower.style.color = temMinuscula ? 'green' : 'red';
+        passNumber.style.color = temNumero ? 'green' : 'red';
+        passSpecial.style.color = temEspecial ? 'green' : 'red';
+        passEqual.style.color = valor === senha2.value ? 'green' : 'red';
 
-        return ok;
+        return temTamanho && temMaiuscula && temMinuscula && temNumero
+            && temEspecial && validaPasswords();
     }
 
     function validaPassword2() {

@@ -1,8 +1,10 @@
 import os
 
 from django.contrib import messages
+from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.decorators import login_required
-from django.core.exceptions import FieldError
+from django.contrib.auth.password_validation import validate_password
+from django.core.exceptions import FieldError, ValidationError
 from PIL import Image, ImageOps
 from django.db import DatabaseError, OperationalError, transaction
 from django.shortcuts import render, redirect, get_object_or_404
@@ -38,6 +40,30 @@ def user_page(request):
                 {"profile": profile, "niveis": niveis},
             )
         member.email = email
+
+        nova_senha = request.POST.get("nova_senha", "").strip()
+        confirmar_senha = request.POST.get("confirmar_senha", "").strip()
+        senha_alterada = False
+        if nova_senha or confirmar_senha:
+            if nova_senha != confirmar_senha:
+                messages.warning(request, "As senhas não coincidem!")
+                return render(
+                    request,
+                    "members/user_page.html",
+                    {"profile": profile, "niveis": niveis},
+                )
+            try:
+                validate_password(nova_senha, member)
+            except ValidationError as e:
+                messages.warning(request, " ".join(e.messages))
+                return render(
+                    request,
+                    "members/user_page.html",
+                    {"profile": profile, "niveis": niveis},
+                )
+            member.set_password(nova_senha)
+            senha_alterada = True
+
         if not member.is_fraguista:
             member.is_fraguista = request.POST.get("fraguista", None) == "on"
         if member.is_fraguista:
@@ -61,6 +87,10 @@ def user_page(request):
 
         member.save()
         profile.save()
+
+        if senha_alterada:
+            update_session_auth_hash(request, member)
+            messages.success(request, "Senha alterada com sucesso!")
 
         if profile.pic_profile.path.find("default.jpg") == -1:
             img = Image.open(profile.pic_profile.path)
