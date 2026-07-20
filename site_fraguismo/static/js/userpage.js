@@ -16,6 +16,16 @@ document.addEventListener('DOMContentLoaded', function () {
     const jobTitle = document.getElementById('job_title');
     const chkCodigoConduta = document.getElementById('codigo_conduta');
 
+    const novaSenha = document.getElementById('nova_senha');
+    const confirmarSenha = document.getElementById('confirmar_senha');
+    const senhaChecklist = document.getElementById('senha-checklist');
+    const passLength = document.getElementById('pass-length');
+    const passUpper = document.getElementById('pass-upper');
+    const passLower = document.getElementById('pass-lower');
+    const passNumber = document.getElementById('pass-number');
+    const passSpecial = document.getElementById('pass-special');
+    const passEqual = document.getElementById('pass-equal');
+
     const btnSalvar = document.getElementById('btn-salvar');
     const formRegistro = document.getElementById('formRegistro');
     
@@ -47,15 +57,18 @@ document.addEventListener('DOMContentLoaded', function () {
         e.preventDefault();
 
         if (isFraguista.checked) {
-            if (validaCampos()) {
+            if (validaCampos() && validaSenha()) {
                 formRegistro.submit();
             }
         } else {
-            if (validaEmail()) {
+            if (validaEmail() && validaSenha()) {
                 formRegistro.submit();
-            }            
+            }
         }
     });
+
+    novaSenha.addEventListener('input', validaSenha);
+    confirmarSenha.addEventListener('input', validaSenha);
 
     email.addEventListener('change', () => {
         validaEmail();
@@ -183,12 +196,41 @@ document.addEventListener('DOMContentLoaded', function () {
         return jobTitleValidation;
     }
 
-    function validaCodigoConduta() {               
-        chkCodigoConduta.checked 
-            ? document.getElementById("validation-codigo_conduta").style.display = 'none' 
+    function validaCodigoConduta() {
+        chkCodigoConduta.checked
+            ? document.getElementById("validation-codigo_conduta").style.display = 'none'
             : document.getElementById("validation-codigo_conduta").style.display = 'inline';
-        
+
         return chkCodigoConduta.checked
     }
-    
+
+    function validaSenha() {
+        const valor = novaSenha.value;
+
+        // A troca de senha é opcional: campos vazios = mantém a senha atual.
+        if (valor === '' && confirmarSenha.value === '') {
+            senhaChecklist.style.display = 'none';
+            return true;
+        }
+
+        senhaChecklist.style.display = 'block';
+
+        const temTamanho = valor.length > 8;
+        const temMaiuscula = /[A-Z]/.test(valor);
+        const temMinuscula = /[a-z]/.test(valor);
+        const temNumero = /\d/.test(valor);
+        const temEspecial = /[^A-Za-z0-9]/.test(valor);
+        const saoIguais = valor !== '' && valor === confirmarSenha.value;
+
+        passLength.style.color = temTamanho ? 'green' : 'red';
+        passUpper.style.color = temMaiuscula ? 'green' : 'red';
+        passLower.style.color = temMinuscula ? 'green' : 'red';
+        passNumber.style.color = temNumero ? 'green' : 'red';
+        passSpecial.style.color = temEspecial ? 'green' : 'red';
+        passEqual.style.color = saoIguais ? 'green' : 'red';
+
+        return temTamanho && temMaiuscula && temMinuscula && temNumero
+            && temEspecial && saoIguais;
+    }
+
 });

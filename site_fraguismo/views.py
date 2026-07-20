@@ -6,9 +6,33 @@ from django.template import loader
 from log.models.log import Log
 from rating.models.fotos_pro_liberdade import FotosProLiberdade
 from site_fraguismo.models import Mensagem
+from django.conf import settings
+from pathlib import Path
 
 
 GALERIA_FOTOS_POR_PAGINA = 12
+
+EXTENSOES_PERMITIDAS = {
+    ".png",
+    ".jpg",
+    ".jpeg",
+    ".webp",
+    ".gif",
+}
+
+def ordenar_imagem(arquivo: Path):
+    """
+    Ordena numericamente arquivos como:
+    1.png, 2.png, 3.png, 10.png.
+
+    Sem isso, 10.png poderia aparecer antes de 2.png.
+    """
+    nome = arquivo.stem
+
+    if nome.isdigit():
+        return 0, int(nome)
+
+    return 1, nome.casefold()
 
 
 def _fotos_publicas_aprovadas():
@@ -60,7 +84,41 @@ def cursofraguista(request):
     return render(request, 'cursofraguista.html')
 
 def anarcopolis(request):
-    return render(request, 'anarcopolis.html')
+    diretorio = (
+        settings.BASE_DIR
+        / "site_fraguismo"
+        / "static"
+        / "images"
+        / "anarcopolis"
+        / "palestrantes"
+    )
+
+    imagens = []
+
+    if diretorio.exists():
+        arquivos = [
+            arquivo
+            for arquivo in diretorio.iterdir()
+            if arquivo.is_file()
+            and arquivo.suffix.lower() in EXTENSOES_PERMITIDAS
+        ]
+        print(len(arquivos))
+
+        arquivos.sort(key=ordenar_imagem)
+
+        print(len(arquivos))
+        imagens = [
+            f"images/anarcopolis/palestrantes/{arquivo.name}"
+            for arquivo in arquivos
+        ]    
+    print(len(imagens))
+    return render(
+        request,
+        "anarcopolis.html",
+        {
+            "imagens_carrossel": imagens,
+        },
+    )
 
 def anarcopolisinfo(request):
     return render(request, 'anarcopolisinfo.html')
@@ -69,8 +127,7 @@ def nossoobjetivo(request):
     return render(request, 'nossoobjetivo.html')
 
 
-def galeria(request):
-    # Carrossel: foto mais recente de cada usuário distinto (máx. 10)
+def galeria(request):    
     latest_per_user = (
         FotosProLiberdade.objects
         .filter(is_public=True, pro_liberdade__is_approved=True)
