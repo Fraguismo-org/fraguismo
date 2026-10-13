@@ -189,62 +189,39 @@
             6 dias de imersão total na filosofia libertária
         </h6>
     </div>  
-        <!-- <div class="container mt-5 pt-5 ct-timeline">
-        <div class="carousel-wrapper">
-            <div id="carouselExampleControls" class="carousel slide carousel-fade" data-bs-ride="carousel">
-                <div class="carousel-inner">
-                    <div class="carousel-item active">
-                        <img class="d-block w-100" src="{% static 'images/29nov.webp' %}" alt="Primeiro Slide">
-                    </div>
-                    <div class="carousel-item">
-                        <img class="d-block w-100" src="{% static 'images/30nov.webp' %}" alt="Segundo Slide">
-                    </div>
-                    <div class="carousel-item">
-                        <img class="d-block w-100" src="{% static 'images/01dez.webp' %}" alt="Terceiro Slide">
-                    </div>
-                    <div class="carousel-item">
-                        <img class="d-block w-100" src="{% static 'images/02dez.webp' %}" alt="Quarto Slide">
-                    </div>
-                    <div class="carousel-item">
-                        <img class="d-block w-100" src="{% static 'images/03dez.webp' %}" alt="Quinto Slide">
-                    </div>
-                    <div class="carousel-item">
-                        <img class="d-block w-100" src="{% static 'images/04dez.webp' %}" alt="Sexto Slide">
-                    </div>
-                </div>            
-                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Anterior</span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Próximo</span>
-                </button>
-            </div>
-        </div> -->
-        <div class="carousel-wrapper">
-            <div id="carouselExampleControls2" class="carousel slide carousel-fade" data-bs-ride="carousel">
-                <div class="carousel-inner">
-                    {% for imagem in imagens_carrossel %}
-                        <div class="carousel-item{% if forloop.first %} active{% endif %}">
-                            <img class="d-block w-100" src="{% static imagem %}" alt="Imagem {{ forloop.counter }} de Anarcópolis">
+        <div class="container mt-5 pt-5 ct-timeline">
+            <div class="carousel-wrapper">
+                <div id="carouselExampleControls" class="carousel slide carousel-fade" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <img class="d-block w-100" src="{% static '/images/cronograma_palestras/cronograma_dia_12.jpeg' %}" alt="Primeiro Slide">
                         </div>
-                    {% empty %}
-                        <div class="alert alert-warning">
-                            Nenhuma imagem foi encontrada.
+                        <div class="carousel-item">
+                            <img class="d-block w-100" src="{% static '/images/cronograma_palestras/cronograma_dia_13.jpeg' %}" alt="Segundo Slide">
                         </div>
-                    {% endfor %}
+                        <div class="carousel-item">
+                            <img class="d-block w-100" src="{% static '/images/cronograma_palestras/cronograma_dia_14.jpeg' %}" alt="Terceiro Slide">
+                        </div>
+                        <div class="carousel-item">
+                            <img class="d-block w-100" src="{% static '/images/cronograma_palestras/cronograma_dia_15.jpeg' %}" alt="Quarto Slide">
+                        </div>
+                        <div class="carousel-item">
+                            <img class="d-block w-100" src="{% static '/images/cronograma_palestras/cronograma_dia_16.jpeg' %}" alt="Quinto Slide">
+                        </div>
+                        <div class="carousel-item">
+                            <img class="d-block w-100" src="{% static '/images/cronograma_palestras/cronograma_dia_17.jpeg' %}" alt="Sexto Slide">
+                        </div>
+                    </div>            
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Anterior</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Próximo</span>
+                    </button>
                 </div>
-
-        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls2" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Anterior</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls2" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Próximo</span>
-        </button>
-        </div>
+            </div>
         </div>
     </div>
 </section>
